@@ -8,35 +8,19 @@ paths, and Docker container settings. Imported by everything else.
 from pathlib import Path
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Paths
-# ──────────────────────────────────────────────────────────────────────
-
 PROJECT_ROOT = Path(__file__).parent.resolve()
 LOGS_DIR = PROJECT_ROOT / "logs"          # per-cell patch JSONs (one per LLM call)
 RESULTS_DIR = PROJECT_ROOT / "results"    # results.csv, intermediate aggregates
 PROMPTS_DIR = PROJECT_ROOT / "prompts"    # prompt template .py files
 SCHEMAS_DIR = PROJECT_ROOT / "schemas"    # per-CWE repair knowledge
 
-# Create dirs if they don't exist (no-op on rerun)
 for d in (LOGS_DIR, RESULTS_DIR):
     d.mkdir(parents=True, exist_ok=True)
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Docker / Vul4J container
-# ──────────────────────────────────────────────────────────────────────
 
 CONTAINER_NAME = "vul4j-alldeps"
 CONTAINER_WORK_DIR = "/tmp/cweft"   # where checkouts live INSIDE the container
 DOCKER_EXEC_TIMEOUT = 900           # 15 min per compile/test command
 
-
-# ──────────────────────────────────────────────────────────────────────
-# Models — three frontier coding LLMs from three labs.
-# Keys: short identifier used in filenames + CSV columns.
-# Values: the actual API model string each provider expects.
-# ──────────────────────────────────────────────────────────────────────
 
 MODELS = {
     "claude":  "claude-sonnet-4-5-20250929",      # Anthropic
@@ -45,25 +29,7 @@ MODELS = {
 }
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Prompt levels (the four conditions in the ablation)
-# ──────────────────────────────────────────────────────────────────────
-
 PROMPT_LEVELS = ["L1", "L2", "L3a", "L3b"]
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Vulnerability subset.
-#
-# Derived from `vul4j verify --id VUL4J-1 ... VUL4J-79` inside the
-# `bqcuongas/vul4j:alldeps` Docker image (see verify_all.log).
-#
-# Filter chain:
-#   79 total in Vul4J
-#   → 63 reproduced (vulnerable build fails PoV, human patch passes it)
-#   → 56 after dropping multi-file fixes (single-file subset)
-#   → 46 after dropping entries with CWE = "Not Mapping"
-# ──────────────────────────────────────────────────────────────────────
 
 SUBSET = [
     "VUL4J-1",  "VUL4J-2",  "VUL4J-6",  "VUL4J-7",  "VUL4J-8",  "VUL4J-10",
@@ -75,13 +41,7 @@ SUBSET = [
     "VUL4J-66", "VUL4J-75", "VUL4J-76", "VUL4J-77", "VUL4J-78", "VUL4J-79",
 ]
 
-# Quick sanity: experiment size
 TOTAL_CELLS = len(SUBSET) * len(PROMPT_LEVELS) * len(MODELS)
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Run as `python config.py` to print a quick sanity summary
-# ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print(f"Project root:       {PROJECT_ROOT}")
