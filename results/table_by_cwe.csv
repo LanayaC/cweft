@@ -1,0 +1,16 @@
+cwe_id,n_cells,L3_count,L3_rate,cwe_name
+CWE-835,84,18,21.4,Loop with Unreachable Exit Condition (Infinite Loop)
+CWE-22,60,12,20.0,Path Traversal
+CWE-611,48,12,25.0,Improper Restriction of XML External Entity Reference (XXE)
+CWE-74,12,11,91.7,Improper Neutralization of Special Elements in Output (Injection)
+CWE-79,60,9,15.0,Cross-Site Scripting (XSS)
+CWE-287,24,9,37.5,Improper Authentication
+CWE-502,24,6,25.0,Deserialization of Untrusted Data
+CWE-20,96,3,3.1,Improper Input Validation
+CWE-532,12,2,16.7,Insertion of Sensitive Information into Log File
+CWE-77,12,1,8.3,Improper Neutralization of Special Elements Used in a Command (Command Injection)
+CWE-264,24,0,0.0,"Permissions, Privileges, and Access Controls"
+CWE-284,12,0,0.0,Improper Access Control
+CWE-310,12,0,0.0,Cryptographic Issues
+CWE-269,12,0,0.0,Improper Privilege Management
+CWE-19,12,0,0.0,Data Processing Errors

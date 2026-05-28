@@ -1,0 +1,8 @@
+# CWEFT pipeline dependencies
+# Install:  pip install -r requirements.txt
+
+openai>=1.30.0
+anthropic>=0.40.0
+google-genai>=0.3.0
+python-dotenv>=1.0.0
+pandas>=2.0.0

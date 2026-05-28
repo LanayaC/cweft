@@ -1,0 +1,18 @@
+# Secrets — NEVER commit
+.env
+*.key
+credentials*
+
+# Python
+__pycache__/
+*.pyc
+cweft-venv/
+.venv/
+
+# Backups & scratch
+logs_backup/
+*_backup*
+results/results_backup_*.csv
+
+# Raw per-call logs go to Zenodo, not the repo
+logs/

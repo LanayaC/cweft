@@ -1,0 +1,5 @@
+McNemar L3a vs L3b (success = L3 outcome)
+  claude   a=  5 b=  0 c=  2 d= 35 discordant=  2  p=0.5000 (n.s.)
+  gemini   a=  6 b=  3 c=  2 d= 31 discordant=  5  p=1.0000 (n.s.)
+  gpt      a=  6 b=  1 c=  0 d= 35 discordant=  1  p=1.0000 (n.s.)
+  pooled   a= 17 b=  4 c=  4 d=101 discordant=  8  p=1.0000 (n.s.)

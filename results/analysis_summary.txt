@@ -1,0 +1,57 @@
+======================================================================
+CWEFT ANALYSIS
+======================================================================
+Total cells: 504   Vulns: 42   Levels: 4   Models: 3
+
+TABLE 1 — Overall trust-level distribution
+  L0:  115  (22.8%)
+  L1:  275  (54.6%)
+  L2:   31  (6.2%)
+  L3:   83  (16.5%)
+  Compile rate (L1+L2+L3): 77.2%
+  PoV pass rate (L2+L3):   22.6%
+  L3 (correct) rate:       16.5%
+
+TABLE 2 — By prompt level  [HEADLINE]
+  level     n    L0    L1    L2    L3     L3%    PoV%   Comp%
+  L1      126    31    72     7    16   12.7%   18.3%   75.4%
+  L2      126    24    68     9    25   19.8%   27.0%   81.0%
+  L3a     126    25    71     9    21   16.7%   23.8%   80.2%
+  L3b     126    35    64     6    21   16.7%   21.4%   72.2%
+
+TABLE 3 — By model
+  model       n    L0    L1    L2    L3     L3%    PoV%   Comp%
+  claude    168    44    89    11    24   14.3%   20.8%   73.8%
+  gemini    168    26    97     8    37   22.0%   26.8%   84.5%
+  gpt       168    45    89    12    22   13.1%   20.2%   73.2%
+
+TABLE 4 — L3 rate by (model × prompt level)
+  model           L1        L2       L3a       L3b
+  claude  5/42 (12%)7/42 (17%)7/42 (17%)5/42 (12%)
+  gemini  7/42 (17%)13/42 (31%)8/42 (19%)9/42 (21%)
+  gpt     4/42 (10%)5/42 (12%)6/42 (14%)7/42 (17%)
+
+TABLE 5 — L3 rate by CWE class (across all conditions)
+  CWE          n_cells   L3     L3%  name
+  CWE-835           84   18   21.4%  Loop with Unreachable Exit Condition (In
+  CWE-22            60   12   20.0%  Path Traversal
+  CWE-611           48   12   25.0%  Improper Restriction of XML External Ent
+  CWE-74            12   11   91.7%  Improper Neutralization of Special Eleme
+  CWE-79            60    9   15.0%  Cross-Site Scripting (XSS)
+  CWE-287           24    9   37.5%  Improper Authentication
+  CWE-502           24    6   25.0%  Deserialization of Untrusted Data
+  CWE-20            96    3    3.1%  Improper Input Validation
+  CWE-532           12    2   16.7%  Insertion of Sensitive Information into 
+  CWE-77            12    1    8.3%  Improper Neutralization of Special Eleme
+  CWE-264           24    0    0.0%  Permissions, Privileges, and Access Cont
+  CWE-284           12    0    0.0%  Improper Access Control
+  CWE-310           12    0    0.0%  Cryptographic Issues
+  CWE-269           12    0    0.0%  Improper Privilege Management
+  CWE-19            12    0    0.0%  Data Processing Errors
+
+McNEMAR TEST — L3a (prose) vs L3b (schema), success = L3
+  (b = L3b fixed & L3a didn't; c = L3a fixed & L3b didn't)
+  claude   a=  5 b=  0 c=  2 d= 35 discordant=  2  p=0.5000 (n.s.)
+  gemini   a=  6 b=  3 c=  2 d= 31 discordant=  5  p=1.0000 (n.s.)
+  gpt      a=  6 b=  1 c=  0 d= 35 discordant=  1  p=1.0000 (n.s.)
+  pooled   a= 17 b=  4 c=  4 d=101 discordant=  8  p=1.0000 (n.s.)
