@@ -91,13 +91,16 @@ cweft/
 
 ### Prerequisites
 
+- Linux, or WSL2 on Windows. Developed and run on Ubuntu under WSL2 (Windows
+  Subsystem for Linux). The harness shells out to `docker exec` and assumes a
+  Unix-style shell, so native Windows (PowerShell/cmd) is not supported.
 - Python 3.10+
 - Docker, with the Vul4J "all-dependencies" image:
 
-  ```bash
+```bash
   docker pull bqcuongas/vul4j:alldeps
   docker run -d --name vul4j-alldeps bqcuongas/vul4j:alldeps tail -f /dev/null
-  ```
+```
 
   This pre-cached image is needed because public Maven mirrors changed in 2023 and a
   vanilla Vul4J checkout no longer resolves all dependencies.
