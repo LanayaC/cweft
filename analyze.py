@@ -119,7 +119,7 @@ def main():
       f"Levels: {len(LEVELS)}   Models: {len(MODEL_KEYS)}")
     w()
 
-    # ---- Table 1: Overall ----
+    #   Table 1: Overall  
     w("TABLE 1 — Overall trust-level distribution")
     d = dist(rows)
     for t in TRUST:
@@ -133,7 +133,7 @@ def main():
         wr = csv.writer(f); wr.writerow(["trust", "count", "pct"])
         for t in TRUST: wr.writerow([t, d[t], f"{100*d[t]/N:.1f}"])
 
-    # ---- Table 2: By prompt level (HEADLINE) ----
+    #   Table 2: By prompt level (HEADLINE)  
     w("TABLE 2 — By prompt level  [HEADLINE]")
     w(f"  {'level':6}{'n':>5}{'L0':>6}{'L1':>6}{'L2':>6}{'L3':>6}"
       f"{'L3%':>8}{'PoV%':>8}{'Comp%':>8}")
@@ -154,7 +154,7 @@ def main():
         wr.writerow(["level","n","L0","L1","L2","L3","L3_rate","PoV_rate","compile_rate"])
         wr.writerows(t2)
 
-    # ---- Table 3: By model ----
+    #   Table 3: By model  
     w("TABLE 3 — By model")
     w(f"  {'model':8}{'n':>5}{'L0':>6}{'L1':>6}{'L2':>6}{'L3':>6}"
       f"{'L3%':>8}{'PoV%':>8}{'Comp%':>8}")
@@ -175,7 +175,7 @@ def main():
         wr.writerow(["model","n","L0","L1","L2","L3","L3_rate","PoV_rate","compile_rate"])
         wr.writerows(t3)
 
-    # ---- Table 4: Model x prompt level (L3 rate) ----
+    #   Table 4: Model x prompt level (L3 rate) 
     w("TABLE 4 — L3 rate by (model × prompt level)")
     w(f"  {'model':8}" + "".join(f"{lv:>10}" for lv in LEVELS))
     cellmap = defaultdict(list)
@@ -193,7 +193,7 @@ def main():
     with (RESULTS_DIR / "table_model_x_level.csv").open("w", newline="") as f:
         wr = csv.writer(f); wr.writerow(["model"] + LEVELS); wr.writerows(t4)
 
-    # ---- Table 5: By CWE ----
+    #   Table 5: By CWE  
     w("TABLE 5 — L3 rate by CWE class (across all conditions)")
     w(f"  {'CWE':12}{'n_cells':>8}{'L3':>5}{'L3%':>8}  name")
     rows_by_cwe = defaultdict(list)
@@ -211,7 +211,7 @@ def main():
         wr.writerow(["cwe_id","n_cells","L3_count","L3_rate","cwe_name"])
         wr.writerows(t5)
 
-    # ---- McNemar: L3a vs L3b ----
+    #   McNemar: L3a vs L3b  
     w("McNEMAR TEST — L3a (prose) vs L3b (schema), success = L3")
     w("  (b = L3b fixed & L3a didn't; c = L3a fixed & L3b didn't)")
     mc = mcnemar(rows)
@@ -225,7 +225,7 @@ def main():
     w()
     (RESULTS_DIR / "mcnemar.txt").write_text("".join(mc_lines))
 
-    # ---- Save full summary ----
+    #   Save full summary  
     (RESULTS_DIR / "analysis_summary.txt").write_text("\n".join(out_lines))
     w("Wrote: analysis_summary.txt + table_*.csv + mcnemar.txt to results/")
 
