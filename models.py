@@ -159,10 +159,11 @@ def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
     """
     Local generation via Ollama's /api/generate.
 
-    num_ctx is the TOTAL window — the prompt and the generated file share it —
-    and Ollama truncates at both ends silently rather than erroring. The guards
-    below turn either truncation into a raised exception, because a half-written
-    Java file cannot compile and would be scored as a genuine L0.
+    num_ctx is the TOTAL window — the prompt and the generated file share it.
+    The request disables Ollama's silent truncation and context shifting, and
+    the guards below are a backstop in case a server ignores those fields: any
+    sign the window ran out raises, because a half-written Java file cannot
+    compile and would be scored as a genuine L0.
     """
     import httpx
 
@@ -172,6 +173,13 @@ def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
         "system":     SYSTEM_PROMPT,
         "stream":     False,            # default is streaming NDJSON; .json() would fail
         "keep_alive": OLLAMA_KEEP_ALIVE,
+        # Ollama's defaults degrade silently when the window is too small: a long
+        # prompt is cut to about half the window, and a full window is shifted
+        # (oldest tokens dropped) while generation carries on. Turn both off so
+        # an over-long prompt returns HTTP 400 and a full window stops with
+        # done_reason "length". Measured on Ollama 0.33.2.
+        "truncate":   False,
+        "shift":      False,
         "options":    {"num_ctx": OLLAMA_NUM_CTX},
     }
 
@@ -212,15 +220,28 @@ def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
             f"out={usage['output_tokens']}). Raise OLLAMA_NUM_CTX in config.py."
         )
 
-    # Prompt hit the ceiling: Ollama drops the middle and reports the clipped
-    # count. A cached-prefix reuse reports FEWER tokens, so only a count
-    # sitting at the window edge is a truncation signature.
+    # Prompt at the window edge. Backstop only: with truncate=False the server
+    # rejects an over-long prompt with HTTP 400 before we get here, and 0.33.2's
+    # own truncation cuts to about HALF the window, which this check would miss.
     n_in = usage["input_tokens"]
     if n_in and n_in >= OLLAMA_NUM_CTX - 64:
         raise RuntimeError(
             f"Prompt for {model_key} was truncated to fit num_ctx="
             f"{OLLAMA_NUM_CTX} (prompt_eval_count={n_in}). "
             f"Raise OLLAMA_NUM_CTX in config.py."
+        )
+
+    # Window exhausted. When the context fills, some Ollama builds shift it
+    # (discard the oldest tokens and keep generating) and finish with a normal
+    # done_reason, so neither check above fires. Prompt plus generated tokens
+    # can only reach num_ctx if the window ran out, whatever the build does.
+    n_out = usage["output_tokens"]
+    if n_in + n_out >= OLLAMA_NUM_CTX:
+        raise RuntimeError(
+            f"Context window exhausted for {model_key}: prompt_eval_count={n_in} "
+            f"+ eval_count={n_out} = {n_in + n_out} >= num_ctx={OLLAMA_NUM_CTX} "
+            f"(done_reason={data.get('done_reason')!r}). The output is not "
+            f"trustworthy; raise OLLAMA_NUM_CTX in config.py."
         )
 
     return text, usage

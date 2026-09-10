@@ -64,6 +64,17 @@ def fresh_checkout(vul_id: str) -> str:
     return ensure_checkout(vul_id, force=True)
 
 
+def restore_primary(workdir: str, primary_file: str) -> None:
+    # Put the vulnerable file back once a patch has been scored. generate.py
+    # reads the primary file from this same checkout, so a patch left on disk
+    # would become the "vulnerable" file in the next prompt. `checkout --`
+    # restores from the index, where `vul4j checkout` staged the original.
+    proc = _docker_exec(["git", "-C", workdir, "checkout", "--", primary_file])
+    if proc.returncode != 0:
+        print(f"  WARNING: could not restore {workdir}/{primary_file}: "
+              f"{proc.stderr.strip()}", file=sys.stderr)
+
+
 def run_compile(workdir: str) -> Tuple[bool, str]:
     res = _docker_exec(["vul4j", "compile", "-d", workdir])
     wrapper_log = (res.stdout or "") + "\n--- stderr ---\n" + (res.stderr or "")
@@ -171,13 +182,9 @@ def evaluate_log(log_path: Path) -> Dict:
     response = log.get("response", "")
     primary_file = log["primary_file"]
 
-    try:
-        payload = get_vuln_payload(vul_id)
-    except Exception as e:
-        return _error_row(log_path, timestamp, f"payload rebuild failed: {e}", log)
-
-    pov_tests = set(payload.get("failing_tests", []))
-
+    # Check out BEFORE rebuilding the payload: get_vuln_payload refuses a
+    # checkout whose primary file differs from the staged original, and a
+    # forced fresh checkout guarantees it doesn't.
     try:
         workdir = fresh_checkout(vul_id)
     except subprocess.TimeoutExpired:
@@ -185,28 +192,39 @@ def evaluate_log(log_path: Path) -> Dict:
     except Exception as e:
         return _error_row(log_path, timestamp, f"checkout failed: {e}", log)
 
+    try:
+        payload = get_vuln_payload(vul_id)
+    except Exception as e:
+        return _error_row(log_path, timestamp, f"payload rebuild failed: {e}", log)
+
+    pov_tests = set(payload.get("failing_tests", []))
+
     target_path = f"{workdir}/{primary_file}"
     try:
-        _docker_write_file(target_path, response)
-    except Exception as e:
-        return _error_row(log_path, timestamp, f"file write failed: {e}", log)
-
-    try:
-        compiled, compile_log = run_compile(workdir)
-    except subprocess.TimeoutExpired:
-        return _error_row(log_path, timestamp, "compile timed out", log)
-    except Exception as e:
-        return _error_row(log_path, timestamp, f"compile crashed: {e}", log)
-
-    test_log = ""
-    test_results = None
-    if compiled:
         try:
-            _, test_log, test_results = run_tests(workdir)
-        except subprocess.TimeoutExpired:
-            test_log = "TIMEOUT during testing"
+            _docker_write_file(target_path, response)
         except Exception as e:
-            test_log = f"test crashed: {e}"
+            return _error_row(log_path, timestamp, f"file write failed: {e}", log)
+
+        try:
+            compiled, compile_log = run_compile(workdir)
+        except subprocess.TimeoutExpired:
+            return _error_row(log_path, timestamp, "compile timed out", log)
+        except Exception as e:
+            return _error_row(log_path, timestamp, f"compile crashed: {e}", log)
+
+        test_log = ""
+        test_results = None
+        if compiled:
+            try:
+                _, test_log, test_results = run_tests(workdir)
+            except subprocess.TimeoutExpired:
+                test_log = "TIMEOUT during testing"
+            except Exception as e:
+                test_log = f"test crashed: {e}"
+    finally:
+        # Whatever happened above, leave the checkout holding the vulnerable file.
+        restore_primary(workdir, primary_file)
 
     trust, pov_passed, regressions = classify(compiled, test_results, pov_tests)
 

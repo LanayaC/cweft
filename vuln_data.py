@@ -150,10 +150,32 @@ def read_vulnerable_file(vul_id: str, relative_path: str) -> str:
     Read the *vulnerable* version of a Java file as a string.
     This reads from the natural project path, not a snapshot directory —
     the alldeps `vul4j checkout` leaves the project at the vulnerable revision.
+
+    evaluate.py writes each candidate patch into this same checkout, so the file
+    on disk is only trustworthy while it still matches what `vul4j checkout`
+    staged. The checkout stages every file but never commits, so the staged
+    (index) copy is the pristine vulnerable file. Raise rather than let an empty
+    or overwritten file become a prompt.
     """
     ensure_checkout(vul_id)
-    full = f"{checkout_dir(vul_id)}/{relative_path}"
-    return _docker_cat(full)
+    workdir = checkout_dir(vul_id)
+    restore = f"docker exec {CONTAINER_NAME} git -C {workdir} checkout -- {relative_path}"
+
+    content = _docker_cat(f"{workdir}/{relative_path}")
+    if not content.strip():
+        raise RuntimeError(
+            f"{vul_id}: {relative_path} is empty in the checkout, so it is not the "
+            f"vulnerable file (a patch left behind by evaluate.py?). Restore it: {restore}"
+        )
+
+    staged = _docker_exec(["git", "-C", workdir, "show", f":{relative_path}"]).stdout
+    if content.replace("\r\n", "\n") != staged.replace("\r\n", "\n"):
+        raise RuntimeError(
+            f"{vul_id}: {relative_path} differs from the copy `vul4j checkout` staged "
+            f"({len(content)} chars on disk vs {len(staged)} staged), so it is not the "
+            f"vulnerable file (a patch left behind by evaluate.py?). Restore it: {restore}"
+        )
+    return content
 
 
 def read_human_patched_content(vul_id: str, relative_path: str) -> str:
