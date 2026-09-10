@@ -279,7 +279,7 @@ def _parse_level(p: Path) -> str:
 
 
 def _parse_model(p: Path) -> str:
-    m = re.match(r"VUL4J-\d+__L\d[ab]?__(\w+)\.json", p.name)
+    m = re.match(r"VUL4J-\d+__L\d[ab]?__([\w-]+)\.json", p.name)
     return m.group(1) if m else ""
 
 
