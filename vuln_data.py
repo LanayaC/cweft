@@ -70,6 +70,7 @@ def _docker_exec(cmd: List[str], check: bool = True) -> subprocess.CompletedProc
         check=check,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         timeout=DOCKER_EXEC_TIMEOUT,
     )
 

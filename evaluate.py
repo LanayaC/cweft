@@ -44,7 +44,7 @@ CSV_FIELDS = [
 def _docker_exec(cmd: List[str], check: bool = False, timeout: Optional[int] = None) -> subprocess.CompletedProcess:
     full = ["docker", "exec", CONTAINER_NAME] + cmd
     return subprocess.run(
-        full, check=check, capture_output=True, text=True,
+        full, check=check, capture_output=True, text=True, encoding="utf-8",
         timeout=timeout or DOCKER_EXEC_TIMEOUT,
     )
 
@@ -53,7 +53,7 @@ def _docker_write_file(container_path: str, content: str) -> None:
     # Pipe via stdin to dodge argument-size and quoting limits.
     proc = subprocess.run(
         ["docker", "exec", "-i", CONTAINER_NAME, "tee", container_path],
-        input=content, text=True, capture_output=True, timeout=60,
+        input=content, text=True, encoding="utf-8", capture_output=True, timeout=60,
     )
     if proc.returncode != 0:
         raise RuntimeError(f"Failed to write {container_path}: {proc.stderr}")
