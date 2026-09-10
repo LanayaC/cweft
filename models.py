@@ -1,8 +1,8 @@
 """
-Unified LLM wrappers for the three providers.
+Unified LLM wrappers for the cloud providers and local Ollama models.
 
 Exposes one function: call_model(model_key, prompt) -> (response_text, usage_dict)
-where model_key is "claude" | "gpt" | "gemini".
+where model_key is any key of config.MODELS.
 
 All API differences live here. The rest of the pipeline calls this once
 per cell and doesn't care which provider it's talking to.
@@ -11,11 +11,15 @@ per cell and doesn't care which provider it's talking to.
 import os
 import re
 import time
+from functools import partial
 from typing import Tuple
 
 from dotenv import load_dotenv
 
-from config import MODELS
+from config import (
+    MODELS, LOCAL_MODELS,
+    OLLAMA_BASE_URL, OLLAMA_NUM_CTX, OLLAMA_KEEP_ALIVE, OLLAMA_TIMEOUT,
+)
 
 load_dotenv()
 
@@ -110,11 +114,21 @@ def _call_gpt(prompt: str) -> Tuple[str, dict]:
             {"role": "user", "content": prompt},
         ],
     )
-    text = response.choices[0].message.content
+    text = response.choices[0].message.content or ""
     usage = {
         "input_tokens": response.usage.prompt_tokens,
         "output_tokens": response.usage.completion_tokens,
     }
+    # An empty string here would be written out as an empty .java file and
+    # scored as a genuine L0. On reasoning models max_completion_tokens covers
+    # reasoning tokens as well as visible output, so the whole budget can be
+    # consumed before any text is emitted.
+    if not text.strip():
+        raise RuntimeError(
+            f"OpenAI returned an empty response (finish_reason="
+            f"{response.choices[0].finish_reason!r}, completion_tokens="
+            f"{usage['output_tokens']}, max_completion_tokens=8192)."
+        )
     return text, usage
 
 
@@ -139,6 +153,79 @@ def _call_gemini(prompt: str) -> Tuple[str, dict]:
         "output_tokens": getattr(response.usage_metadata, "candidates_token_count", 0),
     }
     return text, usage
+
+
+def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
+    """
+    Local generation via Ollama's /api/generate.
+
+    num_ctx is the TOTAL window — the prompt and the generated file share it —
+    and Ollama truncates at both ends silently rather than erroring. The guards
+    below turn either truncation into a raised exception, because a half-written
+    Java file cannot compile and would be scored as a genuine L0.
+    """
+    import httpx
+
+    body = {
+        "model":      MODELS[model_key],
+        "prompt":     prompt,
+        "system":     SYSTEM_PROMPT,
+        "stream":     False,            # default is streaming NDJSON; .json() would fail
+        "keep_alive": OLLAMA_KEEP_ALIVE,
+        "options":    {"num_ctx": OLLAMA_NUM_CTX},
+    }
+
+    try:
+        response = httpx.post(
+            f"{OLLAMA_BASE_URL}/api/generate",
+            json=body,
+            # long read budget, but fail fast if nothing is listening
+            timeout=httpx.Timeout(OLLAMA_TIMEOUT, connect=10.0),
+        )
+    except httpx.RequestError as e:
+        raise RuntimeError(f"Ollama unreachable at {OLLAMA_BASE_URL} for "
+                           f"{model_key}: {type(e).__name__}: {e}") from e
+
+    if response.status_code != 200:
+        raise RuntimeError(f"Ollama HTTP {response.status_code} for {model_key}: "
+                           f"{response.text[:300]}")
+
+    data = response.json()
+    if data.get("error"):
+        raise RuntimeError(f"Ollama error for {model_key}: {data['error']}")
+
+    text = data.get("response") or ""
+    usage = {
+        "input_tokens":  data.get("prompt_eval_count", 0),
+        "output_tokens": data.get("eval_count", 0),
+    }
+
+    if not text.strip():
+        raise RuntimeError(f"Ollama returned an empty response for {model_key} "
+                           f"(done_reason={data.get('done_reason')!r})")
+
+    # Output hit the ceiling: the file is cut off mid-token.
+    if data.get("done_reason") == "length":
+        raise RuntimeError(
+            f"Ollama truncated the output for {model_key} at num_ctx="
+            f"{OLLAMA_NUM_CTX} (in={usage['input_tokens']}, "
+            f"out={usage['output_tokens']}). Raise OLLAMA_NUM_CTX in config.py."
+        )
+
+    # Prompt hit the ceiling: Ollama drops the middle and reports the clipped
+    # count. A cached-prefix reuse reports FEWER tokens, so only a count
+    # sitting at the window edge is a truncation signature.
+    n_in = usage["input_tokens"]
+    if n_in and n_in >= OLLAMA_NUM_CTX - 64:
+        raise RuntimeError(
+            f"Prompt for {model_key} was truncated to fit num_ctx="
+            f"{OLLAMA_NUM_CTX} (prompt_eval_count={n_in}). "
+            f"Raise OLLAMA_NUM_CTX in config.py."
+        )
+
+    return text, usage
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Public entry point
 # ──────────────────────────────────────────────────────────────────────
@@ -147,6 +234,9 @@ _DISPATCH = {
     "claude": _call_claude,
     "gpt": _call_gpt,
     "gemini": _call_gemini,
+    # all four local models share one function; bind the key so call_model
+    # can keep its single-argument dispatch
+    **{k: partial(_call_ollama, model_key=k) for k in LOCAL_MODELS},
 }
 
 
@@ -155,7 +245,7 @@ def call_model(model_key: str, prompt: str) -> Tuple[str, dict]:
     Call the named model with the given prompt.
 
     Args:
-        model_key: "claude" | "gpt" | "gemini"
+        model_key: any key of config.MODELS
         prompt:    full user prompt text
 
     Returns:

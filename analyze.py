@@ -22,7 +22,8 @@ from config import RESULTS_DIR, SUBSET, PROMPT_LEVELS, MODELS
 CSV = RESULTS_DIR / "results.csv"
 LEVELS = ["L1", "L2", "L3a", "L3b"]       # prompt levels
 TRUST = ["L0", "L1", "L2", "L3"]          # trust levels
-MODEL_KEYS = ["claude", "gemini", "gpt"]
+MODEL_KEYS = sorted(MODELS)               # derived: see config.MODELS
+MODEL_COL = max(8, max(len(m) for m in MODEL_KEYS + ["pooled"]) + 2)
 
 
 def load():
@@ -156,7 +157,7 @@ def main():
 
     #   Table 3: By model  
     w("TABLE 3 — By model")
-    w(f"  {'model':8}{'n':>5}{'L0':>6}{'L1':>6}{'L2':>6}{'L3':>6}"
+    w(f"  {'model':{MODEL_COL}}{'n':>5}{'L0':>6}{'L1':>6}{'L2':>6}{'L3':>6}"
       f"{'L3%':>8}{'PoV%':>8}{'Comp%':>8}")
     rows_by_model = defaultdict(list)
     for r in rows: rows_by_model[r["model_key"]].append(r)
@@ -166,7 +167,7 @@ def main():
         l3r = pct(dd["L3"], n)
         povr = pct(dd["L2"] + dd["L3"], n)
         compr = pct(n - dd["L0"], n)
-        w(f"  {m:8}{n:>5}{dd['L0']:>6}{dd['L1']:>6}{dd['L2']:>6}"
+        w(f"  {m:{MODEL_COL}}{n:>5}{dd['L0']:>6}{dd['L1']:>6}{dd['L2']:>6}"
           f"{dd['L3']:>6}{l3r:>8}{povr:>8}{compr:>8}")
         t3.append([m, n, dd["L0"], dd["L1"], dd["L2"], dd["L3"], l3r, povr, compr])
     w()
@@ -177,16 +178,17 @@ def main():
 
     #   Table 4: Model x prompt level (L3 rate) 
     w("TABLE 4 — L3 rate by (model × prompt level)")
-    w(f"  {'model':8}" + "".join(f"{lv:>10}" for lv in LEVELS))
+    w(f"  {'model':{MODEL_COL}}" + "".join(f"{lv:>10}" for lv in LEVELS))
     cellmap = defaultdict(list)
     for r in rows: cellmap[(r["model_key"], r["level"])].append(r)
     t4 = []
     for m in MODEL_KEYS:
-        line = f"  {m:8}"; row_out = [m]
+        line = f"  {m:{MODEL_COL}}"; row_out = [m]
         for lv in LEVELS:
             rr = cellmap[(m, lv)]; n = len(rr)
             k = sum(1 for r in rr if r["trust_level"] == "L3")
-            line += f"{k}/{n} ({100*k/n:.0f}%)".rjust(10)
+            cell = f"{k}/{n} ({100*k/n:.0f}%)" if n else "—"
+            line += cell.rjust(10)
             row_out.append(f"{k}/{n}")
         w(line); t4.append(row_out)
     w()
@@ -218,7 +220,7 @@ def main():
     mc_lines = ["McNemar L3a vs L3b (success = L3 outcome)\n"]
     for m in MODEL_KEYS + ["pooled"]:
         r = mc[m]
-        line = (f"  {m:8} a={r['a']:3} b={r['b']:3} c={r['c']:3} d={r['d']:3} "
+        line = (f"  {m:{MODEL_COL}} a={r['a']:3} b={r['b']:3} c={r['c']:3} d={r['d']:3} "
                 f"discordant={r['discordant']:3}  p={r['p']:.4f} "
                 f"{'(sig)' if r['p'] < 0.05 else '(n.s.)'}")
         w(line); mc_lines.append(line + "\n")

@@ -5,6 +5,7 @@ Single source of truth for: vulnerability subset, models, prompt levels,
 paths, and Docker container settings. Imported by everything else.
 """
 
+import os
 from pathlib import Path
 
 
@@ -22,11 +23,35 @@ CONTAINER_WORK_DIR = "/tmp/cweft"   # where checkouts live INSIDE the container
 DOCKER_EXEC_TIMEOUT = 900           # 15 min per compile/test command
 
 
-MODELS = {
+# Ollama serves the local models. Base URL, context window and per-call
+# timeout live here so the whole pipeline has one place to point at a
+# different host or shrink the window for a smaller GPU.
+OLLAMA_BASE_URL  = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+OLLAMA_NUM_CTX   = 40960    # total window: prompt + regenerated file. See models.py.
+OLLAMA_KEEP_ALIVE = "30m"   # keep weights resident across the 168 cells per model
+OLLAMA_TIMEOUT   = 1800     # 30 min; a 30B q8 regenerating a whole file is slow
+
+
+CLOUD_MODELS = {
     "claude":  "claude-sonnet-4-5-20250929",      # Anthropic
     "gpt":     "gpt-5",                            # OpenAI
     "gemini":  "gemini-2.5-pro",                   # Google
 }
+
+# Served locally by Ollama. The dict KEY is a filesystem-safe handle and the
+# VALUE is the Ollama model id. They differ on purpose: the ids contain a
+# colon, and generate.py:41 interpolates the key into a log filename, where a
+# colon silently becomes an NTFS alternate data stream on Windows (the write
+# succeeds, but the file lands without a .json extension and evaluate.py:300
+# never globs it).
+LOCAL_MODELS = {
+    "granite-8b":  "granite4.1:8b-q8_0",
+    "granite-30b": "granite4.1:30b-q8_0",
+    "gemma-12b":   "gemma4:12b-it-q8_0",
+    "gemma-31b":   "gemma4:31b-it-q8_0",
+}
+
+MODELS = {**CLOUD_MODELS, **LOCAL_MODELS}
 
 
 PROMPT_LEVELS = ["L1", "L2", "L3a", "L3b"]
