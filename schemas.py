@@ -526,6 +526,106 @@ CWE_SCHEMAS: Dict[str, Dict] = {
             "what_to_avoid":    "Seeding SecureRandom with predictable values; using java.util.Random for security-sensitive values.",
         },
     },
+    # ──────────────────────────────────────────────────────────────────
+    "CWE-94": {
+        "prose": (
+            "Code injection is fixed by removing the step that evaluates "
+            "untrusted input as code or a template expression. Replace it "
+            "with a dispatch over a fixed set of operations selected by a "
+            "validated key, or a data-only parser. Where evaluation cannot "
+            "be removed, isolate it outside the calling process; in-process "
+            "sandboxes are escapable. Preserve the signature, return type, "
+            "and error behavior. Do not filter input and then evaluate it, "
+            "and do not blocklist keywords; aliases and reflective lookups "
+            "bypass them."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted input reaches a facility that evaluates it as code or a template expression.",
+            "canonical_repair": "Dispatch over a fixed set of operations selected by a validated key, or use a data-only parser; if evaluation must remain, isolate it outside the calling process.",
+            "constraints":      "Preserve the signature, return type, and error behavior.",
+            "what_to_avoid":    "Filtering then evaluating; in-process sandboxing, which is escapable; keyword blocklists, bypassed by aliases and reflective lookups.",
+        },
+    },
+    # ──────────────────────────────────────────────────────────────────
+    "CWE-601": {
+        "prose": (
+            "An open redirect is fixed by confirming the destination points "
+            "inside the application or to an approved site. Accept it only "
+            "if it resolves to a relative path within the application, or if "
+            "its parsed host exactly equals an allowlist entry; otherwise "
+            "use a fixed default, redirecting from the validated value. "
+            "Preserve the signature, return type, and error behavior, and "
+            "keep the redirect status code. Do not match the host by prefix "
+            "or suffix, and do not reject only scheme-prefixed values; "
+            "protocol-relative, encoded, and userinfo forms bypass that."
+        ),
+        "schema": {
+            "root_cause":       "A redirect destination from untrusted input is used without confirming where it points.",
+            "canonical_repair": "Accept only a relative path within the application or a host exactly equal to an allowlist entry, redirecting from the validated value; otherwise use a fixed default.",
+            "constraints":      "Preserve the signature, return type, and error behavior; keep the redirect status code.",
+            "what_to_avoid":    "Prefix or suffix host matching; rejecting only scheme-prefixed values, bypassed by protocol-relative, encoded, and userinfo forms.",
+        },
+    },
+    # ──────────────────────────────────────────────────────────────────
+    "CWE-89": {
+        "prose": (
+            "SQL injection is fixed by keeping untrusted data out of the "
+            "query's structure. Send the query with placeholders and bind "
+            "each untrusted value as a separate parameter, with the binding "
+            "performed by the database rather than by substitution in the "
+            "client. For fragments that cannot be parameterized — table or "
+            "column names, sort direction — select them from a fixed "
+            "allowlist of literals. Preserve the signature, result shape, "
+            "and error behavior. Do not quote-escape characters, interpolate "
+            "into a placeholder query, or blocklist SQL keywords."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted data is concatenated into a query string, so it can change the query's structure.",
+            "canonical_repair": "Bind each untrusted value as a parameter to a placeholder query, with binding done by the database, not the client; take fragments that cannot be parameterized (table or column names, sort direction) from a fixed allowlist.",
+            "constraints":      "Preserve the signature, result shape, and error behavior.",
+            "what_to_avoid":    "Quote-escaping; interpolating into a placeholder query; SQL keyword blocklists.",
+        },
+    },
+    # ──────────────────────────────────────────────────────────────────
+    "CWE-285": {
+        "prose": (
+            "Improper authorization is fixed by binding the check to the "
+            "specific resource the request names, not merely to the caller's "
+            "identity or role. Resolve the resource identifier from the "
+            "request and establish that this caller owns it or holds a "
+            "permission covering it, denying otherwise. Enforce centrally "
+            "rather than per handler. Preserve the signature, return type, "
+            "and error behavior, and keep the existing denial response. Do "
+            "not treat authentication as authorization, and do not trust "
+            "caller-supplied role or ownership fields."
+        ),
+        "schema": {
+            "root_cause":       "The check tests who the caller is but is not bound to the resource instance named in the request.",
+            "canonical_repair": "Resolve the resource identifier from the request and establish that the caller owns it or holds a covering permission, denying otherwise; enforce centrally, not per handler.",
+            "constraints":      "Preserve the signature, return type, and error behavior; keep the existing denial response.",
+            "what_to_avoid":    "Treating authentication as authorization; trusting caller-supplied role or ownership fields.",
+        },
+    },
+    # ──────────────────────────────────────────────────────────────────
+    "CWE-116": {
+        "prose": (
+            "Improper encoding of output is fixed by encoding each untrusted "
+            "value exactly once, where it enters an output format, by that "
+            "format's rule. The sinks are those outside page markup — header "
+            "values, log lines, delimiter-separated records — and not all "
+            "are repaired by escaping: a field a spreadsheet reads as a "
+            "formula is neutralized by quoting, an illegal header value by "
+            "rejection. Preserve the signature, return type, and error "
+            "behavior. Do not use one general-purpose escape everywhere, and "
+            "do not encode at input and trust the value downstream."
+        ),
+        "schema": {
+            "root_cause":       "A value is written into an output format outside page markup without being encoded for that format's syntax.",
+            "canonical_repair": "Encode each untrusted value exactly once where it enters the output format, by that format's rule — escaping log lines, quoting delimiter-separated records, rejecting illegal header values.",
+            "constraints":      "Preserve the signature, return type, and error behavior.",
+            "what_to_avoid":    "One general-purpose escape for every format; encoding at input and trusting the value downstream.",
+        },
+    },
 }
 # ──────────────────────────────────────────────────────────────────────
 # Public accessors
