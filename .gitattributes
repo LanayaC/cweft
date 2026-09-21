@@ -1,0 +1,3 @@
+# PatchEval vulnerable sources are frozen byte for byte (sha256 in
+# data/patcheval/manifest.json). No line-ending conversion, but still diff as text.
+data/patcheval/files/** -text diff

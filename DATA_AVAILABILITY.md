@@ -6,6 +6,10 @@ The complete CWEFT artifact is publicly available and reproduces every result in
 
 The repository holds the full pipeline: subset derivation, prompt construction, patch generation for all three LLM providers, the Docker-based evaluation harness, the L0–L3 classifier, and the analysis scripts (`analyze.py`, `spotcheck.py`, `monitor.py`). The headline data lives in `results/results.csv`, which has all 504 per-cell outcomes (vulnerability ID, CVE, CWE, prompt level, model, compile status, PoV-pass status, regressions, and the assigned L0–L3 level). The per-CWE repair knowledge is in `schemas.py`, with the prose (L3a) and typed-schema (L3b) encodings sharing identical content. The exact 42-vulnerability subset and its derivation, including the four buildability exclusions, are defined in `config.py`.
 
+## Third-party source files (PatchEval extension)
+
+`data/patcheval/files/` holds the vulnerable source file of each of the 109 PatchEval-Verified entries (Go, JavaScript/TypeScript, Python) whose primary CWE has repair guidance in `schemas.py`, so prompts can be built without Docker. Each file is copied verbatim from its upstream open-source repository at the vulnerable commit and remains under that project's own licence. `data/patcheval/manifest.json` records, for every file, the upstream repository URL, the commit, the git blob id and the SHA-256; `scripts/fetch_patcheval_files.py` regenerates the directory from the PatchEval dataset and verifies every file against its git blob id. The vulnerabilities themselves come from PatchEval (ByteDance), and evaluating patches still needs each entry's PatchEval Docker image.
+
 ## Archived separately
 
 The raw per-call generation logs (one JSON per cell, with the full prompt, raw model response, model ID, and timing) come to several hundred files, so we archive them to Zenodo with a permanent DOI rather than committing them, which keeps the repository readable. The Zenodo archive also includes cached model responses, so the pipeline can be re-evaluated without paying for new API calls.

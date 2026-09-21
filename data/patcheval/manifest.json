@@ -1,0 +1,2035 @@
+[
+  {
+    "cve_id": "CVE-2018-12976",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "gosrc/gosrc.go",
+    "token_count": 3849,
+    "bytes": 14369,
+    "sha256": "d2d84edd1a1463eb0c1804eea8abd05c892053b28a8e67e08d364c807d1c4dc9",
+    "git_blob_id": "9a9e44bc19d6fca62fbb917a282c4f67ccfc3333",
+    "repo": "https://github.com/golang/gddo",
+    "vul_commit": "9ab275bde8fe1bb887642e9250b8d58aba11af61",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2018-12976"
+  },
+  {
+    "cve_id": "CVE-2019-19499",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-89",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_list": [
+      "CWE-89"
+    ],
+    "vulnerable_file_path": "pkg/tsdb/mysql/mysql.go",
+    "token_count": 1063,
+    "bytes": 3712,
+    "sha256": "3c802a3c3f4682c7c5e7582c44d5fafba987d129c9e0ede810015934a9ca7f0f",
+    "git_blob_id": "fe41a9f38b5b034c5d2030b648fdc86d7ce5fc93",
+    "repo": "https://github.com/grafana/grafana",
+    "vul_commit": "8cf75b4e75be0a3561c4ff1b1cfc884206b30745",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2019-19499"
+  },
+  {
+    "cve_id": "CVE-2020-11053",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "oauthproxy.go",
+    "token_count": 9728,
+    "bytes": 36454,
+    "sha256": "47510d9fb38c35c8ac9f81d7a096dbf5e50b8271b28595333af829292a14abe4",
+    "git_blob_id": "587215fd2a58b4c036850c3723064172872bfb9f",
+    "repo": "https://github.com/oauth2-proxy/oauth2-proxy",
+    "vul_commit": "36da6e2be906e7d212178e633168dab99aee7eb4",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-11053"
+  },
+  {
+    "cve_id": "CVE-2020-15233",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "authorize_helper.go",
+    "token_count": 1869,
+    "bytes": 7394,
+    "sha256": "1690b23985c949cd02af25e0624c88a9860d2095acd27836435901cf21776b69",
+    "git_blob_id": "ec286f5803164b2adb8e4c2afdf48b8833d06e1f",
+    "repo": "https://github.com/ory/fosite",
+    "vul_commit": "eb8704839f3ad62cbfff02580bfb8fae0adaebe4",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-15233"
+  },
+  {
+    "cve_id": "CVE-2020-26294",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "template/native/render.go",
+    "token_count": 391,
+    "bytes": 1448,
+    "sha256": "1d6cbb03ed922469702150ff34f648e2cce80f0b86646c8a63b162dc474368b8",
+    "git_blob_id": "4683db693c587c22e83643143057d0df75d040d4",
+    "repo": "https://github.com/go-vela/compiler",
+    "vul_commit": "adf85cc6f434c069476eb3401cb9d9c1ea854585",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-26294"
+  },
+  {
+    "cve_id": "CVE-2020-29529",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "slug.go",
+    "token_count": 2403,
+    "bytes": 8782,
+    "sha256": "85b96927a0a6df2de970642e0173101f3d3e79d759d4f66a60b2fd4f2e71d24f",
+    "git_blob_id": "04041734209f66ac88be79c2bd14a5cc64ed15e8",
+    "repo": "https://github.com/hashicorp/go-slug",
+    "vul_commit": "dbc66eb36565a91ad0e3dd9ddec5e9446da6754c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-29529"
+  },
+  {
+    "cve_id": "CVE-2020-4053",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "pkg/plugin/installer/http_installer.go",
+    "token_count": 1273,
+    "bytes": 4978,
+    "sha256": "d0ad4f54dff6d560e9f30d2a19d6d02955240aeceb5f33d2656affa341d18955",
+    "git_blob_id": "c07cad80a79be921ff64744893f96c24408e36c7",
+    "repo": "https://github.com/helm/helm",
+    "vul_commit": "8f832046e258e2cb800894579b1b3b50c2d83492",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-4053"
+  },
+  {
+    "cve_id": "CVE-2021-29417",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "internal/pkg/gitjacker/retriever.go",
+    "token_count": 3551,
+    "bytes": 13045,
+    "sha256": "902686ba39b3a8653616b794a790dcafb6d64b0658d9c0f9e1c29bf196acde3a",
+    "git_blob_id": "3066e69949673c38fca0e4bcfcd383d084b167c5",
+    "repo": "https://github.com/liamg/gitjacker",
+    "vul_commit": "e8546ea819fd37e47906f1747960ca44a508ad84",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-29417"
+  },
+  {
+    "cve_id": "CVE-2021-43798",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "pkg/api/plugins.go",
+    "token_count": 4133,
+    "bytes": 15829,
+    "sha256": "0a6a13266bff55df2fa3f065628afcfd664534b667c04d239307d551ddd42f6b",
+    "git_blob_id": "6e01a3414fe479f9b9a79aa12f9280b57f44f14d",
+    "repo": "https://github.com/grafana/grafana",
+    "vul_commit": "a2ad0a0fb61b969ecf31b6cc9df3964cccf3e313",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-43798"
+  },
+  {
+    "cve_id": "CVE-2022-1883",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-89",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_list": [
+      "CWE-89"
+    ],
+    "vulnerable_file_path": "db/db.go",
+    "token_count": 6796,
+    "bytes": 25289,
+    "sha256": "8161137f9cec0f4790c6c2c86e800185cec43bad3932605973318fcc74b5b739",
+    "git_blob_id": "88e53908d8c47f81c2767c1995ee493dd2a75a80",
+    "repo": "https://github.com/camptocamp/terraboard",
+    "vul_commit": "608d9d5c694e967917c0fbca31be77e10a40a6e1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-1883"
+  },
+  {
+    "cve_id": "CVE-2022-1986",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "internal/db/repo_editor.go",
+    "token_count": 4886,
+    "bytes": 16893,
+    "sha256": "720d8d990b01cbf7429f2a0ee72430c426f4835a69360559f0bb5b0f60aeec8d",
+    "git_blob_id": "9d4664be9d9be819c40a509dc0064b4abcab8d26",
+    "repo": "https://github.com/gogs/gogs",
+    "vul_commit": "69827490e0f0e68b34e082321b4e328df7847d66",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-1986"
+  },
+  {
+    "cve_id": "CVE-2022-1992",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "internal/pathutil/pathutil.go",
+    "token_count": 87,
+    "bytes": 371,
+    "sha256": "66f69f4a191d78b980b6fd76d5b7f24e7211f3d1d26c6f9df83e8bdb94308f35",
+    "git_blob_id": "6a7286e1c489baac37850fc5315a188f7fffb505",
+    "repo": "https://github.com/gogs/gogs",
+    "vul_commit": "325904ce5a8579434618dfaea8ad5dd973965fcc",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-1992"
+  },
+  {
+    "cve_id": "CVE-2022-23536",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "pkg/alertmanager/api.go",
+    "token_count": 3797,
+    "bytes": 15251,
+    "sha256": "ac9b8561494e040ec8f8b1da1a42789a762b0c56111ce4e919f51e5036861d2a",
+    "git_blob_id": "3ed63a6e4db578dcf764c7c6e51b1faae6499c43",
+    "repo": "https://github.com/cortexproject/cortex",
+    "vul_commit": "e6a3da989df81ea402b85d6e3b5c575744d5644e",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-23536"
+  },
+  {
+    "cve_id": "CVE-2022-23538",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-522",
+    "primary_cwe_name": "Insufficiently Protected Credentials",
+    "cwe_list": [
+      "CWE-522"
+    ],
+    "vulnerable_file_path": "client/pull.go",
+    "token_count": 2723,
+    "bytes": 10541,
+    "sha256": "1ca784b185b4d41c4ad26fb7519cbbd68d87fc86b6b6f10668565e0c04d0a4e7",
+    "git_blob_id": "145cbe9c055f1405846fcbea1f8d0c1fbcf07bdc",
+    "repo": "https://github.com/sylabs/scs-library-client",
+    "vul_commit": "54fbe14448fd902301ed40c4e3d7e81aeb7a3144",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-23538"
+  },
+  {
+    "cve_id": "CVE-2022-23542",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-285",
+    "primary_cwe_name": "Improper Authorization",
+    "cwe_list": [
+      "CWE-285"
+    ],
+    "vulnerable_file_path": "server/commands/check_utils.go",
+    "token_count": 2482,
+    "bytes": 9562,
+    "sha256": "548f2bf5bb421a96e782f74200f6f3460dbf5ddac4a0f3eb85d80a233366eb6a",
+    "git_blob_id": "2b1651e429914e2a6a2ce402b5baddc9f7ba0b2f",
+    "repo": "https://github.com/openfga/openfga",
+    "vul_commit": "58dbe665b1ea99ab96a043f7b7ce5d337c5761d5",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-23542"
+  },
+  {
+    "cve_id": "CVE-2022-24825",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "pkg/smokescreen/acl/v1/acl.go",
+    "token_count": 1550,
+    "bytes": 5747,
+    "sha256": "2ed5a4d29fe528e668ede989a521fd111719214f8c866645696b2837e515d730",
+    "git_blob_id": "bf913c0b393e2a247b7d001bb5d87eabd25c0efd",
+    "repo": "https://github.com/stripe/smokescreen",
+    "vul_commit": "37438e8b0af791bc6f0584479d988261ffd30807",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-24825"
+  },
+  {
+    "cve_id": "CVE-2022-29188",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "pkg/smokescreen/smokescreen.go",
+    "token_count": 7261,
+    "bytes": 27557,
+    "sha256": "284be7b4f6dec41fdcc2e1f801e8a6bdd6be31612c4e862274f9a687f8d3f449",
+    "git_blob_id": "f1887686e9d493604ef0405e584f52a6d7a43b8d",
+    "repo": "https://github.com/stripe/smokescreen",
+    "vul_commit": "e589a2fbf3b9a774de91d589f630eb85b2ef7d27",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-29188"
+  },
+  {
+    "cve_id": "CVE-2022-36009",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-863"
+    ],
+    "vulnerable_file_path": "eventcontent.go",
+    "token_count": 4873,
+    "bytes": 19512,
+    "sha256": "948daef848df17343cd7c7e0559cb8664580c530bd9f5cc08e535af6f701088a",
+    "git_blob_id": "5f9ba6357a211f438534259866329fffea400a68",
+    "repo": "https://github.com/matrix-org/gomatrixserverlib",
+    "vul_commit": "6a49c18a298a1144e3cb2dfd06b56dc0c467731b",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-36009"
+  },
+  {
+    "cve_id": "CVE-2022-36103",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-863"
+    ],
+    "vulnerable_file_path": "internal/app/trustd/internal/reg/reg.go",
+    "token_count": 445,
+    "bytes": 1782,
+    "sha256": "0e8a0d4772ea795b290805767c2e9178e82f4196cae8fb1e536becf591aee9d5",
+    "git_blob_id": "ed5fd696008dc33b3bc2b1137c9bb9e7917c0d33",
+    "repo": "https://github.com/siderolabs/talos",
+    "vul_commit": "43674912479d3fb58c30e350fea9c4daf4ba45d4",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-36103"
+  },
+  {
+    "cve_id": "CVE-2022-46146",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-287",
+    "primary_cwe_name": "Improper Authentication",
+    "cwe_list": [
+      "CWE-287"
+    ],
+    "vulnerable_file_path": "web/handler.go",
+    "token_count": 1004,
+    "bytes": 3816,
+    "sha256": "cbd588a70654c8dacc68c387849dc8b74c18875a1213cccd776814c11f15c033",
+    "git_blob_id": "ae3ebc03b97f6f0e707b9fbfa7f767d023e1a3a5",
+    "repo": "https://github.com/prometheus/exporter-toolkit",
+    "vul_commit": "c6a241567e08fcf9b226814562a9a07b24265271",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-46146"
+  },
+  {
+    "cve_id": "CVE-2022-4643",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "pdf_ocr.go",
+    "token_count": 847,
+    "bytes": 2966,
+    "sha256": "b7f52fcd454d28bff475c7d6744d56f38ef56782d256610edc3473e477f49d43",
+    "git_blob_id": "4d9d53a91222d2451e573aa0a5ba0904c330645a",
+    "repo": "https://github.com/sajari/docconv",
+    "vul_commit": "44d673994791482c8aec902e0f949c354ce8dc0f",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-4643"
+  },
+  {
+    "cve_id": "CVE-2023-22480",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-863",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "pkg/router/v1/v1api.go",
+    "token_count": 1503,
+    "bytes": 6625,
+    "sha256": "8e2f2349a1f2250867b3fa165ea55dac2a4fc26d1cb032889ece5c13b755b23e",
+    "git_blob_id": "1a3b9cbc1ec4d194dab46abb8b068973fb0d222f",
+    "repo": "https://github.com/KubeOperator/KubeOperator",
+    "vul_commit": "8205703d0b66ba888ef8a7da0c800037fbf2ac72",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-22480"
+  },
+  {
+    "cve_id": "CVE-2023-24623",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "client.go",
+    "token_count": 1446,
+    "bytes": 4970,
+    "sha256": "acd2713de1bfda084acbc5093a6c1788620819307b465b6d4c45d5fb14e0d65e",
+    "git_blob_id": "4f804441b60ee5c487015f8ae4b81012fd8e6156",
+    "repo": "https://github.com/hakobe/paranoidhttp",
+    "vul_commit": "a5a8577d76f0b1a4f76f7e1bfef66c876eefb15e",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-24623"
+  },
+  {
+    "cve_id": "CVE-2023-40029",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-532",
+    "primary_cwe_name": "Insertion of Sensitive Information into Log File",
+    "cwe_list": [
+      "CWE-532"
+    ],
+    "vulnerable_file_path": "util/db/cluster.go",
+    "token_count": 3360,
+    "bytes": 12609,
+    "sha256": "02534e792517c066a2aa130149cef271f5e64f3b0a3f0b39a30affffa2f523f8",
+    "git_blob_id": "9b405a9cacd609ce0e7236a6ba68891b9bed02da",
+    "repo": "https://github.com/argoproj/argo-cd",
+    "vul_commit": "b8f92c4ff226346624f43de3f25d81dac6386674",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-40029"
+  },
+  {
+    "cve_id": "CVE-2023-5122",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "pkg/http_storage.go",
+    "token_count": 668,
+    "bytes": 2605,
+    "sha256": "19a4afc782e033dbaaf3e069beab0ec6bca1bfb290484847e0d44fc90bf1557e",
+    "git_blob_id": "14341266e62629e3525b747e4780dfa75d987516",
+    "repo": "https://github.com/grafana/grafana-csv-datasource",
+    "vul_commit": "572367c23d091963390278c8ee3ff9748d3c0cab",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-5122"
+  },
+  {
+    "cve_id": "CVE-2023-52081",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-74",
+    "primary_cwe_name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')",
+    "cwe_list": [
+      "CWE-74"
+    ],
+    "vulnerable_file_path": "catalog.go",
+    "token_count": 659,
+    "bytes": 2564,
+    "sha256": "866e6ffc1db4e6ad97adf2e350f324a9c072fb7e6863cd92fa5b8416f7b44e90",
+    "git_blob_id": "1fb4814f94aca490d7c16029c93d56ac4a9f7fa8",
+    "repo": "https://github.com/ewen-lbh/ffcss",
+    "vul_commit": "5e1ea8f550c6ebed3c3c8895a911a7ddd47e6019",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-52081"
+  },
+  {
+    "cve_id": "CVE-2024-10220",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "pkg/volume/git_repo/git_repo.go",
+    "token_count": 2189,
+    "bytes": 8170,
+    "sha256": "dce76b11d581e94fccaafd08526a610cfcc48733364529ff3de9f3893b4d699f",
+    "git_blob_id": "995018d9007278e625d93f9e21da893690b097a5",
+    "repo": "https://github.com/kubernetes/kubernetes",
+    "vul_commit": "8dbeaa5786bab14772873cc90af70ccb9b06b4c1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-10220"
+  },
+  {
+    "cve_id": "CVE-2024-22199",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-116",
+    "primary_cwe_name": "Improper Encoding or Escaping of Output",
+    "cwe_list": [
+      "CWE-116"
+    ],
+    "vulnerable_file_path": "django/django.go",
+    "token_count": 1667,
+    "bytes": 5906,
+    "sha256": "7a169c0e5c0cfb1f2c42db7250ac9b65d5e723059a017b75291a0740f46f2597",
+    "git_blob_id": "030fbe2d01e88a209fc9820f12f9282ab6e07ab6",
+    "repo": "https://github.com/gofiber/template",
+    "vul_commit": "fd5a1ab847ebbf537447561827f310ba70fd0998",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-22199"
+  },
+  {
+    "cve_id": "CVE-2024-24579",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "pkg/file/tarutil.go",
+    "token_count": 1088,
+    "bytes": 4102,
+    "sha256": "a0d4815081867f2bc5437f393188bd30e483fb1ed1ec9de27ede20438820a76f",
+    "git_blob_id": "374c60f6628eff9b19614f41bdd89d0a6ddb7b15",
+    "repo": "https://github.com/anchore/stereoscope",
+    "vul_commit": "eb656fc717935ad5abeb8e1379a5c4e11c957120",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-24579"
+  },
+  {
+    "cve_id": "CVE-2024-27289",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-89",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_list": [
+      "CWE-89"
+    ],
+    "vulnerable_file_path": "internal/sanitize/sanitize.go",
+    "token_count": 2176,
+    "bytes": 7176,
+    "sha256": "99cd8311291613745399971093787ceef9132148b8dc4748511a6cfd0e829d42",
+    "git_blob_id": "e0c9427cbf0a142faa6b4ef7db14c114cb00deca",
+    "repo": "https://github.com/jackc/pgx",
+    "vul_commit": "826a89229b8b1cdf18e4190afa437d3df9901b9c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-27289"
+  },
+  {
+    "cve_id": "CVE-2024-47616",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-863"
+    ],
+    "vulnerable_file_path": "pkg/grpcutil/options.go",
+    "token_count": 919,
+    "bytes": 3373,
+    "sha256": "29fb311e89fd1b2bfd6d0d05a38952c674f6e7bc64534eb705e13997a4bf3583",
+    "git_blob_id": "d3329251e0bb19daad86051dbbc4bed2cedf3e7b",
+    "repo": "https://github.com/pomerium/pomerium",
+    "vul_commit": "61847b1fdcb396d2878780acced84b5bfa360801",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-47616"
+  },
+  {
+    "cve_id": "CVE-2024-5138",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-269",
+    "primary_cwe_name": "Improper Privilege Management",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "overlord/hookstate/ctlcmd/ctlcmd.go",
+    "token_count": 1276,
+    "bytes": 4935,
+    "sha256": "176401f9e5c46e00d7002c2c9154563b17e21dd44c5d93e24558e55254c3a32b",
+    "git_blob_id": "b663420a3fb6008203c64db546b54d2507cb67c2",
+    "repo": "https://github.com/canonical/snapd",
+    "vul_commit": "84106089df82cd9a9785f4cd1be6b27c60f92769",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-5138"
+  },
+  {
+    "cve_id": "CVE-2024-6257",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "get_git.go",
+    "token_count": 3068,
+    "bytes": 11101,
+    "sha256": "f87e71093b152b12616570528e3ea64521812ed3ddfe4ad4e299b81b1b7f50fd",
+    "git_blob_id": "908493b9dc3c15d7b3207c60824f97e4b390f9e0",
+    "repo": "https://github.com/hashicorp/go-getter",
+    "vul_commit": "975961f5f06346ccc282cd0d9aa16e160d26f9e3",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-6257"
+  },
+  {
+    "cve_id": "CVE-2025-24366",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "internal/sftpd/ssh_cmd.go",
+    "token_count": 5522,
+    "bytes": 19999,
+    "sha256": "082eeec77f089896987483c94d3c730a0fe08073e2e2897af79d42515ff5d04a",
+    "git_blob_id": "8a342e994fbf39c4aff6fbdd824743c39ba154c2",
+    "repo": "https://github.com/drakkan/sftpgo",
+    "vul_commit": "4611d05d7fa1a7effa1d04e0d4eaec36ab4fb5a6",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-24366"
+  },
+  {
+    "cve_id": "CVE-2025-29778",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-285",
+    "primary_cwe_name": "Improper Authorization",
+    "cwe_list": [
+      "CWE-285"
+    ],
+    "vulnerable_file_path": "pkg/cosign/cosign.go",
+    "token_count": 5859,
+    "bytes": 21516,
+    "sha256": "3b8d00bb6a4a7ffcbf0504eb067301dc26a40469570b8bb9931ea32eec79a789",
+    "git_blob_id": "60ca41696666fef81b29a1be531516491a3f1633",
+    "repo": "https://github.com/kyverno/kyverno",
+    "vul_commit": "5f42a0bad8ca0812b676f11f8674f87403ca2367",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-29778"
+  },
+  {
+    "cve_id": "CVE-2025-46331",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-284",
+    "primary_cwe_name": "Improper Access Control",
+    "cwe_list": [
+      "CWE-284"
+    ],
+    "vulnerable_file_path": "internal/graph/cached_resolver.go",
+    "token_count": 1589,
+    "bytes": 6603,
+    "sha256": "3b30117ab19822b7a13e81c1f35f19721f6e8ed9627ce5f2f54b2dacab9a00ab",
+    "git_blob_id": "2e7e02cc8f5a7d582a7391d6d9e5f453f7f31966",
+    "repo": "https://github.com/openfga/openfga",
+    "vul_commit": "1486ac4db41d153b47966da08d8f0b00467d39e9",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-46331"
+  },
+  {
+    "cve_id": "CVE-2025-48374",
+    "language": "Go",
+    "prompt_language": "Go",
+    "primary_cwe": "CWE-532",
+    "primary_cwe_name": "Insertion of Sensitive Information into Log File",
+    "cwe_list": [
+      "CWE-532"
+    ],
+    "vulnerable_file_path": "pkg/api/config/config.go",
+    "token_count": 3398,
+    "bytes": 13302,
+    "sha256": "e014a4cca9bc54974866347cfe3f22967f0843fb942ff27287e3d9dcca482913",
+    "git_blob_id": "39f866391e643b794fcab6b5e891bf4d4d016596",
+    "repo": "https://github.com/project-zot/zot",
+    "vul_commit": "af4a46b331a408a096f43200a306b0f4378dec4a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-48374"
+  },
+  {
+    "cve_id": "CVE-2015-3295",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-284",
+    "primary_cwe_name": "Improper Access Control",
+    "cwe_list": [
+      "CWE-284"
+    ],
+    "vulnerable_file_path": "lib/index.js",
+    "token_count": 4025,
+    "bytes": 16264,
+    "sha256": "b8a21861565978a6b5ba7dd806a50515bf5b08519431d94c2afc0359623efc4a",
+    "git_blob_id": "abc152565fcc3217a5b7648ebdd9272db1f4b524",
+    "repo": "https://github.com/markdown-it/markdown-it",
+    "vul_commit": "f7976b25f79df1599c98787e16873d52bd0b7d05",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2015-3295"
+  },
+  {
+    "cve_id": "CVE-2016-1000232",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "lib/cookie.js",
+    "token_count": 10003,
+    "bytes": 37543,
+    "sha256": "3fbf414cf74743476f9fef09a42d5fb8bb43da6f482245546f404024cd513656",
+    "git_blob_id": "12da297ac4d20fda50d6995f3631b213b8291043",
+    "repo": "https://github.com/salesforce/tough-cookie",
+    "vul_commit": "ce769183a578e0b32179a83fa641f907ff3c0ea6",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2016-1000232"
+  },
+  {
+    "cve_id": "CVE-2017-1000189",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "lib/ejs.js",
+    "token_count": 5800,
+    "bytes": 22816,
+    "sha256": "ae07deffdbaf8336a3eef70f4188383cc4d0f1967d8470cc962e7e73424f2e36",
+    "git_blob_id": "98e5991c063089bb1abced1dec8dba702d1c5690",
+    "repo": "https://github.com/mde/ejs",
+    "vul_commit": "7eaba6ade1b11e0bb275f1eb63ba49071aca24dd",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2017-1000189"
+  },
+  {
+    "cve_id": "CVE-2017-1001003",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "lib/expression/node/ObjectNode.js",
+    "token_count": 1298,
+    "bytes": 5671,
+    "sha256": "1c757a992e8cb22f739a889594e582000cd9cc1e1241e0edfb3b3826ccdbf84e",
+    "git_blob_id": "22681adae8b0f9d8dadd7d0786e740b17e8a1b66",
+    "repo": "https://github.com/josdejong/mathjs",
+    "vul_commit": "8d2d48d81b3c233fb64eb2ec1d7a9e1cf6a55a90",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2017-1001003"
+  },
+  {
+    "cve_id": "CVE-2017-1001004",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "typed-function.js",
+    "token_count": 10022,
+    "bytes": 43516,
+    "sha256": "bdc3e8cfad48158eed327f1bc1e7a9164479a89cb734f7c136d49591872785f3",
+    "git_blob_id": "9b84eeadabe187d1478444cf6d70175762f353ff",
+    "repo": "https://github.com/josdejong/typed-function",
+    "vul_commit": "9a8cac3cb8ae89fd0a9b3ae2dfde27cd1aa5a60a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2017-1001004"
+  },
+  {
+    "cve_id": "CVE-2018-16482",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "lib/staticFileHandler.js",
+    "token_count": 570,
+    "bytes": 2784,
+    "sha256": "2f59e79afc4fde0d9cfe0f6ac05a2ef2279153d27e977ce43220b7549c0a7f3a",
+    "git_blob_id": "cfdc1c7256186ed8e784759c41ac88e40ce1360d",
+    "repo": "https://github.com/tjchaplin/mcstatic",
+    "vul_commit": "7743af5a6f5e8ca42729c76d1da8dfa7a7d7d707",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2018-16482"
+  },
+  {
+    "cve_id": "CVE-2018-3778",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-269",
+    "primary_cwe_name": "Improper Privilege Management",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "lib/client.js",
+    "token_count": 1781,
+    "bytes": 6844,
+    "sha256": "587068c4a14075bd00163c28fd1b3881b1b5abd7340a450dbb4beced5d58d3f5",
+    "git_blob_id": "644589d13c92a7424a0bbc181f9802464526c6cb",
+    "repo": "https://github.com/moscajs/aedes",
+    "vul_commit": "1189ffe7b1cd41247f1f857aad4a81275a00700e",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2018-3778"
+  },
+  {
+    "cve_id": "CVE-2019-10795",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-74",
+    "primary_cwe_name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')",
+    "cwe_list": [
+      "CWE-74"
+    ],
+    "vulnerable_file_path": "lib/undefsafe.js",
+    "token_count": 668,
+    "bytes": 2502,
+    "sha256": "b2da1dcd58f72fd51d1486382c999a01ff5260c01c9e01aea23e10185b2cd73f",
+    "git_blob_id": "60663b07a40b135faf091812ba98920953214691",
+    "repo": "https://github.com/remy/undefsafe",
+    "vul_commit": "f4959541af2a607258ce197e7a07b79e6e8a8356",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2019-10795"
+  },
+  {
+    "cve_id": "CVE-2019-15597",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-94",
+    "primary_cwe_name": "Improper Control of Generation of Code ('Code Injection')",
+    "cwe_list": [
+      "CWE-94"
+    ],
+    "vulnerable_file_path": "lib/index.js",
+    "token_count": 345,
+    "bytes": 1464,
+    "sha256": "c5a7156667b141ca94409a6180f59cae691137bbac558485fc4ad161e91af128",
+    "git_blob_id": "767584b5b8dc426ffc9cc67545d5b19c35ffe1da",
+    "repo": "https://github.com/adriano-di-giovanni/node-df",
+    "vul_commit": "c0b554a9ed73eef970ce5d72cf3ec2d89c542a5d",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2019-15597"
+  },
+  {
+    "cve_id": "CVE-2020-26226",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-116",
+    "primary_cwe_name": "Improper Encoding or Escaping of Output",
+    "cwe_list": [
+      "CWE-116"
+    ],
+    "vulnerable_file_path": "lib/hide-sensitive.js",
+    "token_count": 188,
+    "bytes": 726,
+    "sha256": "aa13556cacb9e6952401098c6c8c163c469af43daa440891e2ecd45f66443792",
+    "git_blob_id": "60984962c94b451b57634d9233e995fab6ada7b1",
+    "repo": "https://github.com/semantic-release/semantic-release",
+    "vul_commit": "63fa143023aa3b54e9a9231c7625549ef4d7f17a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-26226"
+  },
+  {
+    "cve_id": "CVE-2020-26299",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "src/fs.js",
+    "token_count": 916,
+    "bytes": 3636,
+    "sha256": "0b8a2b30c114cab7125bef970c0f94f37e5e3c39ca38fceda39c90584669cbc5",
+    "git_blob_id": "3226d2e340c62198377ff23503f729ba212c0249",
+    "repo": "https://github.com/autovance/ftp-srv",
+    "vul_commit": "722da60a82a63538357f5022827b3f01f5f4249b",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-26299"
+  },
+  {
+    "cve_id": "CVE-2020-28494",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "image.js",
+    "token_count": 4772,
+    "bytes": 17409,
+    "sha256": "84ef6f78b12517b48a789f4ed2e7862ab8ecb8c171c8affe35ba28880ae255ee",
+    "git_blob_id": "19631b27db8289f5ff204a3c757f3edc3f3430f0",
+    "repo": "https://github.com/totaljs/framework",
+    "vul_commit": "79e84ada0a4455a2fe2383bed6436f231290276a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-28494"
+  },
+  {
+    "cve_id": "CVE-2020-7613",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 16707,
+    "bytes": 88132,
+    "sha256": "668694bd2811b9f14c8a71b2be9c5021bdba184dd4cf7825c033e70df7b769cc",
+    "git_blob_id": "7cdbddf80e63b4c50c67d451d98e5830ddc5e927",
+    "repo": "https://github.com/kylefarris/clamscan",
+    "vul_commit": "d474da7b89c0d3397cd681e79c7bcc592bff144b",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7613"
+  },
+  {
+    "cve_id": "CVE-2020-7631",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "lib/posix.js",
+    "token_count": 294,
+    "bytes": 1135,
+    "sha256": "55b0076c22b46edca2b0212acf634b047da4ba1ac5f980cdb37f7d20dd94a1a0",
+    "git_blob_id": "76b4b98737f95b9d3b8bcec9485b68003fb0993c",
+    "repo": "https://github.com/iximiuz/node-diskusage-ng",
+    "vul_commit": "53c505506553c83861d1bd67823d6a382d3a5a43",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7631"
+  },
+  {
+    "cve_id": "CVE-2020-7649",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "lib/filters/index.js",
+    "token_count": 1101,
+    "bytes": 4796,
+    "sha256": "801b1107ceca2a261f3b7b127844fd77daca351d9974c043aedb5accd4ceec7b",
+    "git_blob_id": "1e272495be668d4b7d868a6d09f9295b97203cd1",
+    "repo": "https://github.com/snyk/broker",
+    "vul_commit": "57c8741d7b54a21b1c77b11970fff3d665754177",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7649"
+  },
+  {
+    "cve_id": "CVE-2020-7674",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-94",
+    "primary_cwe_name": "Improper Control of Generation of Code ('Code Injection')",
+    "cwe_list": [
+      "CWE-94"
+    ],
+    "vulnerable_file_path": "lib/encode.js",
+    "token_count": 133,
+    "bytes": 554,
+    "sha256": "8c03ce2127fd0a3c9c67f1db8a3f46c4adffd1aadd30a51fe57c83df74904772",
+    "git_blob_id": "6756d1e3d9956a08d67210a150abab97ee05d82a",
+    "repo": "https://github.com/TupleAustin/access-policy",
+    "vul_commit": "64d9bdbc32227b59560918d2771d0a446616de77",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7674"
+  },
+  {
+    "cve_id": "CVE-2020-7675",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-94",
+    "primary_cwe_name": "Improper Control of Generation of Code ('Code Injection')",
+    "cwe_list": [
+      "CWE-94"
+    ],
+    "vulnerable_file_path": "src/messenger-node.js",
+    "token_count": 499,
+    "bytes": 1949,
+    "sha256": "936074d99ff7a2a1ad44f6539af0dda6243e03008cd167cb69340153bb9dcd65",
+    "git_blob_id": "ec76b26c90501f54763fa3d5300852cf5bb3ac46",
+    "repo": "https://github.com/mikeerickson/cd-messenger",
+    "vul_commit": "f0ebcfffec747bd455f74f8abebb779877676e24",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7675"
+  },
+  {
+    "cve_id": "CVE-2020-7795",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 162,
+    "bytes": 754,
+    "sha256": "92cdcff3be59f3bacacb0b7cb87de7bfe5835ed11e2f8678516d5ef603658693",
+    "git_blob_id": "a207f281d2c30ddea68c2f9149913b804235e617",
+    "repo": "https://github.com/hoperyy/get-npm-package-version",
+    "vul_commit": "52797864df09049ea28d65d14620774257a965b0",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-7795"
+  },
+  {
+    "cve_id": "CVE-2021-21321",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "lib/utils.js",
+    "token_count": 438,
+    "bytes": 1651,
+    "sha256": "15116c55a57677e38c5359fb090fe94a3cb6b17dd96c2a1d97b52e324494bc03",
+    "git_blob_id": "48572cdc490015dc6726609c143537c2d837ca9f",
+    "repo": "https://github.com/fastify/fastify-reply-from",
+    "vul_commit": "20d0795edee290435da4dc13bfa640484006cadd",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-21321"
+  },
+  {
+    "cve_id": "CVE-2021-23363",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 84,
+    "bytes": 279,
+    "sha256": "476d3d9e3cf819d8529406d62c99b4726278da3dd73add83f3cede66e52e6d9d",
+    "git_blob_id": "a827f3767b3727dcdd956ac308a9604ee1477644",
+    "repo": "https://github.com/GuyMograbi/kill-by-port",
+    "vul_commit": "16dcbe264b6b4a5ecf409661b42836dd286fd43f",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-23363"
+  },
+  {
+    "cve_id": "CVE-2021-23376",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 2110,
+    "bytes": 8615,
+    "sha256": "330d44b8636d8e476ce3cae6f7f247ef9be8e7d25dc372fe4834feefd9ee4326",
+    "git_blob_id": "8a9c7ea9a0b3beba07ed224c2602fdbc4b805f0f",
+    "repo": "https://github.com/TRomesh/ffmpegdotjs",
+    "vul_commit": "b7395daf0bdcb81218340427eb7073cdd28462af",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-23376"
+  },
+  {
+    "cve_id": "CVE-2021-23384",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 368,
+    "bytes": 1653,
+    "sha256": "c8ad1c9fe88043ab8994ec7cdccd5eff960d7d33beee58797278e08158ec1b05",
+    "git_blob_id": "0102e845e2e41187570a81dffc0f2db1bc51394f",
+    "repo": "https://github.com/vgno/koa-remove-trailing-slashes",
+    "vul_commit": "b7da3627de262c01b20f1583324d265098a2d09c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-23384"
+  },
+  {
+    "cve_id": "CVE-2021-32796",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-116",
+    "primary_cwe_name": "Improper Encoding or Escaping of Output",
+    "cwe_list": [
+      "CWE-116"
+    ],
+    "vulnerable_file_path": "lib/dom.js",
+    "token_count": 10703,
+    "bytes": 42840,
+    "sha256": "bce9d9c0f137526efccb4565341cdde93bbd5d7be6efbd2fbfd067b57dac20d7",
+    "git_blob_id": "de9f6066a37a767c63ac08774c0af5c25048aa59",
+    "repo": "https://github.com/xmldom/xmldom",
+    "vul_commit": "9b92ff439e9b480f24018ef2ff36121eb85b6328",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-32796"
+  },
+  {
+    "cve_id": "CVE-2021-33420",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-502",
+    "primary_cwe_name": "Deserialization of Untrusted Data",
+    "cwe_list": [
+      "CWE-502"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 3295,
+    "bytes": 15058,
+    "sha256": "88ba2ef61b8c86f9ce506c808184fe391fbdf7182a4239c5d26ab62f535e5d38",
+    "git_blob_id": "b180286b5c0c5ff94e156be77aa01221520dcb6c",
+    "repo": "https://github.com/inikulin/replicator",
+    "vul_commit": "8eb089256005ba18bf9b406d7f9108607aa18a7b",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-33420"
+  },
+  {
+    "cve_id": "CVE-2021-3664",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "index.js",
+    "token_count": 3379,
+    "bytes": 13188,
+    "sha256": "76f5bdd719bc8873bd17afd1d38635186aef3cb4d6d16f56b6fd2513437303e1",
+    "git_blob_id": "94e357e0ffdd8012cae89c7dcb9ba5f0b7c59714",
+    "repo": "https://github.com/unshiftio/url-parse",
+    "vul_commit": "ee22050a48a67409aa5f7c87947284156d615bd1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-3664"
+  },
+  {
+    "cve_id": "CVE-2022-24794",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "lib/context.js",
+    "token_count": 1933,
+    "bytes": 8489,
+    "sha256": "339807c253d5393ae2bb4042a56de3b6ec1153848d97e37317b6c6a493e4e0f8",
+    "git_blob_id": "c95e363e937cf8bab662fb3bc62e8c290e6c7b76",
+    "repo": "https://github.com/auth0/express-openid-connect",
+    "vul_commit": "c619f67e90b46e0ff7637faba125e5d3761dbc96",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-24794"
+  },
+  {
+    "cve_id": "CVE-2022-2900",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "lib/index.js",
+    "token_count": 600,
+    "bytes": 2370,
+    "sha256": "5ed886c4307ccab55726fdf6bb74fc607c94cd9dbcaa73943caebc50519266cf",
+    "git_blob_id": "b8064313ed70eb2241ec57fa648dfc7b6edcbbf0",
+    "repo": "https://github.com/ionicabizau/parse-url",
+    "vul_commit": "e4968ffc2aa2868349d67b14c32024c09e4ee6a8",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-2900"
+  },
+  {
+    "cve_id": "CVE-2022-29822",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-89",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_list": [
+      "CWE-89"
+    ],
+    "vulnerable_file_path": "lib/index.js",
+    "token_count": 2232,
+    "bytes": 9390,
+    "sha256": "7797f538c7d8eaa784715ab3a890d5d41c9ed84f92803d70b6edda831988c7b7",
+    "git_blob_id": "ad1d76060b1588be24a6cf70458d4ee694ef6bc0",
+    "repo": "https://github.com/feathersjs-ecosystem/feathers-sequelize",
+    "vul_commit": "4c536ccc58343fe5b283016d618ad8e7fd6a1c2c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-29822"
+  },
+  {
+    "cve_id": "CVE-2023-28155",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "lib/redirect.js",
+    "token_count": 1234,
+    "bytes": 5517,
+    "sha256": "af06e56e39944992bf56b5d5e82ae5101304a66658e33e93bed8734609945e6a",
+    "git_blob_id": "500252cecf2db0e651407d65af4bcdf123d2f0ef",
+    "repo": "https://github.com/cypress-io/request",
+    "vul_commit": "0664780557c95610eafeedff6067bacac6783705",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-28155"
+  },
+  {
+    "cve_id": "CVE-2024-29041",
+    "language": "JavaScript",
+    "prompt_language": "JavaScript",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "lib/response.js",
+    "token_count": 7303,
+    "bytes": 28014,
+    "sha256": "7fdb8547558f9ea42606888eed597a30d84ac67d66b487244a417cd1c3d8a97e",
+    "git_blob_id": "fede486c06d8c96f8d565b3c1d70c2585033a69c",
+    "repo": "https://github.com/expressjs/express",
+    "vul_commit": "567c9c665d0de4c344b8e160146050770233783c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-29041"
+  },
+  {
+    "cve_id": "CVE-2025-23221",
+    "language": "JavaScript",
+    "prompt_language": "TypeScript",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "src/webfinger/lookup.ts",
+    "token_count": 705,
+    "bytes": 3110,
+    "sha256": "e0fddb5c228eace90f2727a9c994dce9848d193133c456d0e636362b5582b533",
+    "git_blob_id": "45952a3a23582df86c820633a3f1a25f328d2af7",
+    "repo": "https://github.com/dahlia/fedify",
+    "vul_commit": "c505eb82fcd6b5b17174c6659c29721bc801ab9a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-23221"
+  },
+  {
+    "cve_id": "CVE-2015-1326",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "dbusmock/mockobject.py",
+    "token_count": 5759,
+    "bytes": 28077,
+    "sha256": "0421c4009db2ea890fef09705c0af7c38263816ea124f71e0dccca30fde262af",
+    "git_blob_id": "29f790edb0949e2b2f4cead6e3ae0aeba35797e3",
+    "repo": "https://github.com/martinpitt/python-dbusmock",
+    "vul_commit": "a4bd39f63ffd8213218bfafd6f0f4e1ca50cb6d4",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2015-1326"
+  },
+  {
+    "cve_id": "CVE-2015-8213",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-200",
+    "primary_cwe_name": "Exposure of Sensitive Information to an Unauthorized Actor",
+    "cwe_list": [
+      "CWE-200"
+    ],
+    "vulnerable_file_path": "django/utils/formats.py",
+    "token_count": 1924,
+    "bytes": 8648,
+    "sha256": "3f8611f8f10695f847f777ac5c34e4e90bae99afa96a4781fe7e801e83693388",
+    "git_blob_id": "d2bdda458e00f4192761a8de9da6d3f73c2a54c3",
+    "repo": "https://github.com/django/django",
+    "vul_commit": "710e11d076b9e5ef3e3b486dfb70bb55b788691c",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2015-8213"
+  },
+  {
+    "cve_id": "CVE-2017-0360",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-269",
+    "primary_cwe_name": "Improper Privilege Management",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "trytond/tools/misc.py",
+    "token_count": 1871,
+    "bytes": 8078,
+    "sha256": "51ca91b35fc54fd3c5309cb45df4ac6f75167957959daa7409161af84198dcf8",
+    "git_blob_id": "2b9a7f8f435dec35e83e43bf63b27e7418251c26",
+    "repo": "https://github.com/tryton/trytond",
+    "vul_commit": "5d7c4fa7c2d631b573fe2c6eeca73064d0ede784",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2017-0360"
+  },
+  {
+    "cve_id": "CVE-2017-7233",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "django/utils/http.py",
+    "token_count": 2770,
+    "bytes": 10641,
+    "sha256": "90ca281746f7519ebb7d5cd0057b74cb17f80aace38936042eb15fa384a72fce",
+    "git_blob_id": "c053185a8a87e3183a7951d7a450f81c36ce42fb",
+    "repo": "https://github.com/django/django",
+    "vul_commit": "5f1ffb07afc1e59729ce2b283124116d6c0659e4",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2017-7233"
+  },
+  {
+    "cve_id": "CVE-2018-18074",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-522",
+    "primary_cwe_name": "Insufficiently Protected Credentials",
+    "cwe_list": [
+      "CWE-522"
+    ],
+    "vulnerable_file_path": "requests/sessions.py",
+    "token_count": 5916,
+    "bytes": 28193,
+    "sha256": "cec0ac852fac982c4ea587b859e5fa20a4dbcecd9ad335b1ef912d812d9e181d",
+    "git_blob_id": "dd525e2ac98805145e42dc40257c9369a65568f5",
+    "repo": "https://github.com/requests/requests",
+    "vul_commit": "dd754d13de250a6af8a68a6a83a8b4419fd429c6",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2018-18074"
+  },
+  {
+    "cve_id": "CVE-2018-7753",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-20",
+    "primary_cwe_name": "Improper Input Validation",
+    "cwe_list": [
+      "CWE-20"
+    ],
+    "vulnerable_file_path": "bleach/sanitizer.py",
+    "token_count": 4606,
+    "bytes": 21671,
+    "sha256": "ae72e6cbc9e192851f0ec6135694c6d518ad1ba5d675d728153c9e229078b85b",
+    "git_blob_id": "81df765bd14417db9a3dc987d5249666030dd857",
+    "repo": "https://github.com/mozilla/bleach",
+    "vul_commit": "e7f83b82b023e4956f99e9316fc7a621f6f507af",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2018-7753"
+  },
+  {
+    "cve_id": "CVE-2019-10856",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "notebook/auth/login.py",
+    "token_count": 1968,
+    "bytes": 10012,
+    "sha256": "fad7254bd59967a21de0c8c25ca2b080753bd2c54cee66f2ebaf7ccdd57f9ac5",
+    "git_blob_id": "8dbd6112fc300325625c3f4aea903110f7c12f5c",
+    "repo": "https://github.com/jupyter/notebook",
+    "vul_commit": "16cf97cf3cc7bd3bacf939ecd86f2c1cc6944935",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2019-10856"
+  },
+  {
+    "cve_id": "CVE-2019-7539",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "ipycache.py",
+    "token_count": 2990,
+    "bytes": 14379,
+    "sha256": "8a71f9548f32b33446db937f06b61cab9022cc8d8c001dd1cbb0f631218f4875",
+    "git_blob_id": "5afef5b9d297646e626cc1417b70f2829a222666",
+    "repo": "https://github.com/adi928/ipycache",
+    "vul_commit": "2c334c5885b9136ade0010770e3c895aa9075e80",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2019-7539"
+  },
+  {
+    "cve_id": "CVE-2020-10691",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "lib/ansible/galaxy/collection.py",
+    "token_count": 8482,
+    "bytes": 40831,
+    "sha256": "b80ebed237d75c91d14dda70d0789ddb332d43a0d84ed5b2dbfdfb964f36f29a",
+    "git_blob_id": "fd50472f79d2357ac08cce466fa581b0e4b2e60b",
+    "repo": "https://github.com/ansible/ansible",
+    "vul_commit": "cef6296735a0baebcd2f25d967c7bdb770ed6b08",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-10691"
+  },
+  {
+    "cve_id": "CVE-2020-15278",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-863",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "redbot/cogs/mod/kickban.py",
+    "token_count": 6652,
+    "bytes": 34172,
+    "sha256": "e597b3d84eee9a02218260afe04275ce14b706d4a2d514dee6479d3c93d3ff09",
+    "git_blob_id": "88b9e0537fac91dd1938aae0b8911a4e45c904c2",
+    "repo": "https://github.com/Cog-Creators/Red-DiscordBot",
+    "vul_commit": "21f9a6f0b6614ce350d0643b36df9f38885e01e8",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-15278"
+  },
+  {
+    "cve_id": "CVE-2020-26215",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "notebook/base/handlers.py",
+    "token_count": 6829,
+    "bytes": 33960,
+    "sha256": "ea3f2d8d744b5b3be1a045603c07b202cff8c409a9d271d09ff45af67833c136",
+    "git_blob_id": "743f7bac736da6e42499473da87e270d7d470fe4",
+    "repo": "https://github.com/jupyter/notebook",
+    "vul_commit": "d8308e13803ba1c6e92f129381e615af6c6e00d3",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2020-26215"
+  },
+  {
+    "cve_id": "CVE-2021-21354",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "pollbot/middlewares.py",
+    "token_count": 499,
+    "bytes": 2560,
+    "sha256": "c8f2b3d77005065c124aa2ce0dbd31c0507d64f296a6953d700779fd02616454",
+    "git_blob_id": "1c5d381cd1bfbeefb4bcf38d006ad2a482cf032e",
+    "repo": "https://github.com/mozilla/PollBot",
+    "vul_commit": "78539afa363b200ef004f40531665826f234eab3",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-21354"
+  },
+  {
+    "cve_id": "CVE-2021-21360",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-200",
+    "primary_cwe_name": "Exposure of Sensitive Information to an Unauthorized Actor",
+    "cwe_list": [
+      "CWE-200"
+    ],
+    "vulnerable_file_path": "src/Products/GenericSetup/context.py",
+    "token_count": 4350,
+    "bytes": 20078,
+    "sha256": "54688f33befeccf88474e5e3851c66d53ad58ea41c65514cd6905d128142276c",
+    "git_blob_id": "1c8ba1dc20fc7935618c8cbf656a1bcfbdf92b28",
+    "repo": "https://github.com/zopefoundation/Products.GenericSetup",
+    "vul_commit": "835c1ac23e18b7b6f8b7facd5caebe0e997d3500",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-21360"
+  },
+  {
+    "cve_id": "CVE-2021-23727",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "celery/backends/base.py",
+    "token_count": 8214,
+    "bytes": 41080,
+    "sha256": "3e44e36a48179f1f556e35dc8d5b2e784c258fa2885cee085d34b63507f0bc0f",
+    "git_blob_id": "ffbd1d0307c929988a44eacdd73185a3f6728c24",
+    "repo": "https://github.com/celery/celery",
+    "vul_commit": "2d8dbc2a8087bbb60590465031ebd5138b8eb359",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-23727"
+  },
+  {
+    "cve_id": "CVE-2021-3281",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "django/utils/archive.py",
+    "token_count": 1529,
+    "bytes": 7418,
+    "sha256": "ae4c1f5b5c779990b981b5ba87c3b461ee5c0cb4cd2ddfddbd587bd11565cb1e",
+    "git_blob_id": "235809f2ad0e27c741ef19572c38da5e3b5cdd0c",
+    "repo": "https://github.com/django/django",
+    "vul_commit": "03a86784d0dbfc5890f5aaba2d2f29c1deb0009d",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-3281"
+  },
+  {
+    "cve_id": "CVE-2021-33203",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "django/contrib/admindocs/views.py",
+    "token_count": 3296,
+    "bytes": 16561,
+    "sha256": "8a1b6c72ce4c9db99ed5d065de95dd0d73437ba0b6581cea00df86bae8a1482c",
+    "git_blob_id": "bd566cde4043bb1df86223a45c22f33ef2583a72",
+    "repo": "https://github.com/django/django",
+    "vul_commit": "aa8781c0a671610d5327d0a14d45df3b1f29640d",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-33203"
+  },
+  {
+    "cve_id": "CVE-2021-3583",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "lib/ansible/template/__init__.py",
+    "token_count": 7571,
+    "bytes": 36866,
+    "sha256": "712ef7ef461bfdd6ab8d2ef9e2b7fb4206de00f8e75051f62b3bb1f144816356",
+    "git_blob_id": "52b9f71977c3c16cbf2300f3aed4cc136a2b0c6d",
+    "repo": "https://github.com/ansible/ansible",
+    "vul_commit": "c49092fd2929e85276bfe60fc63d3f47f8aa4646",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-3583"
+  },
+  {
+    "cve_id": "CVE-2021-39163",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-863"
+    ],
+    "vulnerable_file_path": "synapse/groups/groups_server.py",
+    "token_count": 7449,
+    "bytes": 35068,
+    "sha256": "3ce3412d69c52bf22e20c20292b4198bb00c2742858789a3c6a50d4c1eda1866",
+    "git_blob_id": "3dc55ab861a50d3d2dbb523d741364ecf8c483d1",
+    "repo": "https://github.com/matrix-org/synapse",
+    "vul_commit": "52c7a51cfc568ed61d800df99dcca25dc3b5fe3e",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-39163"
+  },
+  {
+    "cve_id": "CVE-2021-41125",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-522",
+    "primary_cwe_name": "Insufficiently Protected Credentials",
+    "cwe_list": [
+      "CWE-522"
+    ],
+    "vulnerable_file_path": "scrapy/downloadermiddlewares/httpauth.py",
+    "token_count": 196,
+    "bytes": 893,
+    "sha256": "dc02cb2956669ec188c13cdb05a77c47602cec3b761884543f35cef89aeca38b",
+    "git_blob_id": "7aa7a62bce508bc9919c73a6c0fbe46174bafe10",
+    "repo": "https://github.com/scrapy/scrapy",
+    "vul_commit": "4183925b4b7114f772883c04e7cef44d766f0f80",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-41125"
+  },
+  {
+    "cve_id": "CVE-2021-4315",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "psiturk/experiment.py",
+    "token_count": 5870,
+    "bytes": 26909,
+    "sha256": "6099f0f4caa76f3cfe52b5a5873827874bd07c3e0a022c472b7062342af1e6a4",
+    "git_blob_id": "a6904f624b7317ae9fe180caace78897cc955b4c",
+    "repo": "https://github.com/NYUCCL/psiTurk",
+    "vul_commit": "231d566ea3a76534a507dd68840524952c10d5d9",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-4315"
+  },
+  {
+    "cve_id": "CVE-2021-45452",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "django/core/files/storage.py",
+    "token_count": 2975,
+    "bytes": 15033,
+    "sha256": "092a0458e112ffb70ecab34ea0e99cec29ee0f2d200dcc73b98b4fcd08f6ff23",
+    "git_blob_id": "89faa626e6ecff678562ccfe8bec45dc5691654f",
+    "repo": "https://github.com/django/django",
+    "vul_commit": "c9f648ccfac5ab90fb2829a66da4f77e68c7f93a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2021-45452"
+  },
+  {
+    "cve_id": "CVE-2022-0577",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-863",
+    "primary_cwe_name": "Incorrect Authorization",
+    "cwe_list": [
+      "CWE-863"
+    ],
+    "vulnerable_file_path": "scrapy/downloadermiddlewares/redirect.py",
+    "token_count": 894,
+    "bytes": 4501,
+    "sha256": "b4642fa16f66a39ed61c4cb1c4a60ceda8cbb507a3d666374348fe33aef02596",
+    "git_blob_id": "4053fecc5110064d26015aac56861b39dcda8194",
+    "repo": "https://github.com/scrapy/scrapy",
+    "vul_commit": "aa0306a167ef34b23cc2ec407a48359a4b5a8d0a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-0577"
+  },
+  {
+    "cve_id": "CVE-2022-21683",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-200",
+    "primary_cwe_name": "Exposure of Sensitive Information to an Unauthorized Actor",
+    "cwe_list": [
+      "CWE-200"
+    ],
+    "vulnerable_file_path": "wagtail/admin/views/pages/edit.py",
+    "token_count": 6232,
+    "bytes": 33184,
+    "sha256": "2ef3e2e3e0bf070fdbbc72f525b3452abf36807086f2b6b4fd9171ae91cb2e04",
+    "git_blob_id": "2edf11b450c506fd7755b43e8cc5b013e4a6320e",
+    "repo": "https://github.com/wagtail/wagtail",
+    "vul_commit": "335ece5f962e72364a8a75ca179a036cdca1a4ac",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-21683"
+  },
+  {
+    "cve_id": "CVE-2022-24065",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "cookiecutter/vcs.py",
+    "token_count": 887,
+    "bytes": 3972,
+    "sha256": "d4c09d4686eb6baaed2d548bb663bd083e481cde1e007965773d1e7b8bbb237b",
+    "git_blob_id": "08cb2eb0c9d71a46aa58f451ab12ce1277162895",
+    "repo": "https://github.com/cookiecutter/cookiecutter",
+    "vul_commit": "94036d0324d09cd6a4eb5e2a5707062c1e409cd1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-24065"
+  },
+  {
+    "cve_id": "CVE-2022-36087",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-601",
+    "primary_cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_list": [
+      "CWE-601"
+    ],
+    "vulnerable_file_path": "oauthlib/uri_validate.py",
+    "token_count": 1856,
+    "bytes": 6107,
+    "sha256": "5cb10ed664a85cae63f64600d762719d392d5a1b091f8d263c9f66f2aee30d8c",
+    "git_blob_id": "8a6d9c27b0c454e13ddae86bc08f0560dc73db85",
+    "repo": "https://github.com/oauthlib/oauthlib",
+    "vul_commit": "b4bdd09c56aa5dedb475529e75ce73c092ca0898",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-36087"
+  },
+  {
+    "cve_id": "CVE-2022-39286",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-269",
+    "primary_cwe_name": "Improper Privilege Management",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "jupyter_core/application.py",
+    "token_count": 1758,
+    "bytes": 8271,
+    "sha256": "727e27c90ed7270bea0745e58d034a6d2869a2d58ed8bba5176e05b5b183c31c",
+    "git_blob_id": "cb46d1243e33a52698cc2f66edfa5e2b52f383d4",
+    "repo": "https://github.com/jupyter/jupyter_core",
+    "vul_commit": "d3f61f336bfe5c6c63e1af0d8c9fb0dea59f8793",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2022-39286"
+  },
+  {
+    "cve_id": "CVE-2023-26145",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "src/pydash/helpers.py",
+    "token_count": 1995,
+    "bytes": 8525,
+    "sha256": "7e727cba3a776a9aada934133ff655ae24fef66a718b23bf424b86776d632489",
+    "git_blob_id": "0467c9c5533d50af560914aba2a1f3fc8fb42a06",
+    "repo": "https://github.com/dgilland/pydash",
+    "vul_commit": "1947d2ad210129d1c2925f0c8837323d7fd420db",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-26145"
+  },
+  {
+    "cve_id": "CVE-2023-29159",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "starlette/staticfiles.py",
+    "token_count": 1759,
+    "bytes": 8735,
+    "sha256": "8c59da75accc2f80f437847dec9aab5a3adf40d0221322a9a69d9a4aa37377ff",
+    "git_blob_id": "4d075b3ed2f52f91c486be26b6b957e317991a08",
+    "repo": "https://github.com/encode/starlette",
+    "vul_commit": "24c1fac62a80bb153c6548145334fc643991e35a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-29159"
+  },
+  {
+    "cve_id": "CVE-2023-30172",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "mlflow/server/handlers.py",
+    "token_count": 12330,
+    "bytes": 58431,
+    "sha256": "c37a50878ecfebb6c3b2cbedb5127210d513d72aa398b173705213cfbfd79a48",
+    "git_blob_id": "08b115c9167c939acac2797bbc3782feb2d1f8d8",
+    "repo": "https://github.com/mlflow/mlflow",
+    "vul_commit": "d1c7621940fabb7fd3895699f5d16d0799f5d121",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-30172"
+  },
+  {
+    "cve_id": "CVE-2023-33977",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-79",
+    "primary_cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "cwe_list": [
+      "CWE-79"
+    ],
+    "vulnerable_file_path": "tcms/kiwi_attachments/validators.py",
+    "token_count": 160,
+    "bytes": 775,
+    "sha256": "637c2e370765ac92a2ce1bd0e3c5d433315fef650995ea1c9640ead234231ea1",
+    "git_blob_id": "696a14399b63ab63730f4f19372bbd2885c60431",
+    "repo": "https://github.com/kiwitcms/Kiwi",
+    "vul_commit": "ce5b83ef9745f90e24b34a08147e898a52d4c0f3",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-33977"
+  },
+  {
+    "cve_id": "CVE-2023-39631",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "numexpr/necompiler.py",
+    "token_count": 7598,
+    "bytes": 32199,
+    "sha256": "03b7aaad750f088d3e825252d8ff4925d824ce3090f0339dae564605ef08a11a",
+    "git_blob_id": "37052acadbee8231c2b3509a863bde7ad5749eab",
+    "repo": "https://github.com/pydata/numexpr",
+    "vul_commit": "74d597398ba3c379c196e469d40f516de110eaa5",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-39631"
+  },
+  {
+    "cve_id": "CVE-2023-39660",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "pandasai/__init__.py",
+    "token_count": 5894,
+    "bytes": 28305,
+    "sha256": "08b6995f6b380de9e516f9a7c8637b6a83582416a5a62dc445be670e1be99272",
+    "git_blob_id": "bb325fb6ace0d68acdad20f64bec5d34e6a87927",
+    "repo": "https://github.com/gventuri/pandas-ai",
+    "vul_commit": "b452b3b878ec1f5552472a857a7a6e11c61381b1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-39660"
+  },
+  {
+    "cve_id": "CVE-2023-40267",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-78",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_list": [
+      "CWE-94",
+      "CWE-77",
+      "CWE-78"
+    ],
+    "vulnerable_file_path": "git/repo/base.py",
+    "token_count": 11823,
+    "bytes": 54937,
+    "sha256": "b83e042f601650c4821c2a8893bbe85e867688285a7f9549d6dd406ebed9935d",
+    "git_blob_id": "2fc9cf1fe331fc652c6ff80210e52651eac111ff",
+    "repo": "https://github.com/gitpython-developers/GitPython",
+    "vul_commit": "c09a71e2caefd5c25195b0b2decc8177d658216a",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-40267"
+  },
+  {
+    "cve_id": "CVE-2023-41040",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "git/refs/symbolic.py",
+    "token_count": 6515,
+    "bytes": 30029,
+    "sha256": "8f9d36e8d70cd2acc891115cefb5e7799b3b213f84b82ec2a6af6a8259ac0c42",
+    "git_blob_id": "734bf32d843f5db8b3436cc9501dab8772351650",
+    "repo": "https://github.com/gitpython-developers/GitPython",
+    "vul_commit": "1774f1e32307deb755f80dc51b220566c7aef755",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-41040"
+  },
+  {
+    "cve_id": "CVE-2023-45809",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-532",
+    "primary_cwe_name": "Insertion of Sensitive Information into Log File",
+    "cwe_list": [
+      "CWE-532"
+    ],
+    "vulnerable_file_path": "wagtail/users/views/bulk_actions/user_bulk_action.py",
+    "token_count": 142,
+    "bytes": 688,
+    "sha256": "ce4f506897f93659015f6a822c5a5cd98b379d60a65715467a84f4f850ec070f",
+    "git_blob_id": "76d05db58df9cac98cb4f000aca3ab19fb36c1c5",
+    "repo": "https://github.com/wagtail/wagtail",
+    "vul_commit": "190af7887d39ab6a1a2c3c3b389c2d44c121a2b1",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-45809"
+  },
+  {
+    "cve_id": "CVE-2023-49736",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-89",
+    "primary_cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_list": [
+      "CWE-89"
+    ],
+    "vulnerable_file_path": "superset/jinja_context.py",
+    "token_count": 4929,
+    "bytes": 23125,
+    "sha256": "8ce2d455648c4d88f5b58e0bc9c77305e9a841b111df41f2d31aad28ffc94c1b",
+    "git_blob_id": "4bb0b91a4e3db57377a83533b3bc271a3faaeba7",
+    "repo": "https://github.com/apache/superset",
+    "vul_commit": "2f468900c87c6d384d928815cf85e572215b81c5",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-49736"
+  },
+  {
+    "cve_id": "CVE-2023-6831",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "mlflow/utils/uri.py",
+    "token_count": 3929,
+    "bytes": 16818,
+    "sha256": "a06098a361f79d616c98d700389a95602ec2a7cd862f22cf07b617372fdd75cd",
+    "git_blob_id": "331648b8e4c3f01586f242a890019a837132717a",
+    "repo": "https://github.com/mlflow/mlflow",
+    "vul_commit": "9612ef043d7fe88f3ee899657a1d0fc2faf8ae0f",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2023-6831"
+  },
+  {
+    "cve_id": "CVE-2024-0243",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-918",
+    "primary_cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_list": [
+      "CWE-918"
+    ],
+    "vulnerable_file_path": "libs/core/langchain_core/utils/html.py",
+    "token_count": 645,
+    "bytes": 2633,
+    "sha256": "92589fd02ae95231f8980cffd5ca42baaf3661003b3ef1af0543817335a1eb6e",
+    "git_blob_id": "95e1c3c2f45787ad60a8610b4d8296a4e2896c22",
+    "repo": "https://github.com/langchain-ai/langchain",
+    "vul_commit": "817b84de9e2cd9f2e16a11004caea6fa53aefed8",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-0243"
+  },
+  {
+    "cve_id": "CVE-2024-23334",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "aiohttp/web_urldispatcher.py",
+    "token_count": 9212,
+    "bytes": 41548,
+    "sha256": "aaa86823d42cc61c66b6ebf56ea81b2a1a3224c7dba6db2a7b230596a59e29c4",
+    "git_blob_id": "fee4f61a1aa6ec66ae6f5a9fa0acd5b898db1967",
+    "repo": "https://github.com/aio-libs/aiohttp",
+    "vul_commit": "33ccdfb0a12690af5bb49bda2319ec0907fa7827",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-23334"
+  },
+  {
+    "cve_id": "CVE-2024-3571",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-22",
+    "primary_cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_list": [
+      "CWE-73",
+      "CWE-22"
+    ],
+    "vulnerable_file_path": "libs/langchain/langchain/storage/file_system.py",
+    "token_count": 818,
+    "bytes": 3880,
+    "sha256": "a6605d9bc9e0314599801277a7dc329edb655faacf967d08eb661e76aec6c87f",
+    "git_blob_id": "720acf085a13363dab173e82e5d325455887fe25",
+    "repo": "https://github.com/langchain-ai/langchain",
+    "vul_commit": "501cc8311d54a5140cbc5a49d657bc7d70a6f6ab",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2024-3571"
+  },
+  {
+    "cve_id": "CVE-2025-23042",
+    "language": "Python",
+    "prompt_language": "Python",
+    "primary_cwe": "CWE-269",
+    "primary_cwe_name": "Improper Privilege Management",
+    "cwe_list": [
+      "CWE-285",
+      "CWE-250",
+      "CWE-269"
+    ],
+    "vulnerable_file_path": "gradio/utils.py",
+    "token_count": 11516,
+    "bytes": 50798,
+    "sha256": "9d1cb9446341961b969fb03a3ca9ab973a8b6985585247a064f3bf88e73f76b6",
+    "git_blob_id": "080a3d1181a4ed269a59331347bb6459cfc39b31",
+    "repo": "https://github.com/gradio-app/gradio",
+    "vul_commit": "345851d7a071b59f0e9b2cefd8c720a6747e9918",
+    "docker_image": "ghcr.io/patcheval-cve/patcheval-cve:cve-2025-23042"
+  }
+]
