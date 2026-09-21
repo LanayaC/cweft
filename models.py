@@ -1,8 +1,8 @@
 """
 Unified LLM wrappers for the cloud providers and local Ollama models.
 
-Exposes one function: call_model(model_key, prompt) -> (response_text, usage_dict)
-where model_key is any key of config.MODELS.
+Exposes one function: call_model(model_key, prompt, language="Java")
+-> (response_text, usage_dict), where model_key is any key of config.MODELS.
 
 All API differences live here. The rest of the pipeline calls this once
 per cell and doesn't care which provider it's talking to.
@@ -68,8 +68,28 @@ def _strip_markdown_fences(text: str) -> str:
     return _FENCE_RE.sub("", text).strip()
 
 
+def _strip_outer_fence(text: str) -> str:
+    """
+    Remove one markdown fence wrapped around the WHOLE response, if present.
+
+    Used for every language except Java. _FENCE_RE works line by line, so it
+    would also delete ``` lines inside the file itself (Python docstrings and
+    JS template literals often hold markdown), and its (?:java|...) label
+    leaves "script" behind on a ```javascript fence. Only the first and last
+    lines are touched here. Java keeps _FENCE_RE so its outputs are cleaned
+    exactly as the published cells were.
+    """
+    text = text.strip()
+    lines = text.split("\n")
+    if len(lines) >= 2 and lines[0].startswith("```") and lines[-1].strip() == "```":
+        text = "\n".join(lines[1:-1])
+    elif lines[0].startswith("```") and lines[0].strip() != "```" and " " not in lines[0].strip():
+        text = "\n".join(lines[1:])  # opening fence only, closing one cut off
+    return text.strip()
+
+
 # ──────────────────────────────────────────────────────────────────────
-# System prompt — identical across providers
+# System prompt — identical across providers, one per source language
 # ──────────────────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = (
@@ -83,17 +103,39 @@ SYSTEM_PROMPT = (
 )
 
 
+def _system_prompt(language: str, fence: str, extension: str, check: str) -> str:
+    return (
+        f"You are a deterministic {language} automated program repair tool. "
+        f"Return ONLY the complete modified {language} source file with the security "
+        f"repair applied. Do NOT wrap the code in markdown fences such as "
+        f"```{fence}. Do NOT add explanations, comments about your changes, or "
+        f"any text before or after the file. Your entire response must be "
+        f"valid {language} source code that can be saved directly to a {extension} file "
+        f"and {check}."
+    )
+
+
+# Java is the published SYSTEM_PROMPT itself, never a rebuilt copy of it.
+SYSTEM_PROMPTS = {
+    "Java":       SYSTEM_PROMPT,
+    "Go":         _system_prompt("Go", "go", ".go", "compiled"),
+    "JavaScript": _system_prompt("JavaScript", "javascript", ".js", "run"),
+    "TypeScript": _system_prompt("TypeScript", "typescript", ".ts", "compiled"),
+    "Python":     _system_prompt("Python", "python", ".py", "run"),
+}
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Per-provider call functions. Each returns the same shape:
 #   (response_text: str, usage: dict)
 # ──────────────────────────────────────────────────────────────────────
 
-def _call_claude(prompt: str) -> Tuple[str, dict]:
+def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
     client = _get_anthropic()
     response = client.messages.create(
         model=MODELS["claude"],
         max_tokens=8192,
-        system=SYSTEM_PROMPT,
+        system=system,
         messages=[{"role": "user", "content": prompt}],
     )
     text = response.content[0].text
@@ -104,13 +146,13 @@ def _call_claude(prompt: str) -> Tuple[str, dict]:
     return text, usage
 
 
-def _call_gpt(prompt: str) -> Tuple[str, dict]:
+def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
     client = _get_openai()
     response = client.chat.completions.create(
         model=MODELS["gpt"],
         max_completion_tokens=8192,
         messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": system},
             {"role": "user", "content": prompt},
         ],
     )
@@ -132,14 +174,14 @@ def _call_gpt(prompt: str) -> Tuple[str, dict]:
     return text, usage
 
 
-def _call_gemini(prompt: str) -> Tuple[str, dict]:
+def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
     client = _get_gemini()
     from google.genai import types
     response = client.models.generate_content(
         model=MODELS["gemini"],
         contents=prompt,
         config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
+            system_instruction=system,
             max_output_tokens=32768,
             thinking_config=types.ThinkingConfig(thinking_budget=512),
         ),
@@ -155,7 +197,7 @@ def _call_gemini(prompt: str) -> Tuple[str, dict]:
     return text, usage
 
 
-def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
+def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
     """
     Local generation via Ollama's /api/generate.
 
@@ -170,7 +212,7 @@ def _call_ollama(prompt: str, model_key: str) -> Tuple[str, dict]:
     body = {
         "model":      MODELS[model_key],
         "prompt":     prompt,
-        "system":     SYSTEM_PROMPT,
+        "system":     system,
         "stream":     False,            # default is streaming NDJSON; .json() would fail
         "keep_alive": OLLAMA_KEEP_ALIVE,
         # Ollama's defaults degrade silently when the window is too small: a long
@@ -261,13 +303,16 @@ _DISPATCH = {
 }
 
 
-def call_model(model_key: str, prompt: str) -> Tuple[str, dict]:
+def call_model(model_key: str, prompt: str, language: str = "Java") -> Tuple[str, dict]:
     """
     Call the named model with the given prompt.
 
     Args:
         model_key: any key of config.MODELS
         prompt:    full user prompt text
+        language:  source language of the file being repaired; selects the
+                   system prompt and fence cleanup. The default is what the
+                   Vul4J cells used.
 
     Returns:
         (response_text, usage_dict)
@@ -275,11 +320,14 @@ def call_model(model_key: str, prompt: str) -> Tuple[str, dict]:
     """
     if model_key not in _DISPATCH:
         raise ValueError(f"Unknown model_key: {model_key!r}. Use one of {list(_DISPATCH)}.")
+    if language not in SYSTEM_PROMPTS:
+        raise ValueError(f"Unknown language: {language!r}. Use one of {list(SYSTEM_PROMPTS)}.")
 
     start = time.time()
-    text, usage = _DISPATCH[model_key](prompt)
+    text, usage = _DISPATCH[model_key](prompt, SYSTEM_PROMPTS[language])
     usage["latency_s"] = round(time.time() - start, 2)
-    return _strip_markdown_fences(text), usage
+    strip = _strip_markdown_fences if language == "Java" else _strip_outer_fence
+    return strip(text), usage
 
 
 # ──────────────────────────────────────────────────────────────────────

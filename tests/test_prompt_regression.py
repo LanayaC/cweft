@@ -111,6 +111,27 @@ def check_models() -> list:
         failures.append("models.SYSTEM_PROMPT differs from the published Java system prompt")
     if models._FENCE_RE.pattern != JAVA_FENCE_PATTERN:
         failures.append("models._FENCE_RE differs from the published Java fence regex")
+
+    # call_model's Java path, default and explicit, with a fake provider:
+    # it must send the published system prompt and clean with _FENCE_RE.
+    raw = "```java\npackage a;\nclass B {}\n```\n"
+    seen = []
+
+    def fake(prompt, system):
+        seen.append(system)
+        return raw, {"input_tokens": 0, "output_tokens": 0}
+
+    original = models._DISPATCH["claude"]
+    models._DISPATCH["claude"] = fake
+    try:
+        outs = [models.call_model("claude", "p")[0],
+                models.call_model("claude", "p", language="Java")[0]]
+    finally:
+        models._DISPATCH["claude"] = original
+    if any(s != JAVA_SYSTEM_PROMPT for s in seen):
+        failures.append("call_model sends a different system prompt on the Java path")
+    if any(o != models._FENCE_RE.sub("", raw).strip() for o in outs):
+        failures.append("call_model cleans Java output differently from _FENCE_RE")
     return failures
 
 
