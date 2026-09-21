@@ -5,15 +5,18 @@ For each (vulnerability × prompt_level × model) cell:
   1. Build the prompt from vuln_data + schemas + prompts
   2. Call the model via models.call_model()
   3. Save a JSON log to logs/<vul_id>__<level>__<model>.json
+     (PatchEval cells: logs/patcheval/<CVE-ID>__<level>__<model>.json)
 
 Resumable: cells with an existing log file are skipped on re-run.
 Idempotent: re-running is free; no re-billing for completed cells.
 
 Usage:
-    python generate.py                     # run everything
+    python generate.py                     # run everything (Vul4J)
     python generate.py --models claude     # only one model
     python generate.py --vulns VUL4J-1     # only one vuln
     python generate.py --levels L1 L2      # only two levels
+    python generate.py --dataset patcheval # the 109 PatchEval entries (no Docker)
+    python generate.py --dataset all       # Vul4J then PatchEval
     python generate.py --dry-run           # print plan, do nothing
 """
 
@@ -25,7 +28,7 @@ from pathlib import Path
 from typing import Optional
 
 from config import (
-    LOGS_DIR, MODELS, PROMPT_LEVELS, SUBSET,
+    DATASETS, LOGS_DIR, MODELS, PATCHEVAL_LOGS_DIR, PROMPT_LEVELS,
 )
 from models import call_model
 from prompts import build_prompt
@@ -38,7 +41,10 @@ from vuln_data import get_vuln_payload
 # ──────────────────────────────────────────────────────────────────────
 
 def log_path_for(vul_id: str, level: str, model_key: str) -> Path:
-    return LOGS_DIR / f"{vul_id}__{level}__{model_key}.json"
+    # Vul4J logs stay where evaluate.py looks; PatchEval logs go to a
+    # subdirectory it does not glob until it has a PatchEval backend.
+    logs_dir = LOGS_DIR if vul_id.startswith("VUL4J-") else PATCHEVAL_LOGS_DIR
+    return logs_dir / f"{vul_id}__{level}__{model_key}.json"
 
 
 def cell_already_done(vul_id: str, level: str, model_key: str) -> bool:
@@ -73,11 +79,14 @@ def run_cell(
     Build prompt, call model with retry, return a result dict to be logged.
     Never raises — failures are recorded with status=error.
     """
+    # Vul4J payloads carry no language key and so get the Java default.
+    language = payload.get("language", "Java")
     prompt = build_prompt(
         level=level,
         vuln_info=payload,
         file_path=payload["primary_file"],
         file_content=payload["primary_content"],
+        language=language,
     )
 
     base_record = {
@@ -92,12 +101,16 @@ def run_cell(
         "prompt_chars": len(prompt),
         "prompt":       prompt,
         "timestamp":    datetime.now(timezone.utc).isoformat(),
+        # PatchEval provenance; absent from Vul4J payloads, so Vul4J
+        # records keep exactly their published fields.
+        **{k: payload[k] for k in ("dataset", "language", "docker_image", "sha256")
+           if k in payload},
     }
 
     last_error = None
     for attempt in range(1, max_attempts + 1):
         try:
-            response_text, usage = call_model(model_key, prompt)
+            response_text, usage = call_model(model_key, prompt, language=language)
             return {
                 **base_record,
                 "status":   "ok",
@@ -149,9 +162,14 @@ def main():
     ap = argparse.ArgumentParser(description="Generate LLM patches for CWEFT")
     ap.add_argument("--models", nargs="+", choices=list(MODELS), default=list(MODELS))
     ap.add_argument("--levels", nargs="+", choices=PROMPT_LEVELS, default=PROMPT_LEVELS)
-    ap.add_argument("--vulns",  nargs="+", default=SUBSET)
+    ap.add_argument("--dataset", choices=list(DATASETS), default="vul4j",
+                    help="Which vulns to run when --vulns is not given (default: vul4j)")
+    ap.add_argument("--vulns",  nargs="+", default=None,
+                    help="Explicit vul_ids (VUL4J-N or PatchEval CVE ids); overrides --dataset")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+    if args.vulns is None:
+        args.vulns = DATASETS[args.dataset]
 
     cells = [
         (vul_id, level, model_key)

@@ -5,6 +5,7 @@ Single source of truth for: vulnerability subset, models, prompt levels,
 paths, and Docker container settings. Imported by everything else.
 """
 
+import json
 import os
 from pathlib import Path
 
@@ -16,7 +17,11 @@ PROMPTS_DIR = PROJECT_ROOT / "prompts"    # prompt template .py files
 SCHEMAS_DIR = PROJECT_ROOT / "schemas"    # per-CWE repair knowledge
 PATCHEVAL_DIR = PROJECT_ROOT / "data" / "patcheval"   # frozen PatchEval sources + manifest
 
-for d in (LOGS_DIR, RESULTS_DIR):
+# PatchEval logs get their own subdirectory: evaluate.py globs logs/*.json
+# only, and it has no PatchEval backend yet, so it must not see them.
+PATCHEVAL_LOGS_DIR = LOGS_DIR / "patcheval"
+
+for d in (LOGS_DIR, RESULTS_DIR, PATCHEVAL_LOGS_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
 CONTAINER_NAME = "vul4j-alldeps"
@@ -69,10 +74,25 @@ SUBSET = [
 
 TOTAL_CELLS = len(SUBSET) * len(PROMPT_LEVELS) * len(MODELS)
 
+# PatchEval extension: the 109 entries (CVE ids) whose primary CWE has
+# guidance in schemas.py, frozen by scripts/fetch_patcheval_files.py.
+_PATCHEVAL_MANIFEST = PATCHEVAL_DIR / "manifest.json"
+PATCHEVAL_SUBSET = (
+    [e["cve_id"] for e in json.loads(_PATCHEVAL_MANIFEST.read_text(encoding="utf-8"))]
+    if _PATCHEVAL_MANIFEST.exists() else []
+)
+
+DATASETS = {
+    "vul4j":     SUBSET,
+    "patcheval": PATCHEVAL_SUBSET,
+    "all":       SUBSET + PATCHEVAL_SUBSET,
+}
+
 if __name__ == "__main__":
     print(f"Project root:       {PROJECT_ROOT}")
     print(f"Container:          {CONTAINER_NAME}")
     print(f"Vulnerabilities:    {len(SUBSET)}")
+    print(f"PatchEval entries:  {len(PATCHEVAL_SUBSET)}")
     print(f"Prompt levels:      {len(PROMPT_LEVELS)}  ({', '.join(PROMPT_LEVELS)})")
     print(f"Models:             {len(MODELS)}  ({', '.join(MODELS.keys())})")
     print(f"Total cells:        {TOTAL_CELLS}")
