@@ -18,9 +18,13 @@ When adding a new CWE entry, write the four schema fields FIRST, then
 compose the prose so that every fact in the prose appears verbatim or
 in close paraphrase among the four fields. This keeps the L3a/L3b
 content contrast clean.
+
+CWE_SCHEMAS is the guidance for Java (the Vul4J cells). Where an entry
+names Java APIs, other languages use LANGUAGE_OVERRIDES instead; see the
+section of that name below.
 """
 
-from typing import Dict
+from typing import Dict, Tuple
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -628,21 +632,192 @@ CWE_SCHEMAS: Dict[str, Dict] = {
     },
 }
 # ──────────────────────────────────────────────────────────────────────
+# Per-language overrides (PatchEval extension)
+#
+# The CWE-22, CWE-78 and CWE-79 entries above name Java APIs. They stay the
+# guidance for Java (the published Vul4J cells) and are never edited for
+# other languages. Instead each (CWE, language) pair that occurs in the
+# PatchEval subset gets an override here: the same repair knowledge as the
+# Java entry, with the language-specific APIs and the "declared exception
+# types" constraint swapped for that language's equivalents. The parity
+# rule in the module docstring applies to each override on its own.
+#
+# Any other non-Java language asking for one of these three CWEs raises,
+# rather than silently receiving Java-API guidance.
+# ──────────────────────────────────────────────────────────────────────
+
+JAVA_SPECIFIC_CWES = ("CWE-22", "CWE-78", "CWE-79")
+
+LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
+
+    # ── CWE-22 ────────────────────────────────────────────────────────
+    ("CWE-22", "Go"): {
+        "prose": (
+            "Path traversal is fixed by canonicalizing the user-supplied path "
+            "and verifying that the result remains within an allowed base "
+            "directory before any file operation. Use filepath.EvalSymlinks() "
+            "or filepath.Abs(filepath.Clean()) to resolve all . and .. "
+            "segments, then check that the canonical result starts with the "
+            "canonical base. Preserve the original function signature and "
+            "returned errors. Do not rely on strings.Contains(p, \"..\") "
+            "checks or simple strings.ReplaceAll() calls — these can be "
+            "bypassed with encoded or composite traversal sequences."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
+            "canonical_repair": "Canonicalize the resolved path (filepath.EvalSymlinks / filepath.Abs(filepath.Clean)) and verify strings.HasPrefix(canonical base) before any file operation.",
+            "constraints":      "Preserve function signature and returned errors.",
+            "what_to_avoid":    "strings.Contains(p, \"..\") or strings.ReplaceAll(p, \"..\", \"\") checks; encoded variants bypass them.",
+        },
+    },
+    ("CWE-22", "JavaScript"): {
+        "prose": (
+            "Path traversal is fixed by canonicalizing the user-supplied path "
+            "and verifying that the result remains within an allowed base "
+            "directory before any file operation. Use fs.realpathSync() or "
+            "path.resolve() to resolve all . and .. segments, then check "
+            "that the canonical result starts with the canonical base. "
+            "Preserve the original function signature and error behavior. "
+            "Do not rely on p.includes(\"..\") checks or simple replace() "
+            "calls — these can be bypassed with encoded or composite "
+            "traversal sequences."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
+            "canonical_repair": "Canonicalize the resolved path (fs.realpathSync / path.resolve) and verify startsWith(canonical base) before any file operation.",
+            "constraints":      "Preserve function signature and error behavior.",
+            "what_to_avoid":    "p.includes(\"..\") or replace(\"..\", \"\") checks; encoded variants bypass them.",
+        },
+    },
+    ("CWE-22", "Python"): {
+        "prose": (
+            "Path traversal is fixed by canonicalizing the user-supplied path "
+            "and verifying that the result remains within an allowed base "
+            "directory before any file operation. Use os.path.realpath() or "
+            "os.path.abspath(os.path.normpath()) to resolve all . and .. "
+            "segments, then check that the canonical result starts with the "
+            "canonical base. Preserve the original function signature and "
+            "raised exception types. Do not rely on \"..\" in path checks or "
+            "simple str.replace() calls — these can be bypassed with encoded "
+            "or composite traversal sequences."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
+            "canonical_repair": "Canonicalize the resolved path (os.path.realpath / abspath(normpath)) and verify startswith(canonical base) before any file operation.",
+            "constraints":      "Preserve function signature and raised exception types.",
+            "what_to_avoid":    "\"..\" in path or path.replace(\"..\", \"\") checks; encoded variants bypass them.",
+        },
+    },
+
+    # ── CWE-78 ────────────────────────────────────────────────────────
+    ("CWE-78", "Go"): {
+        "prose": (
+            "OS command injection is fixed by separating program arguments "
+            "from the program string. Pass arguments as a list to "
+            "exec.Command(name, args...) so the operating system never "
+            "interprets them through a shell. Where shell invocation is "
+            "genuinely required, escape arguments with a helper that quotes "
+            "shell metacharacters (spaces, semicolons, backticks, $, &, |, "
+            "redirections). Preserve the function signature and returned "
+            "errors. Do not rely on a blocklist of bad characters; attackers "
+            "vary encoding and syntax to bypass them."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
+            "canonical_repair": "Pass arguments as a list to exec.Command(name, args...); if a shell is required, quote arguments with a helper that handles all shell metacharacters.",
+            "constraints":      "Preserve function signature and returned errors.",
+            "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
+        },
+    },
+    ("CWE-78", "JavaScript"): {
+        "prose": (
+            "OS command injection is fixed by separating program arguments "
+            "from the program string. Pass arguments as an array to "
+            "child_process.execFile() or spawn() without shell: true so the "
+            "operating system never interprets them through a shell. Where "
+            "shell invocation is genuinely required, escape arguments with a "
+            "helper that quotes shell metacharacters (spaces, semicolons, "
+            "backticks, $, &, |, redirections). Preserve the function "
+            "signature and error behavior. Do not rely on a blocklist of bad "
+            "characters; attackers vary encoding and syntax to bypass them."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
+            "canonical_repair": "Pass arguments as an array to child_process.execFile / spawn without shell: true; if a shell is required, quote arguments with a helper that handles all shell metacharacters.",
+            "constraints":      "Preserve function signature and error behavior.",
+            "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
+        },
+    },
+    ("CWE-78", "Python"): {
+        "prose": (
+            "OS command injection is fixed by separating program arguments "
+            "from the program string. Pass arguments as a list to "
+            "subprocess.run() or Popen() with shell=False so the operating "
+            "system never interprets them through a shell. Where shell "
+            "invocation is genuinely required, escape arguments with a "
+            "helper such as shlex.quote() that quotes shell metacharacters "
+            "(spaces, semicolons, backticks, $, &, |, redirections). "
+            "Preserve the function signature and raised exception types. Do "
+            "not rely on a blocklist of bad characters; attackers vary "
+            "encoding and syntax to bypass them."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
+            "canonical_repair": "Pass arguments as a list to subprocess.run / Popen with shell=False; if a shell is required, quote arguments with a helper such as shlex.quote that handles all shell metacharacters.",
+            "constraints":      "Preserve function signature and raised exception types.",
+            "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
+        },
+    },
+
+    # ── CWE-79 ────────────────────────────────────────────────────────
+    ("CWE-79", "Python"): {
+        "prose": (
+            "Cross-site scripting is fixed by applying context-appropriate "
+            "output encoding to all untrusted data inserted into a page. "
+            "HTML body text needs HTML entity encoding; attribute values need "
+            "attribute-context encoding; JavaScript string literals need "
+            "JS-string encoding; URLs need percent-encoding. Use an established "
+            "encoder such as markupsafe.escape() or the project's existing "
+            "sanitizer rather than a hand-rolled function. Preserve function "
+            "signatures and raised exception types. Do not strip tags as a "
+            "primary defense — encoded or fragmented variants bypass "
+            "tag-stripping."
+        ),
+        "schema": {
+            "root_cause":       "Untrusted data is inserted into a page without context-appropriate output encoding.",
+            "canonical_repair": "Apply HTML / attribute / JS-string / URL encoding via an established encoder library, matched to the insertion context.",
+            "constraints":      "Preserve function signature and raised exception types.",
+            "what_to_avoid":    "Tag stripping as primary defense; encoded variants bypass it.",
+        },
+    },
+}
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Public accessors
 # ──────────────────────────────────────────────────────────────────────
 
-def get_prose(cwe_id: str) -> str:
-    """Return the L3a free-text guidance for a CWE."""
+def _entry(cwe_id: str, language: str) -> Dict:
+    if (cwe_id, language) in LANGUAGE_OVERRIDES:
+        return LANGUAGE_OVERRIDES[(cwe_id, language)]
     if cwe_id not in CWE_SCHEMAS:
         raise KeyError(f"No schema for {cwe_id}. Add an entry to CWE_SCHEMAS.")
-    return CWE_SCHEMAS[cwe_id]["prose"]
+    if language != "Java" and cwe_id in JAVA_SPECIFIC_CWES:
+        raise KeyError(
+            f"The {cwe_id} guidance names Java APIs and has no {language} override. "
+            f"Add ({cwe_id!r}, {language!r}) to LANGUAGE_OVERRIDES."
+        )
+    return CWE_SCHEMAS[cwe_id]
 
 
-def get_schema(cwe_id: str) -> Dict[str, str]:
-    """Return the L3b structured schema for a CWE."""
-    if cwe_id not in CWE_SCHEMAS:
-        raise KeyError(f"No schema for {cwe_id}. Add an entry to CWE_SCHEMAS.")
-    return CWE_SCHEMAS[cwe_id]["schema"]
+def get_prose(cwe_id: str, language: str = "Java") -> str:
+    """Return the L3a free-text guidance for a CWE, in the given source language."""
+    return _entry(cwe_id, language)["prose"]
+
+
+def get_schema(cwe_id: str, language: str = "Java") -> Dict[str, str]:
+    """Return the L3b structured schema for a CWE, in the given source language."""
+    return _entry(cwe_id, language)["schema"]
 
 
 def has_schema(cwe_id: str) -> bool:

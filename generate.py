@@ -145,8 +145,10 @@ def payload_for(vul_id: str) -> Optional[dict]:
         return _payload_cache[vul_id]
     try:
         p = get_vuln_payload(vul_id)
-        p["repair_prose"]  = get_prose(p["cwe_id"])
-        p["repair_schema"] = get_schema(p["cwe_id"])
+        # Vul4J payloads carry no language key and so get the Java guidance.
+        language = p.get("language", "Java")
+        p["repair_prose"]  = get_prose(p["cwe_id"], language)
+        p["repair_schema"] = get_schema(p["cwe_id"], language)
         _payload_cache[vul_id] = p
         return p
     except Exception as e:
