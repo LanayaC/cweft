@@ -14,6 +14,7 @@ LOGS_DIR = PROJECT_ROOT / "logs"          # per-cell patch JSONs (one per LLM ca
 RESULTS_DIR = PROJECT_ROOT / "results"    # results.csv, intermediate aggregates
 PROMPTS_DIR = PROJECT_ROOT / "prompts"    # prompt template .py files
 SCHEMAS_DIR = PROJECT_ROOT / "schemas"    # per-CWE repair knowledge
+PATCHEVAL_DIR = PROJECT_ROOT / "data" / "patcheval"   # frozen PatchEval sources + manifest
 
 for d in (LOGS_DIR, RESULTS_DIR):
     d.mkdir(parents=True, exist_ok=True)

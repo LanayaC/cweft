@@ -1,5 +1,12 @@
 """
-Vul4J integration layer (alldeps-compatible).
+Vulnerability data layer: Vul4J (via Docker) and PatchEval (local files).
+
+get_vuln_payload(vul_id) routes on the id. VUL4J-N ids take the Vul4J path
+described below, unchanged since the published 504 cells. CVE ids take the
+PatchEval path, which reads data/patcheval/ only and needs no Docker (see
+the PatchEval section at the bottom of this file).
+
+Vul4J integration (alldeps-compatible).
 
 For each VUL4J-N in our subset, this module:
   1. Looks up CWE metadata from the Vul4J dataset CSV (inside the container)
@@ -20,11 +27,12 @@ path in the checkout tree.
 """
 
 import csv
+import hashlib
 import json
 import subprocess
 from typing import Dict, List, Optional
 
-from config import CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT
+from config import CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT, PATCHEVAL_DIR
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -230,6 +238,19 @@ def _extract_failing_tests(info: Dict) -> List[str]:
 def get_vuln_payload(vul_id: str) -> Dict:
     """
     Bundle everything `prompts.build_prompt` could need for this vuln.
+    VUL4J-N ids go to the Vul4J path; ids in data/patcheval/manifest.json
+    go to the PatchEval path.
+    """
+    if vul_id.startswith("VUL4J-"):
+        return _get_vul4j_payload(vul_id)
+    if vul_id in _patcheval_manifest():
+        return _get_patcheval_payload(vul_id)
+    raise KeyError(f"{vul_id!r} is neither a VUL4J-N id nor in {PATCHEVAL_DIR / 'manifest.json'}")
+
+
+def _get_vul4j_payload(vul_id: str) -> Dict:
+    """
+    Bundle everything `prompts.build_prompt` could need for a Vul4J vuln.
 
     Returns a dict with:
         vul_id, cve_id, cwe_id, cwe_name,
@@ -272,6 +293,82 @@ def get_vuln_payload(vul_id: str) -> Dict:
         "file_paths":      paths,
         "primary_file":    primary_file,
         "primary_content": primary_content,
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────
+# PatchEval: frozen local files, no Docker
+#
+# scripts/fetch_patcheval_files.py wrote data/patcheval/manifest.json and
+# one vulnerable file per entry under data/patcheval/files/<CVE-ID>/.
+# The PoC lives in each entry's Docker image (fix-run.sh), which only the
+# evaluation step needs, so failing_tests is empty here.
+# ──────────────────────────────────────────────────────────────────────
+
+_patcheval_cache: Optional[Dict[str, Dict]] = None
+
+
+def _patcheval_manifest() -> Dict[str, Dict]:
+    global _patcheval_cache
+    if _patcheval_cache is None:
+        path = PATCHEVAL_DIR / "manifest.json"
+        entries = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+        _patcheval_cache = {e["cve_id"]: e for e in entries}
+    return _patcheval_cache
+
+
+def patcheval_ids() -> List[str]:
+    """PatchEval vul_ids (CVE ids), in manifest order."""
+    return list(_patcheval_manifest())
+
+
+def read_patcheval_file(vul_id: str) -> str:
+    """
+    The frozen vulnerable file for a PatchEval entry. Raises if its bytes no
+    longer match the sha256 recorded when it was fetched, so an edited file
+    can never become a prompt.
+    """
+    entry = _patcheval_manifest()[vul_id]
+    path = PATCHEVAL_DIR / "files" / vul_id / entry["vulnerable_file_path"]
+    data = path.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    if digest != entry["sha256"]:
+        raise RuntimeError(
+            f"{vul_id}: {path} has sha256 {digest}, but the manifest records "
+            f"{entry['sha256']}. Regenerate with scripts/fetch_patcheval_files.py."
+        )
+    return data.decode("utf-8")
+
+
+def _get_patcheval_payload(vul_id: str) -> Dict:
+    """
+    Same keys as the Vul4J payload, plus dataset, language (the language the
+    prompt is written for), docker_image and sha256.
+    """
+    entry = _patcheval_manifest()[vul_id]
+
+    cwe_id = entry["primary_cwe"]
+    cwe_name = CWE_NAMES.get(cwe_id)
+    if cwe_name is None:
+        raise RuntimeError(
+            f"{vul_id} has CWE {cwe_id!r}, which is not in CWE_NAMES. "
+            f"Add it to vuln_data.CWE_NAMES."
+        )
+
+    primary_file = entry["vulnerable_file_path"]
+    return {
+        "vul_id":          vul_id,
+        "cve_id":          vul_id,
+        "cwe_id":          cwe_id,
+        "cwe_name":        cwe_name,
+        "failing_tests":   [],
+        "file_paths":      [primary_file],
+        "primary_file":    primary_file,
+        "primary_content": read_patcheval_file(vul_id),
+        "dataset":         "patcheval",
+        "language":        entry["prompt_language"],
+        "docker_image":    entry["docker_image"],
+        "sha256":          entry["sha256"],
     }
 
 
