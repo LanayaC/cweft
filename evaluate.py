@@ -10,6 +10,7 @@ L0/L1/L2/L3. Resumable: cells already in results.csv are skipped.
     python evaluate.py --vulns VUL4J-1     # one vuln
     python evaluate.py --levels L1 L2      # some levels
     python evaluate.py --limit 5           # smoke test
+    python evaluate.py --dataset patcheval # PatchEval logs (patcheval_eval.py)
 """
 
 import argparse
@@ -313,7 +314,14 @@ def main():
                     help="Subset of vuln IDs (default: all in logs)")
     ap.add_argument("--limit",  type=int, default=None,
                     help="Cap the number of cells to evaluate (smoke test)")
+    ap.add_argument("--dataset", choices=["vul4j", "patcheval"], default="vul4j",
+                    help="Which benchmark's logs to evaluate (default: vul4j)")
     args = ap.parse_args()
+
+    if args.dataset == "patcheval":
+        import patcheval_eval
+        patcheval_eval.main(args)
+        return
 
     all_logs = sorted(LOGS_DIR.glob("*.json"))
     if not all_logs:
