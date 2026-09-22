@@ -16,3 +16,6 @@ results/results_backup_*.csv
 
 # Raw per-call logs go to Zenodo, not the repo
 logs/
+
+# Local prompt samples for manual review
+samples/
