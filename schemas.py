@@ -639,10 +639,11 @@ CWE_SCHEMAS: Dict[str, Dict] = {
 # and is never edited for other languages. Non-Java languages get entries
 # here instead, of two kinds:
 #
-#   1. Hand-written, for CWEs whose Java entry names Java APIs (CWE-22,
-#      CWE-78, CWE-79): the same repair knowledge with the APIs swapped for
-#      the language's own, one entry per (CWE, language) pair that occurs in
-#      the PatchEval subset.
+#   1. Hand-written, for CWEs whose Java entry names Java APIs: the same
+#      repair knowledge with the APIs swapped for the language's own, one
+#      entry per (CWE, language) pair that occurs in the PatchEval subset.
+#      So far CWE-22, CWE-78 and CWE-79; CWE-77 (ProcessBuilder), CWE-332
+#      (SecureRandom) and CWE-611 (Java parser settings) have none yet.
 #   2. Derived, for CWEs whose only Java-specific text is the constraint
 #      "Preserve method signature and declared exception types" and its
 #      prose sentence: the Java entry with just that pair replaced by
@@ -656,7 +657,9 @@ CWE_SCHEMAS: Dict[str, Dict] = {
 # raises, rather than silently receiving Java-API guidance.
 # ──────────────────────────────────────────────────────────────────────
 
-JAVA_SPECIFIC_CWES = ("CWE-22", "CWE-78", "CWE-79")
+# CWEs whose Java entry names Java APIs. Every one of them needs a
+# hand-written override before a non-Java language can use it.
+JAVA_SPECIFIC_CWES = ("CWE-22", "CWE-77", "CWE-78", "CWE-79", "CWE-332", "CWE-611")
 
 NON_JAVA_LANGUAGES = ("Go", "JavaScript", "TypeScript", "Python")
 
