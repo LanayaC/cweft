@@ -25,11 +25,10 @@ EXPECTED_ENTRIES = 109
 
 # Java-only wording that must not reach a Go/JS/TS/Python prompt, whether
 # from the scaffolding in prompts.py or the L3 guidance in schemas.py.
-# ("declared exception types" in the generic constraints of other CWEs is
-# deliberately not listed: only CWE-22/78/79 are overridden.)
 JAVA_MARKERS = (
     "Java file", "Java source", "getCanonicalPath", "Path.normalize",
     "ProcessBuilder", "Runtime.exec", "OWASP Java",
+    "method signature", "exception types",
 )
 
 
@@ -87,20 +86,24 @@ def check_tamper_detected() -> list:
 
 
 def check_overrides() -> list:
-    """Overrides are complete, Java still gets the base entry, gaps raise."""
+    """Overrides are complete and neutral, Java still gets the base entry, gaps raise."""
     failures = []
     for (cwe_id, language), entry in schemas.LANGUAGE_OVERRIDES.items():
         if language == "Java":
             failures.append(f"({cwe_id}, Java): Java must use the base entry, not an override")
-        if cwe_id not in schemas.JAVA_SPECIFIC_CWES:
-            failures.append(f"({cwe_id}, {language}): override outside {schemas.JAVA_SPECIFIC_CWES}")
+        if cwe_id not in schemas.CWE_SCHEMAS:
+            failures.append(f"({cwe_id}, {language}): override for a CWE with no base entry")
         s = entry.get("schema", {})
         for field in ("root_cause", "canonical_repair", "constraints", "what_to_avoid"):
             if len(s.get(field, "")) <= 20:
                 failures.append(f"({cwe_id}, {language}).{field} missing or too short")
         if len(entry.get("prose", "")) <= 100:
             failures.append(f"({cwe_id}, {language}).prose missing or too short")
-    for cwe_id in schemas.JAVA_SPECIFIC_CWES:
+        if s.get("constraints") != schemas.NEUTRAL_CONSTRAINT:
+            failures.append(f"({cwe_id}, {language}): constraints is not NEUTRAL_CONSTRAINT")
+        if "error-reporting behavior" not in entry.get("prose", ""):
+            failures.append(f"({cwe_id}, {language}): prose does not state the neutral constraint")
+    for cwe_id in schemas.CWE_SCHEMAS:
         if schemas.get_prose(cwe_id, "Java") is not schemas.CWE_SCHEMAS[cwe_id]["prose"]:
             failures.append(f"{cwe_id}: Java prose is not the base entry")
         if schemas.get_schema(cwe_id, "Java") is not schemas.CWE_SCHEMAS[cwe_id]["schema"]:

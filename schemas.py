@@ -20,7 +20,8 @@ in close paraphrase among the four fields. This keeps the L3a/L3b
 content contrast clean.
 
 CWE_SCHEMAS is the guidance for Java (the Vul4J cells). Where an entry
-names Java APIs, other languages use LANGUAGE_OVERRIDES instead; see the
+names Java APIs or states the Java-only "declared exception types"
+constraint, other languages use LANGUAGE_OVERRIDES instead; see the
 section of that name below.
 """
 
@@ -634,19 +635,32 @@ CWE_SCHEMAS: Dict[str, Dict] = {
 # ──────────────────────────────────────────────────────────────────────
 # Per-language overrides (PatchEval extension)
 #
-# The CWE-22, CWE-78 and CWE-79 entries above name Java APIs. They stay the
-# guidance for Java (the published Vul4J cells) and are never edited for
-# other languages. Instead each (CWE, language) pair that occurs in the
-# PatchEval subset gets an override here: the same repair knowledge as the
-# Java entry, with the language-specific APIs and the "declared exception
-# types" constraint swapped for that language's equivalents. The parity
-# rule in the module docstring applies to each override on its own.
+# CWE_SCHEMAS above is the guidance for Java (the published Vul4J cells)
+# and is never edited for other languages. Non-Java languages get entries
+# here instead, of two kinds:
 #
-# Any other non-Java language asking for one of these three CWEs raises,
-# rather than silently receiving Java-API guidance.
+#   1. Hand-written, for CWEs whose Java entry names Java APIs (CWE-22,
+#      CWE-78, CWE-79): the same repair knowledge with the APIs swapped for
+#      the language's own, one entry per (CWE, language) pair that occurs in
+#      the PatchEval subset.
+#   2. Derived, for CWEs whose only Java-specific text is the constraint
+#      "Preserve method signature and declared exception types" and its
+#      prose sentence: the Java entry with just that pair replaced by
+#      NEUTRAL_CONSTRAINT, for every non-Java language (see the end of this
+#      section).
+#
+# Every non-Java constraint is NEUTRAL_CONSTRAINT. The parity rule in the
+# module docstring applies to each override on its own.
+#
+# A non-Java language asking for a JAVA_SPECIFIC_CWES entry with no override
+# raises, rather than silently receiving Java-API guidance.
 # ──────────────────────────────────────────────────────────────────────
 
 JAVA_SPECIFIC_CWES = ("CWE-22", "CWE-78", "CWE-79")
+
+NON_JAVA_LANGUAGES = ("Go", "JavaScript", "TypeScript", "Python")
+
+NEUTRAL_CONSTRAINT = "Preserve the function's public signature and error-reporting behavior."
 
 LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
 
@@ -658,15 +672,15 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "directory before any file operation. Use filepath.EvalSymlinks() "
             "or filepath.Abs(filepath.Clean()) to resolve all . and .. "
             "segments, then check that the canonical result starts with the "
-            "canonical base. Preserve the original function signature and "
-            "returned errors. Do not rely on strings.Contains(p, \"..\") "
-            "checks or simple strings.ReplaceAll() calls — these can be "
-            "bypassed with encoded or composite traversal sequences."
+            "canonical base. Preserve the function's public signature and "
+            "error-reporting behavior. Do not rely on strings.Contains(p, "
+            "\"..\") checks or simple strings.ReplaceAll() calls — these can "
+            "be bypassed with encoded or composite traversal sequences."
         ),
         "schema": {
             "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
             "canonical_repair": "Canonicalize the resolved path (filepath.EvalSymlinks / filepath.Abs(filepath.Clean)) and verify strings.HasPrefix(canonical base) before any file operation.",
-            "constraints":      "Preserve function signature and returned errors.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "strings.Contains(p, \"..\") or strings.ReplaceAll(p, \"..\", \"\") checks; encoded variants bypass them.",
         },
     },
@@ -677,15 +691,15 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "directory before any file operation. Use fs.realpathSync() or "
             "path.resolve() to resolve all . and .. segments, then check "
             "that the canonical result starts with the canonical base. "
-            "Preserve the original function signature and error behavior. "
-            "Do not rely on p.includes(\"..\") checks or simple replace() "
+            "Preserve the function's public signature and error-reporting "
+            "behavior. Do not rely on p.includes(\"..\") checks or simple replace() "
             "calls — these can be bypassed with encoded or composite "
             "traversal sequences."
         ),
         "schema": {
             "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
             "canonical_repair": "Canonicalize the resolved path (fs.realpathSync / path.resolve) and verify startsWith(canonical base) before any file operation.",
-            "constraints":      "Preserve function signature and error behavior.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "p.includes(\"..\") or replace(\"..\", \"\") checks; encoded variants bypass them.",
         },
     },
@@ -696,15 +710,15 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "directory before any file operation. Use os.path.realpath() or "
             "os.path.abspath(os.path.normpath()) to resolve all . and .. "
             "segments, then check that the canonical result starts with the "
-            "canonical base. Preserve the original function signature and "
-            "raised exception types. Do not rely on \"..\" in path checks or "
+            "canonical base. Preserve the function's public signature and "
+            "error-reporting behavior. Do not rely on \"..\" in path checks or "
             "simple str.replace() calls — these can be bypassed with encoded "
             "or composite traversal sequences."
         ),
         "schema": {
             "root_cause":       "Untrusted path fragment used in file resolution without normalization against an allowed base.",
             "canonical_repair": "Canonicalize the resolved path (os.path.realpath / abspath(normpath)) and verify startswith(canonical base) before any file operation.",
-            "constraints":      "Preserve function signature and raised exception types.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "\"..\" in path or path.replace(\"..\", \"\") checks; encoded variants bypass them.",
         },
     },
@@ -718,14 +732,14 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "interprets them through a shell. Where shell invocation is "
             "genuinely required, escape arguments with a helper that quotes "
             "shell metacharacters (spaces, semicolons, backticks, $, &, |, "
-            "redirections). Preserve the function signature and returned "
-            "errors. Do not rely on a blocklist of bad characters; attackers "
+            "redirections). Preserve the function's public signature and "
+            "error-reporting behavior. Do not rely on a blocklist of bad characters; attackers "
             "vary encoding and syntax to bypass them."
         ),
         "schema": {
             "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
             "canonical_repair": "Pass arguments as a list to exec.Command(name, args...); if a shell is required, quote arguments with a helper that handles all shell metacharacters.",
-            "constraints":      "Preserve function signature and returned errors.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
         },
     },
@@ -737,14 +751,14 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "operating system never interprets them through a shell. Where "
             "shell invocation is genuinely required, escape arguments with a "
             "helper that quotes shell metacharacters (spaces, semicolons, "
-            "backticks, $, &, |, redirections). Preserve the function "
-            "signature and error behavior. Do not rely on a blocklist of bad "
+            "backticks, $, &, |, redirections). Preserve the function's "
+            "public signature and error-reporting behavior. Do not rely on a blocklist of bad "
             "characters; attackers vary encoding and syntax to bypass them."
         ),
         "schema": {
             "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
             "canonical_repair": "Pass arguments as an array to child_process.execFile / spawn without shell: true; if a shell is required, quote arguments with a helper that handles all shell metacharacters.",
-            "constraints":      "Preserve function signature and error behavior.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
         },
     },
@@ -757,14 +771,14 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "invocation is genuinely required, escape arguments with a "
             "helper such as shlex.quote() that quotes shell metacharacters "
             "(spaces, semicolons, backticks, $, &, |, redirections). "
-            "Preserve the function signature and raised exception types. Do "
-            "not rely on a blocklist of bad characters; attackers vary "
-            "encoding and syntax to bypass them."
+            "Preserve the function's public signature and error-reporting "
+            "behavior. Do not rely on a blocklist of bad characters; "
+            "attackers vary encoding and syntax to bypass them."
         ),
         "schema": {
             "root_cause":       "Untrusted data is concatenated into a string passed to the operating-system shell instead of being delivered as a separated argument list.",
             "canonical_repair": "Pass arguments as a list to subprocess.run / Popen with shell=False; if a shell is required, quote arguments with a helper such as shlex.quote that handles all shell metacharacters.",
-            "constraints":      "Preserve function signature and raised exception types.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "Blocklists of bad characters; attackers bypass them via encoding and syntactic variants.",
         },
     },
@@ -778,19 +792,62 @@ LANGUAGE_OVERRIDES: Dict[Tuple[str, str], Dict] = {
             "attribute-context encoding; JavaScript string literals need "
             "JS-string encoding; URLs need percent-encoding. Use an established "
             "encoder such as markupsafe.escape() or the project's existing "
-            "sanitizer rather than a hand-rolled function. Preserve function "
-            "signatures and raised exception types. Do not strip tags as a "
+            "sanitizer rather than a hand-rolled function. Preserve the "
+            "function's public signature and error-reporting behavior. Do not "
+            "strip tags as a "
             "primary defense — encoded or fragmented variants bypass "
             "tag-stripping."
         ),
         "schema": {
             "root_cause":       "Untrusted data is inserted into a page without context-appropriate output encoding.",
             "canonical_repair": "Apply HTML / attribute / JS-string / URL encoding via an established encoder library, matched to the insertion context.",
-            "constraints":      "Preserve function signature and raised exception types.",
+            "constraints":      NEUTRAL_CONSTRAINT,
             "what_to_avoid":    "Tag stripping as primary defense; encoded variants bypass it.",
         },
     },
 }
+
+
+# Derived overrides. For each CWE: the sentence in its Java prose that
+# states the constraint, and the language-neutral sentence replacing it.
+# The Java schema constraint for all of them is _JAVA_CONSTRAINT and is
+# replaced by NEUTRAL_CONSTRAINT; everything else is the Java entry as-is.
+_JAVA_CONSTRAINT = "Preserve method signature and declared exception types."
+
+_NEUTRAL_CONSTRAINT_PROSE = {
+    "CWE-20": (
+        "Preserve the existing method signature and exception types so callers do not break,",
+        "Preserve the function's public signature and error-reporting behavior so callers do not break,",
+    ),
+    "CWE-74": (
+        "Preserve method signatures and exception types;",
+        "Preserve the function's public signature and error-reporting behavior;",
+    ),
+    **{cwe_id: ("Preserve method signatures and exception types.", NEUTRAL_CONSTRAINT)
+       for cwe_id in ("CWE-200", "CWE-269", "CWE-284", "CWE-287", "CWE-502",
+                      "CWE-522", "CWE-532", "CWE-863", "CWE-918")},
+}
+
+
+def _with_neutral_constraint(cwe_id: str) -> Dict:
+    """The Java entry with only its constraint sentence and field made neutral."""
+    base = CWE_SCHEMAS[cwe_id]
+    java_sentence, neutral_sentence = _NEUTRAL_CONSTRAINT_PROSE[cwe_id]
+    # Refuse rather than silently swap nothing if the Java text ever changes.
+    if base["prose"].count(java_sentence) != 1:
+        raise RuntimeError(f"{cwe_id}: prose no longer contains {java_sentence!r} exactly once")
+    if base["schema"]["constraints"] != _JAVA_CONSTRAINT:
+        raise RuntimeError(f"{cwe_id}: constraints is no longer {_JAVA_CONSTRAINT!r}")
+    return {
+        "prose":  base["prose"].replace(java_sentence, neutral_sentence),
+        "schema": {**base["schema"], "constraints": NEUTRAL_CONSTRAINT},
+    }
+
+
+for _cwe_id in _NEUTRAL_CONSTRAINT_PROSE:
+    _entry_neutral = _with_neutral_constraint(_cwe_id)
+    for _language in NON_JAVA_LANGUAGES:
+        LANGUAGE_OVERRIDES[(_cwe_id, _language)] = _entry_neutral
 
 
 # ──────────────────────────────────────────────────────────────────────
