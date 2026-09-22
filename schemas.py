@@ -657,9 +657,14 @@ CWE_SCHEMAS: Dict[str, Dict] = {
 # raises, rather than silently receiving Java-API guidance.
 # ──────────────────────────────────────────────────────────────────────
 
-# CWEs whose Java entry names Java APIs. Every one of them needs a
-# hand-written override before a non-Java language can use it.
-JAVA_SPECIFIC_CWES = ("CWE-22", "CWE-77", "CWE-78", "CWE-79", "CWE-332", "CWE-611")
+# CWEs whose Java entry is Java-specific and has no neutral derived
+# override: it names Java APIs (CWE-22, 77, 78, 79, 332, 611), or states the
+# Java constraint in a CWE outside the PatchEval subset (CWE-19, 254, 264,
+# 310, 345, 352, 835). A non-Java language needs an override for it first.
+JAVA_SPECIFIC_CWES = (
+    "CWE-19", "CWE-22", "CWE-77", "CWE-78", "CWE-79", "CWE-254", "CWE-264",
+    "CWE-310", "CWE-332", "CWE-345", "CWE-352", "CWE-611", "CWE-835",
+)
 
 NON_JAVA_LANGUAGES = ("Go", "JavaScript", "TypeScript", "Python")
 
@@ -864,7 +869,7 @@ def _entry(cwe_id: str, language: str) -> Dict:
         raise KeyError(f"No schema for {cwe_id}. Add an entry to CWE_SCHEMAS.")
     if language != "Java" and cwe_id in JAVA_SPECIFIC_CWES:
         raise KeyError(
-            f"The {cwe_id} guidance names Java APIs and has no {language} override. "
+            f"The {cwe_id} guidance is Java-specific and has no {language} override. "
             f"Add ({cwe_id!r}, {language!r}) to LANGUAGE_OVERRIDES."
         )
     return CWE_SCHEMAS[cwe_id]

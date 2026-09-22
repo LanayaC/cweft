@@ -108,8 +108,8 @@ def check_overrides() -> list:
             failures.append(f"{cwe_id}: Java prose is not the base entry")
         if schemas.get_schema(cwe_id, "Java") is not schemas.CWE_SCHEMAS[cwe_id]["schema"]:
             failures.append(f"{cwe_id}: Java schema is not the base entry")
-    # Every Java-API CWE must raise for every non-Java language it has no
-    # hand-written override for, in both accessors.
+    # Every guarded CWE must raise for every non-Java language it has no
+    # override for, in both accessors.
     for cwe_id in schemas.JAVA_SPECIFIC_CWES:
         for language in schemas.NON_JAVA_LANGUAGES:
             if (cwe_id, language) in schemas.LANGUAGE_OVERRIDES:
@@ -118,9 +118,17 @@ def check_overrides() -> list:
                 try:
                     accessor(cwe_id, language)
                     failures.append(f"{accessor.__name__}({cwe_id}, {language}) returned "
-                                    f"Java-API guidance instead of raising")
+                                    f"Java-specific guidance instead of raising")
                 except KeyError:
                     pass
+    # Every base entry that still carries Java-specific text must be either
+    # overridden for all non-Java languages or guarded.
+    for cwe_id, entry in schemas.CWE_SCHEMAS.items():
+        if "declared exception types" not in entry["schema"]["constraints"]:
+            continue
+        covered = all((cwe_id, l) in schemas.LANGUAGE_OVERRIDES for l in schemas.NON_JAVA_LANGUAGES)
+        if not covered and cwe_id not in schemas.JAVA_SPECIFIC_CWES:
+            failures.append(f"{cwe_id} has the Java constraint but is neither overridden nor guarded")
     for cwe_id in ("CWE-77", "CWE-332", "CWE-611"):
         if cwe_id not in schemas.JAVA_SPECIFIC_CWES:
             failures.append(f"{cwe_id} names Java APIs but is not guarded")
