@@ -1,3 +1,7 @@
 # PatchEval vulnerable sources are frozen byte for byte (sha256 in
 # data/patcheval/manifest.json). No line-ending conversion, but still diff as text.
 data/patcheval/files/** -text diff
+
+# Captured test-runner output. Stored and checked out with LF, so the
+# fixtures read the same on every machine as they did when captured.
+tests/fixtures/testparse/** text eol=lf
