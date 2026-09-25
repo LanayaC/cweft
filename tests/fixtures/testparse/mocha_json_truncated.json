@@ -1,0 +1,26 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 1,
+    "pending": 1,
+    "failures": 1,
+    "start": "2026-09-25T07:10:19.372Z",
+    "end": "2026-09-25T07:10:19.374Z",
+    "duration": 2
+  },
+  "tests": [
+    {
+      "title": "adds numbers",
+      "fullTitle": "calculator adds numbers",
+      "file": "/tmp/mochafx/test/sample.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "divides numbers",
+      "fullTitle": "calculator divides numbers",
+      "file": "/tmp/mochafx/test/sample.test.js",
+      "duration": 

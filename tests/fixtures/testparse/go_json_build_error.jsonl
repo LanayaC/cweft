@@ -1,0 +1,7 @@
+{"ImportPath":"example.com/nope/missing","Action":"build-output","Output":"# example.com/fx\n"}
+{"ImportPath":"example.com/nope/missing","Action":"build-output","Output":"calc.go:3:8: no required module provides package example.com/nope/missing; to add it:\n"}
+{"ImportPath":"example.com/nope/missing","Action":"build-output","Output":"\tgo get example.com/nope/missing\n"}
+{"ImportPath":"example.com/nope/missing","Action":"build-fail"}
+{"Time":"2026-09-25T07:10:18.413566102Z","Action":"start","Package":"example.com/fx"}
+{"Time":"2026-09-25T07:10:18.413597456Z","Action":"output","Package":"example.com/fx","Output":"FAIL\texample.com/fx [setup failed]\n"}
+{"Time":"2026-09-25T07:10:18.413601018Z","Action":"fail","Package":"example.com/fx","Elapsed":0,"FailedBuild":"example.com/nope/missing"}

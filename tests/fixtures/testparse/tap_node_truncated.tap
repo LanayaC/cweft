@@ -1,0 +1,11 @@
+TAP version 13
+# Subtest: adds numbers
+ok 1 - adds numbers
+  ---
+  duration_ms: 1.3272
+  ...
+# Subtest: divides numbers
+not ok 2 - divides numbers
+  ---
+  duration_ms: 1.9001
+  location: '/fixtures\\nodefix\\ok\

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="1" skipped="1" tests="4" time="0.076" timestamp="2026-09-25T10:07:40.902796+03:00" hostname="fixture-host"><testcase classname="tests_ok.test_sample" name="test_adds" time="0.001" /><testcase classname="tests_ok.test_sample" name="test_divides" time="0.001"><failure message="assert (10 / 4) == 2">def test_divides():
+&gt;       assert 10 / 4 == 2
+E       assert (10 / 4) == 2
+
+tests_ok\test_sample.py:7: AssertionError</failure></testcase><testcase classname="tests_ok.test_sample" name="test_needs_db" time="0.000"><skipped type="pytest.skip" message="needs a database">/fixtures\pyfix\tests_ok\test_sample.py:9: needs a database</skipped></testcase><testcase classname="tests_ok.test_sample" name="test_errors_in_fixture" time="0.000"><error message="failed on setup with &quot;RuntimeError: fixture blew up&quot;">@pytest.fixture
+    def broken_fixture():
+&gt;       raise RuntimeError("fixture blew up")
+E       RuntimeError: fixture blew up
+
+tests_ok\test_sample.py:18: RuntimeError</error></testcase></testsuite></testsuites>

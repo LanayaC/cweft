@@ -1,0 +1,18 @@
+{"Time":"2026-09-25T07:12:29.512877083Z","Action":"start","Package":"example.com/fx"}
+{"Time":"2026-09-25T07:12:29.514553616Z","Action":"run","Package":"example.com/fx","Test":"TestAdd"}
+{"Time":"2026-09-25T07:12:29.514587965Z","Action":"output","Package":"example.com/fx","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}
+{"Time":"2026-09-25T07:12:29.514611679Z","Action":"output","Package":"example.com/fx","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}
+{"Time":"2026-09-25T07:12:29.514613933Z","Action":"pass","Package":"example.com/fx","Test":"TestAdd","Elapsed":0}
+{"Time":"2026-09-25T07:12:29.514616791Z","Action":"run","Package":"example.com/fx","Test":"TestDivides"}
+{"Time":"2026-09-25T07:12:29.514618102Z","Action":"output","Package":"example.com/fx","Test":"TestDivides","Output":"=== RUN   TestDivides\n"}
+{"Time":"2026-09-25T07:12:29.514619709Z","Action":"output","Package":"example.com/fx","Test":"TestDivides","Output":"    calc_test.go:13: divides numbers: got 2.5, want 2\n"}
+{"Time":"2026-09-25T07:12:29.514622138Z","Action":"output","Package":"example.com/fx","Test":"TestDivides","Output":"--- FAIL: TestDivides (0.00s)\n"}
+{"Time":"2026-09-25T07:12:29.514624101Z","Action":"fail","Package":"example.com/fx","Test":"TestDivides","Elapsed":0}
+{"Time":"2026-09-25T07:12:29.514625735Z","Action":"run","Package":"example.com/fx","Test":"TestNeedsDatabase"}
+{"Time":"2026-09-25T07:12:29.514627094Z","Action":"output","Package":"example.com/fx","Test":"TestNeedsDatabase","Output":"=== RUN   TestNeedsDatabase\n"}
+{"Time":"2026-09-25T07:12:29.514628589Z","Action":"output","Package":"example.com/fx","Test":"TestNeedsDatabase","Output":"    calc_test.go:18: no database here\n"}
+{"Time":"2026-09-25T07:12:29.514630556Z","Action":"output","Package":"example.com/fx","Test":"TestNeedsDatabase","Output":"--- SKIP: TestNeedsDatabase (0.00s)\n"}
+{"Time":"2026-09-25T07:12:29.514633648Z","Action":"skip","Package":"example.com/fx","Test":"TestNeedsDatabase","Elapsed":0}
+{"Time":"2026-09-25T07:12:29.514635105Z","Action":"output","Package":"example.com/fx","Output":"FAIL\n"}
+{"Time":"2026-09-25T07:12:29.515431679Z","Action":"output","Package":"example.com/fx","Output":"FAIL\texample.com/fx\t0.002s\n"}
+{"Time":"2026-09-25T07:12:29.515499505Z","Action":"fail","Package":"example.com/fx","Elapsed":0.003}

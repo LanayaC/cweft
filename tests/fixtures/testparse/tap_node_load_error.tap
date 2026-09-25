@@ -1,0 +1,43 @@
+TAP version 13
+# node:internal/modules/cjs/loader:1189
+#   throw err;
+#   ^
+# Error: Cannot find module './definitely-not-here'
+# Require stack:
+# - /fixtures\\nodefix\\broken\\import.test.js
+#     at Module._resolveFilename (node:internal/modules/cjs/loader:1186:15)
+#     at Module._load (node:internal/modules/cjs/loader:1012:27)
+#     at Module.require (node:internal/modules/cjs/loader:1271:19)
+#     at require (node:internal/modules/helpers:123:16)
+#     at Object.<anonymous> (/fixtures\\nodefix\\broken\\import.test.js:1:1)
+#     at Module._compile (node:internal/modules/cjs/loader:1434:14)
+#     at Module._extensions..js (node:internal/modules/cjs/loader:1518:10)
+#     at Module.load (node:internal/modules/cjs/loader:1249:32)
+#     at Module._load (node:internal/modules/cjs/loader:1065:12)
+#     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:158:12) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     '/fixtures\\\\nodefix\\\\broken\\\\import.test.js'
+#   ]
+# }
+# Node.js v22.2.0
+# Subtest: broken\\import.test.js
+not ok 1 - broken\\import.test.js
+  ---
+  duration_ms: 61.216
+  location: '/fixtures\\nodefix\\broken\\import.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 70.4968

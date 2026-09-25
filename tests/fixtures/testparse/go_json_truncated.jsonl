@@ -1,0 +1,8 @@
+{"Time":"2026-09-25T07:12:29.512877083Z","Action":"start","Package":"example.com/fx"}
+{"Time":"2026-09-25T07:12:29.514553616Z","Action":"run","Package":"example.com/fx","Test":"TestAdd"}
+{"Time":"2026-09-25T07:12:29.514587965Z","Action":"output","Package":"example.com/fx","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}
+{"Time":"2026-09-25T07:12:29.514611679Z","Action":"output","Package":"example.com/fx","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}
+{"Time":"2026-09-25T07:12:29.514613933Z","Action":"pass","Package":"example.com/fx","Test":"TestAdd","Elapsed":0}
+{"Time":"2026-09-25T07:12:29.514616791Z","Action":"run","Package":"example.com/fx","Test":"TestDivides"}
+{"Time":"2026-09-25T07:12:29.514618102Z","Action":"output","Package":"example.com/fx","Test":"TestDivides","Output":"=== RUN   TestDivides\n"}
+{"Time":"2026-09-25T07:12:29.514619709Z","Action":"output","Package":"exa
