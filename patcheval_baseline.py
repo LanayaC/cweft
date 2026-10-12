@@ -22,10 +22,16 @@ fix is applied), otherwise from a per-language default. Either way the
 runner is given the flags that make its output machine-readable, and every
 change is recorded in the baseline.
 
-    python patcheval_baseline.py CVE-2017-0360
-    python patcheval_baseline.py CVE-2017-0360 CVE-2023-24623 --keep-image
+    python patcheval_baseline.py                      # every manifest entry
+    python patcheval_baseline.py --language go        # one language
+    python patcheval_baseline.py --only CVE-2017-0360 --redo
 
-Writes data/patcheval/baseline.json, merging one entry per CVE.
+Writes data/patcheval/baseline.json, merging one entry per CVE and saving
+after each, so a crash loses at most the CVE in flight. A CVE already in the
+file is skipped unless --redo. One CVE at a time: pull, run, remove the image
+if we pulled it. A CVE that fails is recorded and the batch carries on. The
+batch stops cleanly, rather than filling the disk, if free space falls below
+DISK_FLOOR_GB.
 """
 
 import argparse
@@ -39,7 +45,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from posixpath import splitext
 
-from config import PATCHEVAL_DIR
+from config import PATCHEVAL_DIR, PROJECT_ROOT
 import patcheval_docker as pdock
 import patcheval_l0 as pl0
 import patcheval_testparse as ptp
@@ -55,6 +61,7 @@ FIX_PATCH = f"{WORKSPACE}/fix.patch"
 UNIT_TEST = f"{WORKSPACE}/unit_test.sh"
 
 RUNS = 3
+DISK_FLOOR_GB = 40         # stop the batch rather than fill the disk
 MIN_TIMEOUT = 120          # never give a command less than this
 MAX_TIMEOUT = 900          # 15 min cap, per the per-CVE limit
 TIMEOUT_FACTOR = 3         # ... = max(3x observed, MIN), capped at MAX
@@ -135,6 +142,46 @@ sys.exit(1 if [r for r in result.records if r[1] in ("failure", "error")] else 0
 
 class BaselineError(RuntimeError):
     """This CVE cannot be baselined; the entry records why."""
+
+
+# Per-CVE outcome, recorded as `status`.
+OK = "ok"
+NO_JUDGED_SET = "no_judged_set"      # the tests ran, but nothing is judgeable
+SETUP_FAILED = "setup_failed"        # the image or its test command is unusable
+ERROR = "error"                      # Docker or this module misbehaved
+
+# Phases, so a failure can say which part gave up.
+SETUP_PHASES = ("frozen_copy", "repo_dir", "frozen_file", "l0", "poc", "test_plan")
+
+# A test that cannot reach the network says so in one of these ways. The
+# container is deliberately offline, so this is the commonest reason a repo's
+# own suite cannot judge anything.
+NETWORK_MARKERS = (
+    "dial tcp", "no such host", "getaddrinfo", "EAI_AGAIN", "ENOTFOUND",
+    "ECONNREFUSED", "ECONNRESET", "EHOSTUNREACH", "ENETUNREACH",
+    "Network is unreachable", "Temporary failure in name resolution",
+    "Connection refused", "connection refused", "socket hang up",
+    "Name or service not known", "URLError", "ConnectionError",
+    "gaierror", "SSLError", "Max retries exceeded", "net::ERR_",
+    "request to http", "fetch failed", "Could not resolve host",
+)
+
+
+def disk_free_gb(path: str = ".") -> float:
+    import shutil
+    return round(shutil.disk_usage(path).free / 2 ** 30, 1)
+
+
+def code_fingerprint() -> str:
+    """
+    Short hash of this module and the parser, recorded per entry: a baseline
+    file can hold entries made before and after a fix, and the fingerprint is
+    what says which is which.
+    """
+    h = hashlib.sha256()
+    for mod in ("patcheval_baseline.py", "patcheval_testparse.py"):
+        h.update((PROJECT_ROOT / mod).read_bytes())
+    return h.hexdigest()[:12]
 
 
 def _now() -> str:
@@ -284,46 +331,133 @@ class TestPlan:
     """How to run the repo's tests and read the result."""
 
     def __init__(self, command: str, source: str, fmt: str,
-                 output_file: str = "", notes=None, runner: str = ""):
+                 output_file: str = "", notes=None, runner: str = "",
+                 scope: str = "repo", stream: str = "stdout"):
         self.command = command
         self.source = source          # "unit_test.sh" or "language_default"
         self.fmt = fmt                # a patcheval_testparse format name
         self.output_file = output_file  # "" when the report is on stdout
         self.notes = list(notes or [])
         self.runner = runner
+        self.scope = scope            # "repo", "package" (the patched file's), "as_written"
+        self.stream = stream          # where the report is: "stdout" or "both"
 
     def as_dict(self) -> dict:
         return {"command": self.command, "source": self.source, "runner": self.runner,
-                "format": self.fmt, "output_file": self.output_file, "notes": self.notes}
+                "format": self.fmt, "output_file": self.output_file, "scope": self.scope,
+                "stream": self.stream, "notes": self.notes}
 
 
 # Turning a plain runner invocation into one that emits a parseable report.
 # Each rule: (does this line invoke the runner?, how to instrument it, format,
 # where the report lands).
+def _after_runner(pattern: str, flags: str):
+    """
+    Put the reporting flags straight after the runner token, never at the end
+    of the line. A script's runner line may carry a `-k "long expression"`, a
+    pipe, or a redirect, and appending past those breaks the command.
+    """
+    return lambda line: re.sub(pattern, lambda m: f"{m.group(0)} {flags}", line, count=1)
+
+
 _INSTRUMENT = [
+    # Django's runner and manage.py test: unittest text, and only at verbosity
+    # 2 does it name each test. Its report goes to stderr.
+    (re.compile(r"\bruntests\.py\b"),
+     _after_runner(r"\bruntests\.py\b", "-v 2"),
+     "unittest_text", "", "django runtests.py", "both"),
+    (re.compile(r"\bmanage\.py\s+test\b"),
+     _after_runner(r"\bmanage\.py\s+test\b", "-v 2"),
+     "unittest_text", "", "manage.py test", "both"),
     (re.compile(r"\bpytest\b"),
-     lambda line: f"{line} --junitxml={REPORT_XML} -p no:cacheprovider",
+     _after_runner(r"\bpytest\b", f"--junitxml={REPORT_XML} -p no:cacheprovider"),
      "junit_xml", REPORT_XML, "pytest"),
     (re.compile(r"\bgo\s+test\b"),
-     lambda line: re.sub(r"\bgo\s+test\b", "go test -json", line, count=1),
+     _after_runner(r"\bgo\s+test\b", "-json"),
      "go_json", "", "go test"),
     (re.compile(r"\bjest\b"),
-     lambda line: f"{line} --json --outputFile={REPORT_JSON} --ci",
+     _after_runner(r"\bjest\b", f"--json --outputFile={REPORT_JSON} --ci"),
      "jest_json", REPORT_JSON, "jest"),
     # --reporter-option output=, not a shell redirect: the suite's own
     # console output lands on stdout interleaved with the report otherwise.
     (re.compile(r"\bmocha\b"),
-     lambda line: f"{line} --reporter json --reporter-option output={REPORT_JSON}",
+     _after_runner(r"\bmocha\b", f"--reporter json --reporter-option output={REPORT_JSON}"),
      "mocha_json", REPORT_JSON, "mocha"),
     (re.compile(r"\bnode\s+--test\b"),
-     lambda line: f"{line} --test-reporter=tap",
+     _after_runner(r"\bnode\s+--test\b", "--test-reporter=tap"),
      "tap", "", "node --test"),
     # --junit-path, not --reporter=junit: deno prints "Check file:///..."
     # around the report otherwise.
     (re.compile(r"\bdeno\s+test\b"),
-     lambda line: f"{line} --junit-path={REPORT_XML}",
+     _after_runner(r"\bdeno\s+test\b", f"--junit-path={REPORT_XML}"),
      "junit_xml", REPORT_XML, "deno test"),
+    # TAP-native JS runners. tape prints TAP with no flag at all; node-tap and
+    # ava need telling. "tape" must be matched before "tap" cannot happen by
+    # accident: \btap\b does not match inside "tape".
+    (re.compile(r"\btape\b"),
+     lambda line: line,
+     "tap", "", "tape", "stdout"),
+    (re.compile(r"\btap\b"),
+     _after_runner(r"\btap\b", "--reporter=tap"),
+     "tap", "", "node-tap", "stdout"),
+    (re.compile(r"\bava\b"),
+     _after_runner(r"\bava\b", "--tap"),
+     "tap", "", "ava", "stdout"),
 ]
+# Rules written without a stream read the report from stdout (or from the file
+# they were told to write, when output_file is set).
+_INSTRUMENT = [rule if len(rule) == 6 else rule + ("stdout",) for rule in _INSTRUMENT]
+
+
+def _drop_fix_patch(line: str, name: str, repo_dir: str) -> tuple:
+    """
+    Take fix.patch out of a `git apply` line but keep any other patch on it.
+    Several scripts apply the fix alongside a dep.patch or test.patch that the
+    tests genuinely need; dropping the whole line would drop those too. This
+    module decides when the reference fix goes on, so only fix.patch must go.
+
+    Some scripts name a patch the image does not ship (CVE-2022-4643 asks for
+    /workspace/test.patch, which is absent). Keeping it would make `git apply`
+    fail and, under `set -e`, kill the whole script, so a missing patch is
+    dropped as well and said so.
+    Returns (line_or_None, note).
+    """
+    tokens = line.split()
+    others = [t for t in tokens if t.endswith(".patch") and not t.endswith("fix.patch")]
+    present = [t for t in others
+               if file_exists(name, t if t.startswith("/") else f"{repo_dir}/{t}")]
+    missing = [t for t in others if t not in present]
+
+    if not present:
+        note = f"removed the fix.patch line: {line.strip()}"
+        if missing:
+            note += f" (it also named {', '.join(missing)}, absent from the image)"
+        return None, note
+
+    kept = [t for t in tokens if not t.endswith("fix.patch") and t not in missing]
+    note = (f"dropped fix.patch from the git apply line but kept "
+            f"{', '.join(present)}: {line.strip()}")
+    if missing:
+        note += f"; also dropped {', '.join(missing)}, absent from the image"
+    return " ".join(kept), note
+
+
+def _join_continuations(text: str) -> tuple:
+    """
+    Fold `\\`-continued lines into one logical line, so instrumenting a runner
+    line cannot land in the middle of a command. Returns (lines, joined_count).
+    """
+    out, joined, buf = [], 0, ""
+    for raw in text.splitlines():
+        if raw.rstrip().endswith("\\") and not raw.rstrip().endswith("\\\\"):
+            buf += raw.rstrip()[:-1].rstrip() + " "
+            joined += 1
+            continue
+        out.append(buf + raw if buf else raw)
+        buf = ""
+    if buf:
+        out.append(buf.rstrip())
+    return out, joined
 
 
 def _unittest_line(name: str, line: str):
@@ -346,18 +480,98 @@ def _unittest_line(name: str, line: str):
     return line[:m.start()] + new, note
 
 
-def _instrument_script(text: str, name: str):
+_NPM_TEST = re.compile(r"(?P<prefix>.*?)\b(?:npm|yarn|pnpm)\s+(?:run\s+)?test\b(?P<args>.*)$")
+_ANSIBLE = re.compile(r"\bansible-playbook\b\s+(?P<rest>\S+)")
+
+# One playbook, one test: ansible-playbook is not a test runner, so each
+# invocation's exit code becomes a JUnit testcase named after its playbook.
+_ANSIBLE_PREAMBLE = """
+CWEFT_STEPS=/tmp/cweft_steps.tsv
+: > "$CWEFT_STEPS"
+cweft_record() { printf '%s\\t%s\\n' "$1" "$2" >> "$CWEFT_STEPS"; }
+cweft_report() {
+  {
+    printf '<testsuite name="ansible-playbook">\\n'
+    while IFS=$'\\t' read -r step rc; do
+      printf '  <testcase classname="ansible-playbook" name="%s">' "$step"
+      [ "$rc" = "0" ] || printf '<failure message="exit status %s"></failure>' "$rc"
+      printf '</testcase>\\n'
+    done < "$CWEFT_STEPS"
+    printf '</testsuite>\\n'
+  } > REPORT_XML_PATH
+}
+trap cweft_report EXIT
+"""
+
+
+def _ansible_script(lines: list, notes: list):
+    """Wrap each ansible-playbook line so its exit status is recorded."""
+    out, steps = [], 0
+    for line in lines:
+        if line.strip().startswith("#") or not _ANSIBLE.search(line):
+            # `set -e` would abandon the run at the first failing playbook.
+            out.append(re.sub(r"^\s*set\s+-e\s*$", "set +e", line))
+            continue
+        playbook = _ANSIBLE.search(line).group("rest")
+        steps += 1
+        out.append(f"( {line.strip()} ); cweft_record {shlex.quote(playbook)} $?")
+    if not steps:
+        return None
+    preamble = _ANSIBLE_PREAMBLE.replace("REPORT_XML_PATH", REPORT_XML)
+    notes.append(f"ansible-playbook is not a test runner: recorded each of the {steps} "
+                 f"playbook invocations as one JUnit testcase, named after the playbook, "
+                 f"passing when it exits 0; `set -e` relaxed so one failure does not "
+                 f"abandon the rest")
+    return "\n".join(out[:1] + [preamble] + out[1:])
+
+
+def _resolve_npm_test(name: str, repo_dir: str, line: str, notes: list):
+    """
+    Replace `npm test` with the command package.json's test script runs, so the
+    real runner can be instrumented. Returns the rewritten line, or None.
+    """
+    m = _NPM_TEST.match(line)
+    if not m:
+        return None
+    pkg = _read_json(name, repo_dir, "package.json")
+    script = ((pkg.get("scripts") or {}).get("test") or "").strip()
+    if not script:
+        return None
+    extra = (m.group("args") or "").strip()
+    rewritten = f"{m.group('prefix')}{script}" + (f" {extra}" if extra else "")
+    notes.append(f"npm test runs package.json's test script; ran it directly instead: "
+                 f"{line.strip()} -> {rewritten.strip()}")
+    return rewritten
+
+
+def _instrument_script(text: str, name: str, repo_dir: str):
     """
     Instrument the runner line in a shell script. Returns
     (new_text, fmt, output_file, runner, notes) or raises if no rule matches.
     """
-    lines = text.splitlines()
+    lines, joined = _join_continuations(text)
     notes, kept = [], []
+    if joined:
+        notes.append(f"folded {joined} backslash-continued line(s) into their command")
     for line in lines:
         if _GIT_APPLY_FIX.search(line):
-            notes.append(f"removed the fix.patch line: {line.strip()}")
+            rewritten, note = _drop_fix_patch(line, name, repo_dir)
+            notes.append(note)
+            if rewritten is not None:
+                kept.append(rewritten)
             continue
         kept.append(line)
+
+    # npm test hides the real runner in package.json; swap it in first so the
+    # rules below see, say, mocha rather than npm.
+    for i, line in enumerate(kept):
+        if line.strip().startswith("#"):
+            continue
+        if _NPM_TEST.match(line):
+            rewritten = _resolve_npm_test(name, repo_dir, line, notes)
+            if rewritten:
+                kept[i] = rewritten
+            break
 
     for i, line in enumerate(kept):
         if line.strip().startswith("#"):
@@ -366,12 +580,27 @@ def _instrument_script(text: str, name: str):
         if shimmed:
             kept[i], note = shimmed
             notes.append(note)
-            return "\n".join(kept), "junit_xml", REPORT_XML, "unittest (JUnit XML shim)", notes
-        for pattern, instrument, fmt, out, runner in _INSTRUMENT:
+            return ("\n".join(kept), "junit_xml", REPORT_XML,
+                    "unittest (JUnit XML shim)", notes, "stdout")
+        for pattern, instrument, fmt, out, runner, stream in _INSTRUMENT:
             if pattern.search(line):
                 kept[i] = instrument(line)
-                notes.append(f"instrumented for {fmt}: {line.strip()} -> {kept[i].strip()}")
-                return "\n".join(kept), fmt, out, runner, notes
+                # A script that throws stderr away hides why a run collected
+                # nothing (a build failure reads as "no output" otherwise).
+                if re.search(r"2>\s*/dev/null", kept[i]):
+                    kept[i] = re.sub(r"\s*2>\s*/dev/null", "", kept[i])
+                    notes.append("kept stderr: the script discarded it, which hides "
+                                 "build failures behind an empty report")
+                if kept[i] != line:
+                    notes.append(f"instrumented for {fmt}: {line.strip()} -> {kept[i].strip()}")
+                else:
+                    notes.append(f"{runner} prints {fmt} with no extra flags: {line.strip()}")
+                return "\n".join(kept), fmt, out, runner, notes, stream
+
+    ansible = _ansible_script(kept, notes)
+    if ansible:
+        return ansible, "junit_xml", REPORT_XML, "ansible-playbook (one playbook per test)", \
+            notes, "stdout"
     raise BaselineError(
         "unit_test.sh names no test runner this module can make machine-readable "
         f"(known: pytest, unittest, go test, jest, mocha, node --test, deno test)"
@@ -451,17 +680,78 @@ def _default_plan(name: str, repo_dir: str, rel_path: str) -> TestPlan:
     raise BaselineError(f"no default test command for {ext!r} files ({rel_path})")
 
 
-def resolve_test_plan(name: str, repo_dir: str, rel_path: str) -> TestPlan:
-    if not file_exists(name, UNIT_TEST):
-        return _default_plan(name, repo_dir, rel_path)
+def _scoped_plan(plan: TestPlan, rel_path: str) -> TestPlan:
+    """
+    The same default runner, narrowed to the package or directory holding the
+    vulnerable file. The fallback when a repo-wide default cannot produce a
+    usable report: one unrelated broken package in the repo would otherwise
+    leave the CVE with nothing to judge.
+    """
+    from posixpath import dirname
+    d = dirname(rel_path)
+    if not d:
+        return None                     # the file is at the repo root: same thing
+    if plan.runner == "go test":
+        cmd = f"GOPROXY=off go test -json ./{d}/..."
+    elif plan.runner == "pytest":
+        cmd = f"{plan.command} {shlex.quote(d)}"
+    elif plan.runner == "jest":
+        cmd = plan.command.replace(" --json", f" {shlex.quote(d)} --json", 1)
+    elif plan.runner == "node --test":
+        cmd = plan.command.replace("--test", f"--test {shlex.quote(d)}", 1)
+    elif plan.runner == "deno test":
+        cmd = plan.command.replace("deno test", f"deno test {shlex.quote(d)}", 1)
+    else:
+        return None                     # mocha and the shim take no directory
+    return TestPlan(cmd, plan.source, plan.fmt, plan.output_file,
+                    plan.notes + [f"narrowed to the vulnerable file's package: {d}"],
+                    plan.runner, scope="package")
 
-    r = _run(name, f"cat {UNIT_TEST}", what="read unit_test.sh")
-    if r.rc != 0:
-        raise BaselineError(f"cannot read {UNIT_TEST}: {r.stderr.strip()[:200]}")
-    script, fmt, out, runner, notes = _instrument_script(r.stdout, name)
+
+def resolve_test_plan(name: str, repo_dir: str, rel_path: str) -> list:
+    """
+    The test commands to try, best first. A repo's own unit_test.sh is used as
+    written; a per-language default is tried repo-wide, then narrowed.
+    """
+    script_text = ""
+    if file_exists(name, UNIT_TEST):
+        r = _run(name, f"cat {UNIT_TEST}", what="read unit_test.sh")
+        if r.rc != 0:
+            raise BaselineError(f"cannot read {UNIT_TEST}: {r.stderr.strip()[:200]}")
+        script_text = r.stdout
+
+    # Two images ship an empty unit_test.sh; treat that as having none.
+    if not script_text.strip():
+        wide = _default_plan(name, repo_dir, rel_path)
+        if file_exists(name, UNIT_TEST):
+            wide.notes.insert(0, "unit_test.sh exists but is empty; used the language default")
+        scoped = _scoped_plan(wide, rel_path)
+        return [wide, scoped] if scoped else [wide]
+
+    script, fmt, out, runner, notes, stream = _instrument_script(script_text, name, repo_dir)
     staged = "/tmp/cweft_unit_test.sh"
     pdock.write_file_bytes(name, staged, script.encode("utf-8"))
-    return TestPlan(f"bash {staged}", "unit_test.sh", fmt, out, notes, runner)
+    return [TestPlan(f"bash {staged}", "unit_test.sh", fmt, out, notes, runner,
+                     scope="as_written", stream=stream)]
+
+
+def choose_plan(name: str, repo_dir: str, candidates: list) -> tuple:
+    """
+    Probe each candidate once on the original code and keep the first whose
+    report is usable. Returns (plan, probes); probes record what each tried.
+    """
+    if len(candidates) == 1:
+        return candidates[0], []        # nothing to choose between; don't pay for a probe
+    probes = []
+    for plan in candidates:
+        reset_repo(name, repo_dir)
+        run = run_tests(name, repo_dir, plan, MAX_TIMEOUT)
+        probes.append({"command": plan.command, "scope": plan.scope,
+                       "status": run["status"], "message": run["message"][:200],
+                       "seconds": run["seconds"], "chosen": run["status"] == ptp.OK})
+        if run["status"] == ptp.OK:
+            return plan, probes
+    return candidates[0], probes
 
 
 # ── Running the tests ────────────────────────────────────────────────────
@@ -469,10 +759,20 @@ def resolve_test_plan(name: str, repo_dir: str, rel_path: str) -> TestPlan:
 def run_tests(name: str, repo_dir: str, plan: TestPlan, timeout: float) -> dict:
     """One test run. Returns the parsed report plus what it took to get it."""
     r = pdock.exec_in(name, f"cd {shlex.quote(repo_dir)} && {plan.command}", timeout=timeout)
+    report_from = plan.stream
     if plan.output_file:
         cat = _run(name, f"cat {shlex.quote(plan.output_file)}; "
                          f"rm -f {shlex.quote(plan.output_file)}")
         raw = cat.stdout
+        report_from = "file"
+        if not raw.strip():
+            # Runners older than the flag that writes a report file ignore it
+            # and print to stdout instead (mocha gained --reporter-option in 6).
+            raw = r.stdout
+            report_from = "stdout (the report file was empty)"
+    elif plan.stream == "both":
+        # unittest writes its report to stderr; scraping it needs both streams.
+        raw = r.stdout + "\n" + r.stderr
     else:
         # stdout only: a runner's own progress chatter goes to stderr and
         # would make the report unparsable if mixed in.
@@ -483,13 +783,64 @@ def run_tests(name: str, repo_dir: str, plan: TestPlan, timeout: float) -> dict:
         "seconds": r.seconds,
         "timed_out": r.timed_out,
         "timeout_used": int(timeout),
+        "report_from": report_from,
         "stderr_tail": r.stderr.strip()[-300:],
         "status": report.status,
         "message": report.message[:300],
         "counts": report.counts,
         "total": report.total,
         "cases": {c.name: c.outcome for c in report.cases},
+        "failures": {c.name: c.detail for c in report.cases
+                     if c.outcome in (ptp.FAILED, ptp.ERROR)},
     }
+
+
+def _trim_runs(runs: list) -> list:
+    """
+    Keep run 1 in full; for the repeats keep counts and only what differed.
+    Three runs of a 1,000-test suite, six times over, would otherwise be most
+    of the file, and the differences are the part that says anything.
+    """
+    if not runs:
+        return runs
+    first, trimmed = runs[0], [runs[0]]
+    for run in runs[1:]:
+        diff = {n: o for n, o in run["cases"].items() if first["cases"].get(n) != o}
+        diff.update({n: "missing" for n in first["cases"] if n not in run["cases"]})
+        slim = {k: v for k, v in run.items() if k != "cases"}
+        slim["differences_vs_run_1"] = diff
+        trimmed.append(slim)
+    return trimmed
+
+
+def _reason_group(record: dict) -> str:
+    """Why a CVE has no judged set, in one of the groups the summary counts."""
+    fixed = record.get("reference_fixed_runs") or []
+    originals = record.get("original_runs") or []
+    if record.get("test_phase_cut_short_by_timeout") or \
+            any(r.get("timed_out") for r in fixed + originals):
+        return "timeout"
+
+    haystack = " ".join(
+        [r.get("message", "") for r in fixed]
+        + [r.get("stderr_tail", "") for r in fixed]
+        + [d for r in fixed for d in (r.get("failures") or {}).values()]
+        + list((record.get("excluded") or {}).values())
+    )
+    if any(m in haystack for m in NETWORK_MARKERS):
+        return "needs_network"
+
+    statuses = {r.get("status") for r in fixed}
+    if ptp.COLLECTION_ERROR in statuses:
+        return "nothing_collected"
+    if ptp.NO_TESTS in statuses:
+        return "no_test_suite_found"
+    if ptp.UNPARSABLE in statuses:
+        return "unreadable_output"
+    excluded = record.get("excluded") or {}
+    if excluded and all(not v.startswith("mixed") for v in excluded.values()):
+        return "all_tests_fail_on_reference"
+    return "other"
 
 
 def _judge(fixed_runs) -> tuple:
@@ -497,6 +848,8 @@ def _judge(fixed_runs) -> tuple:
     Judged set: passed in all three reference-fixed runs. Everything else
     that was seen is excluded, with why.
     """
+    if not fixed_runs:
+        return [], {}, "no reference-fixed run completed"
     unusable = [r for r in fixed_runs if r["status"] != ptp.OK]
     if unusable:
         return [], {}, (f"{len(unusable)} of {len(fixed_runs)} reference runs unusable: "
@@ -521,52 +874,76 @@ def _judge(fixed_runs) -> tuple:
 
 def baseline_cve(cve: str, entry: dict, keep_image: bool = False) -> dict:
     rel_path = entry["vulnerable_file_path"]
-    data = frozen_bytes(cve, entry)
+    tag = entry["docker_image"]
     record = {
         "cve_id": cve,
         "language": entry["prompt_language"],
+        "dataset_language": entry["language"],
         "vulnerable_file_path": rel_path,
-        "image_tag": entry["docker_image"],
+        "image_tag": tag,
         "started_at": _now(),
+        "code_fingerprint": code_fingerprint(),
+        "disk_free_gb_before": disk_free_gb(),
         "ok": False,
+        "status": ERROR,
+        "phase": "frozen_copy",
     }
 
-    tag = entry["docker_image"]
-    pulled = pdock.ensure_image(tag)
-    record["image_pulled"] = pulled
     name = pdock.container_name("baseline", cve.replace("-", "_"))
-    started = False
+    pulled = started = False
     try:
+        data = frozen_bytes(cve, entry)
+        record["phase"] = "image"
+        pulled = pdock.ensure_image(tag)
+        record["image_pulled"] = pulled
         digest = pdock.repo_digest(tag)
         record["image_digest"] = digest
         pdock.start_container(name, digest)
         started = True
 
+        record["phase"] = "repo_dir"
         repo_dir = find_repo_dir(name)
         record["repo_dir"] = repo_dir
+        record["phase"] = "frozen_file"
         record["frozen_file"] = check_frozen_file(name, repo_dir, rel_path, data)
+        record["phase"] = "l0"
         record["l0"] = check_l0(name, repo_dir, rel_path, data)
+        record["phase"] = "poc"
         record["poc"] = check_poc_polarity(name, repo_dir)
 
-        plan = resolve_test_plan(name, repo_dir, rel_path)
+        record["phase"] = "test_plan"
+        candidates = resolve_test_plan(name, repo_dir, rel_path)
+        plan, probes = choose_plan(name, repo_dir, candidates)
         record["test_plan"] = plan.as_dict()
+        record["test_plan_probes"] = probes
 
-        # First run sets the timeout for the rest.
+        record["phase"] = "runs"
+        # First run sets the timeout for the rest. A run that times out ends
+        # the phase: repeating a hung suite cannot make it judgeable, and six
+        # capped runs would cost an hour and a half per CVE.
         timeout = MAX_TIMEOUT
-        original_runs, fixed_runs = [], []
-        for i in range(RUNS):
+        original_runs, fixed_runs, hung = [], [], False
+        for _ in range(RUNS):
             reset_repo(name, repo_dir)
             run = run_tests(name, repo_dir, plan, timeout)
             original_runs.append(run)
+            if run["timed_out"]:
+                hung = True
+                break
             timeout = budget(run["seconds"])
-        for i in range(RUNS):
-            reset_repo(name, repo_dir)
-            apply_fix(name, repo_dir)
-            fixed_runs.append(run_tests(name, repo_dir, plan, timeout))
+        if not hung:
+            for _ in range(RUNS):
+                reset_repo(name, repo_dir)
+                apply_fix(name, repo_dir)
+                run = run_tests(name, repo_dir, plan, timeout)
+                fixed_runs.append(run)
+                if run["timed_out"]:
+                    hung = True
+                    break
+        record["test_phase_cut_short_by_timeout"] = hung
         reset_repo(name, repo_dir)
 
-        record["original_runs"] = original_runs
-        record["reference_fixed_runs"] = fixed_runs
+        record["phase"] = "judge"
         judged, excluded, problem = _judge(fixed_runs)
         record["judged"] = judged
         record["judged_count"] = len(judged)
@@ -576,20 +953,37 @@ def baseline_cve(cve: str, entry: dict, keep_image: bool = False) -> dict:
             "reference_fixed": [r["seconds"] for r in fixed_runs],
             "timeout_after_first_run": timeout,
         }
+        # _reason_group reads the full runs, so classify before trimming.
+        record["original_runs"] = original_runs
+        record["reference_fixed_runs"] = fixed_runs
         if problem:
             record["problem"] = problem
         elif not judged:
             record["problem"] = "no test passed in all three reference-fixed runs"
-        else:
+        if judged:
             record["ok"] = True
-    except (BaselineError, pl0.L0SetupError, RuntimeError, ValueError) as e:
+            record["status"] = OK
+        else:
+            record["status"] = NO_JUDGED_SET
+            record["reason_group"] = _reason_group(record)
+        record["original_runs"] = _trim_runs(original_runs)
+        record["reference_fixed_runs"] = _trim_runs(fixed_runs)
+        record["runs_note"] = ("run 1 of each set holds every case; the repeats hold "
+                              "counts and differences_vs_run_1 only")
+        record["phase"] = "done"
+    except (BaselineError, pl0.L0SetupError) as e:
         record["problem"] = f"{type(e).__name__}: {e}"
+        record["status"] = SETUP_FAILED if record["phase"] in SETUP_PHASES else ERROR
+    except Exception as e:                      # Docker, JSON, anything else
+        record["problem"] = f"{type(e).__name__}: {e}"
+        record["status"] = ERROR
     finally:
         if started:
             pdock.remove_container(name)
         if pulled and not keep_image:
             record["image_removed"] = pdock.remove_image(tag, pulled)
     record["finished_at"] = _now()
+    record["disk_free_gb_after"] = disk_free_gb()
     return record
 
 
@@ -609,43 +1003,115 @@ def save_baseline(doc: dict) -> None:
     BASELINE_PATH.write_text(json.dumps(doc, indent=2, sort_keys=False) + "\n", encoding="utf-8")
 
 
+def select_cves(entries: dict, only=None, language: str = "") -> list:
+    cves = list(entries)
+    if only:
+        cves = [c for c in cves if c in set(only)]
+    if language:
+        want = language.lower()
+        cves = [c for c in cves if entries[c]["language"].lower() == want]
+    return cves
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Baseline PatchEval CVEs (no grading)")
-    ap.add_argument("cves", nargs="+", help="CVE ids from data/patcheval/manifest.json")
+    ap.add_argument("cves", nargs="*", help="CVE ids (default: every manifest entry)")
+    ap.add_argument("--only", nargs="+", metavar="CVE",
+                    help="same as listing CVEs positionally")
+    ap.add_argument("--language", choices=["python", "go", "javascript"],
+                    help="only this dataset language (javascript includes the .ts entry)")
+    ap.add_argument("--redo", action="store_true",
+                    help="re-baseline CVEs already in baseline.json (default: skip them)")
     ap.add_argument("--keep-image", action="store_true",
                     help="keep images this run pulled (default: remove them)")
     args = ap.parse_args()
 
     entries = manifest()
-    unknown = [c for c in args.cves if c not in entries]
+    only = (args.cves or []) + (args.only or [])
+    unknown = [c for c in only if c not in entries]
     if unknown:
         print(f"Not in the manifest: {', '.join(unknown)}", file=sys.stderr)
         return 2
 
     doc = load_baseline()
     doc.setdefault("entries", {})
-    failures = 0
-    for i, cve in enumerate(args.cves, start=1):
-        print(f"[{i}/{len(args.cves)}] {cve} ({entries[cve]['prompt_language']}) ...",
-              flush=True)
+    selected = select_cves(entries, only, args.language or "")
+    if args.redo:
+        todo, done_already = selected, []
+    else:
+        done_already = [c for c in selected if c in doc["entries"]]
+        todo = [c for c in selected if c not in doc["entries"]]
+
+    free_at_start = disk_free_gb()
+    print(f"Selected {len(selected)} CVEs  |  already baselined: {len(done_already)}  |  "
+          f"to run: {len(todo)}")
+    print(f"Disk free: {free_at_start} GB  (stopping below {DISK_FLOOR_GB} GB)")
+    if not todo:
+        print("Nothing to do.")
+        return 0
+
+    batch_started = time.time()
+    counts = {OK: 0, NO_JUDGED_SET: 0, SETUP_FAILED: 0, ERROR: 0}
+    min_free = free_at_start
+    stopped_early = ""
+
+    for i, cve in enumerate(todo, start=1):
+        free_before = disk_free_gb()
+        if free_before < DISK_FLOOR_GB:
+            stopped_early = (f"stopped before {cve}: {free_before} GB free is below the "
+                             f"{DISK_FLOOR_GB} GB floor. Free some space, then rerun to "
+                             f"carry on from here.")
+            print(stopped_early)
+            break
+
         t0 = time.time()
-        record = baseline_cve(cve, entries[cve], keep_image=args.keep_image)
+        try:
+            record = baseline_cve(cve, entries[cve], keep_image=args.keep_image)
+        except BaseException as e:              # keep the batch alive regardless
+            record = {
+                "cve_id": cve, "language": entries[cve]["prompt_language"],
+                "dataset_language": entries[cve]["language"],
+                "image_tag": entries[cve]["docker_image"],
+                "status": ERROR, "ok": False, "phase": "driver",
+                "problem": f"{type(e).__name__}: {e}",
+                "started_at": _now(), "finished_at": _now(),
+                "disk_free_gb_before": free_before, "disk_free_gb_after": disk_free_gb(),
+            }
+            pdock.sweep_containers()
+        record["elapsed_seconds"] = round(time.time() - t0, 1)
         doc["entries"][cve] = record
-        save_baseline(doc)
-        if record["ok"]:
-            plan = record["test_plan"]
-            print(f"    ok  {plan['runner']} from {plan['source']}  "
-                  f"judged={record['judged_count']}  excluded={len(record['excluded'])}  "
-                  f"({time.time() - t0:.0f}s)")
-        else:
-            failures += 1
-            print(f"    PROBLEM: {record.get('problem', 'unknown')}")
+        save_baseline(doc)                      # after every CVE: lose at most one
+
+        counts[record["status"]] = counts.get(record["status"], 0) + 1
+        free_after = record.get("disk_free_gb_after", disk_free_gb())
+        min_free = min(min_free, free_after)
+        detail = (f"judged={record.get('judged_count', 0):<4} "
+                  f"excl={len(record.get('excluded') or {}):<4}")
+        if record["status"] != OK:
+            detail = f"{record.get('reason_group', record['status'])}: " \
+                     f"{str(record.get('problem', ''))[:70]}"
+        print(f"[{i:3}/{len(todo)}] {cve:18} {record['language']:<11} "
+              f"{record['status']:<14} {detail}  {record['elapsed_seconds']:>6.0f}s  "
+              f"free={free_after}GB", flush=True)
+
+    doc["batch"] = {
+        "finished_at": _now(),
+        "wall_seconds": round(time.time() - batch_started, 1),
+        "counts": counts,
+        "disk_free_gb_start": free_at_start,
+        "disk_free_gb_min": min_free,
+        "peak_disk_used_gb": round(free_at_start - min_free, 1),
+        "stopped_early": stopped_early,
+    }
+    save_baseline(doc)
 
     left = pdock.sweep_containers()
     if left:
         print(f"Swept leftover containers: {', '.join(left)}")
+    print(f"\n{counts}  in {(time.time() - batch_started) / 60:.1f} min  |  "
+          f"peak disk used {free_at_start - min_free:.1f} GB")
     print(f"Wrote {BASELINE_PATH}")
-    return 1 if failures else 0
+    return 1 if (counts[ERROR] or stopped_early) else 0
 
 
 if __name__ == "__main__":

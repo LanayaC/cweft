@@ -1,0 +1,26 @@
+test_adds (tests_ut.test_sample.SampleTests.test_adds) ... ok
+test_divides (tests_ut.test_sample.SampleTests.test_divides) ... FAIL
+test_errors_in_setup (tests_ut.test_sample.SampleTests.test_errors_in_setup) ... ERROR
+test_needs_db (tests_ut.test_sample.SampleTests.test_needs_db) ... skipped 'needs a database'
+
+======================================================================
+ERROR: test_errors_in_setup (tests_ut.test_sample.SampleTests.test_errors_in_setup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/fixtures\tests_ut\test_sample.py", line 16, in test_errors_in_setup
+    raise RuntimeError("setup blew up")
+RuntimeError: setup blew up
+
+======================================================================
+FAIL: test_divides (tests_ut.test_sample.SampleTests.test_divides)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/fixtures\tests_ut\test_sample.py", line 9, in test_divides
+    self.assertEqual(10 / 4, 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: 2.5 != 2
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1, errors=1, skipped=1)

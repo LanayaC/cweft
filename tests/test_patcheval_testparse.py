@@ -29,6 +29,7 @@ NORMAL = [
     ("jest_json", "jest_json_normal.json", 0),
     ("mocha_json", "mocha_json_normal.json", 0),
     ("tap", "tap_node_normal.tap", 0),
+    ("unittest_text", "unittest_text_normal.txt", 1),
 ]
 NO_TESTS_CASES = [
     ("junit_xml", "junit_pytest_no_tests.xml"),
@@ -36,6 +37,7 @@ NO_TESTS_CASES = [
     ("jest_json", "jest_json_no_tests.json"),
     ("mocha_json", "mocha_json_no_tests.json"),
     ("tap", "tap_node_no_tests.tap"),
+    ("unittest_text", "unittest_text_no_tests.txt"),
 ]
 COLLECTION_CASES = [
     ("junit_xml", "junit_pytest_collection_error.xml"),
@@ -43,6 +45,7 @@ COLLECTION_CASES = [
     ("jest_json", "jest_json_load_error.json"),
     ("mocha_json", "mocha_json_load_error.json"),
     ("tap", "tap_node_load_error.tap"),
+    ("unittest_text", "unittest_text_load_error.txt"),
 ]
 TRUNCATED = [
     ("junit_xml", "junit_pytest_truncated.xml"),
@@ -50,6 +53,7 @@ TRUNCATED = [
     ("jest_json", "jest_json_truncated.json"),
     ("mocha_json", "mocha_json_truncated.json"),
     ("tap", "tap_node_truncated.tap"),
+    ("unittest_text", "unittest_text_truncated.txt"),
 ]
 
 

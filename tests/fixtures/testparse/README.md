@@ -15,6 +15,7 @@ run that collected nothing, an import or build failure, and a truncated file
 | `go_json_*.jsonl` | `go test -json`, go1.24.1 | PatchEval image `cve-2023-24623` |
 | `mocha_json_*.json` | `mocha --reporter json`, Node v22.14.0 | PatchEval image `cve-2022-29822` |
 | `jest_json_*.json` | `jest --json`, Node v22.14.0 | PatchEval image `cve-2021-23376` |
+| `unittest_text_*.txt` | `python -m unittest -v`, Python 3.13.1 | this machine |
 
 Two quirks these fixtures exist to pin down:
 
@@ -25,3 +26,8 @@ Two quirks these fixtures exist to pin down:
 
 `mocha_json_load_error.json` therefore holds stdout and stderr combined, which
 is what the evaluator captures. The others hold stdout only.
+
+`unittest_text_*.txt` hold stderr, where unittest writes its report; the
+evaluator captures both streams for that format. unittest also turns a module
+that will not import into one erroring test named `_FailedTest`, so an import
+failure otherwise looks like a run with a single error rather than nothing at all.

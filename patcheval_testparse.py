@@ -3,7 +3,9 @@ Readers that turn a test runner's output into one shape, so the PatchEval
 backend can compare a model's run against a baseline run test by test.
 
 Supported: JUnit XML (pytest --junitxml), `go test -json`, `jest --json`,
-`mocha --reporter json`, and TAP (`node --test --test-reporter=tap`).
+`mocha --reporter json`, TAP (`node --test --test-reporter=tap`, tape, ava
+--tap, tap --reporter=tap), and unittest's own verbose text output, which is
+what Django's runtests.py and manage.py test print.
 
 Every reader returns a TestReport whose `status` says whether the results
 can be trusted:
@@ -300,12 +302,109 @@ def parse_tap(text: str) -> TestReport:
     return _report(fmt, OK, "", cases)
 
 
+# ── unittest text (Django's runtests.py, manage.py test, unittest -v) ────
+#
+# The only format here that is scraped from prose rather than read from a
+# machine-readable report: Django's runner has no JUnit option. It needs
+# verbosity 2, which prints one line per test, and the trailing "Ran N tests"
+# line is what says the output is complete.
+
+_UT_NAME = re.compile(
+    r"^(?P<name>\w+) \((?P<cls>[\w.]+)\)(?P<sub> \[[^\]]*\])?(?P<rest>.*)$")
+_UT_OUTCOME = re.compile(
+    r"\.\.\.\s*(?P<outcome>ok|FAIL|ERROR|skipped.*|expected failure|unexpected success)\s*$")
+_UT_RAN = re.compile(r"^Ran (\d+) tests? in ", re.M)
+_UT_DETAIL_HEAD = re.compile(r"^(FAIL|ERROR): (?P<name>\w+) \((?P<cls>[\w.]+)\)")
+
+_UT_OUTCOMES = {"ok": PASSED, "FAIL": FAILED, "ERROR": ERROR,
+                "expected failure": PASSED, "unexpected success": FAILED}
+
+
+def _ut_full_name(cls: str, name: str, sub: str = "") -> str:
+    # Python 3.11+ prints (module.Class.method); older prints (module.Class).
+    full = cls if cls.endswith("." + name) else f"{cls}::{name}"
+    return f"{full}{sub.strip()}" if sub else full
+
+
+def parse_unittest_text(text: str) -> TestReport:
+    fmt = "unittest_text"
+    lines = text.splitlines()
+    cases, pending = [], None
+
+    for line in lines:
+        if pending is not None:
+            # A docstring sat between the test's name and its outcome.
+            m = _UT_OUTCOME.search(line)
+            if m:
+                cases.append(TestCase(pending, _ut_outcome(m.group("outcome"))))
+                pending = None
+                continue
+            if _UT_NAME.match(line) is None:
+                continue
+            pending = None                       # name line with no outcome: give up on it
+        m = _UT_NAME.match(line)
+        if not m:
+            continue
+        full = _ut_full_name(m.group("cls"), m.group("name"), m.group("sub") or "")
+        outcome = _UT_OUTCOME.search(m.group("rest") or "")
+        if outcome:
+            cases.append(TestCase(full, _ut_outcome(outcome.group("outcome"))))
+        else:
+            pending = full
+
+    # Failure and error bodies, from the ==== blocks below the run.
+    details, current = {}, None
+    for line in lines:
+        head = _UT_DETAIL_HEAD.match(line)
+        if head:
+            current = _ut_full_name(head.group("cls"), head.group("name"))
+            details[current] = []
+            continue
+        if current:
+            if line.startswith("===") or _UT_RAN.match(line):
+                current = None
+            elif not line.startswith("---"):
+                details[current].append(line)
+    if details:
+        cases = [c._replace(detail=_detail(" ".join(details.get(c.name, []))))
+                 if c.outcome in (FAILED, ERROR) else c for c in cases]
+
+    ran = _UT_RAN.search(text)
+    if ran is None:
+        if _MODULE_MISSING.search(text):
+            return _report(fmt, COLLECTION_ERROR, _detail(text[-1000:]), cases)
+        return _report(fmt, UNPARSABLE,
+                       "no 'Ran N tests' line: output truncated, or verbosity below 2", cases)
+    if int(ran.group(1)) == 0:
+        return _report(fmt, NO_TESTS, "the runner ran 0 tests")
+    if not cases:
+        return _report(fmt, UNPARSABLE,
+                       f"'Ran {ran.group(1)} tests' but no per-test lines: run with -v 2")
+    # unittest turns a module that will not import into a passing-looking run
+    # of one erroring test called _FailedTest. Nothing really ran.
+    load_failures = [c for c in cases
+                     if "_FailedTest" in c.name
+                     or (c.outcome == ERROR and _MODULE_MISSING.search(c.detail or ""))]
+    if load_failures and len(load_failures) == len([c for c in cases if c.outcome == ERROR]):
+        return _report(fmt, COLLECTION_ERROR,
+                       _detail(load_failures[0].detail or load_failures[0].name), cases)
+    return _report(fmt, OK, "", cases)
+
+
+def _ut_outcome(token: str) -> str:
+    token = token.strip()
+    if token.startswith("skipped"):
+        return SKIPPED
+    return _UT_OUTCOMES.get(token, ERROR)
+
+
 FORMATS = {
     "junit_xml": parse_junit_xml,
     "go_json": parse_go_json,
     "jest_json": parse_jest_json,
     "mocha_json": parse_mocha_json,
     "tap": parse_tap,
+    "unittest_text": parse_unittest_text,
 }
 
 

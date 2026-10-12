@@ -1,0 +1,7 @@
+test_adds (tests_ut.test_sample.SampleTests.test_adds) ... ok
+test_divides (tests_ut.test_sample.SampleTests.test_divides) ... FAIL
+test_errors_in_setup (tests_ut.test_sample.SampleTests.test_errors_in_setup) ... ERROR
+test_needs_db (tests_ut.test_sample.SampleTests.test_needs_db) ... skipped 'needs a database'
+
+======================================================================
+ERROR: test_errors_in_setup (
