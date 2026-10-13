@@ -5,3 +5,4 @@ data/patcheval/files/** -text diff
 # Captured test-runner output. Stored and checked out with LF, so the
 # fixtures read the same on every machine as they did when captured.
 tests/fixtures/testparse/** text eol=lf
+tests/fixtures/plans/** text eol=lf
