@@ -585,6 +585,8 @@ def _instrument_script(text: str, name: str, repo_dir: str):
         for pattern, instrument, fmt, out, runner, stream in _INSTRUMENT:
             if pattern.search(line):
                 kept[i] = instrument(line)
+                if runner == "mocha":
+                    kept[i], out = _mocha_fix_line(kept[i], name, repo_dir, notes)
                 # A script that throws stderr away hides why a run collected
                 # nothing (a build failure reads as "no output" otherwise).
                 if re.search(r"2>\s*/dev/null", kept[i]):
@@ -623,6 +625,48 @@ def _has_dep(pkg: dict, *names: str) -> bool:
     return any(n in deps or re.search(rf"\b{re.escape(n)}\b", scripts) for n in names)
 
 
+_MOCHA_FLAG_REJECTED = re.compile(r"unknown option.{0,8}--reporter-option", re.I)
+
+
+def mocha_rejects_reporter_option(text: str) -> bool:
+    """True when mocha refused --reporter-option, a flag it only gained in 6."""
+    return bool(_MOCHA_FLAG_REJECTED.search(text or ""))
+
+
+def _mocha_major(name: str, repo_dir: str):
+    """The image's mocha major version, or None when it cannot be asked."""
+    r = _run(name, f"cd {shlex.quote(repo_dir)} && npx --no-install mocha --version")
+    m = re.search(r"(\d+)\.", r.stdout or "") if r.rc == 0 else None
+    return int(m.group(1)) if m else None
+
+
+def _mocha_report_flags(name: str, repo_dir: str, notes: list) -> tuple:
+    """
+    (flags, output_file) for mocha's JSON report, on old and new mocha alike.
+
+    --reporter-option arrived in mocha 6. Older mocha does not ignore it, it
+    rejects the whole invocation and runs nothing, so there the report is read
+    from stdout instead: the suite's own console output may surround the JSON,
+    which the mocha_json reader already tolerates.
+    """
+    major = _mocha_major(name, repo_dir)
+    if major is not None and major >= 6:
+        notes.append(f"mocha {major}: JSON report written to {REPORT_JSON} "
+                     f"with --reporter-option")
+        return f"--reporter json --reporter-option output={REPORT_JSON}", REPORT_JSON
+    notes.append(f"mocha {major if major is not None else 'version unknown'}: "
+                 f"--reporter-option needs mocha 6; read the JSON report from stdout")
+    return "--reporter json", ""
+
+
+def _mocha_fix_line(line: str, name: str, repo_dir: str, notes: list) -> tuple:
+    """An instrumented mocha line, with --reporter-option removed if too old."""
+    flags, out = _mocha_report_flags(name, repo_dir, notes)
+    if out:
+        return line, out
+    return re.sub(r"\s*--reporter-option\s+output=\S+", "", line), ""
+
+
 def _python_with_pytest(name: str, repo_dir: str) -> str:
     """The first interpreter that has pytest: the PoC env's, then the image's."""
     candidates = []
@@ -635,6 +679,31 @@ def _python_with_pytest(name: str, repo_dir: str) -> str:
         if _run(name, f"cd {shlex.quote(repo_dir)} && {shlex.quote(py)} -m pytest --version").rc == 0:
             return py
     raise BaselineError(f"no interpreter with pytest among {candidates}")
+
+
+def _django_plan(name: str, repo_dir: str, notes: list):
+    """
+    Django's own test entry point, when the repo is a Django project.
+
+    pytest and plain unittest discovery import the project's modules without
+    loading settings, which Django answers with ImproperlyConfigured before a
+    single test runs. manage.py test loads them, and at -v 2 it names every
+    test, which the unittest_text reader reads. Its report goes to stderr.
+    """
+    if not file_exists(name, f"{repo_dir}/manage.py"):
+        return None
+    if _run(name, f"grep -q DJANGO_SETTINGS_MODULE {shlex.quote(repo_dir)}/manage.py").rc != 0:
+        return None
+    try:
+        py = pl0.python_interpreter(name)
+    except pl0.L0SetupError:
+        return None
+    return TestPlan(f"{shlex.quote(py)} manage.py test -v 2", "language_default",
+                    "unittest_text", "",
+                    notes + ["manage.py names DJANGO_SETTINGS_MODULE: used Django's own "
+                             "runner, which loads settings; pytest and unittest discovery "
+                             "fail with ImproperlyConfigured"],
+                    "manage.py test", stream="both")
 
 
 def _default_plan(name: str, repo_dir: str, rel_path: str) -> TestPlan:
@@ -666,10 +735,10 @@ def _default_plan(name: str, repo_dir: str, rel_path: str) -> TestPlan:
                             "language_default", "jest_json", REPORT_JSON,
                             notes + ["jest found in package.json"], "jest")
         if _has_dep(pkg, "mocha"):
-            return TestPlan(f"npx --no-install mocha --reporter json "
-                            f"--reporter-option output={REPORT_JSON}",
-                            "language_default", "mocha_json", REPORT_JSON,
-                            notes + ["mocha found in package.json"], "mocha")
+            mnotes = notes + ["mocha found in package.json"]
+            flags, out = _mocha_report_flags(name, repo_dir, mnotes)
+            return TestPlan(f"npx --no-install mocha {flags}",
+                            "language_default", "mocha_json", out, mnotes, "mocha")
         if ext.startswith(".ts") and _run(name, "command -v deno").rc == 0:
             return TestPlan(f"deno test -A --no-check --junit-path={REPORT_XML}",
                             "language_default", "junit_xml", REPORT_XML,
@@ -726,7 +795,13 @@ def resolve_test_plan(name: str, repo_dir: str, rel_path: str) -> list:
         if file_exists(name, UNIT_TEST):
             wide.notes.insert(0, "unit_test.sh exists but is empty; used the language default")
         scoped = _scoped_plan(wide, rel_path)
-        return [wide, scoped] if scoped else [wide]
+        candidates = [wide] + ([scoped] if scoped else [])
+        # A Django project cannot be tested by the generic default at all, so
+        # probe its own runner first.
+        django = _django_plan(name, repo_dir, list(wide.notes))
+        if django and wide.runner != "manage.py test":
+            candidates.insert(0, django)
+        return candidates
 
     script, fmt, out, runner, notes, stream = _instrument_script(script_text, name, repo_dir)
     staged = "/tmp/cweft_unit_test.sh"
@@ -778,7 +853,20 @@ def run_tests(name: str, repo_dir: str, plan: TestPlan, timeout: float) -> dict:
         # would make the report unparsable if mixed in.
         raw = r.stdout
     report = ptp.parse(plan.fmt, raw)
-    return {
+    retried = False
+    if (plan.fmt == "mocha_json" and report.status != ptp.OK
+            and "--reporter-option" in plan.command
+            and mocha_rejects_reporter_option(r.stderr + r.stdout)):
+        # The version probe can be wrong: npx may resolve a different mocha, or
+        # a wrapper script may shadow it. mocha itself has now said no, so run
+        # it again without the flag and read the report from stdout.
+        retried = True
+        stripped = re.sub(r"\s*--reporter-option\s+output=\S+", "", plan.command)
+        r = pdock.exec_in(name, f"cd {shlex.quote(repo_dir)} && {stripped}", timeout=timeout)
+        raw = r.stdout
+        report_from = "stdout (retried without --reporter-option)"
+        report = ptp.parse(plan.fmt, raw)
+    result = {
         "rc": r.rc,
         "seconds": r.seconds,
         "timed_out": r.timed_out,
@@ -793,6 +881,11 @@ def run_tests(name: str, repo_dir: str, plan: TestPlan, timeout: float) -> dict:
         "failures": {c.name: c.detail for c in report.cases
                      if c.outcome in (ptp.FAILED, ptp.ERROR)},
     }
+    if retried:
+        result["retried_without_reporter_option"] = True
+    if report.dropped:
+        result["dropped_packages"] = list(report.dropped)
+    return result
 
 
 def _trim_runs(runs: list) -> list:
@@ -843,6 +936,23 @@ def _reason_group(record: dict) -> str:
     return "other"
 
 
+_OUTCOME_RANK = {ptp.PASSED: 0, ptp.SKIPPED: 1, ptp.FAILED: 2, ptp.ERROR: 3}
+
+
+def _worse(a: str, b: str) -> str:
+    """The worse of two outcomes, so a folded collision never reads as a pass."""
+    return a if _OUTCOME_RANK.get(a, 3) >= _OUTCOME_RANK.get(b, 3) else b
+
+
+def _fold_run(cases: dict) -> dict:
+    """One run's cases keyed by name with any per-run timing removed."""
+    folded = {}
+    for raw_name, outcome in cases.items():
+        key = ptp.normalize_case_name(raw_name)
+        folded[key] = _worse(folded[key], outcome) if key in folded else outcome
+    return folded
+
+
 def _judge(fixed_runs) -> tuple:
     """
     Judged set: passed in all three reference-fixed runs. Everything else
@@ -855,10 +965,14 @@ def _judge(fixed_runs) -> tuple:
         return [], {}, (f"{len(unusable)} of {len(fixed_runs)} reference runs unusable: "
                         f"{unusable[0]['status']} ({unusable[0]['message'][:120]})")
 
-    seen = sorted({n for r in fixed_runs for n in r["cases"]})
+    # Match tests across runs by name with any per-run timing removed: node-tap
+    # prints a name like test/array.test.js # time=66.722ms, so raw names never
+    # match from one run to the next and every test would look flaky.
+    per_run = [_fold_run(r["cases"]) for r in fixed_runs]
+    seen = sorted({n for folded in per_run for n in folded})
     judged, excluded = [], {}
     for n in seen:
-        outcomes = [r["cases"].get(n, "missing") for r in fixed_runs]
+        outcomes = [folded.get(n, "missing") for folded in per_run]
         if all(o == ptp.PASSED for o in outcomes):
             judged.append(n)
         elif all(o == ptp.SKIPPED for o in outcomes):

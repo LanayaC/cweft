@@ -31,3 +31,17 @@ is what the evaluator captures. The others hold stdout only.
 evaluator captures both streams for that format. unittest also turns a module
 that will not import into one erroring test named `_FailedTest`, so an import
 failure otherwise looks like a run with a single error rather than nothing at all.
+
+## Added after the clean pass of 2026-10-13
+
+`go_json_partial_build_error.jsonl` is the one file here that is assembled
+rather than captured whole, because no complete capture of that run was kept.
+Its `build-output` and `build-fail` events carry the compiler error recorded
+verbatim for `CVE-2024-24579` in `data/patcheval/baseline.json`; the test
+events after them are the ones from `go_json_normal.jsonl`. Together they
+reproduce what that CVE hit: one package whose test binary will not build
+while other packages run to completion. That must leave the passing results
+usable and name the dropped package, rather than discard the whole run.
+
+See also `../plans/`, which holds what a runner says when it refuses to run at
+all, and which the plan builder reads to decide a runner's flags.

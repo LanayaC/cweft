@@ -18,6 +18,13 @@ can be trusted:
 
 The last three must never be read as "zero failures". Only `ok` means the
 case list is complete; `usable` says so in one word.
+
+One qualification on `ok`: a report may also name packages in `dropped`.
+`go test ./...` builds each package separately, and one package that will not
+build does not stop the others from running. Such a report is `ok` for the
+packages that did run, and `dropped` names those that never did, so a single
+broken package cannot discard hundreds of real results. A build failure that
+leaves nothing usable is still `collection_error`.
 """
 
 import json
@@ -43,6 +50,9 @@ _COLLECTION_MSG = re.compile(r"collection (failure|error)", re.I)
 _MODULE_MISSING = re.compile(
     r"Cannot find module|ModuleNotFoundError|ImportError|No module named", re.I)
 _GO_BUILD_FAILED = re.compile(r"\[(build|setup) failed\]|^# ", re.M)
+# "# github.com/org/repo/pkg [github.com/org/repo/pkg.test]" names the package
+# whose test binary failed to build.
+_GO_BUILD_PKG = re.compile(r"^#\s+(\S+)")
 _GO_NO_TESTS = re.compile(r"no tests to run|no test files", re.I)
 _TAP_RESULT = re.compile(r"^(not ok|ok)\s+(\d+)\s*-?\s*(.*)$")
 _TAP_PLAN = re.compile(r"^1\.\.(\d+)\s*$")
@@ -61,6 +71,7 @@ class TestReport(NamedTuple):
     status: str
     message: str
     cases: Tuple[TestCase, ...]
+    dropped: Tuple[str, ...] = ()      # packages that never built (see module docstring)
 
     @property
     def usable(self) -> bool:
@@ -87,8 +98,20 @@ def _detail(text: str) -> str:
     return " ".join((text or "").split())[:DETAIL_CHARS]
 
 
-def _report(fmt, status, message="", cases=()) -> TestReport:
-    return TestReport(fmt, status, message, tuple(cases))
+# A per-run timing printed as part of a TAP test name: node-tap and tape emit
+# `ok 1 - test/array.test.js # time=66.722ms`. The number changes every run, so
+# the same test never matches itself across runs and every case looks flaky.
+# Only `time=` is stripped: any other `#` comment may be part of the name.
+_TIMING_SUFFIX = re.compile(r"\s+#\s*time=[\d.]+\s*(?:ms|s)?\s*$", re.I)
+
+
+def normalize_case_name(name: str) -> str:
+    """A test's name with any per-run timing removed, for cross-run matching."""
+    return _TIMING_SUFFIX.sub("", name or "").strip()
+
+
+def _report(fmt, status, message="", cases=(), dropped=()) -> TestReport:
+    return TestReport(fmt, status, message, tuple(cases), tuple(dropped))
 
 
 # ── JUnit XML (pytest --junitxml) ────────────────────────────────────────
@@ -150,6 +173,7 @@ def parse_go_json(text: str) -> TestReport:
         return _report(fmt, UNPARSABLE, f"no JSON events ({malformed} unreadable lines)")
 
     cases, output, package_done, build_failed = [], [], False, False
+    failed_pkgs: List[str] = []
     per_test: Dict[Tuple[str, str], List[str]] = {}
     for ev in events:
         action, test = ev.get("Action"), ev.get("Test")
@@ -160,8 +184,13 @@ def parse_go_json(text: str) -> TestReport:
                 per_test.setdefault((pkg, test), []).append(text_out)
             else:
                 output.append(text_out)
+                named = _GO_BUILD_PKG.match(text_out)
+                if named and named.group(1) not in failed_pkgs:
+                    failed_pkgs.append(named.group(1))
         elif action == "build-fail":
             build_failed = True
+            if pkg and pkg not in failed_pkgs:
+                failed_pkgs.append(pkg)
         elif test and action in ("pass", "fail", "skip"):
             outcome = {"pass": PASSED, "fail": FAILED, "skip": SKIPPED}[action]
             detail = "" if outcome == PASSED else _detail("".join(per_test.get((pkg, test), [])))
@@ -173,7 +202,13 @@ def parse_go_json(text: str) -> TestReport:
     if not package_done and not build_failed:
         return _report(fmt, UNPARSABLE, "no package-level result: output looks truncated", cases)
     if build_failed or _GO_BUILD_FAILED.search(joined):
-        return _report(fmt, COLLECTION_ERROR, _detail(joined), cases)
+        if cases:
+            named = ", ".join(failed_pkgs) if failed_pkgs else "an unnamed package"
+            return _report(fmt, OK,
+                           f"kept {len(cases)} result(s) from the packages that built; "
+                           f"{named} did not: {_detail(joined)}",
+                           cases, failed_pkgs or ("unknown",))
+        return _report(fmt, COLLECTION_ERROR, _detail(joined), cases, failed_pkgs)
     if not cases:
         why = "no tests matched" if _GO_NO_TESTS.search(joined) else "no test events"
         return _report(fmt, NO_TESTS, why)
