@@ -126,8 +126,49 @@ SYSTEM_PROMPTS = {
 
 
 # ──────────────────────────────────────────────────────────────────────
+# Truncation detection
+#
+# Every provider says why it stopped, but each uses its own field and its own
+# vocabulary. The value is recorded verbatim as `stop_reason`, and the one
+# value per provider that means "I ran out of output budget" sets `truncated`:
+#
+#   claude   response.stop_reason                  "max_tokens"
+#   gpt      choices[0].finish_reason              "length"
+#   gemini   candidates[0].finish_reason           "MAX_TOKENS" (an enum)
+#   ollama   done_reason                           "length"
+#
+# A truncated response is a file cut off mid-write. It cannot compile or parse,
+# so it scores L0 and looks exactly like a failed repair unless the flag is
+# carried alongside it.
+# ──────────────────────────────────────────────────────────────────────
+
+TRUNCATION_REASON = {
+    "claude": "max_tokens",
+    "gpt":    "length",
+    "gemini": "MAX_TOKENS",
+    "ollama": "length",
+}
+
+
+def _reason_text(raw) -> str:
+    """A provider's stop reason as a plain string (Gemini's is an enum)."""
+    if raw is None:
+        return ""
+    return str(getattr(raw, "name", None) or raw)
+
+
+def is_truncated(provider: str, reason: str) -> bool:
+    want = TRUNCATION_REASON.get(provider)
+    if not want or not reason:
+        return False
+    return reason.strip().upper().endswith(want.upper())
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Per-provider call functions. Each returns the same shape:
 #   (response_text: str, usage: dict)
+# where usage always carries input_tokens, output_tokens, stop_reason and
+# truncated.
 # ──────────────────────────────────────────────────────────────────────
 
 def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
@@ -139,9 +180,12 @@ def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
         messages=[{"role": "user", "content": prompt}],
     )
     text = response.content[0].text
+    reason = _reason_text(getattr(response, "stop_reason", None))
     usage = {
         "input_tokens": response.usage.input_tokens,
         "output_tokens": response.usage.output_tokens,
+        "stop_reason": reason,
+        "truncated": is_truncated("claude", reason),
     }
     return text, usage
 
@@ -157,10 +201,19 @@ def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
         ],
     )
     text = response.choices[0].message.content or ""
+    reason = _reason_text(getattr(response.choices[0], "finish_reason", None))
     usage = {
         "input_tokens": response.usage.prompt_tokens,
         "output_tokens": response.usage.completion_tokens,
+        "stop_reason": reason,
+        "truncated": is_truncated("gpt", reason),
     }
+    # Reasoning tokens share max_completion_tokens with the visible answer, so
+    # record them: they explain a truncation that the file length alone doesn't.
+    details = getattr(response.usage, "completion_tokens_details", None)
+    reasoning = getattr(details, "reasoning_tokens", None)
+    if reasoning is not None:
+        usage["reasoning_tokens"] = reasoning
     # An empty string here would be written out as an empty .java file and
     # scored as a genuine L0. On reasoning models max_completion_tokens covers
     # reasoning tokens as well as visible output, so the whole budget can be
@@ -187,12 +240,15 @@ def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
         ),
     )
     text = response.text
+    candidate = response.candidates[0] if response.candidates else None
+    reason = _reason_text(getattr(candidate, "finish_reason", None)) if candidate else ""
     if text is None:
-        finish = response.candidates[0].finish_reason if response.candidates else "unknown"
-        raise RuntimeError(f"Gemini returned no text (finish_reason={finish})")
+        raise RuntimeError(f"Gemini returned no text (finish_reason={reason or 'unknown'})")
     usage = {
         "input_tokens": getattr(response.usage_metadata, "prompt_token_count", 0),
         "output_tokens": getattr(response.usage_metadata, "candidates_token_count", 0),
+        "stop_reason": reason,
+        "truncated": is_truncated("gemini", reason),
     }
     return text, usage
 
@@ -245,9 +301,12 @@ def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
         raise RuntimeError(f"Ollama error for {model_key}: {data['error']}")
 
     text = data.get("response") or ""
+    reason = _reason_text(data.get("done_reason"))
     usage = {
         "input_tokens":  data.get("prompt_eval_count", 0),
         "output_tokens": data.get("eval_count", 0),
+        "stop_reason": reason,
+        "truncated": is_truncated("ollama", reason),
     }
 
     if not text.strip():
@@ -326,6 +385,10 @@ def call_model(model_key: str, prompt: str, language: str = "Java") -> Tuple[str
     start = time.time()
     text, usage = _DISPATCH[model_key](prompt, SYSTEM_PROMPTS[language])
     usage["latency_s"] = round(time.time() - start, 2)
+    # Always present, whatever the provider reported, so every caller and every
+    # log can rely on them.
+    usage.setdefault("stop_reason", "")
+    usage.setdefault("truncated", False)
     strip = _strip_markdown_fences if language == "Java" else _strip_outer_fence
     return strip(text), usage
 

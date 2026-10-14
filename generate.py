@@ -111,18 +111,38 @@ def run_cell(
     for attempt in range(1, max_attempts + 1):
         try:
             response_text, usage = call_model(model_key, prompt, language=language)
-            return {
+            record = {
                 **base_record,
-                "status":   "ok",
-                "response": response_text,
-                "usage":    usage,
-                "attempts": attempt,
+                "status":      "ok",
+                "response":    response_text,
+                "usage":       usage,
+                "truncated":   bool(usage.get("truncated")),
+                "stop_reason": usage.get("stop_reason", ""),
+                "attempts":    attempt,
             }
+            if record["truncated"]:
+                # The file is cut off mid-write, so it cannot compile or parse
+                # and will score L0 for a reason that is not the model's repair.
+                # ASCII only, and never fatal: this print sits inside the retry
+                # block, so a console that cannot render it would otherwise turn
+                # a paid, successful call into three retries and an error row.
+                try:
+                    print(f"\n      !! TRUNCATED: {payload['vul_id']} {level} {model_key} "
+                          f"stopped at the output cap (stop_reason="
+                          f"{record['stop_reason']!r}, output_tokens="
+                          f"{usage.get('output_tokens')}). Scores L0 for truncation, "
+                          f"not for the patch.", flush=True)
+                except Exception:
+                    pass
+            return record
         except Exception as e:
             last_error = f"{type(e).__name__}: {e}"
             if attempt < max_attempts:
                 sleep_s = base_backoff_s * (2 ** (attempt - 1))
-                print(f"      ⚠ attempt {attempt} failed ({last_error}); retrying in {sleep_s:.0f}s")
+                # ASCII: a Windows console in cp1252 raises on "⚠", and
+                # this line runs on the failure path, where a crash would take
+                # the whole run down with it.
+                print(f"      ! attempt {attempt} failed ({last_error}); retrying in {sleep_s:.0f}s")
                 time.sleep(sleep_s)
 
     return {
@@ -152,7 +172,7 @@ def payload_for(vul_id: str) -> Optional[dict]:
         _payload_cache[vul_id] = p
         return p
     except Exception as e:
-        print(f"  ✗ {vul_id}: payload build failed: {type(e).__name__}: {e}")
+        print(f"  x {vul_id}: payload build failed: {type(e).__name__}: {e}")
         return None
 
 
@@ -191,7 +211,7 @@ def main():
     print()
 
     if args.dry_run:
-        print("Dry run — exiting before any API calls.")
+        print("Dry run - exiting before any API calls.")
         return
 
     if not pending:

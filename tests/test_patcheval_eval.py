@@ -27,7 +27,7 @@ EXPECTED_COLUMNS = [
     "image_digest", "digest_matches_baseline",
     "l0_checker", "l0_passed", "poc_passed",
     "judged_set_size", "tests_run", "regressions", "n_regressions",
-    "flaky_excluded", "trust_level", "error", "timings",
+    "flaky_excluded", "trust_level", "truncated", "stop_reason", "error", "timings",
     "code_fingerprint", "timestamp",
 ]
 

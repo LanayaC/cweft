@@ -65,7 +65,7 @@ CSV_FIELDS = [
     "image_digest", "digest_matches_baseline",
     "l0_checker", "l0_passed", "poc_passed",
     "judged_set_size", "tests_run", "regressions", "n_regressions",
-    "flaky_excluded", "trust_level", "error", "timings",
+    "flaky_excluded", "trust_level", "truncated", "stop_reason", "error", "timings",
     "code_fingerprint", "timestamp",
 ]
 
@@ -166,9 +166,25 @@ def done_cells(path: Path = None) -> set:
         return {(r["cve"], r["level"], r["model_key"]) for r in csv.DictReader(f)}
 
 
+def _check_header(path: Path) -> None:
+    """Refuse to append rows wider than an existing file's header."""
+    if not path.exists():
+        return
+    with path.open(encoding="utf-8", newline="") as f:
+        header = (f.readline().strip() or "").split(",")
+    if header != CSV_FIELDS:
+        missing = [c for c in CSV_FIELDS if c not in header]
+        raise RuntimeError(
+            f"{path} has an older header (missing: {', '.join(missing) or 'none'}; "
+            f"{len(header)} columns, this code writes {len(CSV_FIELDS)}). Appending "
+            f"would corrupt it: move it aside and let this write a new one."
+        )
+
+
 def append_row(row: dict, path: Path = None) -> None:
     path = path or RESULTS_CSV
     path.parent.mkdir(parents=True, exist_ok=True)
+    _check_header(path)
     new = not path.exists()
     with path.open("a", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=CSV_FIELDS, extrasaction="raise")
@@ -214,6 +230,10 @@ def _row(cve: str, entry: Optional[dict], level: str, model_key: str,
         "n_regressions": "",
         "flaky_excluded": "",
         "trust_level": "",
+        # Set from the generation log by the caller: a candidate the provider
+        # cut off at its output cap scores L0 for truncation, not for its patch.
+        "truncated": False,
+        "stop_reason": "",
         "error": "",
         "timings": "",
         "code_fingerprint": code_fingerprint(),
@@ -516,6 +536,11 @@ def main(args) -> None:
         log = json.loads(path.read_text(encoding="utf-8"))
         row = score_candidate(cve, (log.get("response") or "").encode("utf-8"),
                               level, model_key, log.get("model_id", ""))
+        row["truncated"] = bool(log.get("truncated"))
+        row["stop_reason"] = log.get("stop_reason", "")
+        if row["truncated"]:
+            print(f"      ! {cve} {level} {model_key}: the candidate was truncated at the "
+                  f"output cap (stop_reason={row['stop_reason']!r})", flush=True)
         append_row(row)
         counts[row["trust_level"]] = counts.get(row["trust_level"], 0) + 1
         print(f"[{i}/{len(cells)}] {cve:18s} {level:5s} {model_key:10s} "

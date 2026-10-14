@@ -37,6 +37,7 @@ CSV_FIELDS = [
     "level", "model_key", "model_id",
     "compiled", "pov_passed", "regressions",
     "trust_level",
+    "truncated", "stop_reason",
     "compile_log_chars", "test_log_chars",
     "error", "timestamp",
 ]
@@ -241,6 +242,8 @@ def evaluate_log(log_path: Path) -> Dict:
         "pov_passed":        pov_passed if pov_passed is not None else "",
         "regressions":       ";".join(regressions) if regressions else "",
         "trust_level":       trust,
+        "truncated":         bool(log.get("truncated")),
+        "stop_reason":       log.get("stop_reason", ""),
         "compile_log_chars": len(compile_log),
         "test_log_chars":    len(test_log),
         "error":             "",
@@ -262,6 +265,8 @@ def _error_row(log_path: Path, timestamp: str, error: str, log: Optional[Dict] =
         "pov_passed":        "",
         "regressions":       "",
         "trust_level":       "ERROR",
+        "truncated":         bool(log.get("truncated")),
+        "stop_reason":       log.get("stop_reason", ""),
         "compile_log_chars": 0,
         "test_log_chars":    0,
         "error":             error,
@@ -295,7 +300,30 @@ def load_done_cells() -> Set[Tuple[str, str, str]]:
     return done
 
 
+def _check_header() -> None:
+    """
+    Refuse to append rows wider than the file's header.
+
+    results.csv holds the published 504 and its header predates the truncated
+    and stop_reason columns. Appending the new shape to it would produce rows
+    the header cannot describe, so say so instead and leave the file alone.
+    """
+    if not RESULTS_CSV.exists():
+        return
+    with RESULTS_CSV.open(newline="") as f:
+        header = (f.readline().strip() or "").split(",")
+    if header != CSV_FIELDS:
+        missing = [c for c in CSV_FIELDS if c not in header]
+        raise RuntimeError(
+            f"{RESULTS_CSV} has an older header (missing: {', '.join(missing) or 'none'}; "
+            f"{len(header)} columns, this code writes {len(CSV_FIELDS)}). Appending would "
+            f"corrupt it. Move it aside (it is the published run) and let this write a new "
+            f"one, or re-evaluate into a fresh file."
+        )
+
+
 def append_row(row: Dict) -> None:
+    _check_header()
     write_header = not RESULTS_CSV.exists()
     with RESULTS_CSV.open("a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_FIELDS)
