@@ -142,6 +142,17 @@ SYSTEM_PROMPTS = {
 # carried alongside it.
 # ──────────────────────────────────────────────────────────────────────
 
+# The configured output budget per cloud model, so a pre-flight check reads the
+# same number the request sends instead of a copy that can drift. Unchanged
+# values: these are what the published 504 ran with. The local models have no
+# output cap - their OLLAMA_NUM_CTX window holds prompt and output together.
+OUTPUT_CAPS = {
+    "claude": 8192,
+    "gpt":    8192,
+    "gemini": 32768,
+}
+
+
 TRUNCATION_REASON = {
     "claude": "max_tokens",
     "gpt":    "length",
@@ -175,7 +186,7 @@ def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
     client = _get_anthropic()
     response = client.messages.create(
         model=MODELS["claude"],
-        max_tokens=8192,
+        max_tokens=OUTPUT_CAPS["claude"],
         system=system,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -194,7 +205,7 @@ def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
     client = _get_openai()
     response = client.chat.completions.create(
         model=MODELS["gpt"],
-        max_completion_tokens=8192,
+        max_completion_tokens=OUTPUT_CAPS["gpt"],
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": prompt},
@@ -222,7 +233,8 @@ def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
         raise RuntimeError(
             f"OpenAI returned an empty response (finish_reason="
             f"{response.choices[0].finish_reason!r}, completion_tokens="
-            f"{usage['output_tokens']}, max_completion_tokens=8192)."
+            f"{usage['output_tokens']}, max_completion_tokens="
+            f"{OUTPUT_CAPS['gpt']})."
         )
     return text, usage
 
@@ -235,7 +247,7 @@ def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=system,
-            max_output_tokens=32768,
+            max_output_tokens=OUTPUT_CAPS["gemini"],
             thinking_config=types.ThinkingConfig(thinking_budget=512),
         ),
     )

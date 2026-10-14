@@ -30,6 +30,7 @@ from typing import Optional
 from config import (
     DATASETS, LOGS_DIR, MODELS, PATCHEVAL_LOGS_DIR, PROMPT_LEVELS,
 )
+import capcheck
 from models import call_model
 from prompts import build_prompt
 from schemas import get_prose, get_schema
@@ -177,6 +178,42 @@ def payload_for(vul_id: str) -> Optional[dict]:
 
 
 # ──────────────────────────────────────────────────────────────────────
+# Pre-flight cap check
+# ──────────────────────────────────────────────────────────────────────
+
+def cap_risks(cells, reasoning_reserve: int = capcheck.GPT_REASONING_RESERVE):
+    """
+    (risks, unknown) for these cells, calling no API.
+
+    Sizes come from the payload each cell would be prompted with, through the
+    same cache the run uses, so nothing is fetched twice. A vuln whose payload
+    cannot be built (no container, say) is reported as unknown rather than
+    guessed at.
+    """
+    file_chars, file_tokens, prompt_chars, unknown = {}, {}, {}, []
+    for vul_id, level, model_key in cells:
+        if vul_id not in file_chars and vul_id not in unknown:
+            payload = payload_for(vul_id)
+            if payload is None:
+                unknown.append(vul_id)
+            else:
+                file_chars[vul_id] = len(payload["primary_content"])
+                # PatchEval ships an exact cl100k count; prefer it over chars.
+                if payload.get("token_count"):
+                    file_tokens[vul_id] = payload["token_count"]
+        if vul_id in file_chars:
+            payload = payload_for(vul_id)
+            prompt = build_prompt(
+                level=level, vuln_info=payload, file_path=payload["primary_file"],
+                file_content=payload["primary_content"],
+                language=payload.get("language", "Java"))
+            prompt_chars[(vul_id, level, model_key)] = len(prompt)
+    return (capcheck.check_cells(cells, file_chars, prompt_chars, reasoning_reserve,
+                                file_tokens),
+            unknown)
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Main loop
 # ──────────────────────────────────────────────────────────────────────
 
@@ -189,6 +226,12 @@ def main():
     ap.add_argument("--vulns",  nargs="+", default=None,
                     help="Explicit vul_ids (VUL4J-N or PatchEval CVE ids); overrides --dataset")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--check-caps", action="store_true",
+                    help="report which cells risk truncation at the output cap, then exit "
+                         "without calling any API")
+    ap.add_argument("--reasoning-reserve", type=int, default=capcheck.GPT_REASONING_RESERVE,
+                    help="tokens of GPT's budget assumed to go to reasoning "
+                         f"(default {capcheck.GPT_REASONING_RESERVE})")
     args = ap.parse_args()
     if args.vulns is None:
         args.vulns = DATASETS[args.dataset]
@@ -208,6 +251,16 @@ def main():
     print(f"Models: {args.models}")
     print(f"Levels: {args.levels}")
     print(f"Vulns:  {len(args.vulns)}")
+    print()
+
+    # Which of these cells cannot fit their file in the budget? Checked before
+    # anything is spent, from the source file alone.
+    to_check = cells if args.check_caps else pending
+    risks, unknown = cap_risks(to_check, args.reasoning_reserve)
+    if args.check_caps:
+        print(capcheck.report(risks, len(to_check), unknown))
+        return
+    print(capcheck.summary_line(risks, len(to_check), len(set(unknown))))
     print()
 
     if args.dry_run:

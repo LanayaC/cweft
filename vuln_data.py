@@ -369,6 +369,8 @@ def _get_patcheval_payload(vul_id: str) -> Dict:
         "language":        entry["prompt_language"],
         "docker_image":    entry["docker_image"],
         "sha256":          entry["sha256"],
+        # cl100k count of this file, for the pre-flight output-cap check.
+        "token_count":     entry.get("token_count", 0),
     }
 
 
