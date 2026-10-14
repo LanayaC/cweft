@@ -76,6 +76,9 @@ FINGERPRINTED = ("patcheval_baseline.py", "patcheval_testparse.py", "patcheval_e
 ORACLE_LEVEL = "oracle"
 ORACLE_REFERENCE = "oracle_reference"
 ORACLE_VULNERABLE = "oracle_vulnerable"
+ORACLE_REGRESSION = "oracle_regression"
+# How to break one judged test for the L2 oracle, per CVE. See its README.
+ORACLE_BREAKS_DIR = PATCHEVAL_DIR / "oracle_breaks"
 # One per language, including the single TypeScript entry. All four are `ok`
 # with small judged sets, and none uses mocha, whose recorded command predates
 # the mocha fix and would rightly be refused.
@@ -394,14 +397,40 @@ def reference_fixed_bytes(cve: str, entry: dict) -> bytes:
         pdock.remove_container(name)
 
 
+def load_break(cve: str) -> Optional[dict]:
+    """The recorded way to break one judged test for this CVE, if there is one."""
+    path = ORACLE_BREAKS_DIR / f"{cve}.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def apply_break(fixed: bytes, recipe: dict) -> bytes:
+    """
+    The reference-fixed file with one judged test's behaviour broken.
+
+    The replacement has to match exactly once: a break that matches nothing or
+    several places is not the break the recipe describes, and scoring it would
+    prove nothing.
+    """
+    old, new = recipe["replace"]["old"], recipe["replace"]["new"]
+    text = fixed.decode("utf-8")
+    found = text.count(old)
+    if found != 1:
+        raise Refused(f"the break for {recipe.get('cve')} matches {found} places, not one")
+    return text.replace(old, new).encode("utf-8")
+
+
 def oracle(cves: List[str]) -> int:
     """
-    Score two synthetic models per CVE and check the verdicts are forced.
+    Score the synthetic models for each CVE and check the verdicts are forced.
 
     The reference-fixed file must come out L3: it closes the hole, and it is
     what the judged set was derived from. The untouched vulnerable file must
-    come out L1: it parses, and the PoC still shows the bug. Returns how many
-    verdicts came out wrong.
+    come out L1: it parses, and the PoC still shows the bug. Where a break is
+    recorded under oracle_breaks, the reference fix carrying that break must
+    come out L2 and must name the judged test the recipe expects. Returns how
+    many verdicts came out wrong.
     """
     entries = load_baseline()
     man = pb.manifest()
@@ -415,12 +444,18 @@ def oracle(cves: List[str]) -> int:
             wrong += 1
             continue
         plans = [
-            (ORACLE_REFERENCE, L3, "reference fix (fix.patch applied)",
+            (ORACLE_REFERENCE, L3, None, "reference fix (fix.patch applied)",
              lambda e=entry, c=cve: reference_fixed_bytes(c, e)),
-            (ORACLE_VULNERABLE, L1, "unpatched vulnerable file (frozen copy)",
+            (ORACLE_VULNERABLE, L1, None, "unpatched vulnerable file (frozen copy)",
              lambda c=cve: pb.frozen_bytes(c, man[c])),
         ]
-        for model_key, expected, model_id, get_bytes in plans:
+        recipe = load_break(cve)
+        if recipe:
+            plans.append((ORACLE_REGRESSION, recipe["expected_trust_level"],
+                          recipe["expected_regression"], recipe["model_id"],
+                          lambda e=entry, c=cve, r=recipe:
+                              apply_break(reference_fixed_bytes(c, e), r)))
+        for model_key, expected, expect_regression, model_id, get_bytes in plans:
             if (cve, ORACLE_LEVEL, model_key) in already:
                 print(f"{cve:18s} {model_key:18s} already scored, skipped", flush=True)
                 continue
@@ -432,12 +467,15 @@ def oracle(cves: List[str]) -> int:
                            trust_level=REFUSED, error=f"{type(e).__name__}: {e}")
             append_row(row)
             got = row["trust_level"]
-            ok = got == expected
+            # A named regression has to be the one the recipe expects, not just
+            # any failure: breaking a different test would also reach L2.
+            named_right = expect_regression is None or row["regressions"] == expect_regression
+            ok = got == expected and named_right
             wrong += 0 if ok else 1
-            print(f"{cve:18s} {model_key:18s} expected {expected}  got {got:8s} "
+            print(f"{cve:18s} {model_key:18s} expected {expected:3s} got {got:8s} "
                   f"{'OK' if ok else 'WRONG'}  judged={row['judged_set_size']} "
-                  f"regressions={row['n_regressions']} {str(row['error'])[:70]}",
-                  flush=True)
+                  f"nreg={row['n_regressions']} {str(row['regressions'])[:58]} "
+                  f"{str(row['error'])[:50]}", flush=True)
     return wrong
 
 

@@ -225,7 +225,40 @@ def test_the_oracle_covers_four_distinct_cves():
 
 
 def test_the_oracle_expects_l3_from_the_fix_and_l1_from_the_bug():
-    # The two synthetic models are named in the rows they write, so a later
-    # reader can tell an oracle row from a model's.
-    assert pe.ORACLE_REFERENCE != pe.ORACLE_VULNERABLE
+    # The synthetic models are named in the rows they write, so a later reader
+    # can tell an oracle row from a model's.
+    assert len({pe.ORACLE_REFERENCE, pe.ORACLE_VULNERABLE, pe.ORACLE_REGRESSION}) == 3
     assert pe.ORACLE_LEVEL == "oracle"
+
+
+# ── the L2 oracle: a break that fails one judged test ────────────────────
+
+BREAK = {"cve": "CVE-X", "replace": {"old": "do_thing()", "new": "pass"}}
+
+
+def test_a_break_replaces_its_one_match():
+    assert pe.apply_break(b"def f():\n    do_thing()\n", BREAK) == b"def f():\n    pass\n"
+
+
+@pytest.mark.parametrize("source,why", [
+    (b"def f():\n    other()\n", "matches nothing"),
+    (b"do_thing()\ndo_thing()\n", "matches twice"),
+])
+def test_a_break_that_matches_other_than_once_is_refused(source, why):
+    with pytest.raises(pe.Refused):
+        pe.apply_break(source, BREAK)
+
+
+def test_no_break_is_recorded_for_a_cve_without_one():
+    assert pe.load_break("CVE-0000-0000") is None
+
+
+def test_the_shipped_break_names_a_test_that_is_really_judged():
+    recipe = pe.load_break("CVE-2022-39286")
+    assert recipe is not None
+    assert recipe["expected_trust_level"] == "L2"
+    assert recipe["replace"]["old"] and recipe["replace"]["new"]
+    assert recipe["model_id"]
+    # The break is pointless if the test it breaks is not in the judged set.
+    judged = pe.load_baseline()["CVE-2022-39286"]["judged"]
+    assert recipe["expected_regression"] in judged
