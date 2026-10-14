@@ -8,17 +8,25 @@ source file and compares it with the configured cap, without calling any API.
 
 How the estimate is made, and why it leans high:
 
-  * When the file's token count is already known it is used directly. The
-    PatchEval manifest carries one per file (cl100k), scaled by TOKENIZER_RATIO
-    because a provider's own tokenizer counts the same code differently: over
-    the 42 Vul4J files, Claude counted 1.21x what GPT did and Gemini 1.12x.
-  * Otherwise tokens are estimated from characters at the *median* ratio each
-    provider produced over those 42 files (claude 3.29, gpt 4.10, gemini 3.57),
-    divided by CHAR_SAFETY because density varies by file: the densest Java file
-    observed ran at 2.36 chars per token against a median of 3.29.
-  * The patched file is usually a little longer than the original, so the
-    estimate is multiplied by PATCH_GROWTH. On Gemini, whose 32,768 cap never
-    truncated, output ran between 0.63x and 1.17x the prompt tokens.
+The estimate is a bracket, not a number, because token density varies by file:
+over the 42 published Vul4J files one Java file ran at 2.36 characters per token
+and another at 3.86. A single ratio is therefore either too loose to be safe or
+too tight to be useful - a median ratio called VUL4J-78 "over cap" on Gemini,
+which in the published run emitted 28,283 tokens against a 32,768 cap and did
+not truncate.
+
+  * From characters: the optimistic bound uses the *highest* chars-per-token
+    ratio the provider was observed to produce (fewest tokens) and the
+    pessimistic bound the *lowest* (most tokens).
+  * From a known token count - the PatchEval manifest's cl100k figure - the
+    bracket is the range by which a provider's own tokenizer differs from
+    cl100k over those same files.
+  * Both bounds are multiplied by PATCH_GROWTH, since a patch adds lines. On
+    Gemini output ran between 0.63x and 1.17x the prompt tokens.
+
+The verdict says which bound decided it: `over` when even the optimistic bound
+does not fit, `tight` when only the pessimistic one does not. `tight` means it
+might truncate, and the recorded stop_reason is what settles it.
   * GPT's max_completion_tokens covers reasoning tokens as well as the visible
     file, so GPT_REASONING_RESERVE of its budget is treated as unavailable.
     This is an assumption, not a measurement: reasoning_tokens only started
@@ -36,34 +44,29 @@ from typing import Dict, List, NamedTuple, Optional
 from config import LOCAL_MODELS, OLLAMA_NUM_CTX
 from models import OUTPUT_CAPS
 
-# Median chars-per-token per provider over the 42 published Vul4J files.
-# "ollama" covers every local model; no local run is published, so it borrows
-# Gemini's, the middle of the three.
-CHARS_PER_TOKEN: Dict[str, float] = {
-    "claude": 3.29,
-    "gpt":    4.10,
-    "gemini": 3.57,
-    "ollama": 3.57,
+# (densest, sparsest) chars-per-token observed per provider over the 42
+# published Vul4J files. The sparsest gives the optimistic token count, the
+# densest the pessimistic one. "ollama" covers every local model; no local run
+# is published, so it borrows Gemini's, the middle of the three.
+CHARS_PER_TOKEN_RANGE: Dict[str, tuple] = {
+    "claude": (2.36, 3.86),
+    "gpt":    (2.95, 5.67),
+    "gemini": (2.54, 4.60),
+    "ollama": (2.54, 4.60),
 }
 
-# What each provider's tokenizer counts, relative to a cl100k count of the same
-# file. Derived from the per-file prompt tokens of the published run.
-TOKENIZER_RATIO: Dict[str, float] = {
-    "claude": 1.21,
-    "gpt":    1.00,          # cl100k is GPT's own family
-    "gemini": 1.12,
-    "ollama": 1.12,
+# (low, high) multiple of a cl100k count that a provider's own tokenizer
+# produces for the same file, from the per-file prompt tokens of the published
+# run (Claude counted about 1.21x what GPT did on average, Gemini 1.12x).
+TOKENIZER_RATIO_RANGE: Dict[str, tuple] = {
+    "claude": (1.15, 1.30),
+    "gpt":    (1.00, 1.05),  # cl100k is GPT's own family
+    "gemini": (1.08, 1.20),
+    "ollama": (1.08, 1.20),
 }
 
-CHAR_SAFETY = 1.30          # per-file density varies: 2.36 against a 3.29 median.
-                            # At 1.30 the estimate clears the actual token count of
-                            # every one of the 42 published files, on all three
-                            # providers (tests/test_capcheck.py pins this).
 PATCH_GROWTH = 1.10          # a patch adds lines; Gemini's output reached 1.17x
 GPT_REASONING_RESERVE = 2048  # assumed, see the module docstring
-TIGHT_FRACTION = 0.80        # "tight" once the estimate passes this much of the budget
-LOCAL_TIGHT_FRACTION = 0.90
-
 OVER, TIGHT, OK = "over", "tight", "ok"
 
 
@@ -72,7 +75,8 @@ class CellRisk(NamedTuple):
     level: str
     model_key: str
     verdict: str              # OVER | TIGHT | OK
-    output_estimate: int      # tokens the file is expected to need
+    output_low: int           # optimistic tokens the file needs
+    output_high: int          # pessimistic tokens the file needs
     budget: int               # tokens actually available for the file
     detail: str               # how the budget was arrived at
 
@@ -80,30 +84,36 @@ class CellRisk(NamedTuple):
     def at_risk(self) -> bool:
         return self.verdict in (OVER, TIGHT)
 
+    @property
+    def needs(self) -> str:
+        return f"{self.output_low}-{self.output_high}"
+
 
 def provider_of(model_key: str) -> str:
     return "ollama" if model_key in LOCAL_MODELS else model_key
 
 
-def estimate_tokens(model_key: str, chars: int = 0, known_tokens: int = 0) -> int:
+def estimate_tokens(model_key: str, chars: int = 0, known_tokens: int = 0) -> tuple:
     """
-    Tokens this model is expected to count for a file.
+    (optimistic, pessimistic) tokens this model is expected to count for a file.
 
-    A known count (the PatchEval manifest's cl100k figure) is scaled to the
-    provider's own tokenizer; otherwise characters are converted at the
-    provider's median ratio with CHAR_SAFETY applied.
+    A known count (the PatchEval manifest's cl100k figure) is scaled by the
+    range its tokenizer differs by; otherwise characters are converted at the
+    sparsest and densest ratios the provider was observed to produce.
     """
     provider = provider_of(model_key)
     if known_tokens:
-        return math.ceil(known_tokens * TOKENIZER_RATIO.get(provider, 1.12))
-    ratio = CHARS_PER_TOKEN.get(provider, 3.57) / CHAR_SAFETY
-    return math.ceil(chars / ratio)
+        low, high = TOKENIZER_RATIO_RANGE.get(provider, (1.08, 1.20))
+        return math.ceil(known_tokens * low), math.ceil(known_tokens * high)
+    densest, sparsest = CHARS_PER_TOKEN_RANGE.get(provider, (2.54, 4.60))
+    return math.ceil(chars / sparsest), math.ceil(chars / densest)
 
 
 def estimate_output_tokens(model_key: str, file_chars: int = 0,
-                           known_tokens: int = 0) -> int:
-    """Tokens the model must emit to return the whole patched file."""
-    return math.ceil(estimate_tokens(model_key, file_chars, known_tokens) * PATCH_GROWTH)
+                           known_tokens: int = 0) -> tuple:
+    """(optimistic, pessimistic) tokens needed to return the whole patched file."""
+    low, high = estimate_tokens(model_key, file_chars, known_tokens)
+    return math.ceil(low * PATCH_GROWTH), math.ceil(high * PATCH_GROWTH)
 
 
 def budget_for(model_key: str, prompt_chars: int = 0,
@@ -115,7 +125,9 @@ def budget_for(model_key: str, prompt_chars: int = 0,
     whatever their shared window has left once the prompt is in it.
     """
     if model_key in LOCAL_MODELS:
-        prompt_tokens = estimate_tokens(model_key, prompt_chars)
+        # The pessimistic prompt count: a bigger prompt leaves less room, so
+        # assuming the smaller one would overstate what is left for the file.
+        _, prompt_tokens = estimate_tokens(model_key, prompt_chars)
         return (OLLAMA_NUM_CTX - prompt_tokens,
                 f"num_ctx {OLLAMA_NUM_CTX} shared, prompt ~{prompt_tokens}")
     cap = OUTPUT_CAPS[model_key]
@@ -128,16 +140,15 @@ def check_cell(vul_id: str, level: str, model_key: str, file_chars: int = 0,
                prompt_chars: int = 0,
                reasoning_reserve: int = GPT_REASONING_RESERVE,
                known_tokens: int = 0) -> CellRisk:
-    need = estimate_output_tokens(model_key, file_chars, known_tokens)
+    low, high = estimate_output_tokens(model_key, file_chars, known_tokens)
     budget, detail = budget_for(model_key, prompt_chars, reasoning_reserve)
-    tight = LOCAL_TIGHT_FRACTION if model_key in LOCAL_MODELS else TIGHT_FRACTION
-    if budget <= 0 or need > budget:
-        verdict = OVER
-    elif need > budget * tight:
-        verdict = TIGHT
+    if budget <= 0 or low > budget:
+        verdict = OVER          # it does not fit even optimistically
+    elif high > budget:
+        verdict = TIGHT         # it might not fit
     else:
         verdict = OK
-    return CellRisk(vul_id, level, model_key, verdict, need, budget, detail)
+    return CellRisk(vul_id, level, model_key, verdict, low, high, budget, detail)
 
 
 def check_cells(cells, file_chars: Dict[str, int] = None,
@@ -185,7 +196,8 @@ def summary_line(risks: List[CellRisk], total_cells: int, unknown: int = 0) -> s
         parts.append(f"{len(tight)} tight ({by_model(tight)})")
     tail = f"; {unknown} of unknown size" if unknown else ""
     return (f"Cap check: {'; '.join(parts)} of {total_cells} cells{tail}. "
-            f"Those will score L0 for truncation. Run --check-caps for the list.")
+            f"Truncation there would score L0 for the cap, not the patch. "
+            f"Run --check-caps for the list.")
 
 
 def report(risks: List[CellRisk], total_cells: int, unknown: Optional[list] = None) -> str:
@@ -195,15 +207,17 @@ def report(risks: List[CellRisk], total_cells: int, unknown: Optional[list] = No
     if flagged:
         lines.append("")
         lines.append(f"{'vuln':<18}{'level':<6}{'model':<12}{'verdict':<8}"
-                     f"{'needs':>8}{'budget':>8}  how the budget was set")
-        for r in sorted(flagged, key=lambda r: (-r.output_estimate, r.vul_id,
+                     f"{'needs':>16}{'budget':>8}  how the budget was set")
+        for r in sorted(flagged, key=lambda r: (-r.output_low, r.vul_id,
                                                 r.model_key, r.level)):
             lines.append(f"{r.vul_id:<18}{r.level:<6}{r.model_key:<12}{r.verdict:<8}"
-                         f"{r.output_estimate:>8}{r.budget:>8}  {r.detail}")
-        worst = max(flagged, key=lambda r: r.output_estimate)
+                         f"{r.needs:>16}{r.budget:>8}  {r.detail}")
+        worst = max(flagged, key=lambda r: r.output_low)
         lines.append("")
-        lines.append(f"Largest need: {worst.vul_id} at ~{worst.output_estimate} tokens "
+        lines.append(f"Largest need: {worst.vul_id} at ~{worst.needs} tokens "
                      f"on {worst.model_key}.")
+        lines.append("`over` does not fit even optimistically; `tight` might not fit. "
+                     "The recorded stop_reason settles it.")
     if unknown:
         lines.append("")
         lines.append(f"Size unknown, not checked ({len(unknown)}): "

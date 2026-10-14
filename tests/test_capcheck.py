@@ -34,26 +34,26 @@ BEGIN, END = "--- BEGIN FILE ---\n", "\n--- END FILE ---"
 # ── the estimate ─────────────────────────────────────────────────────────
 
 def test_a_known_token_count_is_preferred_and_scaled_per_provider():
-    # cl100k is GPT's own family, so GPT scales by 1.0 and Claude by more.
-    gpt = capcheck.estimate_output_tokens("gpt", known_tokens=10_000)
-    claude = capcheck.estimate_output_tokens("claude", known_tokens=10_000)
-    gemini = capcheck.estimate_output_tokens("gemini", known_tokens=10_000)
-    assert gpt == 11_000                      # 10k x 1.00 x 1.10 growth
-    assert claude > gemini > gpt
+    # cl100k is GPT's own family, so GPT's lower bound is 1.0 and Claude's more.
+    gpt_low, gpt_high = capcheck.estimate_output_tokens("gpt", known_tokens=10_000)
+    claude_low, _ = capcheck.estimate_output_tokens("claude", known_tokens=10_000)
+    gemini_low, _ = capcheck.estimate_output_tokens("gemini", known_tokens=10_000)
+    assert gpt_low == 11_000                  # 10k x 1.00 x 1.10 growth
+    assert gpt_high > gpt_low
+    assert claude_low > gemini_low > gpt_low
 
 
-def test_the_character_path_is_used_when_no_count_is_known():
-    assert capcheck.estimate_output_tokens("claude", file_chars=40_000) > 0
+def test_the_character_path_brackets_the_estimate():
+    low, high = capcheck.estimate_output_tokens("claude", file_chars=40_000)
+    assert 0 < low < high
     # More characters can never mean fewer tokens.
-    smaller = capcheck.estimate_output_tokens("claude", file_chars=10_000)
-    bigger = capcheck.estimate_output_tokens("claude", file_chars=20_000)
-    assert bigger > smaller
+    assert capcheck.estimate_output_tokens("claude", file_chars=20_000)[0] >         capcheck.estimate_output_tokens("claude", file_chars=10_000)[0]
 
 
 def test_the_estimate_includes_room_for_the_patch_to_grow():
-    bare = capcheck.estimate_tokens("gpt", known_tokens=10_000)
-    with_growth = capcheck.estimate_output_tokens("gpt", known_tokens=10_000)
-    assert with_growth > bare
+    bare_low, _ = capcheck.estimate_tokens("gpt", known_tokens=10_000)
+    grown_low, _ = capcheck.estimate_output_tokens("gpt", known_tokens=10_000)
+    assert grown_low > bare_low
 
 
 @pytest.mark.skipif(not GOLDEN_LOGS.is_dir(), reason="archived logs not available")
@@ -70,11 +70,46 @@ def test_the_estimate_never_falls_short_on_the_published_files():
             continue
         prompt = log["prompt"]
         chars = len(prompt[prompt.index(BEGIN) + len(BEGIN):prompt.rindex(END)])
-        estimate = capcheck.estimate_output_tokens(log["model_key"], file_chars=chars)
+        _, pessimistic = capcheck.estimate_output_tokens(log["model_key"],
+                                                         file_chars=chars)
         actual = log["usage"]["input_tokens"]
-        if estimate < actual:
-            short.append(f"{log['vul_id']}/{log['model_key']}: {estimate} < {actual}")
+        if pessimistic < actual:
+            short.append(f"{log['vul_id']}/{log['model_key']}: {pessimistic} < {actual}")
     assert not short, short
+
+
+@pytest.mark.skipif(not GOLDEN_LOGS.is_dir(), reason="archived logs not available")
+def test_the_bracket_contains_the_real_count_for_the_published_files():
+    """The optimistic bound must not sit above the file's real token count."""
+    above = []
+    for path in sorted(GOLDEN_LOGS.glob("*__L1__*.json")):
+        log = json.loads(path.read_text(encoding="utf-8"))
+        if log.get("status") != "ok":
+            continue
+        prompt = log["prompt"]
+        chars = len(prompt[prompt.index(BEGIN) + len(BEGIN):prompt.rindex(END)])
+        optimistic, _ = capcheck.estimate_tokens(log["model_key"], chars)
+        actual = log["usage"]["input_tokens"]
+        if optimistic > actual:
+            above.append(f"{log['vul_id']}/{log['model_key']}: {optimistic} > {actual}")
+    assert not above, above
+
+
+def test_the_largest_published_file_is_graded_as_it_really_behaved():
+    """
+    VUL4J-78 is 111,641 characters. In the published run Claude and GPT were
+    truncated at 8192, while Gemini emitted 28,283 of its 32,768 - close, but
+    not truncated. A median-ratio estimate called Gemini "over cap"; the bracket
+    must call it tight instead.
+    """
+    chars = 111_641
+    assert capcheck.check_cell("VUL4J-78", "L1", "claude",
+                               file_chars=chars).verdict == capcheck.OVER
+    assert capcheck.check_cell("VUL4J-78", "L1", "gpt",
+                               file_chars=chars).verdict == capcheck.OVER
+    gemini = capcheck.check_cell("VUL4J-78", "L1", "gemini", file_chars=chars)
+    assert gemini.verdict == capcheck.TIGHT
+    assert gemini.output_low <= 28_283 <= gemini.output_high
 
 
 # ── the budget ───────────────────────────────────────────────────────────
@@ -121,12 +156,14 @@ def test_a_small_file_is_ok_and_not_at_risk():
     assert risk.verdict == capcheck.OK and not risk.at_risk
 
 
-def test_a_file_near_the_cap_is_tight():
-    # just inside the cap, but past the tight fraction of it
+def test_a_file_the_bounds_disagree_about_is_tight():
+    # fits optimistically, does not fit pessimistically
+    low_ratio, high_ratio = capcheck.TOKENIZER_RATIO_RANGE["claude"]
     cap = OUTPUT_CAPS["claude"]
-    tokens = int(cap * 0.95 / (capcheck.TOKENIZER_RATIO["claude"] * capcheck.PATCH_GROWTH))
+    tokens = int(cap / (capcheck.PATCH_GROWTH * (low_ratio + high_ratio) / 2))
     risk = capcheck.check_cell("V", "L1", "claude", known_tokens=tokens)
     assert risk.verdict == capcheck.TIGHT and risk.at_risk
+    assert risk.output_low <= risk.budget < risk.output_high
 
 
 def test_gemini_clears_what_claude_cannot_at_the_same_size():
@@ -147,10 +184,10 @@ def test_cells_of_unknown_size_are_skipped_not_guessed():
 
 
 def test_a_known_count_wins_over_the_character_estimate():
-    # 200k dense characters would estimate far above this count
+    # 200k characters would estimate far above this count
     risks = capcheck.check_cells([("V", "L1", "claude")], file_chars={"V": 200_000},
                                  file_tokens={"V": 1_000})
-    assert risks[0].output_estimate < 2_000
+    assert risks[0].output_high < 2_000
 
 
 def test_summary_line_reports_nothing_to_worry_about():
