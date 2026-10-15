@@ -1,5 +1,6 @@
 """
-Unified LLM wrappers for the cloud providers and local Ollama models.
+Unified LLM wrappers for the cloud providers, local Ollama models, and
+models served by vLLM.
 
 Exposes one function: call_model(model_key, prompt, language="Java")
 -> (response_text, usage_dict), where model_key is any key of config.MODELS.
@@ -19,6 +20,8 @@ from dotenv import load_dotenv
 from config import (
     MODELS, LOCAL_MODELS,
     OLLAMA_BASE_URL, OLLAMA_NUM_CTX, OLLAMA_KEEP_ALIVE, OLLAMA_TIMEOUT,
+    VLLM_MODELS, VLLM_BASE_URL, VLLM_MAX_MODEL_LEN, VLLM_MAX_OUTPUT_TOKENS,
+    VLLM_TOKEN_MARGIN, VLLM_TIMEOUT, VLLM_PLACEHOLDER,
 )
 
 load_dotenv()
@@ -44,6 +47,17 @@ def _get_openai():
         from openai import OpenAI
         _clients["openai"] = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
     return _clients["openai"]
+
+
+def _get_vllm():
+    if "vllm" not in _clients:
+        from openai import OpenAI
+        # vLLM ignores the key but the client requires one. No client-side
+        # retries: generate.run_cell already retries, and a retried timeout
+        # here would silently repeat a half-hour generation.
+        _clients["vllm"] = OpenAI(base_url=VLLM_BASE_URL, api_key="EMPTY",
+                                  timeout=VLLM_TIMEOUT, max_retries=0)
+    return _clients["vllm"]
 
 
 def _get_gemini():
@@ -136,6 +150,7 @@ SYSTEM_PROMPTS = {
 #   gpt      choices[0].finish_reason              "length"
 #   gemini   candidates[0].finish_reason           "MAX_TOKENS" (an enum)
 #   ollama   done_reason                           "length"
+#   vllm     choices[0].finish_reason              "length"
 #
 # A truncated response is a file cut off mid-write. It cannot compile or parse,
 # so it scores L0 and looks exactly like a failed repair unless the flag is
@@ -158,6 +173,7 @@ TRUNCATION_REASON = {
     "gpt":    "length",
     "gemini": "MAX_TOKENS",
     "ollama": "length",
+    "vllm":   "length",
 }
 
 
@@ -360,6 +376,120 @@ def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
     return text, usage
 
 
+class PromptExceedsWindow(Exception):
+    """
+    The prompt leaves no room for output in the vLLM window. Nothing was sent.
+    generate.run_cell records the cell as skipped rather than retrying it: the
+    prompt will not get shorter.
+    """
+
+
+def vllm_placeholders(model_keys) -> list:
+    """The vLLM keys among these whose config id is still a placeholder."""
+    return [k for k in model_keys
+            if k in VLLM_MODELS and VLLM_MODELS[k].startswith(VLLM_PLACEHOLDER)]
+
+
+def vllm_max_tokens(prompt_tokens: int, max_model_len: int = VLLM_MAX_MODEL_LEN) -> int:
+    """
+    The output budget for one request: whatever the window has left after the
+    prompt and a small margin, capped at VLLM_MAX_OUTPUT_TOKENS. Raises
+    PromptExceedsWindow when that leaves nothing.
+    """
+    room = max_model_len - prompt_tokens - VLLM_TOKEN_MARGIN
+    if room <= 0:
+        raise PromptExceedsWindow(
+            f"prompt is {prompt_tokens} tokens; with the {VLLM_TOKEN_MARGIN}-token "
+            f"margin that leaves no room for output in max_model_len={max_model_len}"
+        )
+    return min(room, VLLM_MAX_OUTPUT_TOKENS)
+
+
+def _vllm_prompt_tokens(model_id: str, messages: list) -> Tuple[int, int]:
+    """
+    (prompt tokens, the server's max_model_len) from vLLM's /tokenize.
+
+    The count goes through the server's own tokenizer and chat template, with
+    the same messages the request will send, so it is exact rather than
+    estimated. /tokenize lives at the server root, not under /v1.
+    """
+    import httpx
+
+    root = VLLM_BASE_URL.rstrip("/")
+    if root.endswith("/v1"):
+        root = root[:-3]
+    try:
+        response = httpx.post(
+            f"{root}/tokenize",
+            json={"model": model_id, "messages": messages,
+                  "add_generation_prompt": True, "add_special_tokens": False},
+            timeout=httpx.Timeout(60.0, connect=10.0),
+        )
+    except httpx.RequestError as e:
+        raise RuntimeError(f"vLLM unreachable at {root} for {model_id}: "
+                           f"{type(e).__name__}: {e}") from e
+    if response.status_code != 200:
+        raise RuntimeError(f"vLLM /tokenize HTTP {response.status_code} for {model_id}: "
+                           f"{response.text[:300]}")
+    data = response.json()
+    return data["count"], data.get("max_model_len")
+
+
+def _call_vllm(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
+    """
+    Generation on a vLLM server through its OpenAI-compatible API.
+
+    The prompt is counted first, and max_tokens is set to what the window has
+    left (see vllm_max_tokens). A prompt that leaves no room is never sent.
+    Unlike Ollama, running out of output budget is flagged rather than raised,
+    as it is for the cloud models: finish_reason "length" sets `truncated`.
+    No temperature is set, as for every other model: each runs at its server's
+    default.
+    """
+    model_id = MODELS[model_key]
+    if vllm_placeholders([model_key]):
+        raise ValueError(
+            f"{model_key} has no Hugging Face id yet ({model_id!r}). "
+            f"Fill it in under VLLM_MODELS in config.py."
+        )
+
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": prompt},
+    ]
+    n_in, server_len = _vllm_prompt_tokens(model_id, messages)
+    if server_len and server_len != VLLM_MAX_MODEL_LEN:
+        raise RuntimeError(
+            f"vLLM reports max_model_len={server_len} for {model_id}, but "
+            f"VLLM_MAX_MODEL_LEN is {VLLM_MAX_MODEL_LEN}. Make them match "
+            f"(config.py or the VLLM_MAX_MODEL_LEN env var, or the server's "
+            f"--max-model-len)."
+        )
+    max_tokens = vllm_max_tokens(n_in)
+
+    response = _get_vllm().chat.completions.create(
+        model=model_id,
+        max_tokens=max_tokens,
+        messages=messages,
+    )
+    text = response.choices[0].message.content or ""
+    reason = _reason_text(getattr(response.choices[0], "finish_reason", None))
+    usage = {
+        "input_tokens": response.usage.prompt_tokens,
+        "output_tokens": response.usage.completion_tokens,
+        "max_tokens": max_tokens,
+        "stop_reason": reason,
+        "truncated": is_truncated("vllm", reason),
+    }
+    if not text.strip():
+        raise RuntimeError(
+            f"vLLM returned an empty response for {model_key} (finish_reason="
+            f"{reason!r}, completion_tokens={usage['output_tokens']}, "
+            f"max_tokens={max_tokens})."
+        )
+    return text, usage
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Public entry point
 # ──────────────────────────────────────────────────────────────────────
@@ -371,6 +501,7 @@ _DISPATCH = {
     # all four local models share one function; bind the key so call_model
     # can keep its single-argument dispatch
     **{k: partial(_call_ollama, model_key=k) for k in LOCAL_MODELS},
+    **{k: partial(_call_vllm, model_key=k) for k in VLLM_MODELS},
 }
 
 

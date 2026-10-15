@@ -22,6 +22,7 @@ Usage:
 
 import argparse
 import json
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,7 +32,7 @@ from config import (
     DATASETS, LOGS_DIR, MODELS, PATCHEVAL_LOGS_DIR, PROMPT_LEVELS,
 )
 import capcheck
-from models import call_model
+from models import PromptExceedsWindow, call_model, vllm_placeholders
 from prompts import build_prompt
 from schemas import get_prose, get_schema
 from vuln_data import get_vuln_payload
@@ -136,6 +137,14 @@ def run_cell(
                 except Exception:
                     pass
             return record
+        except PromptExceedsWindow as e:
+            # Nothing was sent, and a retry would send the same prompt.
+            return {
+                **base_record,
+                "status":   "skipped",
+                "error":    f"prompt exceeds window: {e}",
+                "attempts": attempt,
+            }
         except Exception as e:
             last_error = f"{type(e).__name__}: {e}"
             if attempt < max_attempts:
@@ -271,9 +280,15 @@ def main():
         print("Nothing to do. All cells already have ok logs.")
         return
 
+    unfilled = vllm_placeholders(args.models)
+    if unfilled:
+        sys.exit(f"No Hugging Face id yet for {', '.join(unfilled)}. Fill them in under "
+                 f"VLLM_MODELS in config.py, or leave them out with --models.")
+
     started_at = time.time()
     ok_count = 0
     err_count = 0
+    skip_count = 0
 
     for i, (vul_id, level, model_key) in enumerate(pending, start=1):
         prefix = f"[{i}/{len(pending)}]"
@@ -296,13 +311,17 @@ def main():
             ok_count += 1
             u = record["usage"]
             print(f"ok  ({u['latency_s']:.1f}s  in={u['input_tokens']} out={u['output_tokens']})")
+        elif record["status"] == "skipped":
+            skip_count += 1
+            print(f"SKIPPED ({record['error']})")
         else:
             err_count += 1
             print(f"ERROR ({record['error']})")
 
     elapsed = time.time() - started_at
     print()
-    print(f"Done in {elapsed/60:.1f} min  |  ok={ok_count}  error={err_count}")
+    print(f"Done in {elapsed/60:.1f} min  |  ok={ok_count}  error={err_count}  "
+          f"skipped={skip_count}")
 
 
 if __name__ == "__main__":

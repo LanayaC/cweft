@@ -33,6 +33,9 @@ might truncate, and the recorded stop_reason is what settles it.
     being recorded with the truncation work, so there is no history to fit yet.
   * The local models have no output cap. Their OLLAMA_NUM_CTX window holds the
     prompt and the generated file together, so both are counted against it.
+  * The vLLM models get what VLLM_MAX_MODEL_LEN has left after the prompt and
+    VLLM_TOKEN_MARGIN, capped at VLLM_MAX_OUTPUT_TOKENS, which is what
+    models.vllm_max_tokens sends.
 
 An estimate is not a promise: it says which cells to look at, and the recorded
 stop_reason says what actually happened.
@@ -41,18 +44,20 @@ stop_reason says what actually happened.
 import math
 from typing import Dict, List, NamedTuple, Optional
 
-from config import LOCAL_MODELS, OLLAMA_NUM_CTX
+from config import (LOCAL_MODELS, OLLAMA_NUM_CTX, VLLM_MODELS, VLLM_MAX_MODEL_LEN,
+                    VLLM_MAX_OUTPUT_TOKENS, VLLM_TOKEN_MARGIN)
 from models import OUTPUT_CAPS
 
 # (densest, sparsest) chars-per-token observed per provider over the 42
 # published Vul4J files. The sparsest gives the optimistic token count, the
-# densest the pessimistic one. "ollama" covers every local model; no local run
-# is published, so it borrows Gemini's, the middle of the three.
+# densest the pessimistic one. "ollama" and "vllm" cover the local models; no
+# local run is published, so they borrow Gemini's, the middle of the three.
 CHARS_PER_TOKEN_RANGE: Dict[str, tuple] = {
     "claude": (2.36, 3.86),
     "gpt":    (2.95, 5.67),
     "gemini": (2.54, 4.60),
     "ollama": (2.54, 4.60),
+    "vllm":   (2.54, 4.60),
 }
 
 # (low, high) multiple of a cl100k count that a provider's own tokenizer
@@ -63,6 +68,7 @@ TOKENIZER_RATIO_RANGE: Dict[str, tuple] = {
     "gpt":    (1.00, 1.05),  # cl100k is GPT's own family
     "gemini": (1.08, 1.20),
     "ollama": (1.08, 1.20),
+    "vllm":   (1.08, 1.20),
 }
 
 PATCH_GROWTH = 1.10          # a patch adds lines; Gemini's output reached 1.17x
@@ -90,7 +96,11 @@ class CellRisk(NamedTuple):
 
 
 def provider_of(model_key: str) -> str:
-    return "ollama" if model_key in LOCAL_MODELS else model_key
+    if model_key in LOCAL_MODELS:
+        return "ollama"
+    if model_key in VLLM_MODELS:
+        return "vllm"
+    return model_key
 
 
 def estimate_tokens(model_key: str, chars: int = 0, known_tokens: int = 0) -> tuple:
@@ -130,6 +140,12 @@ def budget_for(model_key: str, prompt_chars: int = 0,
         _, prompt_tokens = estimate_tokens(model_key, prompt_chars)
         return (OLLAMA_NUM_CTX - prompt_tokens,
                 f"num_ctx {OLLAMA_NUM_CTX} shared, prompt ~{prompt_tokens}")
+    if model_key in VLLM_MODELS:
+        _, prompt_tokens = estimate_tokens(model_key, prompt_chars)
+        room = VLLM_MAX_MODEL_LEN - prompt_tokens - VLLM_TOKEN_MARGIN
+        return (min(room, VLLM_MAX_OUTPUT_TOKENS),
+                f"max_model_len {VLLM_MAX_MODEL_LEN} shared, prompt ~{prompt_tokens}, "
+                f"capped at {VLLM_MAX_OUTPUT_TOKENS}")
     cap = OUTPUT_CAPS[model_key]
     if model_key == "gpt":
         return cap - reasoning_reserve, f"cap {cap} less {reasoning_reserve} for reasoning"

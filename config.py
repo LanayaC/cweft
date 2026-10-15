@@ -37,6 +37,16 @@ OLLAMA_NUM_CTX   = 40960    # total window: prompt + regenerated file. See model
 OLLAMA_KEEP_ALIVE = "30m"   # keep weights resident across the 168 cells per model
 OLLAMA_TIMEOUT   = 1800     # 30 min; a 30B q8 regenerating a whole file is slow
 
+# A vLLM server serves the bf16 local models through its OpenAI-compatible API.
+# VLLM_MAX_MODEL_LEN must equal the server's --max-model-len: each request's
+# max_tokens is what that window has left after the prompt, and models.py
+# refuses to run if the server reports a different length.
+VLLM_BASE_URL          = os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
+VLLM_MAX_MODEL_LEN     = int(os.environ.get("VLLM_MAX_MODEL_LEN", "65536"))
+VLLM_MAX_OUTPUT_TOKENS = 64000   # ceiling on max_tokens, whatever the window allows
+VLLM_TOKEN_MARGIN      = 64       # left unused between prompt + output and the window
+VLLM_TIMEOUT           = 1800     # same budget as Ollama; whole-file regeneration is slow
+
 
 CLOUD_MODELS = {
     "claude":  "claude-sonnet-4-5-20250929",      # Anthropic
@@ -57,7 +67,19 @@ LOCAL_MODELS = {
     "gemma-31b":   "gemma4:31b-it-q8_0",
 }
 
-MODELS = {**CLOUD_MODELS, **LOCAL_MODELS}
+# Served by vLLM. Same key rule as LOCAL_MODELS: colon-free, because the key
+# goes into a log filename. The VALUE is the Hugging Face model id the server
+# was launched with. The placeholders below are not ids: models.py and
+# generate.py refuse to run a model whose id still starts with VLLM_PLACEHOLDER.
+VLLM_PLACEHOLDER = "FILL-IN-HF-ID"
+VLLM_MODELS = {
+    "granite-8b-bf16":  f"{VLLM_PLACEHOLDER}: granite 8B, bf16",
+    "granite-30b-bf16": f"{VLLM_PLACEHOLDER}: granite 30B, bf16",
+    "gemma-12b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 12B, bf16",
+    "gemma-31b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 31B, bf16",
+}
+
+MODELS = {**CLOUD_MODELS, **LOCAL_MODELS, **VLLM_MODELS}
 
 
 PROMPT_LEVELS = ["L1", "L2", "L3a", "L3b"]
