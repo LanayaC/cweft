@@ -14,8 +14,10 @@ logs_backup/
 *_backup*
 results/results_backup_*.csv
 
-# Raw per-call logs go to Zenodo, not the repo
-logs/
+# Per-call logs from new runs stay out of the repo. The frozen published
+# 504 in logs/published/ are committed.
+logs/*
+!logs/published/
 
 # Local prompt samples for manual review
 samples/

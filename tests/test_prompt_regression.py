@@ -14,8 +14,8 @@ What comes from the log and what comes from the code:
 It also pins the Java system prompt and markdown-fence regex in models.py,
 which go out with every call but are not part of the logged prompt.
 
-The logs live outside the repo (they go to Zenodo). Point at them with
-CWEFT_GOLDEN_LOGS; the default is the sibling cweft_dataset checkout.
+The logs are the frozen copy in logs/published/. CWEFT_GOLDEN_LOGS points
+the test at another copy instead.
 
     python tests/test_prompt_regression.py
     python -m pytest tests/test_prompt_regression.py
@@ -36,7 +36,7 @@ from vuln_data import CWE_NAMES  # noqa: E402
 
 
 GOLDEN_LOGS = Path(os.environ.get(
-    "CWEFT_GOLDEN_LOGS", PROJECT_ROOT.parent / "cweft_dataset" / "vul4j_logs"
+    "CWEFT_GOLDEN_LOGS", PROJECT_ROOT / "logs" / "published"
 ))
 EXPECTED_LOG_COUNT = 504
 

@@ -89,7 +89,7 @@ published cap — but the larger problem is already in the Java results.
 import csv, json, collections
 from pathlib import Path
 
-logs = Path("../cweft_dataset/vul4j_logs")   # the archived per-call logs
+logs = Path("logs/published")   # the 504 published per-call logs
 truncated = set()
 for p in logs.glob("*.json"):
     log = json.loads(p.read_text(encoding="utf-8"))
@@ -103,5 +103,5 @@ print(len(truncated), collections.Counter(
     if (r["vul_id"], r["level"], r["model_key"]) in truncated))
 ```
 
-The logs are archived separately from the repo (see `DATA_AVAILABILITY.md`); point
-`logs` at that archive. `results/published/results.csv` holds the 504 published outcomes.
+`logs/published/` holds the 504 published per-call logs and
+`results/published/results.csv` the 504 published outcomes.

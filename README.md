@@ -80,6 +80,9 @@ cweft/
 ├── analyze.py         # Produces all paper tables + McNemar test for L3a vs L3b
 ├── monitor.py         # Live progress dashboard (read-only; safe to run alongside)
 ├── spotcheck.py       # Inspect a single cell: LLM patch vs. human patch + verdict
+├── logs/
+│   ├── published/      # Frozen per-call logs of the published 504: do not edit
+│   └── ...             # Written by generate.py for new runs (not committed)
 ├── results/
 │   ├── published/      # Frozen published run: do not edit
 │   │   ├── results.csv # All 504 per-cell outcomes (the headline data)

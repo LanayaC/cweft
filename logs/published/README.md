@@ -1,0 +1,1 @@
+These are the 504 published generation logs, frozen: do not edit. They contain author and licence emails from the upstream open-source files, unredacted on purpose, so the logged prompts match what was sent.

@@ -8,7 +8,8 @@ Usage:
     python spotcheck.py --list-l2          # list all L2 cells
     python spotcheck.py --results results/results.csv --list-l3
 
-Reads the published 504 (results/published/results.csv) unless --results says otherwise.
+Reads the published 504 (results/published/results.csv and logs/published/)
+unless --results and --logs say otherwise.
 """
 
 import argparse
@@ -58,6 +59,8 @@ def main():
     ap.add_argument("--list-l2", action="store_true", help="List all L2 cells")
     ap.add_argument("--results", type=Path, default=CSV,
                     help="Results CSV to read (default: the published 504)")
+    ap.add_argument("--logs", type=Path, default=LOGS_DIR / "published",
+                    help="Generation logs to read (default: the published 504)")
     args = ap.parse_args()
 
     if args.list_l3:
@@ -93,11 +96,11 @@ def main():
     print()
 
     # 2. The LLM's response
-    log_path = LOGS_DIR / f"{vul_id}__{level}__{model}.json"
+    log_path = args.logs / f"{vul_id}__{level}__{model}.json"
     if not log_path.exists():
         print(f"(log not found: {log_path})")
         return
-    log = json.loads(log_path.read_text())
+    log = json.loads(log_path.read_text(encoding="utf-8"))
     llm_code = log.get("response", "")
 
     # 3. The human patch

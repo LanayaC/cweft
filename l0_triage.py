@@ -7,7 +7,7 @@ while anything else is running; safe to delete.
 
 For every row in the results CSV (default: the published 504,
 results/published/results.csv) with trust_level == "L0", this reads the matching
-logs/<vul>__<level>__<model>.json, pulls the `response` field, and classifies
+logs/published/<vul>__<level>__<model>.json, pulls the `response` field, and classifies
 it as:
 
     a_not_java        the response was never usable Java — prose, empty,
@@ -202,7 +202,7 @@ OUT_FIELDS = [
 def main():
     ap = argparse.ArgumentParser(description="Split the L0 bucket by failure cause")
     ap.add_argument("--results", default="results/published/results.csv")
-    ap.add_argument("--logs", default="logs")
+    ap.add_argument("--logs", default="logs/published")
     ap.add_argument("--out", default="results/l0_triage.csv")
     ap.add_argument("--all", action="store_true",
                     help="Classify every row, not just trust_level == L0")

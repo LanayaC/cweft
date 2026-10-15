@@ -7,8 +7,8 @@ one the request will actually have: GPT's reasoning shares its cap, and a local
 model's window holds the prompt and the file together.
 
 The calibration test measures the estimator against the 42 published Vul4J
-files, whose real token counts the archived logs record for all three providers.
-It skips when that archive is not present (see DATA_AVAILABILITY.md).
+files, whose real token counts the published logs (logs/published/, or
+CWEFT_GOLDEN_LOGS) record for all three providers. It skips if they are absent.
 """
 
 import json
@@ -27,7 +27,7 @@ from config import OLLAMA_NUM_CTX  # noqa: E402
 from models import OUTPUT_CAPS  # noqa: E402
 
 GOLDEN_LOGS = Path(os.environ.get(
-    "CWEFT_GOLDEN_LOGS", PROJECT_ROOT.parent / "cweft_dataset" / "vul4j_logs"))
+    "CWEFT_GOLDEN_LOGS", PROJECT_ROOT / "logs" / "published"))
 BEGIN, END = "--- BEGIN FILE ---\n", "\n--- END FILE ---"
 
 
