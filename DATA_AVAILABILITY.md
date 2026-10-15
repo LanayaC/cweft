@@ -12,7 +12,7 @@ The repository holds the full pipeline: subset derivation, prompt construction, 
 
 ## Archived separately
 
-The raw per-call generation logs (one JSON per cell, with the full prompt, raw model response, model ID, and timing) come to several hundred files, so we archive them to Zenodo with a permanent DOI rather than committing them, which keeps the repository readable. The Zenodo archive also includes cached model responses, so the pipeline can be re-evaluated without paying for new API calls.
+The raw per-call generation logs (one JSON per cell, with the full prompt, raw model response, model ID, and timing) come to several hundred files, so we archive them to Zenodo with a permanent DOI. The 504 published logs are also committed, under `logs/published/`. The Zenodo archive also includes cached model responses, so the pipeline can be re-evaluated without paying for new API calls.
 
 > Zenodo DOI: to be minted prior to camera-ready.
 
