@@ -2,10 +2,11 @@
 L0 triage — split the L0 bucket into two causes.
 
 STANDALONE. Imports nothing from the CWEFT pipeline, writes nothing the
-pipeline reads, and never touches logs/ or results/results.csv. Safe to run
+pipeline reads, and never touches logs/ or the results CSVs. Safe to run
 while anything else is running; safe to delete.
 
-For every row in results.csv with trust_level == "L0", this reads the matching
+For every row in the results CSV (default: the published 504,
+results/published/results.csv) with trust_level == "L0", this reads the matching
 logs/<vul>__<level>__<model>.json, pulls the `response` field, and classifies
 it as:
 
@@ -200,7 +201,7 @@ OUT_FIELDS = [
 
 def main():
     ap = argparse.ArgumentParser(description="Split the L0 bucket by failure cause")
-    ap.add_argument("--results", default="results/results.csv")
+    ap.add_argument("--results", default="results/published/results.csv")
     ap.add_argument("--logs", default="logs")
     ap.add_argument("--out", default="results/l0_triage.csv")
     ap.add_argument("--all", action="store_true",
@@ -222,7 +223,7 @@ def main():
         rows = list(csv.DictReader(f))
 
     targets = rows if args.all else [r for r in rows if r["trust_level"] == "L0"]
-    print(f"Rows in results.csv: {len(rows)}")
+    print(f"Rows in {results_path}: {len(rows)}")
     print(f"Rows to classify:    {len(targets)}"
           f"{'' if args.all else ' (trust_level == L0)'}")
 

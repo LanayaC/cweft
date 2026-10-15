@@ -81,7 +81,11 @@ cweft/
 ├── monitor.py         # Live progress dashboard (read-only; safe to run alongside)
 ├── spotcheck.py       # Inspect a single cell: LLM patch vs. human patch + verdict
 ├── results/
-│   └── results.csv     # All 504 per-cell outcomes (the headline data)
+│   ├── published/      # Frozen published run: do not edit
+│   │   ├── results.csv # All 504 per-cell outcomes (the headline data)
+│   │   └── ...         # analysis_summary.txt, mcnemar.txt, table_*.csv
+│   ├── archive/        # Retired files (results_patcheval.csv: the 2026-10-14 oracle check)
+│   └── results.csv     # Written by evaluate.py for new runs
 ├── requirements.txt
 ├── .env.example        # Copy to .env and add your API keys
 └── README.md
@@ -123,11 +127,11 @@ python config.py
 # 1. Generate patches (resumable; skips cells already logged)
 python generate.py
 
-# 2. Evaluate every patch in the Docker harness (resumable)
+# 2. Evaluate every patch in the Docker harness (resumable; writes results/results.csv)
 python evaluate.py
 
-# 3. Produce all tables + statistics
-python analyze.py
+# 3. Produce all tables + statistics for that run
+python analyze.py --results results/results.csv
 
 # Optional: live progress while (1) or (2) runs, in a second terminal
 python monitor.py
@@ -135,6 +139,10 @@ python monitor.py
 
 Generation and evaluation are both resumable. Cells whose artifact already exists are
 skipped, so partial re-runs do not re-incur API cost or recompute.
+
+`analyze.py`, `spotcheck.py`, `l0_triage.py` and `scripts/report_truncation.py` read the
+published 504 in `results/published/results.csv` by default. Pass `--results` (or, for
+`report_truncation.py`, a path argument) to point them at a new run.
 
 To inspect any single cell, for example to verify a verdict:
 
@@ -156,7 +164,7 @@ Over 504 cells, error-free and fully classified:
 - Repair rate tracks CWE specificity: concrete classes such as CWE-74 injection are
   repaired far more often than abstract ones such as CWE-20 input validation.
 
-See the `analyze.py` output and `results/` for the full tables.
+See `results/published/` for the full tables.
 
 ## Citing
 

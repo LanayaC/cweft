@@ -6,21 +6,24 @@ Usage:
     python spotcheck.py VUL4J-74 L2 gemini
     python spotcheck.py --list-l3          # list all L3 cells to pick from
     python spotcheck.py --list-l2          # list all L2 cells
+    python spotcheck.py --results results/results.csv --list-l3
+
+Reads the published 504 (results/published/results.csv) unless --results says otherwise.
 """
 
+import argparse
 import csv
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 from config import RESULTS_DIR, LOGS_DIR, CONTAINER_NAME
 
-CSV = RESULTS_DIR / "results.csv"
+CSV = RESULTS_DIR / "published" / "results.csv"
 
 
-def list_cells(trust):
-    rows = [r for r in csv.DictReader(CSV.open()) if r["trust_level"] == trust]
+def list_cells(trust, csv_path=CSV):
+    rows = [r for r in csv.DictReader(csv_path.open()) if r["trust_level"] == trust]
     print(f"\n{len(rows)} cells with trust_level={trust}:\n")
     for r in rows:
         print(f"  {r['vul_id']:10} {r['level']:4} {r['model_key']:8} "
@@ -49,20 +52,28 @@ def get_human_patch(vul_id):
 
 
 def main():
-    if len(sys.argv) == 2 and sys.argv[1] == "--list-l3":
-        list_cells("L3"); return
-    if len(sys.argv) == 2 and sys.argv[1] == "--list-l2":
-        list_cells("L2"); return
-    if len(sys.argv) != 4:
+    ap = argparse.ArgumentParser(description="Spot-check one evaluated cell")
+    ap.add_argument("cell", nargs="*", metavar="VUL4J-N LEVEL MODEL")
+    ap.add_argument("--list-l3", action="store_true", help="List all L3 cells")
+    ap.add_argument("--list-l2", action="store_true", help="List all L2 cells")
+    ap.add_argument("--results", type=Path, default=CSV,
+                    help="Results CSV to read (default: the published 504)")
+    args = ap.parse_args()
+
+    if args.list_l3:
+        list_cells("L3", args.results); return
+    if args.list_l2:
+        list_cells("L2", args.results); return
+    if len(args.cell) != 3:
         print("Usage: python spotcheck.py VUL4J-N LEVEL MODEL")
         print("   or: python spotcheck.py --list-l3 / --list-l2")
         return
 
-    vul_id, level, model = sys.argv[1], sys.argv[2], sys.argv[3]
+    vul_id, level, model = args.cell
 
     # 1. The recorded verdict
     row = None
-    for r in csv.DictReader(CSV.open()):
+    for r in csv.DictReader(args.results.open()):
         if (r["vul_id"] == vul_id and r["level"] == level
                 and r["model_key"] == model):
             row = r; break

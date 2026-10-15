@@ -3,7 +3,8 @@ Patch evaluation loop.
 
 Reads each generation log, applies the patched file in a fresh checkout,
 compiles and tests it in the container, and classifies the result as
-L0/L1/L2/L3. Resumable: cells already in results.csv are skipped.
+L0/L1/L2/L3. Resumable: cells already in results/results.csv are skipped.
+That file is for new runs; the published 504 are frozen in results/published/.
 
     python evaluate.py                     # all logs
     python evaluate.py --models claude     # one model
@@ -304,9 +305,11 @@ def _check_header() -> None:
     """
     Refuse to append rows wider than the file's header.
 
-    results.csv holds the published 504 and its header predates the truncated
-    and stop_reason columns. Appending the new shape to it would produce rows
-    the header cannot describe, so say so instead and leave the file alone.
+    The published 504 now live in results/published/results.csv, and their
+    header predates the truncated and stop_reason columns. results.csv is for
+    new runs. If a file with an older header turns up here anyway, appending the
+    new shape would produce rows the header cannot describe, so say so instead
+    and leave the file alone.
     """
     if not RESULTS_CSV.exists():
         return

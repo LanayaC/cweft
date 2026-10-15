@@ -1,5 +1,5 @@
 """
-CWEFT analysis — turns results/results.csv into publication tables + stats.
+CWEFT analysis — turns results/published/results.csv into publication tables + stats.
 
 Outputs:
   results/analysis_summary.txt   human-readable tables for the paper
@@ -11,23 +11,29 @@ Outputs:
   results/mcnemar.txt
 
 Usage:  python analyze.py
+        python analyze.py --results results/results.csv --out-dir results/
+
+The frozen copies of these outputs, from the published 504, are in
+results/published/. The default --out-dir is results/, so a re-run never
+overwrites them.
 """
 
+import argparse
 import csv
 from collections import Counter, defaultdict
 from pathlib import Path
 
 from config import RESULTS_DIR, SUBSET, PROMPT_LEVELS, MODELS
 
-CSV = RESULTS_DIR / "results.csv"
+CSV = RESULTS_DIR / "published" / "results.csv"
 LEVELS = ["L1", "L2", "L3a", "L3b"]       # prompt levels
 TRUST = ["L0", "L1", "L2", "L3"]          # trust levels
 MODEL_KEYS = sorted(MODELS)               # derived: see config.MODELS
 MODEL_COL = max(8, max(len(m) for m in MODEL_KEYS + ["pooled"]) + 2)
 
 
-def load():
-    rows = list(csv.DictReader(CSV.open()))
+def load(path=CSV):
+    rows = list(csv.DictReader(Path(path).open()))
     rows = [r for r in rows if r["trust_level"] in TRUST]   # drop any stray ERROR
     return rows
 
@@ -105,7 +111,16 @@ def mcnemar(rows):
 
 
 def main():
-    rows = load()
+    ap = argparse.ArgumentParser(description="Turn a results CSV into tables + stats")
+    ap.add_argument("--results", type=Path, default=CSV,
+                    help="Results CSV to analyze (default: the published 504)")
+    ap.add_argument("--out-dir", type=Path, default=RESULTS_DIR,
+                    help="Where to write the tables (default: results/)")
+    args = ap.parse_args()
+    out_dir = args.out_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    rows = load(args.results)
     N = len(rows)
     out_lines = []
 
@@ -130,7 +145,7 @@ def main():
     w(f"  PoV pass rate (L2+L3):   {pct(pp[0], pp[1])}")
     w(f"  L3 (correct) rate:       {pct(l3[0], l3[1])}")
     w()
-    with (RESULTS_DIR / "table_overall.csv").open("w", newline="") as f:
+    with (out_dir / "table_overall.csv").open("w", newline="") as f:
         wr = csv.writer(f); wr.writerow(["trust", "count", "pct"])
         for t in TRUST: wr.writerow([t, d[t], f"{100*d[t]/N:.1f}"])
 
@@ -150,7 +165,7 @@ def main():
           f"{dd['L3']:>6}{l3r:>8}{povr:>8}{compr:>8}")
         t2.append([lv, n, dd["L0"], dd["L1"], dd["L2"], dd["L3"], l3r, povr, compr])
     w()
-    with (RESULTS_DIR / "table_by_level.csv").open("w", newline="") as f:
+    with (out_dir / "table_by_level.csv").open("w", newline="") as f:
         wr = csv.writer(f)
         wr.writerow(["level","n","L0","L1","L2","L3","L3_rate","PoV_rate","compile_rate"])
         wr.writerows(t2)
@@ -171,7 +186,7 @@ def main():
           f"{dd['L3']:>6}{l3r:>8}{povr:>8}{compr:>8}")
         t3.append([m, n, dd["L0"], dd["L1"], dd["L2"], dd["L3"], l3r, povr, compr])
     w()
-    with (RESULTS_DIR / "table_by_model.csv").open("w", newline="") as f:
+    with (out_dir / "table_by_model.csv").open("w", newline="") as f:
         wr = csv.writer(f)
         wr.writerow(["model","n","L0","L1","L2","L3","L3_rate","PoV_rate","compile_rate"])
         wr.writerows(t3)
@@ -192,7 +207,7 @@ def main():
             row_out.append(f"{k}/{n}")
         w(line); t4.append(row_out)
     w()
-    with (RESULTS_DIR / "table_model_x_level.csv").open("w", newline="") as f:
+    with (out_dir / "table_model_x_level.csv").open("w", newline="") as f:
         wr = csv.writer(f); wr.writerow(["model"] + LEVELS); wr.writerows(t4)
 
     #   Table 5: By CWE  
@@ -208,7 +223,7 @@ def main():
         w(f"  {cwe:12}{n:>8}{k:>5}{pct(k,n):>8}  {name}")
         t5.append([cwe, n, k, f"{100*k/n:.1f}", rr[0]["cwe_name"]])
     w()
-    with (RESULTS_DIR / "table_by_cwe.csv").open("w", newline="") as f:
+    with (out_dir / "table_by_cwe.csv").open("w", newline="") as f:
         wr = csv.writer(f)
         wr.writerow(["cwe_id","n_cells","L3_count","L3_rate","cwe_name"])
         wr.writerows(t5)
@@ -225,11 +240,11 @@ def main():
                 f"{'(sig)' if r['p'] < 0.05 else '(n.s.)'}")
         w(line); mc_lines.append(line + "\n")
     w()
-    (RESULTS_DIR / "mcnemar.txt").write_text("".join(mc_lines))
+    (out_dir / "mcnemar.txt").write_text("".join(mc_lines))
 
     #   Save full summary  
-    (RESULTS_DIR / "analysis_summary.txt").write_text("\n".join(out_lines))
-    w("Wrote: analysis_summary.txt + table_*.csv + mcnemar.txt to results/")
+    (out_dir / "analysis_summary.txt").write_text("\n".join(out_lines))
+    w(f"Wrote: analysis_summary.txt + table_*.csv + mcnemar.txt to {out_dir}")
 
 
 if __name__ == "__main__":

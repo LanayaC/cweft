@@ -6,7 +6,8 @@ compile or parse, so it scores L0 for a reason that has nothing to do with the
 repair. This counts those cells by model and by prompt level, so an L0 rate can
 be read net of them.
 
-    python scripts/report_truncation.py                         # results/results.csv
+    python scripts/report_truncation.py                         # results/published/results.csv
+    python scripts/report_truncation.py results/results.csv     # a new run
     python scripts/report_truncation.py results/results_patcheval.csv
     python scripts/report_truncation.py --by-vuln
 
@@ -22,7 +23,7 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_CSV = PROJECT_ROOT / "results" / "results.csv"
+DEFAULT_CSV = PROJECT_ROOT / "results" / "published" / "results.csv"
 
 TRUE = {"true", "1", "yes"}
 # results.csv keys cells by vul_id; results_patcheval.csv by cve.

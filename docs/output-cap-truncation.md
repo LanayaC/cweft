@@ -25,7 +25,7 @@ truncation measurable: Gemini is an uncapped control for the same 42 files.
 ## Evidence
 
 Every cell whose `usage.output_tokens` equals its cap was truncated, because a model
-cannot emit more than its cap. Joining those cells to `results/results.csv`:
+cannot emit more than its cap. Joining those cells to `results/published/results.csv`:
 
 - **claude: 29 cells at 8192**, across 8 vulnerabilities —
   VUL4J-7, 14, 22, 36, 52, 59, 78, 79.
@@ -97,11 +97,11 @@ for p in logs.glob("*.json"):
             and log["usage"]["output_tokens"] >= 8192:
         truncated.add((log["vul_id"], log["level"], log["model_key"]))
 
-rows = list(csv.DictReader(Path("results/results.csv").open()))
+rows = list(csv.DictReader(Path("results/published/results.csv").open()))
 print(len(truncated), collections.Counter(
     r["trust_level"] for r in rows
     if (r["vul_id"], r["level"], r["model_key"]) in truncated))
 ```
 
 The logs are archived separately from the repo (see `DATA_AVAILABILITY.md`); point
-`logs` at that archive. `results/results.csv` holds the 504 published outcomes.
+`logs` at that archive. `results/published/results.csv` holds the 504 published outcomes.
