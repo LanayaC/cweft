@@ -158,9 +158,9 @@ SYSTEM_PROMPTS = {
 # ──────────────────────────────────────────────────────────────────────
 
 # The configured output budget per cloud model, so a pre-flight check reads the
-# same number the request sends instead of a copy that can drift. Unchanged
-# values: these are what the published 504 ran with. The local models have no
-# output cap - their OLLAMA_NUM_CTX window holds prompt and output together.
+# same number the request sends instead of a copy that can drift. The local
+# models have no output cap - their OLLAMA_NUM_CTX window holds prompt and
+# output together.
 OUTPUT_CAPS = {
     "claude": 8192,
     "gpt":    8192,

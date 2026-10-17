@@ -143,9 +143,8 @@ python monitor.py
 Generation and evaluation are both resumable. Cells whose artifact already exists are
 skipped, so partial re-runs do not re-incur API cost or recompute.
 
-`analyze.py`, `spotcheck.py`, `l0_triage.py` and `scripts/report_truncation.py` read the
-published 504 in `results/published/results.csv` by default. Pass `--results` (or, for
-`report_truncation.py`, a path argument) to point them at a new run.
+`analyze.py`, `spotcheck.py` and `l0_triage.py` read the published 504 in
+`results/published/results.csv` by default. Pass `--results` to point them at a new run.
 
 To inspect any single cell, for example to verify a verdict:
 

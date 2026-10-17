@@ -177,7 +177,7 @@ def test_run_cell_records_the_skip_and_does_not_retry(monkeypatch):
     monkeypatch.setattr(generate, "call_model", too_long)
     monkeypatch.setattr(generate.time, "sleep", lambda s: pytest.fail("must not back off"))
     payload = {
-        "vul_id": "VUL4J-78", "cve_id": "CVE-x", "cwe_id": "CWE-22",
+        "vul_id": "VUL4J-1", "cve_id": "CVE-x", "cwe_id": "CWE-22",
         "cwe_name": "Path Traversal", "primary_file": "A.java",
         "primary_content": "class A {}", "repair_prose": "p", "repair_schema": {
             "root_cause": "r", "canonical_repair": "c", "constraints": "k",

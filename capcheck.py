@@ -9,11 +9,9 @@ source file and compares it with the configured cap, without calling any API.
 How the estimate is made, and why it leans high:
 
 The estimate is a bracket, not a number, because token density varies by file:
-over the 42 published Vul4J files one Java file ran at 2.36 characters per token
-and another at 3.86. A single ratio is therefore either too loose to be safe or
-too tight to be useful - a median ratio called VUL4J-78 "over cap" on Gemini,
-which in the published run emitted 28,283 tokens against a 32,768 cap and did
-not truncate.
+over the 42 Vul4J files one Java file ran at 2.36 characters per token and
+another at 3.86. A single ratio is therefore either too loose to be safe or too
+tight to be useful, so the check reports both ends.
 
   * From characters: the optimistic bound uses the *highest* chars-per-token
     ratio the provider was observed to produce (fewest tokens) and the
@@ -21,16 +19,15 @@ not truncate.
   * From a known token count - the PatchEval manifest's cl100k figure - the
     bracket is the range by which a provider's own tokenizer differs from
     cl100k over those same files.
-  * Both bounds are multiplied by PATCH_GROWTH, since a patch adds lines. On
-    Gemini output ran between 0.63x and 1.17x the prompt tokens.
+  * Both bounds are multiplied by PATCH_GROWTH, since a patch adds lines.
 
 The verdict says which bound decided it: `over` when even the optimistic bound
 does not fit, `tight` when only the pessimistic one does not. `tight` means it
 might truncate, and the recorded stop_reason is what settles it.
   * GPT's max_completion_tokens covers reasoning tokens as well as the visible
     file, so GPT_REASONING_RESERVE of its budget is treated as unavailable.
-    This is an assumption, not a measurement: reasoning_tokens only started
-    being recorded with the truncation work, so there is no history to fit yet.
+    This is an assumption, not a measurement: reasoning_tokens is recorded
+    per call, but there is not yet enough history to fit it.
   * The local models have no output cap. Their OLLAMA_NUM_CTX window holds the
     prompt and the generated file together, so both are counted against it.
   * The vLLM models get what VLLM_MAX_MODEL_LEN has left after the prompt and
@@ -49,9 +46,9 @@ from config import (LOCAL_MODELS, OLLAMA_NUM_CTX, VLLM_MODELS, VLLM_MAX_MODEL_LE
 from models import OUTPUT_CAPS
 
 # (densest, sparsest) chars-per-token observed per provider over the 42
-# published Vul4J files. The sparsest gives the optimistic token count, the
+# Vul4J files. The sparsest gives the optimistic token count, the
 # densest the pessimistic one. "ollama" and "vllm" cover the local models; no
-# local run is published, so they borrow Gemini's, the middle of the three.
+# local measurements exist yet, so they borrow Gemini's, the middle of the three.
 CHARS_PER_TOKEN_RANGE: Dict[str, tuple] = {
     "claude": (2.36, 3.86),
     "gpt":    (2.95, 5.67),
@@ -61,8 +58,8 @@ CHARS_PER_TOKEN_RANGE: Dict[str, tuple] = {
 }
 
 # (low, high) multiple of a cl100k count that a provider's own tokenizer
-# produces for the same file, from the per-file prompt tokens of the published
-# run (Claude counted about 1.21x what GPT did on average, Gemini 1.12x).
+# produces for the same file, from per-file prompt token counts (Claude counted
+# about 1.21x what GPT did on average, Gemini 1.12x).
 TOKENIZER_RATIO_RANGE: Dict[str, tuple] = {
     "claude": (1.15, 1.30),
     "gpt":    (1.00, 1.05),  # cl100k is GPT's own family
@@ -71,7 +68,7 @@ TOKENIZER_RATIO_RANGE: Dict[str, tuple] = {
     "vllm":   (1.08, 1.20),
 }
 
-PATCH_GROWTH = 1.10          # a patch adds lines; Gemini's output reached 1.17x
+PATCH_GROWTH = 1.10          # a patch adds lines
 GPT_REASONING_RESERVE = 2048  # assumed, see the module docstring
 OVER, TIGHT, OK = "over", "tight", "ok"
 

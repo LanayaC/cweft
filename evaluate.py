@@ -305,11 +305,9 @@ def _check_header() -> None:
     """
     Refuse to append rows wider than the file's header.
 
-    The published 504 now live in results/published/results.csv, and their
-    header predates the truncated and stop_reason columns. results.csv is for
-    new runs. If a file with an older header turns up here anyway, appending the
-    new shape would produce rows the header cannot describe, so say so instead
-    and leave the file alone.
+    A results.csv written by an older version of this code may lack columns
+    this version writes. Appending the new shape to it would produce rows the
+    header cannot describe, so say so instead and leave the file alone.
     """
     if not RESULTS_CSV.exists():
         return
@@ -320,7 +318,7 @@ def _check_header() -> None:
         raise RuntimeError(
             f"{RESULTS_CSV} has an older header (missing: {', '.join(missing) or 'none'}; "
             f"{len(header)} columns, this code writes {len(CSV_FIELDS)}). Appending would "
-            f"corrupt it. Move it aside (it is the published run) and let this write a new "
+            f"corrupt it. Move it aside and let this write a new "
             f"one, or re-evaluate into a fresh file."
         )
 

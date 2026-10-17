@@ -1,12 +1,11 @@
 """
-Truncation detection: a response cut off at the output cap must be recorded as
-such, at every stage, for every provider.
+Stop-reason recording: a response that stops at the output cap must be recorded
+as such, at every stage, for every provider.
 
 Each provider reports stopping differently, so each gets a positive case (it hit
 the cap) and a negative control (it finished normally) against a fake client.
 Then: the flag reaches the generation log and prints a warning, the results
-writers carry it as a column and refuse to append to an older header, and the
-reporting script counts it.
+writers carry it as a column and refuse to append to an older header.
 """
 
 import csv
@@ -19,13 +18,11 @@ import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 import evaluate  # noqa: E402
 import generate  # noqa: E402
 import models  # noqa: E402
 import patcheval_eval  # noqa: E402
-import report_truncation  # noqa: E402
 
 
 # ── the mapping itself ───────────────────────────────────────────────────
@@ -177,7 +174,7 @@ def test_call_model_always_sets_the_keys(monkeypatch):
 # ── the generation log ───────────────────────────────────────────────────
 
 PAYLOAD = {
-    "vul_id": "VUL4J-78", "cve_id": "CVE-x", "cwe_id": "CWE-22",
+    "vul_id": "VUL4J-1", "cve_id": "CVE-x", "cwe_id": "CWE-22",
     "cwe_name": "Path Traversal", "primary_file": "A.java",
     "primary_content": "class A {}", "repair_prose": "p", "repair_schema": {
         "root_cause": "r", "canonical_repair": "c", "constraints": "k", "what_to_avoid": "a"},
@@ -185,16 +182,16 @@ PAYLOAD = {
 
 
 def test_run_cell_records_truncation_and_warns(monkeypatch, capsys):
-    usage = {"input_tokens": 1, "output_tokens": 8192, "latency_s": 1.0,
+    usage = {"input_tokens": 1, "output_tokens": 4000, "latency_s": 1.0,
              "stop_reason": "max_tokens", "truncated": True}
     monkeypatch.setattr(generate, "call_model", lambda *a, **kw: ("partial file", usage))
     record = generate.run_cell(PAYLOAD, "L1", "claude")
     assert record["status"] == "ok"
     assert record["truncated"] is True
     assert record["stop_reason"] == "max_tokens"
-    assert record["usage"]["output_tokens"] == 8192
+    assert record["usage"]["output_tokens"] == 4000
     out = capsys.readouterr().out
-    assert "TRUNCATED" in out and "VUL4J-78" in out
+    assert "TRUNCATED" in out and "VUL4J-1" in out
 
 
 def test_console_that_cannot_print_the_warning_still_yields_the_result(monkeypatch):
@@ -202,7 +199,7 @@ def test_console_that_cannot_print_the_warning_still_yields_the_result(monkeypat
     The warning sits inside the retry block. If printing it could raise, a paid
     successful call would become three retries and an error row.
     """
-    usage = {"input_tokens": 1, "output_tokens": 8192, "latency_s": 1.0,
+    usage = {"input_tokens": 1, "output_tokens": 4000, "latency_s": 1.0,
              "stop_reason": "max_tokens", "truncated": True}
     monkeypatch.setattr(generate, "call_model", lambda *a, **kw: ("partial", usage))
 
@@ -267,52 +264,8 @@ def test_evaluate_writes_the_flag_to_a_fresh_file(tmp_path, monkeypatch):
     fresh = tmp_path / "results.csv"
     monkeypatch.setattr(evaluate, "RESULTS_CSV", fresh)
     row = {k: "" for k in evaluate.CSV_FIELDS}
-    row.update({"vul_id": "VUL4J-78", "level": "L1", "model_key": "claude",
+    row.update({"vul_id": "VUL4J-1", "level": "L1", "model_key": "claude",
                 "trust_level": "L0", "truncated": True, "stop_reason": "max_tokens"})
     evaluate.append_row(row)
     back = list(csv.DictReader(fresh.open(newline="")))
     assert back[0]["truncated"] == "True" and back[0]["stop_reason"] == "max_tokens"
-
-
-# ── the reporting script ─────────────────────────────────────────────────
-
-def _write_results(path, rows, fields=None):
-    fields = fields or ["vul_id", "level", "model_key", "trust_level",
-                        "truncated", "stop_reason"]
-    with path.open("w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        w.writerows(rows)
-
-
-def test_report_counts_by_model_and_level(tmp_path, capsys):
-    path = tmp_path / "r.csv"
-    _write_results(path, [
-        {"vul_id": "VUL4J-78", "level": "L1", "model_key": "claude",
-         "trust_level": "L0", "truncated": "True", "stop_reason": "max_tokens"},
-        {"vul_id": "VUL4J-78", "level": "L2", "model_key": "claude",
-         "trust_level": "L0", "truncated": "True", "stop_reason": "max_tokens"},
-        {"vul_id": "VUL4J-79", "level": "L1", "model_key": "gpt",
-         "trust_level": "L0", "truncated": "True", "stop_reason": "length"},
-        {"vul_id": "VUL4J-1", "level": "L1", "model_key": "gemini",
-         "trust_level": "L3", "truncated": "False", "stop_reason": "STOP"},
-    ])
-    assert report_truncation.main([str(path), "--by-vuln"]) == 0
-    out = capsys.readouterr().out
-    assert "3 of 4 cells truncated" in out
-    assert "claude" in out and "gpt" in out
-    assert "3 truncated cells scored L0, out of 3 L0s" in out
-    assert "VUL4J-78" in out
-
-
-def test_report_says_so_when_the_column_is_missing(tmp_path, capsys):
-    path = tmp_path / "old.csv"
-    _write_results(path, [{"vul_id": "VUL4J-1", "level": "L1", "model_key": "claude",
-                           "trust_level": "L0"}],
-                   fields=["vul_id", "level", "model_key", "trust_level"])
-    assert report_truncation.main([str(path)]) == 1
-    assert "no `truncated` column" in capsys.readouterr().out
-
-
-def test_report_handles_a_missing_file(tmp_path, capsys):
-    assert report_truncation.main([str(tmp_path / "nope.csv")]) == 2

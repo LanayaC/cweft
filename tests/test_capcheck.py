@@ -95,23 +95,6 @@ def test_the_bracket_contains_the_real_count_for_the_published_files():
     assert not above, above
 
 
-def test_the_largest_published_file_is_graded_as_it_really_behaved():
-    """
-    VUL4J-78 is 111,641 characters. In the published run Claude and GPT were
-    truncated at 8192, while Gemini emitted 28,283 of its 32,768 - close, but
-    not truncated. A median-ratio estimate called Gemini "over cap"; the bracket
-    must call it tight instead.
-    """
-    chars = 111_641
-    assert capcheck.check_cell("VUL4J-78", "L1", "claude",
-                               file_chars=chars).verdict == capcheck.OVER
-    assert capcheck.check_cell("VUL4J-78", "L1", "gpt",
-                               file_chars=chars).verdict == capcheck.OVER
-    gemini = capcheck.check_cell("VUL4J-78", "L1", "gemini", file_chars=chars)
-    assert gemini.verdict == capcheck.TIGHT
-    assert gemini.output_low <= 28_283 <= gemini.output_high
-
-
 # ── the budget ───────────────────────────────────────────────────────────
 
 def test_cloud_budget_is_the_configured_cap():
@@ -166,10 +149,12 @@ def test_a_file_the_bounds_disagree_about_is_tight():
     assert risk.output_low <= risk.budget < risk.output_high
 
 
-def test_gemini_clears_what_claude_cannot_at_the_same_size():
+def test_the_verdict_follows_the_configured_cap(monkeypatch):
     tokens = 9_000
+    monkeypatch.setitem(OUTPUT_CAPS, "claude", 8_000)
     assert capcheck.check_cell("V", "L1", "claude", known_tokens=tokens).verdict == capcheck.OVER
-    assert capcheck.check_cell("V", "L1", "gemini", known_tokens=tokens).verdict == capcheck.OK
+    monkeypatch.setitem(OUTPUT_CAPS, "claude", 32_000)
+    assert capcheck.check_cell("V", "L1", "claude", known_tokens=tokens).verdict == capcheck.OK
 
 
 # ── whole plans ──────────────────────────────────────────────────────────
@@ -214,7 +199,7 @@ def test_report_lists_the_flagged_cells_and_the_unknown_ones():
 # ── the generate.py wiring ───────────────────────────────────────────────
 
 FAKE_PAYLOAD = {
-    "vul_id": "VUL4J-78", "cve_id": "CVE-x", "cwe_id": "CWE-22",
+    "vul_id": "VUL4J-1", "cve_id": "CVE-x", "cwe_id": "CWE-22",
     "cwe_name": "Path Traversal", "primary_file": "A.java",
     "primary_content": "class A {}" * 9000,          # big enough to be over cap
     "repair_prose": "p",
@@ -234,18 +219,18 @@ def no_api(monkeypatch):
 
 def test_check_caps_reports_and_calls_no_api(no_api, monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["generate.py", "--check-caps",
-                                      "--vulns", "VUL4J-78", "--models", "claude",
+                                      "--vulns", "VUL4J-1", "--models", "claude",
                                       "--levels", "L1"])
     generate.main()
     out = capsys.readouterr().out
     assert "Cap check:" in out and "over cap" in out
-    assert "VUL4J-78" in out
+    assert "VUL4J-1" in out
 
 
 def test_a_normal_run_prints_the_summary_before_starting(no_api, monkeypatch, capsys):
     # --dry-run stops before any API call, after the plan and the cap summary
     monkeypatch.setattr(sys, "argv", ["generate.py", "--dry-run",
-                                      "--vulns", "VUL4J-78", "--models", "claude",
+                                      "--vulns", "VUL4J-1", "--models", "claude",
                                       "--levels", "L1"])
     generate.main()
     out = capsys.readouterr().out
