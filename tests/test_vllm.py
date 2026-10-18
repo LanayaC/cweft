@@ -192,11 +192,23 @@ def test_run_cell_records_the_skip_and_does_not_retry(monkeypatch):
 
 # ── placeholders ─────────────────────────────────────────────────────────
 
-def test_placeholder_ids_are_reported():
+@pytest.fixture
+def unfilled(monkeypatch):
+    """Give KEY a placeholder id, whatever config.py currently holds."""
+    placeholder = f"{config.VLLM_PLACEHOLDER}: test"
+    monkeypatch.setitem(models.MODELS, KEY, placeholder)
+    monkeypatch.setitem(models.VLLM_MODELS, KEY, placeholder)
+
+
+def test_placeholder_ids_are_reported(unfilled):
     assert models.vllm_placeholders(["claude", "granite-8b", KEY]) == [KEY]
 
 
-def test_a_placeholder_id_fails_before_any_call(monkeypatch):
+def test_a_filled_id_is_not_reported(filled):
+    assert models.vllm_placeholders([KEY]) == []
+
+
+def test_a_placeholder_id_fails_before_any_call(monkeypatch, unfilled):
     monkeypatch.setattr(models, "_vllm_prompt_tokens",
                         lambda *a: pytest.fail("must not reach the server"))
     with pytest.raises(ValueError, match="VLLM_MODELS in config.py"):
