@@ -53,8 +53,19 @@ sbatch leylak/run_model.sbatch granite-8b-bf16 -- --dataset all --logs-dir logs/
 Across both of gpu5's cards (tensor parallel), for the larger models:
 
 ```bash
-sbatch --gres=gpu:2 leylak/run_model.sbatch granite-30b-bf16 --tp 2 -- --dataset all --logs-dir logs/granite-30b-bf16
+CUDA_VISIBLE_DEVICES=0,1 sbatch leylak/run_model.sbatch granite-30b-bf16 --tp 2 -- --dataset all --logs-dir logs/granite-30b-bf16
 ```
+
+LEYLAK has no GPU gres, so Slurm does not pick a card for you and you must not
+pass `--gres`. The job uses card 0 unless you set `CUDA_VISIBLE_DEVICES` when
+submitting, which the job inherits. To use gpu5's second card:
+
+```bash
+CUDA_VISIBLE_DEVICES=1 sbatch leylak/run_model.sbatch granite-8b-bf16 -- --dataset all --logs-dir logs/granite-8b-bf16
+```
+
+Check which cards are free first with `nvidia-smi` on the node (for example
+`srun -p GPU_nvrtx6000pro -w gpu5 nvidia-smi`).
 
 A small test on gpu4 (partition `GPU_nvrtx4090`, whose card fits a 16k window).
 Test logs go to `logs/plumbing_test/`, never into a real run's folder:
@@ -69,8 +80,12 @@ server already uses that port on the node) and `--wait-timeout S` (default
 1800 seconds for the server to come up). Add `--dry-run` after `--` to check a
 plan without generating anything.
 
-A run that stops part-way can simply be submitted again: cells that already
-have a good log in the chosen folder are skipped.
+The GPU partitions cap a job at 12 hours (the script asks for 12:00:00; ask
+for less with `--time` if you like, never more, or the job waits forever with
+reason `PartitionTimeLimit`). A full run that needs longer is split into several
+jobs: when one ends, submit the same command again. `generate.py` skips every
+cell that already has a good log in the chosen folder, so each job continues
+where the last one stopped. The same goes for a run that fails part-way.
 
 ## 4. Watch it
 

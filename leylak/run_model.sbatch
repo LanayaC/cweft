@@ -2,9 +2,8 @@
 #SBATCH --job-name=cweft
 #SBATCH --partition=GPU_nvrtx6000pro
 #SBATCH --nodelist=gpu5
-#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
-#SBATCH --time=48:00:00
+#SBATCH --time=12:00:00
 #SBATCH --output=/dev/null
 #
 # One unattended generation job for one vLLM model: start vLLM, wait until it
@@ -19,13 +18,22 @@
 # Options:
 #   --max-model-len N   vLLM context window, also given to generate.py as
 #                       VLLM_MAX_MODEL_LEN (default 65536)
-#   --tp N              tensor parallel across N GPUs (default 1). Submit with
-#                       --gres=gpu:N to get them, e.g. --tp 2 on gpu5's two cards.
+#   --tp N              tensor parallel across the first N cards in
+#                       CUDA_VISIBLE_DEVICES (default 1), e.g. --tp 2 with
+#                       CUDA_VISIBLE_DEVICES=0,1 for gpu5's two cards.
 #   --port N            local port for vLLM (default 8000)
 #   --wait-timeout S    seconds to wait for the server to answer (default 1800)
 #
 # Everything after -- goes to generate.py (--vulns, --levels, --dataset,
 # --logs-dir, --dry-run ...). --models is set from MODEL and may not be passed.
+#
+# Choosing a card: LEYLAK has no GPU gres, so Slurm does not assign cards.
+# Set CUDA_VISIBLE_DEVICES when submitting and the job inherits it, e.g.
+#   CUDA_VISIBLE_DEVICES=1 sbatch leylak/run_model.sbatch granite-8b-bf16 ...
+# Without it the job uses cards 0..N-1 for --tp N.
+#
+# Time: the GPU partitions cap jobs at 12 h. A longer run is split into several
+# jobs; generate.py skips cells already logged, so resubmitting continues it.
 #
 # Output: ~/cweft_<MODEL>_<jobid>.log, and vLLM's own output in
 # ~/cweft_<MODEL>_<jobid>.vllm.log.
@@ -70,14 +78,14 @@ export no_proxy="127.0.0.1,localhost${no_proxy:+,$no_proxy}"
 export NO_PROXY="$no_proxy"
 cd "$CWEFT_DIR" || die "no repository at $CWEFT_DIR"
 
-# One GPU per tensor-parallel rank. Slurm sets CUDA_VISIBLE_DEVICES from
-# --gres; set it ourselves only when it did not.
+# One GPU per tensor-parallel rank. LEYLAK has no GPU gres, so Slurm leaves
+# CUDA_VISIBLE_DEVICES alone: use the submitter's value, or cards 0..TP-1.
 if [[ -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then
     CUDA_VISIBLE_DEVICES="$(seq -s, 0 $((TP - 1)))"
     export CUDA_VISIBLE_DEVICES
 fi
 NGPU=$(awk -F, '{print NF}' <<<"$CUDA_VISIBLE_DEVICES")
-(( NGPU >= TP )) || die "--tp $TP needs $TP GPUs but CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES; submit with --gres=gpu:$TP"
+(( NGPU >= TP )) || die "--tp $TP needs $TP GPUs but CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES; submit with CUDA_VISIBLE_DEVICES set to $TP cards (e.g. 0,1)"
 
 # Model id and revision come from config.py, the single source of truth.
 MODEL_INFO="$(python - "$MODEL" <<'PY'
