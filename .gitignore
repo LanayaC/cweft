@@ -15,6 +15,9 @@ logs_backup/
 *_backup*
 results/results_backup_*.csv
 
+# Plumbing-test grading output stays local
+results/plumbing_test/
+
 # Per-call logs from new runs stay out of the repo. The frozen published
 # 504 in logs/published/ are committed.
 logs/*

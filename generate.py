@@ -18,6 +18,7 @@ Usage:
     python generate.py --dataset patcheval # the 109 PatchEval entries (no Docker)
     python generate.py --dataset all       # Vul4J then PatchEval
     python generate.py --dry-run           # print plan, do nothing
+    python generate.py --logs-dir logs/plumbing_test   # write logs elsewhere
 """
 
 import argparse
@@ -47,6 +48,14 @@ def log_path_for(vul_id: str, level: str, model_key: str) -> Path:
     # subdirectory it does not glob until it has a PatchEval backend.
     logs_dir = LOGS_DIR if vul_id.startswith("VUL4J-") else PATCHEVAL_LOGS_DIR
     return logs_dir / f"{vul_id}__{level}__{model_key}.json"
+
+
+def set_logs_dir(path: Path) -> None:
+    """Point log_path_for at another folder: Vul4J logs in it, PatchEval in patcheval/."""
+    global LOGS_DIR, PATCHEVAL_LOGS_DIR
+    LOGS_DIR = path.resolve()
+    PATCHEVAL_LOGS_DIR = LOGS_DIR / "patcheval"
+    PATCHEVAL_LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def cell_already_done(vul_id: str, level: str, model_key: str) -> bool:
@@ -235,6 +244,9 @@ def main():
     ap.add_argument("--vulns",  nargs="+", default=None,
                     help="Explicit vul_ids (VUL4J-N or PatchEval CVE ids); overrides --dataset")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--logs-dir", type=Path, default=None,
+                    help="write logs here instead of logs/ (PatchEval cells go to its "
+                         "patcheval/ subfolder); cells are 'done' only if logged here")
     ap.add_argument("--check-caps", action="store_true",
                     help="report which cells risk truncation at the output cap, then exit "
                          "without calling any API")
@@ -242,6 +254,8 @@ def main():
                     help="tokens of GPT's budget assumed to go to reasoning "
                          f"(default {capcheck.GPT_REASONING_RESERVE})")
     args = ap.parse_args()
+    if args.logs_dir is not None:
+        set_logs_dir(args.logs_dir)
     if args.vulns is None:
         args.vulns = DATASETS[args.dataset]
 
@@ -260,6 +274,7 @@ def main():
     print(f"Models: {args.models}")
     print(f"Levels: {args.levels}")
     print(f"Vulns:  {len(args.vulns)}")
+    print(f"Logs:   {LOGS_DIR}")
     print()
 
     # Which of these cells cannot fit their file in the budget? Checked before

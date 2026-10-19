@@ -1,0 +1,636 @@
+{
+  "container": "vul4j-alldeps",
+  "image": "sha256:744fa5437034484d3e929f6e7feb735416385d4fb3d9b860e21ff92a291864d7",
+  "entries": [
+    {
+      "vul_id": "VUL4J-1",
+      "cve_id": "CVE-2017-18349",
+      "cwe_id": "CWE-20",
+      "primary_file": "src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java",
+      "file_paths": [
+        "src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java"
+      ],
+      "failing_tests": [
+        "com.alibaba.json.bvt.bug.Issue1005#test_for_issue"
+      ],
+      "source": "sources/VUL4J-1/ObjectArrayCodec.java",
+      "bytes": 8841,
+      "sha256": "53dbc01043c165b08efb12d13275b6ef9de7b3e69d61330988eb4ea0cf7e940e"
+    },
+    {
+      "vul_id": "VUL4J-2",
+      "cve_id": "CVE-2017-5662",
+      "cwe_id": "CWE-611",
+      "primary_file": "batik-dom/src/main/java/org/apache/batik/dom/util/SAXDocumentFactory.java",
+      "file_paths": [
+        "batik-dom/src/main/java/org/apache/batik/dom/util/SAXDocumentFactory.java"
+      ],
+      "failing_tests": [
+        "org.apache.batik.dom.util.TestCVE_2017_5662"
+      ],
+      "source": "sources/VUL4J-2/SAXDocumentFactory.java",
+      "bytes": 26184,
+      "sha256": "21144c406d1fb6860db226638f9bf38eeaeaba89b32318f15b956afa3369027e"
+    },
+    {
+      "vul_id": "VUL4J-6",
+      "cve_id": "CVE-2018-1324",
+      "cwe_id": "CWE-835",
+      "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.compress.Test_CVE_2018_1324"
+      ],
+      "source": "sources/VUL4J-6/X0017_StrongEncryptionHeader.java",
+      "bytes": 15596,
+      "sha256": "0cf58ab0670c5a1e046052ce52c95892793cf59ba3cfb4983a4a5f465a0f4bd8"
+    },
+    {
+      "vul_id": "VUL4J-7",
+      "cve_id": "CVE-2018-11771",
+      "cwe_id": "CWE-835",
+      "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#singleByteReadThrowsAtEofForCorruptedStoredEntry",
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#multiByteReadThrowsAtEofForCorruptedStoredEntry"
+      ],
+      "source": "sources/VUL4J-7/ZipArchiveInputStream.java",
+      "bytes": 48189,
+      "sha256": "936caae13581e049ff4e700a0e6009507febb93864c2933d7ac490861c63b188"
+    },
+    {
+      "vul_id": "VUL4J-8",
+      "cve_id": "CVE-2019-12402",
+      "cwe_id": "CWE-835",
+      "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.compress.archivers.zip.NioZipEncodingTest#partialSurrogatePair"
+      ],
+      "source": "sources/VUL4J-8/NioZipEncoding.java",
+      "bytes": 7905,
+      "sha256": "e2273957a846046be6fa35193bbdb0aed26d1e9c5f90a64f12df0ae510a68180"
+    },
+    {
+      "vul_id": "VUL4J-10",
+      "cve_id": "CVE-2013-2186",
+      "cwe_id": "CWE-20",
+      "primary_file": "src/main/java/org/apache/commons/fileupload/disk/DiskFileItem.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/fileupload/disk/DiskFileItem.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepositoryWithNullChar",
+        "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepository"
+      ],
+      "source": "sources/VUL4J-10/DiskFileItem.java",
+      "bytes": 22946,
+      "sha256": "a93b3764a64cf7254ccaa8fdc57f53a3aed4c8f3ebe8ebdde571b092b410ce2c"
+    },
+    {
+      "vul_id": "VUL4J-13",
+      "cve_id": "CVE-2018-17201",
+      "cwe_id": "CWE-835",
+      "primary_file": "src/main/java/org/apache/commons/imaging/formats/rgbe/RgbeInfo.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/imaging/formats/rgbe/RgbeInfo.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.imaging.formats.rgbe.RgbeReadTest#testErrorDecompressingInvalidFile"
+      ],
+      "source": "sources/VUL4J-13/RgbeInfo.java",
+      "bytes": 6579,
+      "sha256": "67f1b64f058ae8fe2040dc08e03b8888aa031c54dd16a47ece689571c8dabce0"
+    },
+    {
+      "vul_id": "VUL4J-14",
+      "cve_id": "CVE-2021-29425",
+      "cwe_id": "CWE-20",
+      "primary_file": "src/main/java/org/apache/commons/io/FilenameUtils.java",
+      "file_paths": [
+        "src/main/java/org/apache/commons/io/FilenameUtils.java"
+      ],
+      "failing_tests": [
+        "org.apache.commons.io.FilenameUtilsTestCase#testGetPrefixLength",
+        "org.apache.commons.io.FilenameUtilsTestCase#testNormalize"
+      ],
+      "source": "sources/VUL4J-14/FilenameUtils.java",
+      "bytes": 59226,
+      "sha256": "75dca88fd2be41bc12bdc4ff9009a1ac6d240400eb4943e829f0a87e7309da95"
+    },
+    {
+      "vul_id": "VUL4J-16",
+      "cve_id": "CVE-2015-5253",
+      "cwe_id": "CWE-264",
+      "primary_file": "rt/rs/security/sso/saml/src/main/java/org/apache/cxf/rs/security/saml/sso/SAMLSSOResponseValidator.java",
+      "file_paths": [
+        "rt/rs/security/sso/saml/src/main/java/org/apache/cxf/rs/security/saml/sso/SAMLSSOResponseValidator.java"
+      ],
+      "failing_tests": [
+        "org.apache.cxf.rs.security.saml.sso.CombinedValidatorTest#testWrappingAttack3"
+      ],
+      "source": "sources/VUL4J-16/SAMLSSOResponseValidator.java",
+      "bytes": 14669,
+      "sha256": "c680265c12d6cb00e980bb34b112b0db628efa69541f061cd4864c984fcd0f8c"
+    },
+    {
+      "vul_id": "VUL4J-18",
+      "cve_id": "CVE-2019-0225",
+      "cwe_id": "CWE-22",
+      "primary_file": "jspwiki-main/src/main/java/org/apache/wiki/url/DefaultURLConstructor.java",
+      "file_paths": [
+        "jspwiki-main/src/main/java/org/apache/wiki/url/DefaultURLConstructor.java"
+      ],
+      "failing_tests": [
+        "org.apache.wiki.WikiServletTest#testNastyDoPost",
+        "org.apache.wiki.WikiServletTest#testDoGet"
+      ],
+      "source": "sources/VUL4J-18/DefaultURLConstructor.java",
+      "bytes": 9134,
+      "sha256": "ef247510c6105cdca6270c482c6fcd33ef10e0faf25fb379281f62a1f4bf6183"
+    },
+    {
+      "vul_id": "VUL4J-22",
+      "cve_id": "CVE-2016-6802",
+      "cwe_id": "CWE-284",
+      "primary_file": "web/src/main/java/org/apache/shiro/web/util/WebUtils.java",
+      "file_paths": [
+        "web/src/main/java/org/apache/shiro/web/util/WebUtils.java"
+      ],
+      "failing_tests": [
+        "org.apache.shiro.web.util.WebUtilsTest"
+      ],
+      "source": "sources/VUL4J-22/WebUtils.java",
+      "bytes": 29810,
+      "sha256": "1b67ed3c9d92dfd29966062dc0fe089de6493740e1cea7bb8023bfc39a995b68"
+    },
+    {
+      "vul_id": "VUL4J-24",
+      "cve_id": "CVE-2016-6798",
+      "cwe_id": "CWE-611",
+      "primary_file": "bundles/extensions/xss/src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java",
+      "file_paths": [
+        "bundles/extensions/xss/src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java"
+      ],
+      "failing_tests": [
+        "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidXML"
+      ],
+      "source": "sources/VUL4J-24/XSSAPIImpl.java",
+      "bytes": 16853,
+      "sha256": "9f78018b900348a392700a6f9256a3ce1aa1cfd2feaf0701bdeb1b742ff160e4"
+    },
+    {
+      "vul_id": "VUL4J-25",
+      "cve_id": "CVE-2017-15717",
+      "cwe_id": "CWE-79",
+      "primary_file": "src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java",
+      "file_paths": [
+        "src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java"
+      ],
+      "failing_tests": [
+        "org.apache.sling.xss.impl.XSSAPIImplTest"
+      ],
+      "source": "sources/VUL4J-25/XSSAPIImpl.java",
+      "bytes": 17854,
+      "sha256": "82e0aa12661daa67a544f223303cd1431ac291082bff713c7f17ff4e15bc187b"
+    },
+    {
+      "vul_id": "VUL4J-26",
+      "cve_id": "CVE-2016-4465",
+      "cwe_id": "CWE-20",
+      "primary_file": "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java",
+      "file_paths": [
+        "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java"
+      ],
+      "failing_tests": [
+        "com.opensymphony.xwork2.validator.URLValidatorTest"
+      ],
+      "source": "sources/VUL4J-26/URLValidator.java",
+      "bytes": 3785,
+      "sha256": "3433360bdd42d3deb9d3934938d0b1e058886187202a8ddf486fca398c3abef8"
+    },
+    {
+      "vul_id": "VUL4J-29",
+      "cve_id": "CVE-2014-0116",
+      "cwe_id": "CWE-264",
+      "primary_file": "core/src/main/java/org/apache/struts2/interceptor/CookieInterceptor.java",
+      "file_paths": [
+        "core/src/main/java/org/apache/struts2/interceptor/CookieInterceptor.java"
+      ],
+      "failing_tests": [
+        "org.apache.struts2.interceptor.CookieInterceptorTest"
+      ],
+      "source": "sources/VUL4J-29/CookieInterceptor.java",
+      "bytes": 14572,
+      "sha256": "2fa1be1577302a13d911d21895614d1e9ce579eb1d8b879b10e5ddb25f53f614"
+    },
+    {
+      "vul_id": "VUL4J-30",
+      "cve_id": "CVE-2016-8738",
+      "cwe_id": "CWE-20",
+      "primary_file": "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java",
+      "file_paths": [
+        "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java"
+      ],
+      "failing_tests": [
+        "com.opensymphony.xwork2.validator.URLValidatorTest"
+      ],
+      "source": "sources/VUL4J-30/URLValidator.java",
+      "bytes": 3822,
+      "sha256": "7aa3a77d5ca5db54ce491fb8a58c82a3ce41d3c729308253f6292d33da29f38a"
+    },
+    {
+      "vul_id": "VUL4J-33",
+      "cve_id": "CVE-2016-3081",
+      "cwe_id": "CWE-77",
+      "primary_file": "core/src/main/java/com/opensymphony/xwork2/ognl/OgnlUtil.java",
+      "file_paths": [
+        "core/src/main/java/com/opensymphony/xwork2/ognl/OgnlUtil.java"
+      ],
+      "failing_tests": [
+        "com.opensymphony.xwork2.ognl.OgnlUtilTest"
+      ],
+      "source": "sources/VUL4J-33/OgnlUtil.java",
+      "bytes": 24043,
+      "sha256": "a84bd11b5adef27486c6db4dddf2f698f800e4f5fdefb51cb13daa6cc862cddb"
+    },
+    {
+      "vul_id": "VUL4J-34",
+      "cve_id": "CVE-2016-2162",
+      "cwe_id": "CWE-79",
+      "primary_file": "core/src/main/java/com/opensymphony/xwork2/interceptor/I18nInterceptor.java",
+      "file_paths": [
+        "core/src/main/java/com/opensymphony/xwork2/interceptor/I18nInterceptor.java"
+      ],
+      "failing_tests": [
+        "com.opensymphony.xwork2.interceptor.I18nInterceptorTest"
+      ],
+      "source": "sources/VUL4J-34/I18nInterceptor.java",
+      "bytes": 10543,
+      "sha256": "508cff50e6f996df48aacf7095d840221412317c8b9ca43850886d288f391206"
+    },
+    {
+      "vul_id": "VUL4J-36",
+      "cve_id": "CVE-2018-8017",
+      "cwe_id": "CWE-835",
+      "primary_file": "tika-parsers/src/main/java/org/apache/tika/parser/iptc/IptcAnpaParser.java",
+      "file_paths": [
+        "tika-parsers/src/main/java/org/apache/tika/parser/iptc/IptcAnpaParser.java"
+      ],
+      "failing_tests": [
+        "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
+      ],
+      "source": "sources/VUL4J-36/IptcAnpaParser.java",
+      "bytes": 34397,
+      "sha256": "4ff0f5448ef808ec6e9a2a0a103f786e3d3baaad056caef4173cfa88601ecfc5"
+    },
+    {
+      "vul_id": "VUL4J-40",
+      "cve_id": "CVE-2019-3775",
+      "cwe_id": "CWE-287",
+      "primary_file": "server/src/main/java/org/cloudfoundry/identity/uaa/security/ScimUserSelfUpdateAllowed.java",
+      "file_paths": [
+        "server/src/main/java/org/cloudfoundry/identity/uaa/security/ScimUserSelfUpdateAllowed.java"
+      ],
+      "failing_tests": [],
+      "source": "sources/VUL4J-40/ScimUserSelfUpdateAllowed.java",
+      "bytes": 2105,
+      "sha256": "5922e4cd178f29235dbbffaedafc587ebbe1ac8dd9f30d9113185d472f0db23c"
+    },
+    {
+      "vul_id": "VUL4J-41",
+      "cve_id": "CVE-2018-1002200",
+      "cwe_id": "CWE-22",
+      "primary_file": "src/main/java/org/codehaus/plexus/archiver/AbstractUnArchiver.java",
+      "file_paths": [
+        "src/main/java/org/codehaus/plexus/archiver/AbstractUnArchiver.java"
+      ],
+      "failing_tests": [
+        "org.codehaus.plexus.archiver.zip.ZipUnArchiverTest#testExtractingZipWithEntryOutsideDestDirThrowsException"
+      ],
+      "source": "sources/VUL4J-41/AbstractUnArchiver.java",
+      "bytes": 9221,
+      "sha256": "396317b351b167947d3d394999ac06fb5e7cd1a17da3fe968a7e2e9740974315"
+    },
+    {
+      "vul_id": "VUL4J-43",
+      "cve_id": "CVE-2018-20227",
+      "cwe_id": "CWE-22",
+      "primary_file": "util/src/main/java/org/eclipse/rdf4j/common/io/ZipUtil.java",
+      "file_paths": [
+        "util/src/main/java/org/eclipse/rdf4j/common/io/ZipUtil.java"
+      ],
+      "failing_tests": [
+        "org.eclipse.rdf4j.common.io.ZipUtilTest#testWriteEntryPathTraversing"
+      ],
+      "source": "sources/VUL4J-43/ZipUtil.java",
+      "bytes": 2856,
+      "sha256": "c35bf0f1581204d9f5d6f757a96e2c58b907c31a4862b2a926004152b033b336"
+    },
+    {
+      "vul_id": "VUL4J-44",
+      "cve_id": "CVE-2013-5960",
+      "cwe_id": "CWE-310",
+      "primary_file": "src/main/java/org/owasp/esapi/codecs/PercentCodec.java",
+      "file_paths": [
+        "src/main/java/org/owasp/esapi/codecs/PercentCodec.java"
+      ],
+      "failing_tests": [
+        "org.owasp.esapi.codecs.CodecImmunityTest"
+      ],
+      "source": "sources/VUL4J-44/PercentCodec.java",
+      "bytes": 4804,
+      "sha256": "075d59c7c6c037fcf32e42d71d030eed8849988a72283a390ef335d566fc6e3b"
+    },
+    {
+      "vul_id": "VUL4J-45",
+      "cve_id": "CVE-2018-1000854",
+      "cwe_id": "CWE-74",
+      "primary_file": "esigate-core/src/main/java/org/esigate/xml/XsltRenderer.java",
+      "file_paths": [
+        "esigate-core/src/main/java/org/esigate/xml/XsltRenderer.java"
+      ],
+      "failing_tests": [
+        "org.esigate.xml.XsltRendererTest#testSecureRendering"
+      ],
+      "source": "sources/VUL4J-45/XsltRenderer.java",
+      "bytes": 4638,
+      "sha256": "94b77df6a2912fb155c8edaaa5f082b8f84ca50627b365223d0ed1ce335a873b"
+    },
+    {
+      "vul_id": "VUL4J-47",
+      "cve_id": "CVE-2016-7051",
+      "cwe_id": "CWE-611",
+      "primary_file": "src/main/java/com/fasterxml/jackson/dataformat/xml/XmlFactory.java",
+      "file_paths": [
+        "src/main/java/com/fasterxml/jackson/dataformat/xml/XmlFactory.java"
+      ],
+      "failing_tests": [
+        "com.fasterxml.jackson.dataformat.xml.SupportDTDDefaultsTest#testDTDAttempt"
+      ],
+      "source": "sources/VUL4J-47/XmlFactory.java",
+      "bytes": 27734,
+      "sha256": "b04fb82dcce9aad28f148991eb51fd3ccd49501443b9c536c5b4b70f3e825c68"
+    },
+    {
+      "vul_id": "VUL4J-48",
+      "cve_id": "CVE-2018-1000531",
+      "cwe_id": "CWE-20",
+      "primary_file": "src/main/java/org/primeframework/jwt/JWTDecoder.java",
+      "file_paths": [
+        "src/main/java/org/primeframework/jwt/JWTDecoder.java"
+      ],
+      "failing_tests": [
+        "org.primeframework.jwt.VulnerabilityTest#test_unsecuredJWT_validation"
+      ],
+      "source": "sources/VUL4J-48/JWTDecoder.java",
+      "bytes": 7765,
+      "sha256": "1ff0aa6514b429a245e86eb95bb6bb400251fa95444a355aba1eec1bf80eacb8"
+    },
+    {
+      "vul_id": "VUL4J-49",
+      "cve_id": "CVE-2018-1000125",
+      "cwe_id": "CWE-20",
+      "primary_file": "src/main/java/org/primeframework/jwt/JWTDecoder.java",
+      "file_paths": [
+        "src/main/java/org/primeframework/jwt/JWTDecoder.java"
+      ],
+      "failing_tests": [
+        "org.primeframework.jwt.JWTTest#test_SingedWithoutSignature"
+      ],
+      "source": "sources/VUL4J-49/JWTDecoder.java",
+      "bytes": 7254,
+      "sha256": "29ca73e5b1740a00168a464e92f0403bb22687c925f442b3691ef1003c86cc36"
+    },
+    {
+      "vul_id": "VUL4J-50",
+      "cve_id": "CVE-2013-4378",
+      "cwe_id": "CWE-79",
+      "primary_file": "javamelody-core/src/main/java/net/bull/javamelody/HtmlSessionInformationsReport.java",
+      "file_paths": [
+        "javamelody-core/src/main/java/net/bull/javamelody/HtmlSessionInformationsReport.java"
+      ],
+      "failing_tests": [
+        "net.bull.javamelody.TestHtmlSessionInformationsReport#testCVE_2013_4378"
+      ],
+      "source": "sources/VUL4J-50/HtmlSessionInformationsReport.java",
+      "bytes": 9663,
+      "sha256": "d9623ff4df2bfe8267ac83ac6a73d62b629b97e7c7624c3fb4043fd40d672755"
+    },
+    {
+      "vul_id": "VUL4J-52",
+      "cve_id": "CVE-2018-1000865",
+      "cwe_id": "CWE-269",
+      "primary_file": "src/main/java/org/kohsuke/groovy/sandbox/SandboxTransformer.java",
+      "file_paths": [
+        "src/main/java/org/kohsuke/groovy/sandbox/SandboxTransformer.java"
+      ],
+      "failing_tests": [
+        "org.kohsuke.groovy.sandbox.FinalizerTest"
+      ],
+      "source": "sources/VUL4J-52/SandboxTransformer.java",
+      "bytes": 38121,
+      "sha256": "aa0e5bd6eb35e38e0925a160ce21255c21d9741086725cb92921d5331c3713c7"
+    },
+    {
+      "vul_id": "VUL4J-53",
+      "cve_id": "CVE-2018-1999044",
+      "cwe_id": "CWE-835",
+      "primary_file": "core/src/main/java/hudson/scheduler/CronTab.java",
+      "file_paths": [
+        "core/src/main/java/hudson/scheduler/CronTab.java"
+      ],
+      "failing_tests": [
+        "hudson.scheduler.CronTabTest#testLongMonths"
+      ],
+      "source": "sources/VUL4J-53/CronTab.java",
+      "bytes": 20026,
+      "sha256": "bdf0515d158911eced3099dd7b37ea8e9f195e194606680ca09b4e4533ea9af2"
+    },
+    {
+      "vul_id": "VUL4J-55",
+      "cve_id": "CVE-2018-1000864",
+      "cwe_id": "CWE-835",
+      "primary_file": "core/src/main/java/hudson/scheduler/CronTab.java",
+      "file_paths": [
+        "core/src/main/java/hudson/scheduler/CronTab.java"
+      ],
+      "failing_tests": [
+        "hudson.scheduler.CronTabTest#testCeilLongMonths"
+      ],
+      "source": "sources/VUL4J-55/CronTab.java",
+      "bytes": 20063,
+      "sha256": "d1af4159831accd93b28b317f0937b32ba844eb6555653dcbbebecaff76b5da3"
+    },
+    {
+      "vul_id": "VUL4J-57",
+      "cve_id": "CVE-2018-1000089",
+      "cwe_id": "CWE-532",
+      "primary_file": "src/main/java/org/jenkinsci/plugins/workflow/support/steps/build/BuildTriggerStepExecution.java",
+      "file_paths": [
+        "src/main/java/org/jenkinsci/plugins/workflow/support/steps/build/BuildTriggerStepExecution.java"
+      ],
+      "failing_tests": [
+        "org.jenkinsci.plugins.workflow.support.steps.build.BuildTriggerStepTest#permissions"
+      ],
+      "source": "sources/VUL4J-57/BuildTriggerStepExecution.java",
+      "bytes": 12383,
+      "sha256": "a9ea91f879f8590cbb4d26b345206656e9a11837ab3cc3ae1b937acd703acf3e"
+    },
+    {
+      "vul_id": "VUL4J-59",
+      "cve_id": "CVE-2015-6748",
+      "cwe_id": "CWE-79",
+      "primary_file": "src/main/java/org/jsoup/parser/TokeniserState.java",
+      "file_paths": [
+        "src/main/java/org/jsoup/parser/TokeniserState.java"
+      ],
+      "failing_tests": [
+        "org.jsoup.parser.XmlTreeBuilderTest#testDoesHandleEOFInTag"
+      ],
+      "source": "sources/VUL4J-59/TokeniserState.java",
+      "bytes": 59725,
+      "sha256": "f729ae272c36da5f88583ad5f17918e55f069eaac406a725b4c709ccee285dd6"
+    },
+    {
+      "vul_id": "VUL4J-60",
+      "cve_id": "CVE-2016-10006",
+      "cwe_id": "CWE-79",
+      "primary_file": "src/main/java/org/owasp/validator/html/scan/MagicSAXFilter.java",
+      "file_paths": [
+        "src/main/java/org/owasp/validator/html/scan/MagicSAXFilter.java"
+      ],
+      "failing_tests": [
+        "org.owasp.validator.html.test.AntiSamyTest#testIssue2"
+      ],
+      "source": "sources/VUL4J-60/MagicSAXFilter.java",
+      "bytes": 15789,
+      "sha256": "f847629165bb4d6b2354df1f9d922da3fa2a1e254522fbf19312ca5f1c059c4b"
+    },
+    {
+      "vul_id": "VUL4J-61",
+      "cve_id": "CVE-2018-1000820",
+      "cwe_id": "CWE-611",
+      "primary_file": "src/main/java/apoc/load/Xml.java",
+      "file_paths": [
+        "src/main/java/apoc/load/Xml.java"
+      ],
+      "failing_tests": [],
+      "source": "sources/VUL4J-61/Xml.java",
+      "bytes": 20138,
+      "sha256": "694aab3885575fa5bd4faa88b64033ab653f7316f0b3154db3af1ecf4ad62fb8"
+    },
+    {
+      "vul_id": "VUL4J-62",
+      "cve_id": "CVE-2018-18389",
+      "cwe_id": "CWE-287",
+      "primary_file": "enterprise/security/src/main/java/org/neo4j/server/security/enterprise/auth/LdapRealm.java",
+      "file_paths": [
+        "enterprise/security/src/main/java/org/neo4j/server/security/enterprise/auth/LdapRealm.java"
+      ],
+      "failing_tests": [
+        "org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls"
+      ],
+      "source": "sources/VUL4J-62/LdapRealm.java",
+      "bytes": 29477,
+      "sha256": "8a908b99c8376f740f4179c2a4bb0407d8d0f62f1dc21f8e3ce12c7fe6e8a278"
+    },
+    {
+      "vul_id": "VUL4J-66",
+      "cve_id": "CVE-2020-1695",
+      "cwe_id": "CWE-20",
+      "primary_file": "resteasy-core/src/main/java/org/jboss/resteasy/plugins/delegates/MediaTypeHeaderDelegate.java",
+      "file_paths": [
+        "resteasy-core/src/main/java/org/jboss/resteasy/plugins/delegates/MediaTypeHeaderDelegate.java"
+      ],
+      "failing_tests": [
+        "org.jboss.resteasy.test.mediatype.MediaTypeHeaderTest#testNewLineInHeaderValueIsRejected"
+      ],
+      "source": "sources/VUL4J-66/MediaTypeHeaderDelegate.java",
+      "bytes": 5440,
+      "sha256": "88ad9e3546aa1bdaf2afcca5f4f1b0a5dd2f411960ac6512b78c57f1ce258a44"
+    },
+    {
+      "vul_id": "VUL4J-75",
+      "cve_id": "CVE-2016-4977",
+      "cwe_id": "CWE-19",
+      "primary_file": "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/endpoint/SpelView.java",
+      "file_paths": [
+        "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/endpoint/SpelView.java"
+      ],
+      "failing_tests": [
+        "org.springframework.security.oauth2.provider.endpoint.SpelViewTests"
+      ],
+      "source": "sources/VUL4J-75/SpelView.java",
+      "bytes": 2717,
+      "sha256": "9fedf3ea7b58d0d0aa2a89ca83df0ee0e5455473ff35dac99636e3b733b4bdb0"
+    },
+    {
+      "vul_id": "VUL4J-76",
+      "cve_id": "CVE-2018-1000850",
+      "cwe_id": "CWE-22",
+      "primary_file": "retrofit/src/main/java/retrofit2/RequestBuilder.java",
+      "file_paths": [
+        "retrofit/src/main/java/retrofit2/RequestBuilder.java"
+      ],
+      "failing_tests": [
+        "retrofit2.RequestFactoryTest"
+      ],
+      "source": "sources/VUL4J-76/RequestBuilder.java",
+      "bytes": 8468,
+      "sha256": "35ba7d415f8181024bcbd0cf0b230dd3246fa123967858ceb5cef7c2061737a6"
+    },
+    {
+      "vul_id": "VUL4J-77",
+      "cve_id": "CVE-2017-1000207",
+      "cwe_id": "CWE-502",
+      "primary_file": "modules/swagger-parser/src/main/java/io/swagger/parser/util/DeserializationUtils.java",
+      "file_paths": [
+        "modules/swagger-parser/src/main/java/io/swagger/parser/util/DeserializationUtils.java"
+      ],
+      "failing_tests": [
+        "\"io.swagger.parser.util.*\""
+      ],
+      "source": "sources/VUL4J-77/DeserializationUtils.java",
+      "bytes": 2262,
+      "sha256": "7477ee83e234e08a741f2c8b81d42d883cb393fe5c8a8ae367f4f26f292f2df2"
+    },
+    {
+      "vul_id": "VUL4J-78",
+      "cve_id": "CVE-2019-10173",
+      "cwe_id": "CWE-502",
+      "primary_file": "xstream/src/java/com/thoughtworks/xstream/XStream.java",
+      "file_paths": [
+        "xstream/src/java/com/thoughtworks/xstream/XStream.java"
+      ],
+      "failing_tests": [
+        "com.thoughtworks.acceptance.SecurityVulnerabilityTest"
+      ],
+      "source": "sources/VUL4J-78/XStream.java",
+      "bytes": 111641,
+      "sha256": "378d7dd5478299305a98cc701b9520bcdafeaa986e3ebb0fe2197817c3e1cf1b"
+    },
+    {
+      "vul_id": "VUL4J-79",
+      "cve_id": "CVE-2018-1002201",
+      "cwe_id": "CWE-22",
+      "primary_file": "src/main/java/org/zeroturnaround/zip/ZipUtil.java",
+      "file_paths": [
+        "src/main/java/org/zeroturnaround/zip/ZipUtil.java"
+      ],
+      "failing_tests": [
+        "org.zeroturnaround.zip.DirectoryTraversalMaliciousTest"
+      ],
+      "source": "sources/VUL4J-79/ZipUtil.java",
+      "bytes": 97694,
+      "sha256": "971bebccc295ac173bdfe02a023f6472d1388751349631d93fa26377c82fff26"
+    }
+  ]
+}

@@ -6,3 +6,12 @@ data/patcheval/files/** -text diff
 # fixtures read the same on every machine as they did when captured.
 tests/fixtures/testparse/** text eol=lf
 tests/fixtures/plans/** text eol=lf
+
+# Vul4J vulnerable sources, exported byte for byte from the vul4j-alldeps
+# container (sha256 in data/vul4j/manifest.json). Two of them contain CR bytes,
+# so git must never convert line endings here.
+data/vul4j/sources/** -text diff
+
+# Shell and Slurm scripts run on Linux: always LF, even in a Windows checkout.
+*.sh     text eol=lf
+*.sbatch text eol=lf

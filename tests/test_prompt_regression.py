@@ -140,6 +140,53 @@ def test_published_vul4j_prompts_unchanged():
     assert not failures, "\n".join(failures[:20])
 
 
+def check_exported_sources() -> list:
+    """
+    Rebuild every published prompt the way generate.py does, from the payload
+    vuln_data builds out of data/vul4j/ (no Docker), and compare it, and the
+    payload's metadata, with the log.
+    """
+    import generate
+    import vuln_data
+
+    if not GOLDEN_LOGS.is_dir():
+        return [f"golden log directory not found: {GOLDEN_LOGS} (set CWEFT_GOLDEN_LOGS)"]
+
+    def no_docker(*a, **kw):
+        raise AssertionError("the exported path must not call docker")
+    original = vuln_data._docker_exec
+    vuln_data._docker_exec = no_docker
+    generate._payload_cache.clear()
+    failures = []
+    try:
+        for p in sorted(GOLDEN_LOGS.glob("*.json")):
+            log = json.loads(p.read_text(encoding="utf-8"))
+            payload = generate.payload_for(log["vul_id"])
+            if payload is None:
+                failures.append(f"{p.name}: no payload from data/vul4j/")
+                continue
+            for key in ("cve_id", "cwe_id", "cwe_name", "primary_file"):
+                if payload[key] != log[key]:
+                    failures.append(f"{p.name}: {key} {payload[key]!r} != logged {log[key]!r}")
+            rebuilt = build_prompt(
+                level=log["level"], vuln_info=payload,
+                file_path=payload["primary_file"],
+                file_content=payload["primary_content"],
+                language=payload.get("language", "Java"),
+            )
+            if rebuilt != log["prompt"]:
+                failures.append(f"{p.name}: prompt from data/vul4j/ differs from the log")
+    finally:
+        vuln_data._docker_exec = original
+        generate._payload_cache.clear()
+    return failures
+
+
+def test_published_prompts_rebuild_from_the_exported_sources():
+    failures = check_exported_sources()
+    assert not failures, "\n".join(failures[:20])
+
+
 def test_java_system_prompt_and_fences_unchanged():
     failures = check_models()
     assert not failures, "\n".join(failures)

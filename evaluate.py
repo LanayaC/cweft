@@ -12,6 +12,7 @@ That file is for new runs; the published 504 are frozen in results/published/.
     python evaluate.py --levels L1 L2      # some levels
     python evaluate.py --limit 5           # smoke test
     python evaluate.py --dataset patcheval # PatchEval logs (patcheval_eval.py)
+    python evaluate.py --logs-dir logs/plumbing_test --results-dir results/plumbing_test
 """
 
 import argparse
@@ -345,10 +346,23 @@ def main():
                     help="Cap the number of cells to evaluate (smoke test)")
     ap.add_argument("--dataset", choices=["vul4j", "patcheval"], default="vul4j",
                     help="Which benchmark's logs to evaluate (default: vul4j)")
+    ap.add_argument("--logs-dir", type=Path, default=None,
+                    help="read logs from here instead of logs/ (PatchEval: its patcheval/)")
+    ap.add_argument("--results-dir", type=Path, default=None,
+                    help="write results.csv / results_patcheval.csv here instead of results/")
     args = ap.parse_args()
 
+    global LOGS_DIR, RESULTS_CSV
+    import patcheval_eval
+    if args.logs_dir is not None:
+        LOGS_DIR = args.logs_dir.resolve()
+        patcheval_eval.PATCHEVAL_LOGS_DIR = LOGS_DIR / "patcheval"
+    if args.results_dir is not None:
+        args.results_dir.mkdir(parents=True, exist_ok=True)
+        RESULTS_CSV = args.results_dir.resolve() / RESULTS_CSV.name
+        patcheval_eval.RESULTS_CSV = args.results_dir.resolve() / patcheval_eval.RESULTS_CSV.name
+
     if args.dataset == "patcheval":
-        import patcheval_eval
         patcheval_eval.main(args)
         return
 

@@ -1,10 +1,12 @@
 """
-Vulnerability data layer: Vul4J (via Docker) and PatchEval (local files).
+Vulnerability data layer: Vul4J (exported files, or Docker) and PatchEval
+(local files).
 
-get_vuln_payload(vul_id) routes on the id. VUL4J-N ids take the Vul4J path
-described below, unchanged since the published 504 cells. CVE ids take the
-PatchEval path, which reads data/patcheval/ only and needs no Docker (see
-the PatchEval section at the bottom of this file).
+get_vuln_payload(vul_id) routes on the id. VUL4J-N ids read data/vul4j/,
+exported once from the container by scripts/export_vul4j_sources.py, and fall
+back to the container path described below for an id not exported. CVE ids
+take the PatchEval path, which reads data/patcheval/ only and needs no Docker
+(see the PatchEval section at the bottom of this file).
 
 Vul4J integration (alldeps-compatible).
 
@@ -30,9 +32,13 @@ import csv
 import hashlib
 import json
 import subprocess
+from pathlib import Path
 from typing import Dict, List, Optional
 
-from config import CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT, PATCHEVAL_DIR
+from config import (CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT,
+                    PATCHEVAL_DIR, PROJECT_ROOT)
+
+VUL4J_DIR = PROJECT_ROOT / "data" / "vul4j"
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -248,9 +254,71 @@ def get_vuln_payload(vul_id: str) -> Dict:
     raise KeyError(f"{vul_id!r} is neither a VUL4J-N id nor in {PATCHEVAL_DIR / 'manifest.json'}")
 
 
+def decode_source(raw: bytes) -> str:
+    """
+    A source file's bytes as the prompt sees them. This is exactly what
+    `_docker_exec` (text=True) does to `cat` output: decode UTF-8, then turn
+    CRLF and lone CR into LF. The exported files keep their original bytes;
+    this keeps prompts built from them identical to the container path.
+    """
+    return raw.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+
+
+_vul4j_manifest_cache: Optional[Dict[str, Dict]] = None
+
+
+def _vul4j_manifest() -> Dict[str, Dict]:
+    """data/vul4j/manifest.json keyed by vul_id; empty if not exported."""
+    global _vul4j_manifest_cache
+    if _vul4j_manifest_cache is None:
+        path = VUL4J_DIR / "manifest.json"
+        _vul4j_manifest_cache = (
+            {e["vul_id"]: e for e in json.loads(path.read_text(encoding="utf-8"))["entries"]}
+            if path.exists() else {}
+        )
+    return _vul4j_manifest_cache
+
+
+def _exported_vul4j_payload(entry: Dict) -> Dict:
+    """The Vul4J payload from data/vul4j/, verified against its SHA-256."""
+    vul_id = entry["vul_id"]
+    raw = (VUL4J_DIR / entry["source"]).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != entry["sha256"]:
+        raise RuntimeError(
+            f"{vul_id}: {VUL4J_DIR / entry['source']} does not match its SHA-256 in "
+            f"data/vul4j/manifest.json (line endings converted on checkout?)."
+        )
+    cwe_id = entry["cwe_id"]
+    cwe_name = CWE_NAMES.get(cwe_id)
+    if cwe_name is None:
+        raise RuntimeError(f"{vul_id} has CWE {cwe_id!r}, which is not in CWE_NAMES.")
+    return {
+        "vul_id":          vul_id,
+        "cve_id":          entry["cve_id"],
+        "cwe_id":          cwe_id,
+        "cwe_name":        cwe_name,
+        "failing_tests":   list(entry["failing_tests"]),
+        "file_paths":      list(entry["file_paths"]),
+        "primary_file":    entry["primary_file"],
+        "primary_content": decode_source(raw),
+    }
+
+
 def _get_vul4j_payload(vul_id: str) -> Dict:
     """
-    Bundle everything `prompts.build_prompt` could need for a Vul4J vuln.
+    Bundle everything `prompts.build_prompt` could need for a Vul4J vuln:
+    from data/vul4j/ when it was exported, otherwise from the container.
+    """
+    entry = _vul4j_manifest().get(vul_id)
+    if entry is not None:
+        return _exported_vul4j_payload(entry)
+    return _container_vul4j_payload(vul_id)
+
+
+def _container_vul4j_payload(vul_id: str) -> Dict:
+    """
+    Bundle everything `prompts.build_prompt` could need for a Vul4J vuln,
+    read from the alldeps container.
 
     Returns a dict with:
         vul_id, cve_id, cwe_id, cwe_name,

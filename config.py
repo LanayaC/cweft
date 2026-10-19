@@ -73,11 +73,16 @@ LOCAL_MODELS = {
 # generate.py refuse to run a model whose id still starts with VLLM_PLACEHOLDER.
 VLLM_PLACEHOLDER = "FILL-IN-HF-ID"
 VLLM_MODELS = {
-    # Downloaded at revision 1504002f650e656a0a3789d99574df12e3e94ed0.
     "granite-8b-bf16":  "ibm-granite/granite-4.1-8b",
     "granite-30b-bf16": f"{VLLM_PLACEHOLDER}: granite 30B, bf16",
     "gemma-12b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 12B, bf16",
     "gemma-31b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 31B, bf16",
+}
+
+# The Hugging Face revision each vLLM model is served at. leylak/run_model.sbatch
+# passes it to `vllm serve --revision` and refuses a model that has none here.
+VLLM_REVISIONS = {
+    "granite-8b-bf16": "1504002f650e656a0a3789d99574df12e3e94ed0",
 }
 
 MODELS = {**CLOUD_MODELS, **LOCAL_MODELS, **VLLM_MODELS}
