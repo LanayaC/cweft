@@ -1,0 +1,123 @@
+"""
+Can each Vul4J entry compile with Maven offline (-o)?
+
+For every entry, in a scratch checkout: make Maven offline (.mvn/maven.config),
+run `vul4j compile` on the original code, and record whether it built. An entry
+that fails offline is compiled ONCE online, which fills ~/.m2 with whatever was
+missing (the "pre-build"), and is then tried offline again. Gradle entries are
+left as they are and reported as such.
+
+    python scripts/check_vul4j_offline.py                 # every entry
+    python scripts/check_vul4j_offline.py --only VUL4J-24
+
+Writes results/oracle_vul4j/offline_compile.csv.
+"""
+
+import argparse
+import csv
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+import vul4j_baseline as vb  # noqa: E402
+from config import SUBSET  # noqa: E402
+
+OUT = PROJECT_ROOT / "results" / "oracle_vul4j" / "offline_compile.csv"
+SCRATCH = "/tmp/cweft_offline"
+
+
+def checkout(vul_id: str) -> str:
+    workdir = f"{SCRATCH}/{vul_id}"
+    vb.docker_run(["rm", "-rf", workdir], 300)
+    vb.docker_run(["mkdir", "-p", SCRATCH], 60)
+    res = vb.docker_run(["vul4j", "checkout", "--id", vul_id, "-d", workdir], 1800)
+    if res.returncode != 0:
+        raise RuntimeError(f"checkout failed: {res.stderr.strip()[-200:]}")
+    return workdir
+
+
+def compile_timed(workdir: str) -> tuple:
+    t0 = time.time()
+    try:
+        ok = vb.compile_ok(workdir)
+    except Exception as e:
+        return False, round(time.time() - t0, 1), f"{type(e).__name__}"
+    return ok, round(time.time() - t0, 1), ""
+
+
+def failure_hint(workdir: str) -> str:
+    log = vb.docker_run(["sh", "-c", f"grep -m3 -E 'ERROR|offline' {workdir}/VUL4J/compile.log"],
+                        60).stdout
+    return " | ".join(line.strip()[:150] for line in log.splitlines())
+
+
+def check_one(vul_id: str) -> dict:
+    row = {"vul_id": vul_id, "build": "", "offline_ok": "", "prebuilt": False,
+           "seconds": "", "note": ""}
+    workdir = checkout(vul_id)
+    try:
+        if not vb.make_offline(workdir):
+            row.update(build="gradle", note="Gradle: not made offline")
+            return row
+        row["build"] = "maven"
+        ok, secs, err = compile_timed(workdir)
+        if not ok:
+            first_hint = err or failure_hint(workdir)
+            # Pre-build: one online compile to fill the local repository.
+            vb.docker_run(["rm", "-f", f"{workdir}/.mvn/maven.config"], 60)
+            online_ok, online_secs, _ = compile_timed(workdir)
+            vb.make_offline(workdir)
+            ok, secs, err = compile_timed(workdir)
+            row.update(prebuilt=True,
+                       note=f"offline failed first ({first_hint[:200]}); online compile "
+                            f"{'ok' if online_ok else 'FAILED'} in {online_secs}s")
+            if not ok:
+                row["note"] += f"; offline after pre-build failed: {err or failure_hint(workdir)[:200]}"
+        row.update(offline_ok=ok, seconds=secs)
+        return row
+    finally:
+        vb.docker_run(["rm", "-rf", workdir], 300)
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description="Check every Vul4J entry compiles offline")
+    ap.add_argument("--only", nargs="+", default=None)
+    args = ap.parse_args(argv)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    done = {}
+    if OUT.exists():
+        with OUT.open(encoding="utf-8", newline="") as f:
+            done = {r["vul_id"]: r for r in csv.DictReader(f)}
+    todo = [v for v in (args.only or SUBSET) if v not in done]
+    print(f"[{datetime.now(timezone.utc).isoformat(timespec='seconds')}] offline compile check: "
+          f"{len(todo)} to do", flush=True)
+    for i, vul_id in enumerate(todo, start=1):
+        try:
+            row = check_one(vul_id)
+        except Exception as e:
+            row = {"vul_id": vul_id, "build": "", "offline_ok": False, "prebuilt": False,
+                   "seconds": "", "note": f"{type(e).__name__}: {e}"[:300]}
+        new = not OUT.exists()
+        with OUT.open("a", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(row))
+            if new:
+                w.writeheader()
+            w.writerow(row)
+        print(f"  ({i}/{len(todo)}) {vul_id:10s} {row['build']:6s} offline_ok={row['offline_ok']} "
+              f"{row['seconds']}s {'(pre-built) ' if row['prebuilt'] else ''}{row['note'][:150]}",
+              flush=True)
+    with OUT.open(encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    bad = [r["vul_id"] for r in rows if r["build"] == "maven" and r["offline_ok"] != "True"]
+    print(f"offline compile check done: {sum(r['offline_ok'] == 'True' for r in rows)} Maven "
+          f"entries compile offline; failing: {bad or 'none'}; Gradle: "
+          f"{[r['vul_id'] for r in rows if r['build'] == 'gradle']}", flush=True)
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

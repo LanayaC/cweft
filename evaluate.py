@@ -56,19 +56,17 @@ CSV_FIELDS = [
 
 
 def _docker_exec(cmd: List[str], check: bool = False, timeout: Optional[int] = None) -> subprocess.CompletedProcess:
-    full = ["docker", "exec", CONTAINER_NAME] + cmd
-    return subprocess.run(
-        full, check=check, capture_output=True, text=True, encoding="utf-8",
-        stdin=subprocess.DEVNULL, timeout=timeout or DOCKER_EXEC_TIMEOUT,
-    )
+    # vul4j_baseline.docker_run enforces the timeout inside the container, so
+    # a timed-out compile or test run is really stopped, child processes too.
+    res = vb.docker_run(cmd, timeout or DOCKER_EXEC_TIMEOUT)
+    if check and res.returncode != 0:
+        raise subprocess.CalledProcessError(res.returncode, cmd, res.stdout, res.stderr)
+    return res
 
 
 def _docker_write_file(container_path: str, content: str) -> None:
     # Pipe via stdin to dodge argument-size and quoting limits.
-    proc = subprocess.run(
-        ["docker", "exec", "-i", CONTAINER_NAME, "tee", container_path],
-        input=content, text=True, encoding="utf-8", capture_output=True, timeout=60,
-    )
+    proc = vb.docker_run(["tee", container_path], 60, input_text=content)
     if proc.returncode != 0:
         raise RuntimeError(f"Failed to write {container_path}: {proc.stderr}")
 
@@ -90,7 +88,7 @@ def restore_primary(workdir: str, primary_file: str) -> None:
 
 
 def run_compile(workdir: str) -> Tuple[bool, str]:
-    res = _docker_exec(["vul4j", "compile", "-d", workdir])
+    res = _docker_exec(["vul4j", "compile", "-d", workdir], timeout=vb.COMPILE_TIMEOUT)
     wrapper_log = (res.stdout or "") + "\n--- stderr ---\n" + (res.stderr or "")
 
     maven_log = ""
@@ -171,6 +169,7 @@ def grade(vul_id: str, primary_file: str, apply: Callable[[str, str], None],
         return {**result, "trust": REFUSED, "error": why}
     try:
         workdir = fresh_checkout(vul_id)
+        vb.make_offline(workdir)               # Maven resolves from the local repository only
     except Exception as e:
         return {**result, "error": f"checkout failed: {type(e).__name__}: {e}"}
     try:

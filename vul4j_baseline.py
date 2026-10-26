@@ -3,7 +3,9 @@ Baseline a Vul4J entry: prove its PoV detects the hole, then record the set of
 tests a patch will later be judged on. The same rules as patcheval_baseline.py.
 
 Per entry, in a scratch checkout inside the vul4j-alldeps container (never the
-/tmp/cweft checkout that generation and grading use):
+/tmp/cweft checkout that generation and grading use), with Maven offline (-o,
+see make_offline) and every command under a timeout that kills its whole
+process tree inside the container (see docker_run):
 
   1. the vulnerable file on disk has the SHA-256 of the exported copy in
      data/vul4j/ (scripts/export_vul4j_sources.py)
@@ -21,6 +23,7 @@ the reason recorded. Nothing here grades a model's patch.
 
     python vul4j_baseline.py                    # every entry in config.SUBSET
     python vul4j_baseline.py --only VUL4J-77 --redo
+    python vul4j_baseline.py --retry-errors     # redo crashed/timed-out entries too
 
 Writes data/vul4j/baseline.json, merging one entry per vulnerability and
 saving after each, so a crash loses at most the entry in flight. An entry
@@ -33,6 +36,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 import time
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
@@ -66,13 +70,71 @@ def _now() -> str:
 
 # ── Docker ───────────────────────────────────────────────────────────────
 
-def _exec(cmd: List[str], timeout: int, input_text: Optional[str] = None) -> subprocess.CompletedProcess:
-    """docker exec with stdin closed (Gradle reads stdin otherwise) or given."""
-    return subprocess.run(
-        ["docker", "exec", "-i", CONTAINER_NAME] + cmd,
-        input=input_text, stdin=None if input_text is not None else subprocess.DEVNULL,
-        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout,
-    )
+KILL_GRACE = 30          # seconds between TERM and KILL inside the container
+HOST_SLACK = 120         # the host gives up this long after the container should have
+# Gradle normally hands the build to a daemon in its own session, which a
+# process-group kill cannot reach. Without the daemon the build stays in the group.
+CONTAINER_ENV = {"GRADLE_OPTS": "-Dorg.gradle.daemon=false"}
+TIMED_OUT = (124, 137)   # GNU timeout: TERM sent (124), or KILL after the grace (137)
+
+
+def docker_run(cmd: List[str], timeout: int, input_text: Optional[str] = None) -> subprocess.CompletedProcess:
+    """
+    Run `cmd` in the container, killing the whole process tree on timeout.
+
+    Killing the `docker exec` client does not stop the command inside the
+    container, so the limit is enforced in there: GNU timeout runs the command
+    in its own process group and signals the whole group (Maven and the test
+    JVMs it forks) when time is up, then KILLs it KILL_GRACE seconds later.
+    Output goes to temporary files, not pipes: on Windows a pipe stays open,
+    and a wait on it blocks, for as long as anything inside still holds it.
+
+    Raises subprocess.TimeoutExpired when the limit was hit; stdin is closed
+    unless `input_text` is given (Gradle reads stdin otherwise).
+    """
+    env = [a for k, v in CONTAINER_ENV.items() for a in ("-e", f"{k}={v}")]
+    full = (["docker", "exec", "-i"] + env + [CONTAINER_NAME,
+            "timeout", "-k", str(KILL_GRACE), str(int(timeout))] + list(cmd))
+    with tempfile.TemporaryFile() as out, tempfile.TemporaryFile() as err:
+        started = time.time()
+        proc = subprocess.Popen(full, stdout=out, stderr=err,
+                                stdin=subprocess.PIPE if input_text is not None else subprocess.DEVNULL)
+        try:
+            if input_text is not None:
+                proc.stdin.write(input_text.encode("utf-8"))
+                proc.stdin.close()
+            rc = proc.wait(timeout=timeout + KILL_GRACE + HOST_SLACK)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
+            raise
+        out.seek(0)
+        err.seek(0)
+        stdout = out.read().decode("utf-8", "replace")
+        stderr = err.read().decode("utf-8", "replace")
+    if rc in TIMED_OUT and time.time() - started >= timeout:
+        raise subprocess.TimeoutExpired(cmd, timeout, output=stdout, stderr=stderr)
+    return subprocess.CompletedProcess(cmd, rc, stdout, stderr)
+
+
+_exec = docker_run
+
+
+def make_offline(workdir: str) -> bool:
+    """
+    Make Maven run offline in this checkout (-o via .mvn/maven.config, which
+    Maven 3.3+ reads from the project root), appending to a config the project
+    already has. Returns False for a Gradle project, which is left as it is.
+    """
+    probe = docker_run(["test", "-f", f"{workdir}/pom.xml"], 60)
+    if probe.returncode != 0:
+        return False
+    script = ('mkdir -p "$1/.mvn" && f="$1/.mvn/maven.config" && '
+              '(grep -qx -- -o "$f" 2>/dev/null || echo -o >> "$f")')
+    res = docker_run(["sh", "-c", script, "sh", workdir], 60)
+    if res.returncode != 0:
+        raise RuntimeError(f"could not make {workdir} offline: {res.stderr.strip()}")
+    return True
 
 
 def checkout(vul_id: str) -> str:
@@ -82,6 +144,7 @@ def checkout(vul_id: str) -> str:
     res = _exec(["vul4j", "checkout", "--id", vul_id, "-d", workdir], 1800)
     if res.returncode != 0:
         raise RuntimeError(f"vul4j checkout failed: {res.stderr.strip()[-300:]}")
+    make_offline(workdir)
     return workdir
 
 
@@ -246,13 +309,20 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Baseline the Vul4J entries (judged sets)")
     ap.add_argument("--only", nargs="+", default=None, help="these VUL4J ids only")
     ap.add_argument("--redo", action="store_true", help="redo entries already in the file")
+    ap.add_argument("--retry-errors", action="store_true",
+                    help="redo entries whose status is 'error' (a crash or timeout), keep the rest")
     args = ap.parse_args(argv)
 
     data = load()
     image = subprocess.run(["docker", "inspect", "-f", "{{.Image}}", CONTAINER_NAME],
                            capture_output=True, text=True).stdout.strip()
     data["image"] = image
-    todo = [v for v in (args.only or SUBSET) if args.redo or v not in data["entries"]]
+    def wanted(v: str) -> bool:
+        if args.redo or v not in data["entries"]:
+            return True
+        return args.retry_errors and data["entries"][v].get("status") == "error"
+
+    todo = [v for v in (args.only or SUBSET) if wanted(v)]
     print(f"[{_now()}] baseline: {len(todo)} to do, {len(data['entries'])} already in "
           f"{BASELINE_PATH}", flush=True)
     t_batch = time.time()
