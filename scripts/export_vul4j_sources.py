@@ -6,8 +6,9 @@ a machine without that container.
 For each vulnerability this writes the primary file's bytes, exactly as they
 sit in the container checkout, to data/vul4j/sources/<VUL4J-N>/<file name>, and
 records in data/vul4j/manifest.json what vuln_data would otherwise read from
-the container: CVE and CWE (dataset CSV), the patched file path and the PoV
-tests (vulnerability_info.json), plus the byte count and SHA-256.
+the container: CVE, CWE and the PoV tests (the dataset CSV's failing_tests
+column), the patched file path (vulnerability_info.json), plus the byte count
+and SHA-256.
 
 Before writing anything it checks, per file, that:
   * the bytes on disk equal the copy `vul4j checkout` staged (git show :path),
@@ -63,13 +64,20 @@ def main() -> int:
 
         source = f"sources/{vul_id}/{Path(rel).name}"
         row = csv_rows[vul_id]
+        pov, pov_source = vuln_data.pov_tests(vul_id, row, info)
         entries.append({
             "vul_id":        vul_id,
             "cve_id":        row.get("cve_id", ""),
             "cwe_id":        row["cwe_id"].strip(),
             "primary_file":  rel,
             "file_paths":    paths,
-            "failing_tests": vuln_data._extract_failing_tests(info),
+            # The PoV tests: Vul4J's failing_tests column (see vuln_data.pov_tests).
+            "failing_tests": pov,
+            "failing_tests_source": pov_source,
+            # What the test_cmd parser gave, which the published 504 were graded
+            # with; kept so scripts/regrade_published_vul4j.py can tell what
+            # the old grader treated as the PoV.
+            "failing_tests_from_test_cmd": vuln_data._extract_failing_tests(info),
             "source":        source,
             "bytes":         len(on_disk),
             "sha256":        hashlib.sha256(on_disk).hexdigest(),

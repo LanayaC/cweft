@@ -32,8 +32,9 @@ import csv
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from config import (CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT,
                     PATCHEVAL_DIR, PROJECT_ROOT)
@@ -237,6 +238,26 @@ def _extract_failing_tests(info: Dict) -> List[str]:
     # The test list ends at the next whitespace (next Maven arg) or EOL
     test_list = after.split()[0] if after.split() else ""
     return [t.strip() for t in test_list.split(",") if t.strip()]
+
+
+def pov_tests(vul_id: str, csv_row: Dict[str, str], info: Dict) -> Tuple[List[str], str]:
+    """
+    (PoV tests, where they came from) for a Vul4J entry.
+
+    The source is Vul4J's own `failing_tests` column in the dataset CSV. The
+    old test_cmd parser above is only a fallback, and says so on stderr when
+    used: it can return a wildcard (VUL4J-77) or nothing at all for Gradle
+    projects (VUL4J-40, VUL4J-61), and neither names a real test.
+    """
+    tests = [t.strip() for t in (csv_row.get("failing_tests") or "").split(",") if t.strip()]
+    if tests:
+        return tests, "vul4j_failing_tests"
+    fallback = _extract_failing_tests(info)
+    print(f"WARNING: {vul_id} has no failing_tests in the Vul4J dataset; using the "
+          f"test_cmd parser instead: {fallback}", file=sys.stderr)
+    return fallback, "test_cmd"
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Convenience: bundle everything a prompt needs
 # ──────────────────────────────────────────────────────────────────────
@@ -357,7 +378,7 @@ def _container_vul4j_payload(vul_id: str) -> Dict:
         "cve_id":          csv_row.get("cve_id", ""),
         "cwe_id":          cwe_id,
         "cwe_name":        cwe_name,
-        "failing_tests":   _extract_failing_tests(info),
+        "failing_tests":   pov_tests(vul_id, csv_row, info)[0],
         "file_paths":      paths,
         "primary_file":    primary_file,
         "primary_content": primary_content,

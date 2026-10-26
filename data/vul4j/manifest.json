@@ -13,6 +13,10 @@
       "failing_tests": [
         "com.alibaba.json.bvt.bug.Issue1005#test_for_issue"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "com.alibaba.json.bvt.bug.Issue1005#test_for_issue"
+      ],
       "source": "sources/VUL4J-1/ObjectArrayCodec.java",
       "bytes": 8841,
       "sha256": "53dbc01043c165b08efb12d13275b6ef9de7b3e69d61330988eb4ea0cf7e940e"
@@ -26,6 +30,10 @@
         "batik-dom/src/main/java/org/apache/batik/dom/util/SAXDocumentFactory.java"
       ],
       "failing_tests": [
+        "org.apache.batik.dom.util.TestCVE_2017_5662#testCVE_2017_5662"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.batik.dom.util.TestCVE_2017_5662"
       ],
       "source": "sources/VUL4J-2/SAXDocumentFactory.java",
@@ -41,6 +49,10 @@
         "src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java"
       ],
       "failing_tests": [
+        "org.apache.commons.compress.Test_CVE_2018_1324#testCVE_2018_1324"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.commons.compress.Test_CVE_2018_1324"
       ],
       "source": "sources/VUL4J-6/X0017_StrongEncryptionHeader.java",
@@ -59,6 +71,11 @@
         "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#singleByteReadThrowsAtEofForCorruptedStoredEntry",
         "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#multiByteReadThrowsAtEofForCorruptedStoredEntry"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#singleByteReadThrowsAtEofForCorruptedStoredEntry",
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#multiByteReadThrowsAtEofForCorruptedStoredEntry"
+      ],
       "source": "sources/VUL4J-7/ZipArchiveInputStream.java",
       "bytes": 48189,
       "sha256": "936caae13581e049ff4e700a0e6009507febb93864c2933d7ac490861c63b188"
@@ -72,6 +89,10 @@
         "src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java"
       ],
       "failing_tests": [
+        "org.apache.commons.compress.archivers.zip.NioZipEncodingTest#partialSurrogatePair"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.commons.compress.archivers.zip.NioZipEncodingTest#partialSurrogatePair"
       ],
       "source": "sources/VUL4J-8/NioZipEncoding.java",
@@ -90,6 +111,11 @@
         "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepositoryWithNullChar",
         "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepository"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepositoryWithNullChar",
+        "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepository"
+      ],
       "source": "sources/VUL4J-10/DiskFileItem.java",
       "bytes": 22946,
       "sha256": "a93b3764a64cf7254ccaa8fdc57f53a3aed4c8f3ebe8ebdde571b092b410ce2c"
@@ -103,6 +129,10 @@
         "src/main/java/org/apache/commons/imaging/formats/rgbe/RgbeInfo.java"
       ],
       "failing_tests": [
+        "org.apache.commons.imaging.formats.rgbe.RgbeReadTest#testErrorDecompressingInvalidFile"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.commons.imaging.formats.rgbe.RgbeReadTest#testErrorDecompressingInvalidFile"
       ],
       "source": "sources/VUL4J-13/RgbeInfo.java",
@@ -121,6 +151,11 @@
         "org.apache.commons.io.FilenameUtilsTestCase#testGetPrefixLength",
         "org.apache.commons.io.FilenameUtilsTestCase#testNormalize"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.commons.io.FilenameUtilsTestCase#testGetPrefixLength",
+        "org.apache.commons.io.FilenameUtilsTestCase#testNormalize"
+      ],
       "source": "sources/VUL4J-14/FilenameUtils.java",
       "bytes": 59226,
       "sha256": "75dca88fd2be41bc12bdc4ff9009a1ac6d240400eb4943e829f0a87e7309da95"
@@ -134,6 +169,10 @@
         "rt/rs/security/sso/saml/src/main/java/org/apache/cxf/rs/security/saml/sso/SAMLSSOResponseValidator.java"
       ],
       "failing_tests": [
+        "org.apache.cxf.rs.security.saml.sso.CombinedValidatorTest#testWrappingAttack3"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.cxf.rs.security.saml.sso.CombinedValidatorTest#testWrappingAttack3"
       ],
       "source": "sources/VUL4J-16/SAMLSSOResponseValidator.java",
@@ -152,6 +191,11 @@
         "org.apache.wiki.WikiServletTest#testNastyDoPost",
         "org.apache.wiki.WikiServletTest#testDoGet"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.wiki.WikiServletTest#testNastyDoPost",
+        "org.apache.wiki.WikiServletTest#testDoGet"
+      ],
       "source": "sources/VUL4J-18/DefaultURLConstructor.java",
       "bytes": 9134,
       "sha256": "ef247510c6105cdca6270c482c6fcd33ef10e0faf25fb379281f62a1f4bf6183"
@@ -165,6 +209,12 @@
         "web/src/main/java/org/apache/shiro/web/util/WebUtils.java"
       ],
       "failing_tests": [
+        "org.apache.shiro.web.util.WebUtilsTest#testGetContextPathIncludes",
+        "org.apache.shiro.web.util.WebUtilsTest#testGetContextPath",
+        "org.apache.shiro.web.util.WebUtilsTest#testGetPathWithinApplication"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.shiro.web.util.WebUtilsTest"
       ],
       "source": "sources/VUL4J-22/WebUtils.java",
@@ -182,6 +232,10 @@
       "failing_tests": [
         "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidXML"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidXML"
+      ],
       "source": "sources/VUL4J-24/XSSAPIImpl.java",
       "bytes": 16853,
       "sha256": "9f78018b900348a392700a6f9256a3ce1aa1cfd2feaf0701bdeb1b742ff160e4"
@@ -195,6 +249,11 @@
         "src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java"
       ],
       "failing_tests": [
+        "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidHref",
+        "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidHrefWithoutHrefConfig"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.sling.xss.impl.XSSAPIImplTest"
       ],
       "source": "sources/VUL4J-25/XSSAPIImpl.java",
@@ -210,6 +269,10 @@
         "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java"
       ],
       "failing_tests": [
+        "com.opensymphony.xwork2.validator.URLValidatorTest#testValidUrlWithDefaultRegex"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.opensymphony.xwork2.validator.URLValidatorTest"
       ],
       "source": "sources/VUL4J-26/URLValidator.java",
@@ -225,6 +288,10 @@
         "core/src/main/java/org/apache/struts2/interceptor/CookieInterceptor.java"
       ],
       "failing_tests": [
+        "org.apache.struts2.interceptor.CookieInterceptorTest#testCookiesWithStrutsInternalsAccess"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.apache.struts2.interceptor.CookieInterceptorTest"
       ],
       "source": "sources/VUL4J-29/CookieInterceptor.java",
@@ -240,6 +307,10 @@
         "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java"
       ],
       "failing_tests": [
+        "com.opensymphony.xwork2.validator.URLValidatorTest#testValidUrl2"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.opensymphony.xwork2.validator.URLValidatorTest"
       ],
       "source": "sources/VUL4J-30/URLValidator.java",
@@ -255,6 +326,10 @@
         "core/src/main/java/com/opensymphony/xwork2/ognl/OgnlUtil.java"
       ],
       "failing_tests": [
+        "com.opensymphony.xwork2.ognl.OgnlUtilTest#testBlockSequenceOfExpressions"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.opensymphony.xwork2.ognl.OgnlUtilTest"
       ],
       "source": "sources/VUL4J-33/OgnlUtil.java",
@@ -270,6 +345,10 @@
         "core/src/main/java/com/opensymphony/xwork2/interceptor/I18nInterceptor.java"
       ],
       "failing_tests": [
+        "com.opensymphony.xwork2.interceptor.I18nInterceptorTest#testCVE_2016_2162"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.opensymphony.xwork2.interceptor.I18nInterceptorTest"
       ],
       "source": "sources/VUL4J-34/I18nInterceptor.java",
@@ -287,6 +366,10 @@
       "failing_tests": [
         "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
+      ],
       "source": "sources/VUL4J-36/IptcAnpaParser.java",
       "bytes": 34397,
       "sha256": "4ff0f5448ef808ec6e9a2a0a103f786e3d3baaad056caef4173cfa88601ecfc5"
@@ -299,7 +382,11 @@
       "file_paths": [
         "server/src/main/java/org/cloudfoundry/identity/uaa/security/ScimUserSelfUpdateAllowed.java"
       ],
-      "failing_tests": [],
+      "failing_tests": [
+        "org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenAttemptingToUpdateAFieldThatIsNotAllowedToBeUpdated$WhenUpdatingTheEmailField#isNotAllowedToUpdateField"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [],
       "source": "sources/VUL4J-40/ScimUserSelfUpdateAllowed.java",
       "bytes": 2105,
       "sha256": "5922e4cd178f29235dbbffaedafc587ebbe1ac8dd9f30d9113185d472f0db23c"
@@ -313,6 +400,10 @@
         "src/main/java/org/codehaus/plexus/archiver/AbstractUnArchiver.java"
       ],
       "failing_tests": [
+        "org.codehaus.plexus.archiver.zip.ZipUnArchiverTest#testExtractingZipWithEntryOutsideDestDirThrowsException"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.codehaus.plexus.archiver.zip.ZipUnArchiverTest#testExtractingZipWithEntryOutsideDestDirThrowsException"
       ],
       "source": "sources/VUL4J-41/AbstractUnArchiver.java",
@@ -330,6 +421,10 @@
       "failing_tests": [
         "org.eclipse.rdf4j.common.io.ZipUtilTest#testWriteEntryPathTraversing"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.eclipse.rdf4j.common.io.ZipUtilTest#testWriteEntryPathTraversing"
+      ],
       "source": "sources/VUL4J-43/ZipUtil.java",
       "bytes": 2856,
       "sha256": "c35bf0f1581204d9f5d6f757a96e2c58b907c31a4862b2a926004152b033b336"
@@ -343,6 +438,24 @@
         "src/main/java/org/owasp/esapi/codecs/PercentCodec.java"
       ],
       "failing_tests": [
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec %De]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec IMMUNE_PERCENT (%)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (!)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS ($)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (*)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (+)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (-)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (.)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (=)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (?)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (@)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (^)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (_)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (|)]",
+        "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec Full_ALPHA_AND_SPECIALS (~)]"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.owasp.esapi.codecs.CodecImmunityTest"
       ],
       "source": "sources/VUL4J-44/PercentCodec.java",
@@ -360,6 +473,10 @@
       "failing_tests": [
         "org.esigate.xml.XsltRendererTest#testSecureRendering"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.esigate.xml.XsltRendererTest#testSecureRendering"
+      ],
       "source": "sources/VUL4J-45/XsltRenderer.java",
       "bytes": 4638,
       "sha256": "94b77df6a2912fb155c8edaaa5f082b8f84ca50627b365223d0ed1ce335a873b"
@@ -373,6 +490,10 @@
         "src/main/java/com/fasterxml/jackson/dataformat/xml/XmlFactory.java"
       ],
       "failing_tests": [
+        "com.fasterxml.jackson.dataformat.xml.SupportDTDDefaultsTest#testDTDAttempt"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.fasterxml.jackson.dataformat.xml.SupportDTDDefaultsTest#testDTDAttempt"
       ],
       "source": "sources/VUL4J-47/XmlFactory.java",
@@ -390,6 +511,10 @@
       "failing_tests": [
         "org.primeframework.jwt.VulnerabilityTest#test_unsecuredJWT_validation"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.primeframework.jwt.VulnerabilityTest#test_unsecuredJWT_validation"
+      ],
       "source": "sources/VUL4J-48/JWTDecoder.java",
       "bytes": 7765,
       "sha256": "1ff0aa6514b429a245e86eb95bb6bb400251fa95444a355aba1eec1bf80eacb8"
@@ -403,6 +528,10 @@
         "src/main/java/org/primeframework/jwt/JWTDecoder.java"
       ],
       "failing_tests": [
+        "org.primeframework.jwt.JWTTest#test_SingedWithoutSignature"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.primeframework.jwt.JWTTest#test_SingedWithoutSignature"
       ],
       "source": "sources/VUL4J-49/JWTDecoder.java",
@@ -420,6 +549,10 @@
       "failing_tests": [
         "net.bull.javamelody.TestHtmlSessionInformationsReport#testCVE_2013_4378"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "net.bull.javamelody.TestHtmlSessionInformationsReport#testCVE_2013_4378"
+      ],
       "source": "sources/VUL4J-50/HtmlSessionInformationsReport.java",
       "bytes": 9663,
       "sha256": "d9623ff4df2bfe8267ac83ac6a73d62b629b97e7c7624c3fb4043fd40d672755"
@@ -433,6 +566,10 @@
         "src/main/java/org/kohsuke/groovy/sandbox/SandboxTransformer.java"
       ],
       "failing_tests": [
+        "org.kohsuke.groovy.sandbox.FinalizerTest#testOverridingFinalizeForbidden"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.kohsuke.groovy.sandbox.FinalizerTest"
       ],
       "source": "sources/VUL4J-52/SandboxTransformer.java",
@@ -450,6 +587,10 @@
       "failing_tests": [
         "hudson.scheduler.CronTabTest#testLongMonths"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "hudson.scheduler.CronTabTest#testLongMonths"
+      ],
       "source": "sources/VUL4J-53/CronTab.java",
       "bytes": 20026,
       "sha256": "bdf0515d158911eced3099dd7b37ea8e9f195e194606680ca09b4e4533ea9af2"
@@ -463,6 +604,10 @@
         "core/src/main/java/hudson/scheduler/CronTab.java"
       ],
       "failing_tests": [
+        "hudson.scheduler.CronTabTest#testCeilLongMonths"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "hudson.scheduler.CronTabTest#testCeilLongMonths"
       ],
       "source": "sources/VUL4J-55/CronTab.java",
@@ -480,6 +625,10 @@
       "failing_tests": [
         "org.jenkinsci.plugins.workflow.support.steps.build.BuildTriggerStepTest#permissions"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.jenkinsci.plugins.workflow.support.steps.build.BuildTriggerStepTest#permissions"
+      ],
       "source": "sources/VUL4J-57/BuildTriggerStepExecution.java",
       "bytes": 12383,
       "sha256": "a9ea91f879f8590cbb4d26b345206656e9a11837ab3cc3ae1b937acd703acf3e"
@@ -493,6 +642,10 @@
         "src/main/java/org/jsoup/parser/TokeniserState.java"
       ],
       "failing_tests": [
+        "org.jsoup.parser.XmlTreeBuilderTest#testDoesHandleEOFInTag"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.jsoup.parser.XmlTreeBuilderTest#testDoesHandleEOFInTag"
       ],
       "source": "sources/VUL4J-59/TokeniserState.java",
@@ -510,6 +663,10 @@
       "failing_tests": [
         "org.owasp.validator.html.test.AntiSamyTest#testIssue2"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.owasp.validator.html.test.AntiSamyTest#testIssue2"
+      ],
       "source": "sources/VUL4J-60/MagicSAXFilter.java",
       "bytes": 15789,
       "sha256": "f847629165bb4d6b2354df1f9d922da3fa2a1e254522fbf19312ca5f1c059c4b"
@@ -522,7 +679,11 @@
       "file_paths": [
         "src/main/java/apoc/load/Xml.java"
       ],
-      "failing_tests": [],
+      "failing_tests": [
+        "apoc.load.XmlTest#testLoadXmlPreventXXEVulnerabilityThrowsQueryExecutionException"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [],
       "source": "sources/VUL4J-61/Xml.java",
       "bytes": 20138,
       "sha256": "694aab3885575fa5bd4faa88b64033ab653f7316f0b3154db3af1ecf4ad62fb8"
@@ -536,6 +697,10 @@
         "enterprise/security/src/main/java/org/neo4j/server/security/enterprise/auth/LdapRealm.java"
       ],
       "failing_tests": [
+        "org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls"
       ],
       "source": "sources/VUL4J-62/LdapRealm.java",
@@ -553,6 +718,10 @@
       "failing_tests": [
         "org.jboss.resteasy.test.mediatype.MediaTypeHeaderTest#testNewLineInHeaderValueIsRejected"
       ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
+        "org.jboss.resteasy.test.mediatype.MediaTypeHeaderTest#testNewLineInHeaderValueIsRejected"
+      ],
       "source": "sources/VUL4J-66/MediaTypeHeaderDelegate.java",
       "bytes": 5440,
       "sha256": "88ad9e3546aa1bdaf2afcca5f4f1b0a5dd2f411960ac6512b78c57f1ce258a44"
@@ -566,6 +735,11 @@
         "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/endpoint/SpelView.java"
       ],
       "failing_tests": [
+        "org.springframework.security.oauth2.provider.endpoint.SpelViewTests#nonRecursive",
+        "org.springframework.security.oauth2.provider.endpoint.SpelViewTests#recursive"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.springframework.security.oauth2.provider.endpoint.SpelViewTests"
       ],
       "source": "sources/VUL4J-75/SpelView.java",
@@ -581,6 +755,12 @@
         "retrofit/src/main/java/retrofit2/RequestBuilder.java"
       ],
       "failing_tests": [
+        "retrofit2.RequestFactoryTest#pathParametersAndPathTraversal",
+        "retrofit2.RequestFactoryTest#encodedPathParametersAndPathTraversal",
+        "retrofit2.RequestFactoryTest#dotDotsOkayWhenNotFullPathSegment"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "retrofit2.RequestFactoryTest"
       ],
       "source": "sources/VUL4J-76/RequestBuilder.java",
@@ -596,6 +776,10 @@
         "modules/swagger-parser/src/main/java/io/swagger/parser/util/DeserializationUtils.java"
       ],
       "failing_tests": [
+        "io.swagger.parser.util.SwaggerDeserializerTest#testCVE_2017_1000207"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "\"io.swagger.parser.util.*\""
       ],
       "source": "sources/VUL4J-77/DeserializationUtils.java",
@@ -611,6 +795,10 @@
         "xstream/src/java/com/thoughtworks/xstream/XStream.java"
       ],
       "failing_tests": [
+        "com.thoughtworks.acceptance.SecurityVulnerabilityTest#testCannotInjectEventHandlerWithUnconfiguredSecurityFramework"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "com.thoughtworks.acceptance.SecurityVulnerabilityTest"
       ],
       "source": "sources/VUL4J-78/XStream.java",
@@ -626,6 +814,11 @@
         "src/main/java/org/zeroturnaround/zip/ZipUtil.java"
       ],
       "failing_tests": [
+        "org.zeroturnaround.zip.DirectoryTraversalMaliciousTest#testUnwrapDoesntLeaveTarget",
+        "org.zeroturnaround.zip.DirectoryTraversalMaliciousTest#testUnpackDoesntLeaveTarget"
+      ],
+      "failing_tests_source": "vul4j_failing_tests",
+      "failing_tests_from_test_cmd": [
         "org.zeroturnaround.zip.DirectoryTraversalMaliciousTest"
       ],
       "source": "sources/VUL4J-79/ZipUtil.java",
