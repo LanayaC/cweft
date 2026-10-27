@@ -273,3 +273,16 @@ def test_regrade_method_level_old_l1_stays_l1():
 def test_regrade_l0_is_unchanged():
     r = rg.regrade_row(_row("L0", ""), [], {"status": "ok", "pov": [POV], "judged": JUDGED})
     assert r["new"] == "L0"
+
+
+# ── Resuming the baseline ────────────────────────────────────────────────
+
+def test_resume_redoes_only_what_the_current_code_did_not_build():
+    import run_vul4j_validation as run
+    entries = {
+        "A": {"status": "ok", "code_fingerprint": "new"},
+        "B": {"status": "ok", "code_fingerprint": "old"},
+        "C": {"status": "error", "code_fingerprint": "new"},
+        "D": {"status": "no_judged_set", "code_fingerprint": "new"},
+    }
+    assert run.stale(entries, ["A", "B", "C", "D", "E"], "new") == ["B", "C", "E"]
