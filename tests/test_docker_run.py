@@ -66,16 +66,41 @@ def test_input_reaches_the_command_unchanged():
     assert res.stdout == "a\nb\n"
 
 
-def test_make_offline_writes_o_once_for_maven_and_leaves_gradle_alone():
-    root = "/tmp/cweft_test_offline"
+def _exists(path: str) -> bool:
+    return vb.docker_run(["test", "-e", path], 30).returncode == 0
+
+
+def test_make_offline_maven_writes_o_once_and_can_go_back_online():
+    root = "/tmp/cweft_test_offline_mvn"
     try:
-        vb.docker_run(["sh", "-c", f"rm -rf {root}; mkdir -p {root}/mvn {root}/gradle; "
-                                   f"touch {root}/mvn/pom.xml {root}/gradle/build.gradle"], 30)
-        assert vb.make_offline(f"{root}/mvn") is True
-        assert vb.make_offline(f"{root}/mvn") is True
-        conf = vb.docker_run(["cat", f"{root}/mvn/.mvn/maven.config"], 30).stdout
-        assert conf.split() == ["-o"]
-        assert vb.make_offline(f"{root}/gradle") is False
-        assert vb.docker_run(["test", "-e", f"{root}/gradle/.mvn"], 30).returncode != 0
+        vb.docker_run(["sh", "-c", f"rm -rf {root}; mkdir -p {root}; touch {root}/pom.xml"], 30)
+        assert vb.make_offline(root) == vb.MAVEN
+        assert vb.make_offline(root) == vb.MAVEN
+        assert vb.docker_run(["cat", f"{root}/.mvn/maven.config"], 30).stdout.split() == ["-o"]
+        assert vb.make_offline(root, online=True) == vb.MAVEN
+        assert vb.docker_run(["cat", f"{root}/.mvn/maven.config"], 30).stdout.split() == []
+    finally:
+        vb.docker_run(["rm", "-rf", root], 30)
+
+
+def test_make_offline_gradle_sets_the_marker_and_installs_the_init_script():
+    root = "/tmp/cweft_test_offline_gradle"
+    try:
+        vb.docker_run(["sh", "-c", f"rm -rf {root}; mkdir -p {root}; touch {root}/build.gradle"], 30)
+        assert vb.make_offline(root) == vb.GRADLE
+        assert _exists(f"{root}/{vb.GRADLE_MARKER}") and not _exists(f"{root}/.mvn")
+        script = vb.docker_run(["cat", vb.GRADLE_INIT], 30).stdout
+        assert script == vb.GRADLE_INIT_SCRIPT
+        assert vb.make_offline(root, online=True) == vb.GRADLE
+        assert not _exists(f"{root}/{vb.GRADLE_MARKER}")
+    finally:
+        vb.docker_run(["rm", "-rf", root], 30)
+
+
+def test_make_offline_leaves_an_unknown_build_alone():
+    root = "/tmp/cweft_test_offline_none"
+    try:
+        vb.docker_run(["sh", "-c", f"rm -rf {root}; mkdir -p {root}"], 30)
+        assert vb.make_offline(root) == ""
     finally:
         vb.docker_run(["rm", "-rf", root], 30)

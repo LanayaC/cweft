@@ -3,8 +3,8 @@ Baseline a Vul4J entry: prove its PoV detects the hole, then record the set of
 tests a patch will later be judged on. The same rules as patcheval_baseline.py.
 
 Per entry, in a scratch checkout inside the vul4j-alldeps container (never the
-/tmp/cweft checkout that generation and grading use), with Maven offline (-o,
-see make_offline) and every command under a timeout that kills its whole
+/tmp/cweft checkout that generation and grading use), with Maven and Gradle
+offline (see make_offline) and every command under a timeout that kills its whole
 process tree inside the container (see docker_run):
 
   1. the vulnerable file on disk has the SHA-256 of the exported copy in
@@ -120,21 +120,55 @@ def docker_run(cmd: List[str], timeout: int, input_text: Optional[str] = None) -
 _exec = docker_run
 
 
-def make_offline(workdir: str) -> bool:
+MAVEN, GRADLE = "maven", "gradle"
+GRADLE_MARKER = ".cweft-offline"
+GRADLE_INIT = "/root/.gradle/init.d/cweft-offline.gradle"
+# Vul4J's Gradle commands cannot be given --offline, so an init script (read
+# by every Gradle build in the container) sets the same switch, but only for a
+# build whose root directory holds the marker that make_offline writes.
+GRADLE_INIT_SCRIPT = """\
+// Installed by CWEFT (vul4j_baseline.make_offline). A build whose root holds
+// .cweft-offline runs as if --offline were given; every other build is untouched.
+if (new File(gradle.startParameter.currentDir, ".cweft-offline").exists()) {
+    gradle.startParameter.offline = true
+    gradle.settingsEvaluated { println "CWEFT: Gradle offline=" + gradle.startParameter.offline }
+}
+"""
+
+
+def make_offline(workdir: str, online: bool = False) -> str:
     """
-    Make Maven run offline in this checkout (-o via .mvn/maven.config, which
-    Maven 3.3+ reads from the project root), appending to a config the project
-    already has. Returns False for a Gradle project, which is left as it is.
+    Make this checkout's build resolve dependencies from the local caches only,
+    and return its build system ("maven" or "gradle"; "" if neither).
+
+    Maven: -o in .mvn/maven.config, which Maven 3.3+ reads from the project
+    root, appended to any config the project already has. Gradle: the marker
+    file GRADLE_INIT_SCRIPT looks for. online=True removes either again, for a
+    one-off online build that fills the caches.
     """
-    probe = docker_run(["test", "-f", f"{workdir}/pom.xml"], 60)
-    if probe.returncode != 0:
-        return False
-    script = ('mkdir -p "$1/.mvn" && f="$1/.mvn/maven.config" && '
-              '(grep -qx -- -o "$f" 2>/dev/null || echo -o >> "$f")')
+    if docker_run(["test", "-f", f"{workdir}/pom.xml"], 60).returncode == 0:
+        if online:
+            script = 'f="$1/.mvn/maven.config"; [ -f "$f" ] && sed -i "/^-o$/d" "$f"; true'
+        else:
+            script = ('mkdir -p "$1/.mvn" && f="$1/.mvn/maven.config" && '
+                      '(grep -qx -- -o "$f" 2>/dev/null || echo -o >> "$f")')
+        system = MAVEN
+    elif docker_run(["sh", "-c", 'for f in build.gradle build.gradle.kts settings.gradle '
+                                 'settings.gradle.kts gradlew; do [ -e "$1/$f" ] && exit 0; done; exit 1',
+                     "sh", workdir], 60).returncode == 0:
+        install = docker_run(["sh", "-c", f'mkdir -p "$(dirname {GRADLE_INIT})" && cat > {GRADLE_INIT}'],
+                             60, input_text=GRADLE_INIT_SCRIPT)
+        if install.returncode != 0:
+            raise RuntimeError(f"could not install {GRADLE_INIT}: {install.stderr.strip()}")
+        script = (f'rm -f "$1/{GRADLE_MARKER}"' if online else f'touch "$1/{GRADLE_MARKER}"')
+        system = GRADLE
+    else:
+        return ""
     res = docker_run(["sh", "-c", script, "sh", workdir], 60)
     if res.returncode != 0:
-        raise RuntimeError(f"could not make {workdir} offline: {res.stderr.strip()}")
-    return True
+        raise RuntimeError(f"could not set {workdir} {'online' if online else 'offline'}: "
+                           f"{res.stderr.strip()}")
+    return system
 
 
 def checkout(vul_id: str) -> str:

@@ -1,11 +1,12 @@
 """
 Can each Vul4J entry compile with Maven offline (-o)?
 
-For every entry, in a scratch checkout: make Maven offline (.mvn/maven.config),
-run `vul4j compile` on the original code, and record whether it built. An entry
-that fails offline is compiled ONCE online, which fills ~/.m2 with whatever was
-missing (the "pre-build"), and is then tried offline again. Gradle entries are
-left as they are and reported as such.
+For every entry, in a scratch checkout: make the build offline (Maven -o via
+.mvn/maven.config, Gradle via the CWEFT init script; see
+vul4j_baseline.make_offline), run `vul4j compile` on the original code, and
+record whether it built. An entry that fails offline is compiled ONCE online,
+which fills the local caches (~/.m2, ~/.gradle) with whatever was missing (the
+"pre-build"), and is then tried offline again.
 
     python scripts/check_vul4j_offline.py                 # every entry
     python scripts/check_vul4j_offline.py --only VUL4J-24
@@ -60,15 +61,15 @@ def check_one(vul_id: str) -> dict:
            "seconds": "", "note": ""}
     workdir = checkout(vul_id)
     try:
-        if not vb.make_offline(workdir):
-            row.update(build="gradle", note="Gradle: not made offline")
+        row["build"] = vb.make_offline(workdir)
+        if not row["build"]:
+            row["note"] = "neither pom.xml nor build.gradle found"
             return row
-        row["build"] = "maven"
         ok, secs, err = compile_timed(workdir)
         if not ok:
             first_hint = err or failure_hint(workdir)
             # Pre-build: one online compile to fill the local repository.
-            vb.docker_run(["rm", "-f", f"{workdir}/.mvn/maven.config"], 60)
+            vb.make_offline(workdir, online=True)
             online_ok, online_secs, _ = compile_timed(workdir)
             vb.make_offline(workdir)
             ok, secs, err = compile_timed(workdir)
@@ -112,10 +113,10 @@ def main(argv=None) -> int:
               flush=True)
     with OUT.open(encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
-    bad = [r["vul_id"] for r in rows if r["build"] == "maven" and r["offline_ok"] != "True"]
-    print(f"offline compile check done: {sum(r['offline_ok'] == 'True' for r in rows)} Maven "
-          f"entries compile offline; failing: {bad or 'none'}; Gradle: "
-          f"{[r['vul_id'] for r in rows if r['build'] == 'gradle']}", flush=True)
+    bad = [r["vul_id"] for r in rows if r["offline_ok"] != "True"]
+    print(f"offline compile check done: {sum(r['offline_ok'] == 'True' for r in rows)} entries "
+          f"compile offline ({sum(r['build'] == 'gradle' for r in rows)} of them Gradle); "
+          f"failing: {bad or 'none'}", flush=True)
     return 1 if bad else 0
 
 

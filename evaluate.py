@@ -169,7 +169,7 @@ def grade(vul_id: str, primary_file: str, apply: Callable[[str, str], None],
         return {**result, "trust": REFUSED, "error": why}
     try:
         workdir = fresh_checkout(vul_id)
-        vb.make_offline(workdir)               # Maven resolves from the local repository only
+        vb.make_offline(workdir)               # Maven/Gradle resolve from the local caches only
     except Exception as e:
         return {**result, "error": f"checkout failed: {type(e).__name__}: {e}"}
     try:
