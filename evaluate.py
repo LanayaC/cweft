@@ -14,6 +14,7 @@ That file is for new runs; the published 504 are frozen in results/published/.
     python evaluate.py --dataset patcheval # PatchEval logs (patcheval_eval.py)
     python evaluate.py --logs-dir logs/plumbing_test --results-dir results/plumbing_test
     python evaluate.py --oracle            # original -> L1, reference fix -> L3
+    python evaluate.py --workers 4         # several cells at once (parallel_grading.py)
 
 Grading follows the PatchEval rules (vul4j_grading.py): the PoV is Vul4J's own
 failing_tests, all of which must run and pass, and regressions are counted
@@ -39,6 +40,7 @@ from config import (
 )
 import vul4j_baseline as vb
 import vul4j_grading as vg
+import parallel_grading
 from vuln_data import get_vuln_payload, ensure_checkout, checkout_dir
 
 
@@ -242,6 +244,14 @@ def evaluate_log(log_path: Path, baseline: Optional[Dict[str, Dict]] = None) -> 
     return _row(log, graded, entry, timestamp)
 
 
+def _log_cell(log_path: Path) -> Dict:
+    try:
+        return evaluate_log(log_path)
+    except Exception as e:
+        return _error_row(log_path, datetime.now(timezone.utc).isoformat(),
+                          f"unhandled: {type(e).__name__}: {e}")
+
+
 def _error_row(log_path: Path, timestamp: str, error: str, log: Optional[Dict] = None) -> Dict:
     log = log or {}
     meta = {**log,
@@ -255,12 +265,42 @@ def _error_row(log_path: Path, timestamp: str, error: str, log: Optional[Dict] =
 
 # ── Oracle: the original file must grade L1, the reference fix L3 ────────
 
-def oracle(vul_ids: List[str], results_dir: Path) -> int:
+def _keep_original(workdir: str, primary_file: str) -> None:
+    pass                                        # the fresh checkout is the original
+
+
+def _reference(workdir: str, primary_file: str) -> None:
+    vb.apply_reference(workdir)
+
+
+ORACLE_CASES = {ORACLE_VULNERABLE: (_keep_original, vg.L1), ORACLE_REFERENCE: (_reference, vg.L3)}
+
+
+def _oracle_cell(vul_id: str, model_key: str) -> Dict:
+    payload = get_vuln_payload(vul_id)
+    entry = load_baseline().get(vul_id)
+    apply, expected = ORACLE_CASES[model_key]
+    graded = grade(vul_id, payload["primary_file"], apply, entry)
+    meta = {**payload, "level": "oracle", "model_key": model_key, "model_id": model_key}
+    row = _row(meta, graded, entry, datetime.now(timezone.utc).isoformat())
+    row["expected"] = expected
+    row["as_expected"] = row["trust_level"] == expected
+    return row
+
+
+def _grader_image_ready() -> None:
+    parallel_grading.ensure_grader_image(
+        json.loads(vb.BASELINE_PATH.read_text(encoding="utf-8"))["image"])
+    parallel_grading.sweep_vul4j_containers()
+
+
+def oracle(vul_ids: List[str], results_dir: Path, workers: int = 1) -> int:
     """
     Grade each entry's original vulnerable file (expected L1) and Vul4J's
     reference fix (expected L3) against the baseline. Appends to
     <results_dir>/oracle.csv, skipping cells already there, and writes
-    oracle_summary.txt. Returns how many came out other than expected.
+    oracle_summary.txt. Returns how many came out other than expected, plus
+    any cell a parallel run could not record.
     """
     results_dir.mkdir(parents=True, exist_ok=True)
     path = results_dir / ORACLE_CSV_NAME
@@ -268,41 +308,34 @@ def oracle(vul_ids: List[str], results_dir: Path) -> int:
     if path.exists():
         with path.open(encoding="utf-8", newline="") as f:
             done = {(r["vul_id"], r["model_key"]) for r in csv.DictReader(f)}
-    baseline = load_baseline()
+    cells = [(v, k) for v in vul_ids for k in ORACLE_CASES]
+    todo = [c for c in cells if c not in done]
+    t0 = [time.time()]
 
-    def keep_original(workdir: str, primary_file: str) -> None:
-        pass                                    # the fresh checkout is the original
+    def record(row: Dict) -> None:
+        new = not path.exists()
+        with path.open("a", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=ORACLE_FIELDS)
+            if new:
+                w.writeheader()
+            w.writerow(row)
+        done.add((row["vul_id"], row["model_key"]))
+        print(f"[{datetime.now(timezone.utc).isoformat(timespec='seconds')}] "
+              f"({len(done & set(cells))}/{len(cells)}) "
+              f"{row['vul_id']:10s} {row['model_key']:18s} expected {row['expected']} got "
+              f"{row['trust_level']:8s} {'OK' if row['as_expected'] else 'WRONG'}  "
+              f"({time.time() - t0[0]:.0f}s) {row['regressions'][:80]} {row['error'][:80]}",
+              flush=True)
+        t0[0] = time.time()
 
-    def reference(workdir: str, primary_file: str) -> None:
-        vb.apply_reference(workdir)
-
-    cases = [(ORACLE_VULNERABLE, keep_original, vg.L1), (ORACLE_REFERENCE, reference, vg.L3)]
-    total = len(vul_ids) * len(cases)
-    i = 0
-    for vul_id in vul_ids:
-        payload = get_vuln_payload(vul_id)
-        entry = baseline.get(vul_id)
-        for model_key, apply, expected in cases:
-            i += 1
-            if (vul_id, model_key) in done:
-                continue
-            t0 = time.time()
-            graded = grade(vul_id, payload["primary_file"], apply, entry)
-            meta = {**payload, "level": "oracle", "model_key": model_key, "model_id": model_key}
-            row = _row(meta, graded, entry, datetime.now(timezone.utc).isoformat())
-            row["expected"] = expected
-            row["as_expected"] = row["trust_level"] == expected
-            new = not path.exists()
-            with path.open("a", encoding="utf-8", newline="") as f:
-                w = csv.DictWriter(f, fieldnames=ORACLE_FIELDS)
-                if new:
-                    w.writeheader()
-                w.writerow(row)
-            print(f"[{datetime.now(timezone.utc).isoformat(timespec='seconds')}] ({i}/{total}) "
-                  f"{vul_id:10s} {model_key:18s} expected {expected} got {row['trust_level']:8s} "
-                  f"{'OK' if row['as_expected'] else 'WRONG'}  "
-                  f"({time.time() - t0:.0f}s) {row['regressions'][:80]} {row['error'][:80]}",
-                  flush=True)
+    failed = []
+    if workers > 1:
+        _grader_image_ready()
+        failed = parallel_grading.run_cells(_oracle_cell, todo, workers, record,
+                                            own_vul4j_container=True)
+    else:
+        for vul_id, model_key in todo:
+            record(_oracle_cell(vul_id, model_key))
 
     with path.open(encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
@@ -314,7 +347,7 @@ def oracle(vul_ids: List[str], results_dir: Path) -> int:
                      f"{r['trust_level']}  {r['regressions'][:100]} {r['error'][:100]}")
     (results_dir / "oracle_summary.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines), flush=True)
-    return len(wrong)
+    return len(wrong) + len(failed)
 
 
 def _parse_vul_id(p: Path) -> str:
@@ -375,6 +408,23 @@ def append_row(row: Dict) -> None:
         writer.writerow(row)
 
 
+def _grade_logs_in_parallel(pending: List[Path], workers: int) -> int:
+    """Grade the logs across workers. Returns how many cells got no row."""
+    _grader_image_ready()
+    counts: Dict[str, int] = {}
+
+    def record(row: Dict) -> None:
+        append_row(row)
+        counts[row["trust_level"]] = counts.get(row["trust_level"], 0) + 1
+        print(f"[{sum(counts.values())}/{len(pending)}] {row['vul_id']}  {row['level']}  "
+              f"{row['model_key']}  {row['trust_level']}  {row['error']}".rstrip(), flush=True)
+
+    failed = parallel_grading.run_cells(_log_cell, [(p,) for p in pending], workers, record,
+                                        own_vul4j_container=True)
+    print(f"\nSummary: {counts}" + (f"; {len(failed)} cells not recorded" if failed else ""))
+    return len(failed)
+
+
 def main():
     ap = argparse.ArgumentParser(description="Evaluate generated CWEFT patches")
     ap.add_argument("--models", nargs="+", default=None,
@@ -395,11 +445,16 @@ def main():
                     help="Vul4J: grade each entry's original file (expect L1) and reference "
                          "fix (expect L3) against data/vul4j/baseline.json; results go to "
                          "--results-dir (default results/oracle_vul4j/)")
+    ap.add_argument("--workers", type=int, default=1,
+                    help="grade this many cells at once, each in its own container "
+                         "(default 1: one after another; see parallel_grading.py)")
     args = ap.parse_args()
+    if args.workers < 1:
+        ap.error("--workers must be at least 1")
 
     if args.oracle and args.dataset == "vul4j":
         out = args.results_dir or (RESULTS_DIR / "oracle_vul4j")
-        wrong = oracle(args.vulns or SUBSET, out)
+        wrong = oracle(args.vulns or SUBSET, out, args.workers)
         sys.exit(1 if wrong else 0)
 
     global LOGS_DIR, RESULTS_CSV
@@ -413,6 +468,14 @@ def main():
         patcheval_eval.RESULTS_CSV = args.results_dir.resolve() / patcheval_eval.RESULTS_CSV.name
 
     if args.dataset == "patcheval":
+        if args.oracle:
+            cves = args.vulns or patcheval_eval.ORACLE_CVES
+            wrong = (parallel_grading.patcheval_oracle(cves, args.workers) if args.workers > 1
+                     else patcheval_eval.oracle(cves))
+            print(f"\n{'all verdicts as expected' if not wrong else str(wrong) + ' WRONG'}")
+            sys.exit(1 if wrong else 0)
+        if args.workers > 1:
+            sys.exit(1 if parallel_grading.patcheval_logs(args, args.workers) else 0)
         patcheval_eval.main(args)
         return
 
@@ -450,6 +513,9 @@ def main():
     if not pending:
         print("Nothing to evaluate. All requested cells are already in results.csv.")
         return
+
+    if args.workers > 1:
+        sys.exit(1 if _grade_logs_in_parallel(pending, args.workers) else 0)
 
     baseline = load_baseline()
     counts = {"L0": 0, "L1": 0, "L2": 0, "L3": 0, ERROR: 0, REFUSED: 0}
