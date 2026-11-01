@@ -1,0 +1,877 @@
+=== start 2026-10-26T12:09:46+03:00
+[2026-10-26T09:09:46.575454+00:00] baseline: 42 to do, 0 already in C:\Users\lanay\cweft\data\vul4j\baseline.json
+[2026-10-26T09:09:46.575544+00:00] (1/42) VUL4J-1
+    original: {'passed': 3596, 'failed': 1, 'skipped': 0} in 21.6s
+    reference run 1/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 19.4s
+    reference run 2/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 22.5s
+    reference run 3/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 18.2s
+    -> ok  judged=3596 excluded=0  (101.9s)
+[2026-10-26T09:11:28.705723+00:00] (2/42) VUL4J-2
+    original: {'passed': 0, 'failed': 1, 'skipped': 0} in 4.3s
+    reference run 1/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 4.4s
+    reference run 2/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 5.3s
+    reference run 3/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 4.6s
+    -> no_judged_set    (51.3s)
+[2026-10-26T09:12:20.253170+00:00] (3/42) VUL4J-6
+    original: {'passed': 867, 'failed': 1, 'skipped': 4} in 22.5s
+    reference run 1/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 19.0s
+    reference run 2/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 18.8s
+    reference run 3/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 18.6s
+    -> ok  judged=867 excluded=4  (100.1s)
+[2026-10-26T09:14:00.563571+00:00] (4/42) VUL4J-7
+    original: {'passed': 1031, 'failed': 2, 'skipped': 8} in 17.3s
+    reference run 1/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 17.9s
+    reference run 2/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 17.1s
+    reference run 3/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 17.8s
+    -> ok  judged=1031 excluded=8  (90.3s)
+[2026-10-26T09:15:31.025389+00:00] (5/42) VUL4J-8
+    original: {'passed': 1093, 'failed': 1, 'skipped': 7} in 19.9s
+    reference run 1/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 19.5s
+    reference run 2/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 18.4s
+    reference run 3/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 18.2s
+    -> ok  judged=1093 excluded=7  (98.8s)
+[2026-10-26T09:17:09.954644+00:00] (6/42) VUL4J-10
+    original: {'passed': 67, 'failed': 2, 'skipped': 0} in 4.5s
+    reference run 1/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.5s
+    reference run 2/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.5s
+    reference run 3/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.5s
+    -> ok  judged=67 excluded=0  (26.8s)
+[2026-10-26T09:17:36.821653+00:00] (7/42) VUL4J-13
+    original: {'passed': 560, 'failed': 1, 'skipped': 15} in 27.6s
+    reference run 1/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 26.6s
+    reference run 2/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 25.6s
+    reference run 3/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 24.2s
+    -> ok  judged=560 excluded=15  (123.0s)
+[2026-10-26T09:19:39.998746+00:00] (8/42) VUL4J-14
+    original: {'passed': 1329, 'failed': 2, 'skipped': 4} in 110.7s
+    reference run 1/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 110.1s
+    reference run 2/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 112.0s
+    reference run 3/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 112.6s
+    -> ok  judged=1329 excluded=4  (463.7s)
+[2026-10-26T09:27:23.829327+00:00] (9/42) VUL4J-16
+    original: {'passed': 34, 'failed': 1, 'skipped': 0} in 5.0s
+    reference run 1/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 6.4s
+    reference run 2/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 6.0s
+    reference run 3/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 5.7s
+    -> ok  judged=34 excluded=0  (290.9s)
+[2026-10-26T09:32:15.634888+00:00] (10/42) VUL4J-18
+    original: {'passed': 853, 'failed': 2, 'skipped': 0} in 74.5s
+    reference run 1/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 72.6s
+    reference run 2/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 72.8s
+    reference run 3/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 72.7s
+    -> ok  judged=853 excluded=0  (376.3s)
+[2026-10-26T09:38:32.529276+00:00] (11/42) VUL4J-22
+    original: {'passed': 125, 'failed': 3, 'skipped': 0} in 5.3s
+    reference run 1/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 5.4s
+    reference run 2/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 5.3s
+    reference run 3/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 5.3s
+    -> ok  judged=125 excluded=0  (92.3s)
+[2026-10-26T09:40:05.011674+00:00] (12/42) VUL4J-24
+    -> error  TimeoutExpired: Command '['docker', 'exec', '-i', 'vul4j-alldeps', 'vul4j', 'compile', '-d', '/tmp/cweft_baseline/VUL4J-24']' timed out after -2591.0473562001716 seconds  (?s)
+[2026-10-26T10:53:22.476529+00:00] (13/42) VUL4J-25
+    original: {'passed': 24, 'failed': 2, 'skipped': 0} in 6.4s
+    reference run 1/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.7s
+    reference run 2/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.6s
+    reference run 3/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.1s
+    -> ok  judged=24 excluded=0  (46.3s)
+[2026-10-26T10:54:08.892358+00:00] (14/42) VUL4J-26
+=== offline check start 2026-10-26T13:59:04+03:00
+[2026-10-26T10:59:04+00:00] offline compile check: 3 to do
+  (1/3) VUL4J-24   maven  offline_ok=True 109.7s 
+  (2/3) VUL4J-1    maven  offline_ok=True 9.6s 
+  (3/3) VUL4J-77   maven  offline_ok=True 10.9s 
+offline compile check done: 3 Maven entries compile offline; failing: none; Gradle: []
+=== exit 0
+=== restart 2026-10-26T14:01:41+03:00
+[2026-10-26T11:01:41+00:00] offline compile check: 39 to do
+  (1/39) VUL4J-2    maven  offline_ok=True 12.6s 
+  (2/39) VUL4J-6    maven  offline_ok=True 9.6s 
+  (3/39) VUL4J-7    maven  offline_ok=True 8.9s 
+  (4/39) VUL4J-8    maven  offline_ok=True 11.5s 
+  (5/39) VUL4J-10   maven  offline_ok=True 3.7s 
+  (6/39) VUL4J-13   maven  offline_ok=True 8.3s 
+  (7/39) VUL4J-14   maven  offline_ok=True 7.3s 
+  (8/39) VUL4J-16   maven  offline_ok=True 127.7s 
+  (9/39) VUL4J-18   maven  offline_ok=True 37.1s 
+  (10/39) VUL4J-22   maven  offline_ok=True 35.0s 
+  (11/39) VUL4J-25   maven  offline_ok=True 9.2s 
+  (12/39) VUL4J-26   maven  offline_ok=True 228.6s 
+  (13/39) VUL4J-29   maven  offline_ok=True 81.0s 
+  (14/39) VUL4J-30   maven  offline_ok=True 27.0s 
+  (15/39) VUL4J-33   maven  offline_ok=True 56.0s 
+  (16/39) VUL4J-34   maven  offline_ok=True 54.5s 
+  (17/39) VUL4J-36   maven  offline_ok=True 101.7s 
+  (18/39) VUL4J-40   gradle offline_ok= s Gradle: not made offline
+  (19/39) VUL4J-41   maven  offline_ok=True 5.0s 
+  (20/39) VUL4J-43   maven  offline_ok=True 54.0s 
+  (21/39) VUL4J-44   maven  offline_ok=True 7.9s 
+  (22/39) VUL4J-45   maven  offline_ok=True 101.1s 
+  (23/39) VUL4J-47   maven  offline_ok=True 5.8s 
+  (24/39) VUL4J-48   maven  offline_ok=True 4.2s 
+  (25/39) VUL4J-49   maven  offline_ok=True 4.2s 
+  (26/39) VUL4J-50   maven  offline_ok=True 23.0s 
+  (27/39) VUL4J-52   maven  offline_ok=True 3.8s 
+  (28/39) VUL4J-53   maven  offline_ok=True 41.7s 
+  (29/39) VUL4J-55   maven  offline_ok=True 131.9s 
+  (30/39) VUL4J-57   maven  offline_ok=True 8.7s 
+  (31/39) VUL4J-59   maven  offline_ok=True 6.1s 
+  (32/39) VUL4J-60   maven  offline_ok=True 2.8s 
+  (33/39) VUL4J-61   gradle offline_ok= s Gradle: not made offline
+  (34/39) VUL4J-62   maven  offline_ok=True 405.1s 
+  (35/39) VUL4J-66   maven  offline_ok=True 36.6s 
+  (36/39) VUL4J-75   maven  offline_ok=True 44.0s 
+  (37/39) VUL4J-76   maven  offline_ok=True 27.2s 
+  (38/39) VUL4J-78   maven  offline_ok=True 16.9s 
+  (39/39) VUL4J-79   maven  offline_ok=True 5.2s 
+offline compile check done: 40 Maven entries compile offline; failing: none; Gradle: ['VUL4J-40', 'VUL4J-61']
+=== offline check exit 0 2026-10-26T14:32:28+03:00
+[2026-10-26T11:32:28.915561+00:00] baseline: 30 to do, 13 already in C:\Users\lanay\cweft\data\vul4j\baseline.json
+[2026-10-26T11:32:28.915674+00:00] (1/30) VUL4J-24
+    original: {'passed': 24, 'failed': 1, 'skipped': 0} in 9.3s
+    reference run 1/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.5s
+    reference run 2/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.7s
+    reference run 3/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.7s
+    -> ok  judged=24 excluded=0  (251.5s)
+[2026-10-26T11:36:41.111826+00:00] (2/30) VUL4J-26
+    original: {'passed': 1660, 'failed': 1, 'skipped': 0} in 43.0s
+    reference run 1/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 40.4s
+    reference run 2/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 39.7s
+    reference run 3/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 41.2s
+    -> ok  judged=1660 excluded=0  (268.2s)
+[2026-10-26T11:41:09.665674+00:00] (3/30) VUL4J-29
+    original: {'passed': 855, 'failed': 1, 'skipped': 0} in 26.7s
+    reference run 1/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 27.2s
+    reference run 2/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 27.1s
+    reference run 3/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 27.3s
+    -> ok  judged=855 excluded=0  (262.3s)
+[2026-10-26T11:45:32.417609+00:00] (4/30) VUL4J-30
+    original: {'passed': 3347, 'failed': 2, 'skipped': 0} in 41.8s
+    reference run 1/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 43.0s
+    reference run 2/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 42.0s
+    reference run 3/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 42.5s
+    -> ok  judged=3348 excluded=0  (220.0s)
+[2026-10-26T11:49:12.743310+00:00] (5/30) VUL4J-33
+    original: {'passed': 1655, 'failed': 1, 'skipped': 0} in 41.2s
+    reference run 1/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 42.4s
+    reference run 2/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 40.1s
+    reference run 3/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 40.5s
+    -> ok  judged=1655 excluded=0  (268.9s)
+[2026-10-26T11:53:42.093912+00:00] (6/30) VUL4J-34
+    original: {'passed': 1653, 'failed': 1, 'skipped': 0} in 43.4s
+    reference run 1/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 43.3s
+    reference run 2/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 43.3s
+    reference run 3/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 41.9s
+    -> ok  judged=1653 excluded=0  (280.9s)
+[2026-10-26T11:58:23.363002+00:00] (7/30) VUL4J-36
+    original: {'passed': 983, 'failed': 1, 'skipped': 37} in 74.4s
+    reference run 1/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 67.8s
+    reference run 2/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 70.5s
+    reference run 3/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 65.8s
+    -> ok  judged=983 excluded=37  (486.3s)
+[2026-10-26T12:06:30.038695+00:00] (8/30) VUL4J-40
+    original: {'passed': 2934, 'failed': 32, 'skipped': 17} in 297.0s
+    reference run 1/3: {'passed': 2963, 'failed': 3, 'skipped': 17} in 235.7s
+    reference run 2/3: {'passed': 2939, 'failed': 27, 'skipped': 17} in 302.5s
+    reference run 3/3: {'passed': 2962, 'failed': 4, 'skipped': 17} in 229.6s
+    -> ok  judged=2934 excluded=48  (1114.6s)
+[2026-10-26T12:25:04.928433+00:00] (9/30) VUL4J-41
+    original: {'passed': 144, 'failed': 1, 'skipped': 7} in 10.0s
+    reference run 1/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 10.4s
+    reference run 2/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 9.8s
+    reference run 3/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 9.1s
+    -> ok  judged=144 excluded=7  (49.4s)
+[2026-10-26T12:25:54.531125+00:00] (10/30) VUL4J-43
+    original: {'passed': 109, 'failed': 1, 'skipped': 0} in 3.4s
+    reference run 1/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 3.5s
+    reference run 2/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 3.6s
+    reference run 3/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 3.5s
+    -> ok  judged=109 excluded=0  (118.0s)
+[2026-10-26T12:27:52.797289+00:00] (11/30) VUL4J-44
+    original: {'passed': 583, 'failed': 3, 'skipped': 0} in 22.1s
+    reference run 1/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 22.0s
+    reference run 2/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 22.0s
+    reference run 3/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 22.1s
+    -> ok  judged=583 excluded=0  (103.3s)
+[2026-10-26T12:29:36.277139+00:00] (12/30) VUL4J-45
+    original: {'passed': 370, 'failed': 1, 'skipped': 0} in 19.9s
+    reference run 1/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 20.3s
+    reference run 2/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 20.3s
+    reference run 3/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 20.7s
+    -> ok  judged=370 excluded=0  (283.0s)
+[2026-10-26T12:34:19.482723+00:00] (13/30) VUL4J-47
+    original: {'passed': 140, 'failed': 1, 'skipped': 0} in 4.7s
+    reference run 1/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.9s
+    reference run 2/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.8s
+    reference run 3/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.6s
+    -> ok  judged=140 excluded=0  (31.6s)
+[2026-10-26T12:34:51.254193+00:00] (14/30) VUL4J-48
+    original: {'passed': 33, 'failed': 1, 'skipped': 0} in 5.2s
+    reference run 1/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 4.9s
+    reference run 2/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 4.7s
+    reference run 3/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 6.5s
+    -> ok  judged=33 excluded=0  (31.1s)
+[2026-10-26T12:35:22.504127+00:00] (15/30) VUL4J-49
+    original: {'passed': 30, 'failed': 1, 'skipped': 0} in 5.3s
+    reference run 1/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 5.0s
+    reference run 2/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 5.6s
+    reference run 3/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 5.1s
+    -> ok  judged=30 excluded=0  (30.2s)
+[2026-10-26T12:35:52.844213+00:00] (16/30) VUL4J-50
+    original: {'passed': 276, 'failed': 1, 'skipped': 0} in 26.0s
+    reference run 1/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 25.3s
+    reference run 2/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 25.9s
+    reference run 3/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 23.8s
+    -> ok  judged=276 excluded=0  (151.4s)
+[2026-10-26T12:38:24.419174+00:00] (17/30) VUL4J-52
+    original: {'passed': 54, 'failed': 1, 'skipped': 0} in 18.6s
+    reference run 1/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 19.8s
+    reference run 2/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 20.4s
+    reference run 3/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 19.4s
+    -> ok  judged=54 excluded=0  (86.8s)
+[2026-10-26T12:39:51.404250+00:00] (18/30) VUL4J-53
+    original: {'passed': 3501, 'failed': 1, 'skipped': 7} in 45.6s
+    reference run 1/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 44.3s
+    reference run 2/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 42.9s
+    reference run 3/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 42.2s
+    -> ok  judged=3501 excluded=7  (264.7s)
+[2026-10-26T12:44:16.952960+00:00] (19/30) VUL4J-55
+    original: {'passed': 3631, 'failed': 1, 'skipped': 13} in 39.9s
+    reference run 1/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 40.0s
+    reference run 2/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 41.6s
+    reference run 3/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 40.3s
+    -> ok  judged=3631 excluded=13  (240.5s)
+[2026-10-26T12:48:18.441894+00:00] (20/30) VUL4J-57
+    original: {'passed': 28, 'failed': 1, 'skipped': 0} in 88.5s
+    reference run 1/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 79.3s
+    reference run 2/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 82.0s
+    reference run 3/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 78.8s
+    -> ok  judged=28 excluded=0  (342.8s)
+[2026-10-26T12:54:01.482420+00:00] (21/30) VUL4J-59
+    original: {'passed': 453, 'failed': 1, 'skipped': 3} in 3.4s
+    reference run 1/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 3.4s
+    reference run 2/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 3.1s
+    reference run 3/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 3.1s
+    -> ok  judged=453 excluded=3  (28.6s)
+[2026-10-26T12:54:30.287430+00:00] (22/30) VUL4J-60
+    original: {'passed': 56, 'failed': 1, 'skipped': 0} in 7.5s
+    reference run 1/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.2s
+    reference run 2/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.3s
+    reference run 3/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.2s
+    -> ok  judged=56 excluded=0  (37.0s)
+[2026-10-26T12:55:07.425891+00:00] (23/30) VUL4J-61
+    original: {'passed': 1022, 'failed': 20, 'skipped': 49} in 704.0s
+    reference run 1/3: {'passed': 1024, 'failed': 18, 'skipped': 49} in 705.1s
+    reference run 2/3: {'passed': 1023, 'failed': 19, 'skipped': 49} in 711.5s
+    reference run 3/3: {'passed': 1024, 'failed': 18, 'skipped': 49} in 719.4s
+    -> ok  judged=1022 excluded=68  (2891.4s)
+[2026-10-26T13:43:19.049743+00:00] (24/30) VUL4J-62
+    original: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.5s
+    reference run 1/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.2s
+    reference run 2/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.2s
+    reference run 3/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.2s
+    -> pov_not_found  PoV tests not among the tests that ran: org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls  (793.2s)
+[2026-10-26T13:56:33.305341+00:00] (25/30) VUL4J-66
+    original: {'passed': 304, 'failed': 1, 'skipped': 0} in 8.6s
+    reference run 1/3: {'passed': 2652, 'failed': 0, 'skipped': 75} in 766.9s
+    reference run 2/3: {'passed': 2652, 'failed': 0, 'skipped': 75} in 752.4s
+    reference run 3/3: {'passed': 2559, 'failed': 1, 'skipped': 75} in 862.4s
+    -> ok  judged=2558 excluded=168  (2459.9s)
+[2026-10-26T14:37:34.030794+00:00] (26/30) VUL4J-75
+    original: {'passed': 587, 'failed': 33, 'skipped': 0} in 12.1s
+    reference run 1/3: {'passed': 590, 'failed': 30, 'skipped': 0} in 12.3s
+    reference run 2/3: {'passed': 589, 'failed': 31, 'skipped': 0} in 12.3s
+    reference run 3/3: {'passed': 590, 'failed': 30, 'skipped': 0} in 12.3s
+    -> ok  judged=587 excluded=31  (5408.4s)
+[2026-10-26T16:07:42.691600+00:00] (27/30) VUL4J-76
+    original: {'passed': 313, 'failed': 3, 'skipped': 1} in 22.1s
+    reference run 1/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 9.1s
+    reference run 2/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 9.0s
+    reference run 3/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 9.1s
+    -> ok  judged=313 excluded=1  (99.8s)
+[2026-10-26T16:09:22.814991+00:00] (28/30) VUL4J-77
+    original: {'passed': 151, 'failed': 1, 'skipped': 0} in 11.6s
+    reference run 1/3: {'passed': 153, 'failed': 0, 'skipped': 0} in 11.0s
+    reference run 2/3: {'passed': 152, 'failed': 0, 'skipped': 0} in 10.9s
+    reference run 3/3: {'passed': 151, 'failed': 0, 'skipped': 0} in 10.9s
+    -> ok  judged=150 excluded=2  (63.1s)
+[2026-10-26T16:10:26.136194+00:00] (29/30) VUL4J-78
+    original: {'passed': 1816, 'failed': 1, 'skipped': 0} in 13.0s
+    reference run 1/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 13.2s
+    reference run 2/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 13.1s
+    reference run 3/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 12.7s
+    -> ok  judged=1816 excluded=0  (84.3s)
+[2026-10-26T16:11:50.624418+00:00] (30/30) VUL4J-79
+    original: {'passed': 116, 'failed': 2, 'skipped': 0} in 3.4s
+    reference run 1/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 4.0s
+    reference run 2/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 3.2s
+    reference run 3/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 3.2s
+    -> ok  judged=116 excluded=0  (24.4s)
+[2026-10-26T16:12:15.133953+00:00] baseline done in 279.8 min: {'ok': 40, 'no_judged_set': 1, 'pov_not_found': 1}
+=== baseline finished 2026-10-26T19:12:15+03:00
+[2026-10-26T16:12:44+00:00] (1/84) VUL4J-1    oracle_vulnerable  expected L1 got L1       OK  (29s)  
+[2026-10-26T16:13:10+00:00] (2/84) VUL4J-1    oracle_reference   expected L3 got L3       OK  (26s)  
+[2026-10-26T16:13:10+00:00] (3/84) VUL4J-2    oracle_vulnerable  expected L1 got refused  WRONG  (0s)  baseline status is 'no_judged_set', not 'ok'
+[2026-10-26T16:13:10+00:00] (4/84) VUL4J-2    oracle_reference   expected L3 got refused  WRONG  (0s)  baseline status is 'no_judged_set', not 'ok'
+[2026-10-26T18:07:03+00:00] (5/84) VUL4J-6    oracle_vulnerable  expected L1 got L1       OK  (6833s)  
+[2026-10-26T18:07:33+00:00] (6/84) VUL4J-6    oracle_reference   expected L3 got L3       OK  (30s)  
+[2026-10-26T18:07:59+00:00] (7/84) VUL4J-7    oracle_vulnerable  expected L1 got L1       OK  (26s)  
+[2026-10-26T18:08:24+00:00] (8/84) VUL4J-7    oracle_reference   expected L3 got L3       OK  (25s)  
+[2026-10-26T18:08:53+00:00] (9/84) VUL4J-8    oracle_vulnerable  expected L1 got L1       OK  (29s)  
+[2026-10-26T18:09:20+00:00] (10/84) VUL4J-8    oracle_reference   expected L3 got L3       OK  (27s)  
+[2026-10-26T18:09:28+00:00] (11/84) VUL4J-10   oracle_vulnerable  expected L1 got L1       OK  (9s)  
+[2026-10-26T18:09:38+00:00] (12/84) VUL4J-10   oracle_reference   expected L3 got L3       OK  (9s)  
+[2026-10-26T18:10:17+00:00] (13/84) VUL4J-13   oracle_vulnerable  expected L1 got L1       OK  (39s)  
+[2026-10-26T18:10:51+00:00] (14/84) VUL4J-13   oracle_reference   expected L3 got L3       OK  (34s)  
+[2026-10-26T22:07:20+00:00] (15/84) VUL4J-14   oracle_vulnerable  expected L1 got L1       OK  (14189s)  
+[2026-10-27T09:43:11+00:00] (16/84) VUL4J-14   oracle_reference   expected L3 got L3       OK  (41751s)  
+[2026-10-27T09:45:41+00:00] (17/84) VUL4J-16   oracle_vulnerable  expected L1 got L1       OK  (150s)  
+[2026-10-27T09:48:14+00:00] (18/84) VUL4J-16   oracle_reference   expected L3 got L3       OK  (153s)  
+[2026-10-27T09:50:17+00:00] (19/84) VUL4J-18   oracle_vulnerable  expected L1 got L1       OK  (123s)  
+=== offline check start 2026-10-27T12:56:20
+[2026-10-27T09:56:21+00:00] offline compile check: 42 to do
+  (1/42) VUL4J-1    maven  offline_ok=True 14.7s 
+  (2/42) VUL4J-2    maven  offline_ok=True 18.2s 
+  (3/42) VUL4J-6    maven  offline_ok=True 15.1s 
+  (4/42) VUL4J-7    maven  offline_ok=True 12.7s 
+  (5/42) VUL4J-8    maven  offline_ok=True 14.7s 
+  (6/42) VUL4J-10   maven  offline_ok=True 4.9s 
+  (7/42) VUL4J-13   maven  offline_ok=True 13.5s 
+  (8/42) VUL4J-14   maven  offline_ok=True 12.9s 
+  (9/42) VUL4J-16   maven  offline_ok=True 186.5s 
+  (10/42) VUL4J-18   maven  offline_ok=True 65.3s 
+  (11/42) VUL4J-22   maven  offline_ok=True 63.1s 
+  (12/42) VUL4J-24   maven  offline_ok=True 147.5s 
+  (13/42) VUL4J-25   maven  offline_ok=True 13.1s 
+  (14/42) VUL4J-26   maven  offline_ok=True 71.3s 
+  (15/42) VUL4J-29   maven  offline_ok=True 92.3s 
+  (16/42) VUL4J-30   maven  offline_ok=True 25.7s 
+  (17/42) VUL4J-33   maven  offline_ok=True 50.7s 
+  (18/42) VUL4J-34   maven  offline_ok=True 57.0s 
+  (19/42) VUL4J-36   maven  offline_ok=True 108.8s 
+  (20/42) VUL4J-40   gradle offline_ok=True 14.7s 
+  (21/42) VUL4J-41   maven  offline_ok=True 5.4s 
+  (22/42) VUL4J-43   maven  offline_ok=True 53.0s 
+  (23/42) VUL4J-44   maven  offline_ok=True 7.1s 
+  (24/42) VUL4J-45   maven  offline_ok=True 96.7s 
+  (25/42) VUL4J-47   maven  offline_ok=True 6.4s 
+  (26/42) VUL4J-48   maven  offline_ok=True 5.6s 
+  (27/42) VUL4J-49   maven  offline_ok=True 4.5s 
+  (28/42) VUL4J-50   maven  offline_ok=True 25.2s 
+  (29/42) VUL4J-52   maven  offline_ok=True 4.5s 
+  (30/42) VUL4J-53   maven  offline_ok=True 43.5s 
+  (31/42) VUL4J-55   maven  offline_ok=True 39.4s 
+  (32/42) VUL4J-57   maven  offline_ok=True 6.3s 
+  (33/42) VUL4J-59   maven  offline_ok=True 6.3s 
+  (34/42) VUL4J-60   maven  offline_ok=True 3.0s 
+  (35/42) VUL4J-61   gradle offline_ok=True 21.9s 
+  (36/42) VUL4J-62   maven  offline_ok=True 395.9s 
+  (37/42) VUL4J-66   maven  offline_ok=True 32.5s 
+  (38/42) VUL4J-75   maven  offline_ok=True 38.7s 
+  (39/42) VUL4J-76   maven  offline_ok=True 33.1s 
+  (40/42) VUL4J-77   maven  offline_ok=True 12.3s 
+  (41/42) VUL4J-78   maven  offline_ok=True 19.4s 
+  (42/42) VUL4J-79   maven  offline_ok=True 6.0s 
+offline compile check done: 42 entries compile offline (2 of them Gradle); failing: none
+=== offline check exit 0 2026-10-27T13:29:34
+=== baseline start 2026-10-27T13:29:34
+[2026-10-27T10:29:34.474952+00:00] baseline: 42 to do, 42 already in C:\Users\lanay\cweft\data\vul4j\baseline.json
+[2026-10-27T10:29:34.475079+00:00] (1/42) VUL4J-1
+    original: {'passed': 3596, 'failed': 1, 'skipped': 0} in 21.9s
+    reference run 1/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 20.8s
+    reference run 2/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 16.8s
+    reference run 3/3: {'passed': 3597, 'failed': 0, 'skipped': 0} in 23.0s
+    -> ok  judged=3596 excluded=0  (105.3s)
+[2026-10-27T10:31:20.151058+00:00] (2/42) VUL4J-2
+    original: {'passed': 0, 'failed': 1, 'skipped': 0} in 2.1s
+    reference run 1/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 2.3s
+    reference run 2/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 2.2s
+    reference run 3/3: {'passed': 1, 'failed': 0, 'skipped': 0} in 2.1s
+    -> no_judged_set    (32.8s)
+[2026-10-27T10:31:53.244384+00:00] (3/42) VUL4J-6
+    original: {'passed': 867, 'failed': 1, 'skipped': 4} in 21.5s
+    reference run 1/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 18.2s
+    reference run 2/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 18.3s
+    reference run 3/3: {'passed': 868, 'failed': 0, 'skipped': 4} in 19.1s
+    -> ok  judged=867 excluded=4  (96.3s)
+[2026-10-27T10:33:29.796144+00:00] (4/42) VUL4J-7
+    original: {'passed': 1031, 'failed': 2, 'skipped': 8} in 16.4s
+    reference run 1/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 16.5s
+    reference run 2/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 15.7s
+    reference run 3/3: {'passed': 1033, 'failed': 0, 'skipped': 8} in 19.2s
+    -> ok  judged=1031 excluded=8  (88.2s)
+[2026-10-27T10:34:58.305897+00:00] (5/42) VUL4J-8
+    original: {'passed': 1093, 'failed': 1, 'skipped': 7} in 19.4s
+    reference run 1/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 17.0s
+    reference run 2/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 17.5s
+    reference run 3/3: {'passed': 1094, 'failed': 0, 'skipped': 7} in 17.8s
+    -> ok  judged=1093 excluded=7  (93.1s)
+[2026-10-27T10:36:31.624541+00:00] (6/42) VUL4J-10
+    original: {'passed': 67, 'failed': 2, 'skipped': 0} in 5.3s
+    reference run 1/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.7s
+    reference run 2/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.2s
+    reference run 3/3: {'passed': 69, 'failed': 0, 'skipped': 0} in 4.2s
+    -> ok  judged=67 excluded=0  (26.3s)
+[2026-10-27T10:36:58.064374+00:00] (7/42) VUL4J-13
+    original: {'passed': 560, 'failed': 1, 'skipped': 15} in 28.5s
+    reference run 1/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 27.9s
+    reference run 2/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 27.1s
+    reference run 3/3: {'passed': 561, 'failed': 0, 'skipped': 15} in 26.0s
+    -> ok  judged=560 excluded=15  (129.3s)
+[2026-10-27T10:39:07.623226+00:00] (8/42) VUL4J-14
+    original: {'passed': 1329, 'failed': 2, 'skipped': 4} in 112.0s
+    reference run 1/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 112.3s
+    reference run 2/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 110.6s
+    reference run 3/3: {'passed': 1331, 'failed': 0, 'skipped': 4} in 113.9s
+    -> ok  judged=1329 excluded=4  (464.6s)
+[2026-10-27T10:46:52.457760+00:00] (9/42) VUL4J-16
+    original: {'passed': 34, 'failed': 1, 'skipped': 0} in 4.7s
+    reference run 1/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 9.0s
+    reference run 2/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 9.4s
+    reference run 3/3: {'passed': 35, 'failed': 0, 'skipped': 0} in 7.2s
+    -> ok  judged=34 excluded=0  (334.0s)
+[2026-10-27T10:52:27.380610+00:00] (10/42) VUL4J-18
+    original: {'passed': 853, 'failed': 2, 'skipped': 0} in 76.1s
+    reference run 1/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 81.0s
+    reference run 2/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 71.7s
+    reference run 3/3: {'passed': 855, 'failed': 0, 'skipped': 0} in 75.1s
+    -> ok  judged=853 excluded=0  (400.5s)
+[2026-10-27T10:59:08.306988+00:00] (11/42) VUL4J-22
+    original: {'passed': 125, 'failed': 3, 'skipped': 0} in 5.6s
+    reference run 1/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 5.7s
+    reference run 2/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 6.2s
+    reference run 3/3: {'passed': 128, 'failed': 0, 'skipped': 0} in 6.8s
+    -> ok  judged=125 excluded=0  (98.3s)
+[2026-10-27T11:00:46.996659+00:00] (12/42) VUL4J-24
+    original: {'passed': 24, 'failed': 1, 'skipped': 0} in 9.1s
+    reference run 1/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.2s
+    reference run 2/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.2s
+    reference run 3/3: {'passed': 25, 'failed': 0, 'skipped': 0} in 5.4s
+    -> ok  judged=24 excluded=0  (240.3s)
+[2026-10-27T11:04:48.155805+00:00] (13/42) VUL4J-25
+    original: {'passed': 24, 'failed': 2, 'skipped': 0} in 6.3s
+    reference run 1/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.2s
+    reference run 2/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.2s
+    reference run 3/3: {'passed': 26, 'failed': 0, 'skipped': 0} in 6.3s
+    -> ok  judged=24 excluded=0  (45.2s)
+[2026-10-27T11:05:33.543197+00:00] (14/42) VUL4J-26
+    original: {'passed': 1660, 'failed': 1, 'skipped': 0} in 45.7s
+    reference run 1/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 44.8s
+    reference run 2/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 43.5s
+    reference run 3/3: {'passed': 1661, 'failed': 0, 'skipped': 0} in 43.6s
+    -> ok  judged=1660 excluded=0  (289.0s)
+[2026-10-27T11:10:23.001653+00:00] (15/42) VUL4J-29
+    original: {'passed': 855, 'failed': 1, 'skipped': 0} in 28.9s
+    reference run 1/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 26.4s
+    reference run 2/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 26.7s
+    reference run 3/3: {'passed': 856, 'failed': 0, 'skipped': 0} in 28.9s
+    -> ok  judged=855 excluded=0  (279.9s)
+[2026-10-27T11:15:03.814916+00:00] (16/42) VUL4J-30
+    original: {'passed': 3347, 'failed': 2, 'skipped': 0} in 44.6s
+    reference run 1/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 45.1s
+    reference run 2/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 45.1s
+    reference run 3/3: {'passed': 3349, 'failed': 0, 'skipped': 0} in 44.5s
+    -> ok  judged=3348 excluded=0  (237.1s)
+[2026-10-27T11:19:01.397646+00:00] (17/42) VUL4J-33
+    original: {'passed': 1655, 'failed': 1, 'skipped': 0} in 43.8s
+    reference run 1/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 43.5s
+    reference run 2/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 43.5s
+    reference run 3/3: {'passed': 1656, 'failed': 0, 'skipped': 0} in 43.8s
+    -> ok  judged=1655 excluded=0  (289.3s)
+[2026-10-27T11:23:51.239043+00:00] (18/42) VUL4J-34
+    original: {'passed': 1653, 'failed': 1, 'skipped': 0} in 46.2s
+    reference run 1/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 46.1s
+    reference run 2/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 46.4s
+    reference run 3/3: {'passed': 1654, 'failed': 0, 'skipped': 0} in 46.3s
+    -> ok  judged=1653 excluded=0  (299.4s)
+[2026-10-27T11:28:51.111588+00:00] (19/42) VUL4J-36
+    original: {'passed': 983, 'failed': 1, 'skipped': 37} in 79.4s
+    reference run 1/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 66.4s
+    reference run 2/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 64.0s
+    reference run 3/3: {'passed': 984, 'failed': 0, 'skipped': 37} in 65.1s
+    -> ok  judged=983 excluded=37  (493.3s)
+[2026-10-27T11:37:04.770432+00:00] (20/42) VUL4J-40
+    original: {'passed': 2934, 'failed': 32, 'skipped': 17} in 278.4s
+    reference run 1/3: {'passed': 2963, 'failed': 3, 'skipped': 17} in 224.5s
+    reference run 2/3: {'passed': 2939, 'failed': 27, 'skipped': 17} in 291.6s
+    reference run 3/3: {'passed': 2962, 'failed': 4, 'skipped': 17} in 223.3s
+    -> ok  judged=2934 excluded=48  (1043.7s)
+[2026-10-27T11:54:29.769667+00:00] (21/42) VUL4J-41
+    original: {'passed': 144, 'failed': 1, 'skipped': 7} in 10.0s
+    reference run 1/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 9.8s
+    reference run 2/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 10.4s
+    reference run 3/3: {'passed': 145, 'failed': 0, 'skipped': 7} in 10.4s
+    -> ok  judged=144 excluded=7  (50.5s)
+[2026-10-27T11:55:20.533026+00:00] (22/42) VUL4J-43
+    original: {'passed': 109, 'failed': 1, 'skipped': 0} in 3.4s
+    reference run 1/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 4.0s
+    reference run 2/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 3.7s
+    reference run 3/3: {'passed': 110, 'failed': 0, 'skipped': 0} in 3.7s
+    -> ok  judged=109 excluded=0  (123.7s)
+[2026-10-27T11:57:24.502963+00:00] (23/42) VUL4J-44
+    original: {'passed': 583, 'failed': 3, 'skipped': 0} in 21.6s
+    reference run 1/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 21.1s
+    reference run 2/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 22.3s
+    reference run 3/3: {'passed': 586, 'failed': 0, 'skipped': 0} in 21.7s
+    -> ok  judged=583 excluded=0  (101.4s)
+[2026-10-27T11:59:06.106029+00:00] (24/42) VUL4J-45
+    original: {'passed': 370, 'failed': 1, 'skipped': 0} in 20.5s
+    reference run 1/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 20.1s
+    reference run 2/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 19.9s
+    reference run 3/3: {'passed': 371, 'failed': 0, 'skipped': 0} in 20.3s
+    -> ok  judged=370 excluded=0  (284.1s)
+[2026-10-27T12:03:50.463075+00:00] (25/42) VUL4J-47
+    original: {'passed': 140, 'failed': 1, 'skipped': 0} in 4.6s
+    reference run 1/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.6s
+    reference run 2/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.5s
+    reference run 3/3: {'passed': 141, 'failed': 0, 'skipped': 0} in 4.6s
+    -> ok  judged=140 excluded=0  (30.6s)
+[2026-10-27T12:04:21.211410+00:00] (26/42) VUL4J-48
+    original: {'passed': 33, 'failed': 1, 'skipped': 0} in 4.6s
+    reference run 1/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 5.1s
+    reference run 2/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 4.8s
+    reference run 3/3: {'passed': 34, 'failed': 0, 'skipped': 0} in 4.8s
+    -> ok  judged=33 excluded=0  (29.2s)
+[2026-10-27T12:04:50.610210+00:00] (27/42) VUL4J-49
+    original: {'passed': 30, 'failed': 1, 'skipped': 0} in 4.7s
+    reference run 1/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 5.3s
+    reference run 2/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 4.9s
+    reference run 3/3: {'passed': 31, 'failed': 0, 'skipped': 0} in 5.3s
+    -> ok  judged=30 excluded=0  (29.6s)
+[2026-10-27T12:05:20.435707+00:00] (28/42) VUL4J-50
+    original: {'passed': 276, 'failed': 1, 'skipped': 0} in 25.3s
+    reference run 1/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 25.7s
+    reference run 2/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 24.8s
+    reference run 3/3: {'passed': 277, 'failed': 0, 'skipped': 0} in 24.2s
+    -> ok  judged=276 excluded=0  (150.8s)
+[2026-10-27T12:07:51.376478+00:00] (29/42) VUL4J-52
+    original: {'passed': 54, 'failed': 1, 'skipped': 0} in 18.2s
+    reference run 1/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 20.3s
+    reference run 2/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 20.0s
+    reference run 3/3: {'passed': 55, 'failed': 0, 'skipped': 0} in 20.1s
+    -> ok  judged=54 excluded=0  (87.5s)
+[2026-10-27T12:09:19.109503+00:00] (30/42) VUL4J-53
+    original: {'passed': 3501, 'failed': 1, 'skipped': 7} in 41.4s
+    reference run 1/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 41.9s
+    reference run 2/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 43.4s
+    reference run 3/3: {'passed': 3502, 'failed': 0, 'skipped': 7} in 42.3s
+    -> ok  judged=3501 excluded=7  (257.9s)
+[2026-10-27T12:13:38.025124+00:00] (31/42) VUL4J-55
+    original: {'passed': 3631, 'failed': 1, 'skipped': 13} in 44.8s
+    reference run 1/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 38.1s
+    reference run 2/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 38.4s
+    reference run 3/3: {'passed': 3632, 'failed': 0, 'skipped': 13} in 38.3s
+    -> ok  judged=3631 excluded=13  (240.5s)
+[2026-10-27T12:17:39.451125+00:00] (32/42) VUL4J-57
+=== resume: 11 baseline entries to redo: VUL4J-57 VUL4J-59 VUL4J-60 VUL4J-61 VUL4J-62 VUL4J-66 VUL4J-75 VUL4J-76 VUL4J-77 VUL4J-78 VUL4J-79
+=== baseline start 2026-10-28T17:22:33
+[2026-10-28T14:22:33.320785+00:00] baseline: 11 to do, 42 already in C:\Users\lanay\cweft\data\vul4j\baseline.json
+[2026-10-28T14:22:33.320896+00:00] (1/11) VUL4J-57
+    original: {'passed': 28, 'failed': 1, 'skipped': 0} in 89.0s
+    reference run 1/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 83.3s
+    reference run 2/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 80.9s
+=== resume: 11 baseline entries to redo: VUL4J-57 VUL4J-59 VUL4J-60 VUL4J-61 VUL4J-62 VUL4J-66 VUL4J-75 VUL4J-76 VUL4J-77 VUL4J-78 VUL4J-79
+=== baseline start 2026-10-28T17:43:04
+[2026-10-28T14:43:04.951709+00:00] baseline: 11 to do, 42 already in C:\Users\lanay\cweft\data\vul4j\baseline.json
+[2026-10-28T14:43:04.951776+00:00] (1/11) VUL4J-57
+    original: {'passed': 28, 'failed': 1, 'skipped': 0} in 89.2s
+    reference run 1/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 81.8s
+    reference run 2/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 82.9s
+    reference run 3/3: {'passed': 29, 'failed': 0, 'skipped': 0} in 80.7s
+    -> ok  judged=28 excluded=0  (350.2s)
+[2026-10-28T14:48:55.385477+00:00] (2/11) VUL4J-59
+    original: {'passed': 453, 'failed': 1, 'skipped': 3} in 3.3s
+    reference run 1/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 4.3s
+    reference run 2/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 2.6s
+    reference run 3/3: {'passed': 454, 'failed': 0, 'skipped': 3} in 3.6s
+    -> ok  judged=453 excluded=3  (28.7s)
+[2026-10-28T14:49:24.342197+00:00] (3/11) VUL4J-60
+    original: {'passed': 56, 'failed': 1, 'skipped': 0} in 8.6s
+    reference run 1/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.7s
+    reference run 2/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.4s
+    reference run 3/3: {'passed': 57, 'failed': 0, 'skipped': 0} in 7.1s
+    -> ok  judged=56 excluded=0  (40.2s)
+[2026-10-28T14:50:04.848447+00:00] (4/11) VUL4J-61
+    original: {'passed': 1034, 'failed': 8, 'skipped': 49} in 704.1s
+    reference run 1/3: {'passed': 1036, 'failed': 6, 'skipped': 49} in 721.7s
+    reference run 2/3: {'passed': 1035, 'failed': 7, 'skipped': 49} in 717.5s
+    reference run 3/3: {'passed': 1036, 'failed': 6, 'skipped': 49} in 719.2s
+    -> ok  judged=1034 excluded=56  (2897.9s)
+[2026-10-28T15:38:23.108912+00:00] (5/11) VUL4J-62
+    original: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.8s
+    reference run 1/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.9s
+    reference run 2/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.7s
+    reference run 3/3: {'passed': 0, 'failed': 0, 'skipped': 0} in 2.7s
+    -> pov_not_found  PoV tests not among the tests that ran: org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls  (895.5s)
+[2026-10-28T15:53:19.893200+00:00] (6/11) VUL4J-66
+    original: {'passed': 304, 'failed': 1, 'skipped': 0} in 10.7s
+    reference run 1/3: {'passed': 2652, 'failed': 0, 'skipped': 75} in 803.3s
+    reference run 2/3: {'passed': 2652, 'failed': 0, 'skipped': 75} in 809.8s
+    reference run 3/3: {'passed': 2652, 'failed': 0, 'skipped': 75} in 811.8s
+    -> ok  judged=2651 excluded=75  (2517.6s)
+[2026-10-28T16:35:18.416258+00:00] (7/11) VUL4J-75
+    original: {'passed': 587, 'failed': 33, 'skipped': 0} in 15.9s
+    reference run 1/3: {'passed': 589, 'failed': 31, 'skipped': 0} in 15.8s
+    reference run 2/3: {'passed': 590, 'failed': 30, 'skipped': 0} in 15.8s
+    reference run 3/3: {'passed': 589, 'failed': 31, 'skipped': 0} in 15.9s
+    -> ok  judged=587 excluded=31  (158.5s)
+[2026-10-28T16:37:57.241085+00:00] (8/11) VUL4J-76
+    original: {'passed': 313, 'failed': 3, 'skipped': 1} in 14.2s
+    reference run 1/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 14.0s
+    reference run 2/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 12.8s
+    reference run 3/3: {'passed': 316, 'failed': 0, 'skipped': 1} in 12.9s
+    -> ok  judged=313 excluded=1  (120.2s)
+[2026-10-28T16:39:57.681717+00:00] (9/11) VUL4J-77
+    original: {'passed': 150, 'failed': 1, 'skipped': 0} in 15.1s
+    reference run 1/3: {'passed': 151, 'failed': 0, 'skipped': 0} in 15.0s
+    reference run 2/3: {'passed': 151, 'failed': 0, 'skipped': 0} in 15.5s
+    reference run 3/3: {'passed': 153, 'failed': 0, 'skipped': 0} in 14.7s
+    -> ok  judged=150 excluded=2  (82.7s)
+[2026-10-28T16:41:20.715551+00:00] (10/11) VUL4J-78
+    original: {'passed': 1816, 'failed': 1, 'skipped': 0} in 15.0s
+    reference run 1/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 15.5s
+    reference run 2/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 14.9s
+    reference run 3/3: {'passed': 1817, 'failed': 0, 'skipped': 0} in 15.3s
+    -> ok  judged=1816 excluded=0  (100.6s)
+[2026-10-28T16:43:01.678778+00:00] (11/11) VUL4J-79
+    original: {'passed': 116, 'failed': 2, 'skipped': 0} in 4.5s
+    reference run 1/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 4.0s
+    reference run 2/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 4.0s
+    reference run 3/3: {'passed': 118, 'failed': 0, 'skipped': 0} in 3.9s
+    -> ok  judged=116 excluded=0  (30.8s)
+[2026-10-28T16:43:32.694846+00:00] baseline done in 120.5 min: {'ok': 40, 'no_judged_set': 1, 'pov_not_found': 1}
+=== baseline exit 0 2026-10-28T19:43:32
+=== oracle start 2026-10-28T19:43:32
+[2026-10-28T16:44:05+00:00] (1/84) VUL4J-1    oracle_vulnerable  expected L1 got L1       OK  (32s)  
+[2026-10-28T16:44:37+00:00] (2/84) VUL4J-1    oracle_reference   expected L3 got L3       OK  (32s)  
+[2026-10-28T16:44:37+00:00] (3/84) VUL4J-2    oracle_vulnerable  expected L1 got refused  WRONG  (0s)  baseline status is 'no_judged_set', not 'ok'
+[2026-10-28T16:44:37+00:00] (4/84) VUL4J-2    oracle_reference   expected L3 got refused  WRONG  (0s)  baseline status is 'no_judged_set', not 'ok'
+[2026-10-28T16:45:13+00:00] (5/84) VUL4J-6    oracle_vulnerable  expected L1 got L1       OK  (37s)  
+[2026-10-28T16:45:45+00:00] (6/84) VUL4J-6    oracle_reference   expected L3 got L3       OK  (32s)  
+[2026-10-28T16:46:17+00:00] (7/84) VUL4J-7    oracle_vulnerable  expected L1 got L1       OK  (31s)  
+[2026-10-28T16:46:48+00:00] (8/84) VUL4J-7    oracle_reference   expected L3 got L3       OK  (31s)  
+[2026-10-28T16:47:23+00:00] (9/84) VUL4J-8    oracle_vulnerable  expected L1 got L1       OK  (36s)  
+[2026-10-28T16:47:55+00:00] (10/84) VUL4J-8    oracle_reference   expected L3 got L3       OK  (32s)  
+[2026-10-28T16:48:08+00:00] (11/84) VUL4J-10   oracle_vulnerable  expected L1 got L1       OK  (12s)  
+[2026-10-28T16:48:20+00:00] (12/84) VUL4J-10   oracle_reference   expected L3 got L3       OK  (12s)  
+[2026-10-28T16:49:03+00:00] (13/84) VUL4J-13   oracle_vulnerable  expected L1 got L1       OK  (44s)  
+[2026-10-28T16:49:45+00:00] (14/84) VUL4J-13   oracle_reference   expected L3 got L3       OK  (42s)  
+[2026-10-28T16:51:52+00:00] (15/84) VUL4J-14   oracle_vulnerable  expected L1 got L1       OK  (126s)  
+[2026-10-28T16:53:58+00:00] (16/84) VUL4J-14   oracle_reference   expected L3 got L3       OK  (126s)  
+[2026-10-28T16:56:48+00:00] (17/84) VUL4J-16   oracle_vulnerable  expected L1 got L1       OK  (169s)  
+[2026-10-28T16:59:30+00:00] (18/84) VUL4J-16   oracle_reference   expected L3 got L3       OK  (163s)  
+[2026-10-28T17:01:35+00:00] (19/84) VUL4J-18   oracle_vulnerable  expected L1 got L1       OK  (125s)  
+[2026-10-28T17:03:41+00:00] (20/84) VUL4J-18   oracle_reference   expected L3 got L3       OK  (125s)  
+[2026-10-28T17:04:34+00:00] (21/84) VUL4J-22   oracle_vulnerable  expected L1 got L1       OK  (53s)  
+[2026-10-28T17:05:25+00:00] (22/84) VUL4J-22   oracle_reference   expected L3 got L3       OK  (51s)  
+[2026-10-28T17:07:47+00:00] (23/84) VUL4J-24   oracle_vulnerable  expected L1 got L1       OK  (143s)  
+[2026-10-28T17:10:01+00:00] (24/84) VUL4J-24   oracle_reference   expected L3 got L3       OK  (134s)  
+[2026-10-28T17:10:21+00:00] (25/84) VUL4J-25   oracle_vulnerable  expected L1 got L1       OK  (20s)  
+[2026-10-28T17:10:41+00:00] (26/84) VUL4J-25   oracle_reference   expected L3 got L3       OK  (20s)  
+[2026-10-28T17:12:35+00:00] (27/84) VUL4J-26   oracle_vulnerable  expected L1 got L1       OK  (114s)  
+[2026-10-28T17:14:29+00:00] (28/84) VUL4J-26   oracle_reference   expected L3 got L3       OK  (114s)  
+[2026-10-28T17:16:35+00:00] (29/84) VUL4J-29   oracle_vulnerable  expected L1 got L1       OK  (126s)  
+[2026-10-28T17:18:39+00:00] (30/84) VUL4J-29   oracle_reference   expected L3 got L3       OK  (124s)  
+[2026-10-28T17:20:01+00:00] (31/84) VUL4J-30   oracle_vulnerable  expected L1 got L1       OK  (82s)  
+[2026-10-28T17:21:24+00:00] (32/84) VUL4J-30   oracle_reference   expected L3 got L3       OK  (83s)  
+[2026-10-28T17:23:16+00:00] (33/84) VUL4J-33   oracle_vulnerable  expected L1 got L1       OK  (111s)  
+[2026-10-28T17:25:08+00:00] (34/84) VUL4J-33   oracle_reference   expected L3 got L3       OK  (112s)  
+[2026-10-28T17:27:03+00:00] (35/84) VUL4J-34   oracle_vulnerable  expected L1 got L1       OK  (116s)  
+[2026-10-28T17:29:00+00:00] (36/84) VUL4J-34   oracle_reference   expected L3 got L3       OK  (117s)  
+[2026-10-28T17:32:50+00:00] (37/84) VUL4J-36   oracle_vulnerable  expected L1 got L1       OK  (230s)  
+[2026-10-28T17:36:04+00:00] (38/84) VUL4J-36   oracle_reference   expected L3 got L3       OK  (194s)  
+[2026-10-28T17:42:02+00:00] (39/84) VUL4J-40   oracle_vulnerable  expected L1 got L1       OK  (358s)  
+[2026-10-28T17:47:55+00:00] (40/84) VUL4J-40   oracle_reference   expected L3 got L3       OK  (353s)  
+[2026-10-28T17:48:12+00:00] (41/84) VUL4J-41   oracle_vulnerable  expected L1 got L1       OK  (17s)  
+[2026-10-28T17:48:28+00:00] (42/84) VUL4J-41   oracle_reference   expected L3 got L3       OK  (16s)  
+[2026-10-28T17:49:31+00:00] (43/84) VUL4J-43   oracle_vulnerable  expected L1 got L1       OK  (63s)  
+[2026-10-28T17:50:33+00:00] (44/84) VUL4J-43   oracle_reference   expected L3 got L3       OK  (62s)  
+[2026-10-28T17:51:03+00:00] (45/84) VUL4J-44   oracle_vulnerable  expected L1 got L1       OK  (30s)  
+[2026-10-28T17:51:34+00:00] (46/84) VUL4J-44   oracle_reference   expected L3 got L3       OK  (31s)  
+[2026-10-28T17:53:37+00:00] (47/84) VUL4J-45   oracle_vulnerable  expected L1 got L1       OK  (123s)  
+[2026-10-28T17:55:46+00:00] (48/84) VUL4J-45   oracle_reference   expected L3 got L3       OK  (128s)  
+[2026-10-28T17:55:57+00:00] (49/84) VUL4J-47   oracle_vulnerable  expected L1 got L1       OK  (11s)  
+[2026-10-28T17:56:08+00:00] (50/84) VUL4J-47   oracle_reference   expected L3 got L3       OK  (12s)  
+[2026-10-28T17:56:19+00:00] (51/84) VUL4J-48   oracle_vulnerable  expected L1 got L1       OK  (10s)  
+[2026-10-28T17:56:30+00:00] (52/84) VUL4J-48   oracle_reference   expected L3 got L3       OK  (11s)  
+[2026-10-28T17:56:44+00:00] (53/84) VUL4J-49   oracle_vulnerable  expected L1 got L1       OK  (14s)  
+[2026-10-28T17:56:54+00:00] (54/84) VUL4J-49   oracle_reference   expected L3 got L3       OK  (10s)  
+[2026-10-28T17:57:45+00:00] (55/84) VUL4J-50   oracle_vulnerable  expected L1 got L1       OK  (51s)  
+[2026-10-28T17:58:36+00:00] (56/84) VUL4J-50   oracle_reference   expected L3 got L3       OK  (52s)  
+[2026-10-28T17:59:00+00:00] (57/84) VUL4J-52   oracle_vulnerable  expected L1 got L1       OK  (24s)  
+[2026-10-28T17:59:24+00:00] (58/84) VUL4J-52   oracle_reference   expected L3 got L3       OK  (24s)  
+[2026-10-28T18:01:08+00:00] (59/84) VUL4J-53   oracle_vulnerable  expected L1 got L1       OK  (104s)  
+[2026-10-28T18:02:48+00:00] (60/84) VUL4J-53   oracle_reference   expected L3 got L3       OK  (100s)  
+[2026-10-28T18:04:23+00:00] (61/84) VUL4J-55   oracle_vulnerable  expected L1 got L1       OK  (95s)  
+[2026-10-28T18:05:58+00:00] (62/84) VUL4J-55   oracle_reference   expected L3 got L3       OK  (95s)  
+[2026-10-28T18:07:38+00:00] (63/84) VUL4J-57   oracle_vulnerable  expected L1 got L1       OK  (100s)  
+[2026-10-28T18:09:07+00:00] (64/84) VUL4J-57   oracle_reference   expected L3 got L3       OK  (89s)  
+[2026-10-28T18:09:19+00:00] (65/84) VUL4J-59   oracle_vulnerable  expected L1 got L1       OK  (12s)  
+[2026-10-28T18:09:31+00:00] (66/84) VUL4J-59   oracle_reference   expected L3 got L3       OK  (12s)  
+[2026-10-28T18:09:43+00:00] (67/84) VUL4J-60   oracle_vulnerable  expected L1 got L1       OK  (13s)  
+[2026-10-28T18:09:55+00:00] (68/84) VUL4J-60   oracle_reference   expected L3 got L3       OK  (12s)  
+[2026-10-28T18:22:05+00:00] (69/84) VUL4J-61   oracle_vulnerable  expected L1 got L1       OK  (730s)  
+[2026-10-28T18:34:14+00:00] (70/84) VUL4J-61   oracle_reference   expected L3 got L3       OK  (729s)  
+[2026-10-28T18:34:14+00:00] (71/84) VUL4J-62   oracle_vulnerable  expected L1 got refused  WRONG  (0s)  baseline status is 'pov_not_found', not 'ok'
+[2026-10-28T18:34:14+00:00] (72/84) VUL4J-62   oracle_reference   expected L3 got refused  WRONG  (0s)  baseline status is 'pov_not_found', not 'ok'
+[2026-10-28T18:35:00+00:00] (73/84) VUL4J-66   oracle_vulnerable  expected L1 got L1       OK  (46s)  
+[2026-10-28T18:47:56+00:00] (74/84) VUL4J-66   oracle_reference   expected L3 got L3       OK  (776s)  
+[2026-10-28T18:48:52+00:00] (75/84) VUL4J-75   oracle_vulnerable  expected L1 got L1       OK  (56s)  
+[2026-10-28T18:49:47+00:00] (76/84) VUL4J-75   oracle_reference   expected L3 got L3       OK  (54s)  
+[2026-10-28T18:50:27+00:00] (77/84) VUL4J-76   oracle_vulnerable  expected L1 got L1       OK  (40s)  
+[2026-10-28T18:51:08+00:00] (78/84) VUL4J-76   oracle_reference   expected L3 got L3       OK  (41s)  
+[2026-10-28T18:51:33+00:00] (79/84) VUL4J-77   oracle_vulnerable  expected L1 got L1       OK  (25s)  
+[2026-10-28T18:51:58+00:00] (80/84) VUL4J-77   oracle_reference   expected L3 got L3       OK  (25s)  
+[2026-10-28T18:52:31+00:00] (81/84) VUL4J-78   oracle_vulnerable  expected L1 got L1       OK  (33s)  
+[2026-10-28T18:53:04+00:00] (82/84) VUL4J-78   oracle_reference   expected L3 got L3       OK  (33s)  
+[2026-10-28T18:53:15+00:00] (83/84) VUL4J-79   oracle_vulnerable  expected L1 got L1       OK  (10s)  
+[2026-10-28T18:53:25+00:00] (84/84) VUL4J-79   oracle_reference   expected L3 got L3       OK  (10s)  
+84 oracle cells graded, 80 as expected, 4 not.
+  VUL4J-2    oracle_vulnerable  expected L1 got refused   baseline status is 'no_judged_set', not 'ok'
+  VUL4J-2    oracle_reference   expected L3 got refused   baseline status is 'no_judged_set', not 'ok'
+  VUL4J-62   oracle_vulnerable  expected L1 got refused   baseline status is 'pov_not_found', not 'ok'
+  VUL4J-62   oracle_reference   expected L3 got refused   baseline status is 'pov_not_found', not 'ok'
+=== oracle exit 1 2026-10-28T21:53:25
+=== published re-grade start 2026-10-28T21:53:25
+504 published Vul4J cells re-graded from the published rows (no test re-run).
+  changed level: 18    undetermined: 98    no usable baseline: 16
+  Assumes every PoV test ran in the published run, and applies no rerun.
+
+Changed cells (old -> new):
+  VUL4J-40   L1   claude  L2 -> L1   PoV test failing
+  VUL4J-40   L1   gemini  L2 -> L1   PoV test failing
+  VUL4J-40   L1   gpt     L2 -> L1   PoV test failing
+  VUL4J-40   L2   claude  L2 -> L1   PoV test failing
+  VUL4J-40   L2   gpt     L2 -> L1   PoV test failing
+  VUL4J-40   L3a  gemini  L2 -> L1   PoV test failing
+  VUL4J-61   L1   gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   gemini  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  gemini  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3b  claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-66   L1   gpt     L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L2   claude  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L2   gemini  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L3a  gemini  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+
+By model (changed cells, as old->new: count):
+  claude    6 changed   L2->L1: 2, L2->L3: 4
+  gemini    6 changed   L2->L1: 2, L2->L3: 4
+  gpt       6 changed   L2->L1: 2, L2->L3: 4
+
+By prompt level (changed cells, as old->new: count):
+  L1        5 changed   L2->L1: 3, L2->L3: 2
+  L2        7 changed   L2->L1: 2, L2->L3: 5
+  L3a       5 changed   L2->L1: 1, L2->L3: 4
+  L3b       1 changed   L2->L3: 1
+
+Undetermined (old L1; could be any of the listed levels):
+  VUL4J-22   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L1   gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-25   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L1   gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-26   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3b  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-29   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L1   gpt     L1 -> L1/L2   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-30   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L1   gemini  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3b  gpt     L1 -> L1/L2   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-33   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L2   gpt     L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  claude  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  claude  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-34   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-44   L1   claude  L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L1   gemini  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L1   gpt     L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   gemini  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  gemini  L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3b  claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-52   L1   gemini  L1 -> L1/L2/L3   old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+  VUL4J-52   L2   gemini  L1 -> L1/L2/L3   old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+  VUL4J-75   L1   gpt     L1 -> L1/L2   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L2   gpt     L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-76   L1   claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L1   gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L1   gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  gemini  L1 -> L1/L2   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-78   L1   gemini  L1 -> L1/L2/L3   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-78   L2   gemini  L1 -> L1/L2   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-78   L3a  gemini  L1 -> L1/L2   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-79   L1   gemini  L1 -> L1/L2/L3   old PoV was org.zeroturnaround.zip.DirectoryTraversalMaliciousTest; the row does not say which of it
+
+Not re-graded (baseline not ok):
+  VUL4J-2: baseline status no_judged_set
+  VUL4J-62: baseline status pov_not_found
+
+Old distribution: {'L0': 115, 'L1': 275, 'L2': 31, 'L3': 83}
+New distribution (exact cells only): {'L0': 115, 'L1': 177, 'L2': 13, 'L3': 85}
+=== published re-grade exit 0 2026-10-28T21:53:25
+=== all done 2026-10-28T21:53:25

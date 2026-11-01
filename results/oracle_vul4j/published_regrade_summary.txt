@@ -1,0 +1,141 @@
+504 published Vul4J cells re-graded from the published rows (no test re-run).
+  changed level: 18    undetermined: 98    no usable baseline: 16
+  Assumes every PoV test ran in the published run, and applies no rerun.
+
+Changed cells (old -> new):
+  VUL4J-40   L1   claude  L2 -> L1   PoV test failing
+  VUL4J-40   L1   gemini  L2 -> L1   PoV test failing
+  VUL4J-40   L1   gpt     L2 -> L1   PoV test failing
+  VUL4J-40   L2   claude  L2 -> L1   PoV test failing
+  VUL4J-40   L2   gpt     L2 -> L1   PoV test failing
+  VUL4J-40   L3a  gemini  L2 -> L1   PoV test failing
+  VUL4J-61   L1   gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   gemini  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L2   gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  gemini  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3a  gpt     L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-61   L3b  claude  L2 -> L3   PoV passes; 2 failure(s) all outside the judged set
+  VUL4J-66   L1   gpt     L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L2   claude  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L2   gemini  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+  VUL4J-66   L3a  gemini  L2 -> L3   PoV passes; 1 failure(s) all outside the judged set
+
+By model (changed cells, as old->new: count):
+  claude    6 changed   L2->L1: 2, L2->L3: 4
+  gemini    6 changed   L2->L1: 2, L2->L3: 4
+  gpt       6 changed   L2->L1: 2, L2->L3: 4
+
+By prompt level (changed cells, as old->new: count):
+  L1        5 changed   L2->L1: 3, L2->L3: 2
+  L2        7 changed   L2->L1: 2, L2->L3: 5
+  L3a       5 changed   L2->L1: 1, L2->L3: 4
+  L3b       1 changed   L2->L3: 1
+
+Undetermined (old L1; could be any of the listed levels):
+  VUL4J-22   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L1   gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-22   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+  VUL4J-25   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L1   gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-25   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+  VUL4J-26   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-26   L3b  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-29   L1   claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L1   gpt     L1 -> L1/L2   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   gemini  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L2   gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3b  claude  L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-29   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its 
+  VUL4J-30   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L1   gemini  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-30   L3b  gpt     L1 -> L1/L2   old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its te
+  VUL4J-33   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L2   gpt     L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  claude  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  claude  L1 -> L1/L2   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-33   L3b  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests faile
+  VUL4J-34   L1   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L1   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L1   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   gemini  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L2   gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3a  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3a  gpt     L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-34   L3b  claude  L1 -> L1/L2/L3   old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of i
+  VUL4J-44   L1   claude  L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L1   gemini  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L1   gpt     L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   gemini  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L2   gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  gemini  L1 -> L1/L2   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3a  gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3b  claude  L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-44   L3b  gpt     L1 -> L1/L2/L3   old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+  VUL4J-52   L1   gemini  L1 -> L1/L2/L3   old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+  VUL4J-52   L2   gemini  L1 -> L1/L2/L3   old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+  VUL4J-75   L1   gpt     L1 -> L1/L2   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L2   gpt     L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L3a  gemini  L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-75   L3b  gemini  L1 -> L1/L2/L3   old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not sa
+  VUL4J-76   L1   claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L1   gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L1   gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L2   gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  gemini  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3a  gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  claude  L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  gemini  L1 -> L1/L2   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-76   L3b  gpt     L1 -> L1/L2/L3   old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+  VUL4J-78   L1   gemini  L1 -> L1/L2/L3   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-78   L2   gemini  L1 -> L1/L2   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-78   L3a  gemini  L1 -> L1/L2   old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its
+  VUL4J-79   L1   gemini  L1 -> L1/L2/L3   old PoV was org.zeroturnaround.zip.DirectoryTraversalMaliciousTest; the row does not say which of it
+
+Not re-graded (baseline not ok):
+  VUL4J-2: baseline status no_judged_set
+  VUL4J-62: baseline status pov_not_found
+
+Old distribution: {'L0': 115, 'L1': 275, 'L2': 31, 'L3': 83}
+New distribution (exact cells only): {'L0': 115, 'L1': 177, 'L2': 13, 'L3': 85}

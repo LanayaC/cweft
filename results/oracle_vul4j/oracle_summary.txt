@@ -1,0 +1,5 @@
+84 oracle cells graded, 80 as expected, 4 not.
+  VUL4J-2    oracle_vulnerable  expected L1 got refused   baseline status is 'no_judged_set', not 'ok'
+  VUL4J-2    oracle_reference   expected L3 got refused   baseline status is 'no_judged_set', not 'ok'
+  VUL4J-62   oracle_vulnerable  expected L1 got refused   baseline status is 'pov_not_found', not 'ok'
+  VUL4J-62   oracle_reference   expected L3 got refused   baseline status is 'pov_not_found', not 'ok'

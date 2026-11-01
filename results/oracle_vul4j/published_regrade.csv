@@ -1,0 +1,505 @@
+vul_id,level,model_key,old,new,basis,possible,changed,reason
+VUL4J-10,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-10,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L1,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-13,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-13,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-13,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-13,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-13,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-13,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-14,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-14,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-14,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-14,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-14,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-14,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-16,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-16,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-18,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-1,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-1,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-1,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-22,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-22,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-22,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3b,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.shiro.web.util.WebUtilsTest; the row does not say which of its tests failed
+VUL4J-22,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-24,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L2,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-24,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-24,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-24,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-25,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L1,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-25,L1,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3b,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-25,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.sling.xss.impl.XSSAPIImplTest; the row does not say which of its tests failed
+VUL4J-26,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L1,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-26,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-26,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-26,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-26,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-29,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L1,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-29,L1,gpt,L1,,undetermined,L1/L2,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-29,L3a,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-29,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-29,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-29,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.apache.struts2.interceptor.CookieInterceptorTest; the row does not say which of its tests failed
+VUL4J-2,L1,claude,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L1,gemini,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-2,L2,claude,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L2,gemini,L3,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-2,L3a,claude,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L3a,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-2,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-2,L3b,claude,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L3b,gemini,L1,,no_baseline,,False,baseline status no_judged_set
+VUL4J-2,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-30,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L1,gemini,L1,,undetermined,L1/L2,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L1,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-30,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-30,L3b,gpt,L1,,undetermined,L1/L2,False,old PoV was com.opensymphony.xwork2.validator.URLValidatorTest; the row does not say which of its tests failed
+VUL4J-33,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-33,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-33,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-33,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-33,L2,gpt,L1,,undetermined,L1/L2,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3a,claude,L1,,undetermined,L1/L2,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3b,claude,L1,,undetermined,L1/L2,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3b,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-33,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.ognl.OgnlUtilTest; the row does not say which of its tests failed
+VUL4J-34,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L1,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L3a,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-34,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was com.opensymphony.xwork2.interceptor.I18nInterceptorTest; the row does not say which of its tests failed
+VUL4J-34,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-34,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-36,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-36,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-36,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-36,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-36,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-40,L1,claude,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L1,gemini,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L1,gpt,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L2,claude,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L2,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-40,L2,gpt,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L3a,claude,L2,L2,exact,L2,False,2 judged test(s) failing: org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled#isAllowedToUpdateScimUser_WithSameValue;org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenChangingAnAllowedField$WhenChangingName#isAllowedToUpdateGiv
+VUL4J-40,L3a,gemini,L2,L1,exact,L1,True,PoV test failing
+VUL4J-40,L3a,gpt,L2,L2,exact,L2,False,3 judged test(s) failing: org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled#isAllowedToUpdateScimUser_WithSameValue;org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenChangingAnAllowedField$WhenChangingName#isAllowedToUpdateGiv
+VUL4J-40,L3b,claude,L2,L2,exact,L2,False,2 judged test(s) failing: org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled#isAllowedToUpdateScimUser_WithSameValue;org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenChangingAnAllowedField$WhenChangingName#isAllowedToUpdateGiv
+VUL4J-40,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-40,L3b,gpt,L2,L2,exact,L2,False,3 judged test(s) failing: org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled#isAllowedToUpdateScimUser_WithSameValue;org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenChangingAnAllowedField$WhenChangingName#isAllowedToUpdateGiv
+VUL4J-41,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-41,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-41,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L2,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-41,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L3b,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-41,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-43,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-43,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-44,L1,claude,L1,,undetermined,L1/L2,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L1,gpt,L1,,undetermined,L1/L2,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L3a,gemini,L1,,undetermined,L1/L2,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-44,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-44,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.owasp.esapi.codecs.CodecImmunityTest; the row does not say which of its tests failed
+VUL4J-45,L1,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L1,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L2,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-45,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-45,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L1,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-47,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L2,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3b,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-47,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-48,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L2,claude,L2,L2,exact,L2,False,2 judged test(s) failing: org.primeframework.jwt.JWTTest#test_none;org.primeframework.jwt.VulnerabilityTest#test_SignedWithoutSignature
+VUL4J-48,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-48,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-49,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-50,L1,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-50,L1,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L2,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-50,L2,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-50,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L3b,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-50,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-52,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+VUL4J-52,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.kohsuke.groovy.sandbox.FinalizerTest; the row does not say which of its tests failed
+VUL4J-52,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3a,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-52,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-53,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-53,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-55,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L3a,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-55,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-55,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-55,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-57,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-57,L1,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-57,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-57,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-59,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-59,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-59,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-59,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-59,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-60,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L2,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3a,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-60,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-61,L1,claude,L2,L2,exact,L2,False,1 judged test(s) failing: apoc.export.graphml.ExportGraphMLTest#testExportGraphGraphMLTypes
+VUL4J-61,L1,gemini,L2,L2,exact,L2,False,1 judged test(s) failing: apoc.export.graphml.ExportGraphMLTest#testExportAllGraphML
+VUL4J-61,L1,gpt,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L2,claude,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L2,gemini,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L2,gpt,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L3a,claude,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L3a,gemini,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L3a,gpt,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L3b,claude,L2,L3,exact,L3,True,PoV passes; 2 failure(s) all outside the judged set
+VUL4J-61,L3b,gemini,L2,L2,exact,L2,False,1 judged test(s) failing: apoc.export.graphml.ExportGraphMLTest#testExportAllGraphML
+VUL4J-61,L3b,gpt,L2,L2,exact,L2,False,1 judged test(s) failing: apoc.export.graphml.ExportGraphMLTest#testExportGraphGraphMLTypes
+VUL4J-62,L1,claude,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L1,gemini,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-62,L2,claude,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L2,gemini,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-62,L3a,claude,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L3a,gemini,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-62,L3b,claude,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L3b,gemini,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-62,L3b,gpt,L3,,no_baseline,,False,baseline status pov_not_found
+VUL4J-66,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-66,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-66,L1,gpt,L2,L3,exact,L3,True,PoV passes; 1 failure(s) all outside the judged set
+VUL4J-66,L2,claude,L2,L3,exact,L3,True,PoV passes; 1 failure(s) all outside the judged set
+VUL4J-66,L2,gemini,L2,L3,exact,L3,True,PoV passes; 1 failure(s) all outside the judged set
+VUL4J-66,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-66,L3a,claude,L2,L2,exact,L2,False,1 judged test(s) failing: org.jboss.resteasy.test.providers.multipart.MimeMultipartProviderTest#testGet
+VUL4J-66,L3a,gemini,L2,L3,exact,L3,True,PoV passes; 1 failure(s) all outside the judged set
+VUL4J-66,L3a,gpt,L2,L2,exact,L2,False,1 judged test(s) failing: org.jboss.resteasy.test.providers.multipart.MimeMultipartProviderTest#testGet
+VUL4J-66,L3b,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-66,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-66,L3b,gpt,L2,L2,exact,L2,False,1 judged test(s) failing: org.jboss.resteasy.test.providers.multipart.MimeMultipartProviderTest#testGet
+VUL4J-6,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-6,L1,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-6,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-6,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L2,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-6,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-6,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-75,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L1,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L1,gpt,L1,,undetermined,L1/L2,False,old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not say which of its tests failed
+VUL4J-75,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L2,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not say which of its tests failed
+VUL4J-75,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not say which of its tests failed
+VUL4J-75,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-75,L3b,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.springframework.security.oauth2.provider.endpoint.SpelViewTests; the row does not say which of its tests failed
+VUL4J-75,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-76,L1,claude,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L1,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L2,claude,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L2,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L2,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3a,claude,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3a,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3a,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3b,claude,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3b,gemini,L1,,undetermined,L1/L2,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-76,L3b,gpt,L1,,undetermined,L1/L2/L3,False,old PoV was retrofit2.RequestFactoryTest; the row does not say which of its tests failed
+VUL4J-77,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-77,L1,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-77,L1,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-77,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-77,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-77,L2,gpt,L2,L2,exact,L2,False,2 judged test(s) failing: io.swagger.parser.AnchorTest#testIssue146;io.swagger.parser.SwaggerParserTest#testIssue146
+VUL4J-77,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-77,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-77,L3a,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-77,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-77,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-77,L3b,gpt,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-78,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its tests failed
+VUL4J-78,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L2,gemini,L1,,undetermined,L1/L2,False,old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its tests failed
+VUL4J-78,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L3a,gemini,L1,,undetermined,L1/L2,False,old PoV was com.thoughtworks.acceptance.SecurityVulnerabilityTest; the row does not say which of its tests failed
+VUL4J-78,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L3b,gemini,L0,L0,exact,L0,False,did not compile
+VUL4J-78,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L1,gemini,L1,,undetermined,L1/L2/L3,False,old PoV was org.zeroturnaround.zip.DirectoryTraversalMaliciousTest; the row does not say which of its tests failed
+VUL4J-79,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-79,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L3a,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-79,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-79,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-79,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L1,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-7,L1,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L2,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L2,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-7,L2,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L3a,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-7,L3a,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L3b,claude,L0,L0,exact,L0,False,did not compile
+VUL4J-7,L3b,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-7,L3b,gpt,L0,L0,exact,L0,False,did not compile
+VUL4J-8,L1,claude,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L1,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L1,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L2,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-8,L2,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-8,L2,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L3a,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-8,L3a,gemini,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L3a,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
+VUL4J-8,L3b,claude,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-8,L3b,gemini,L3,L3,exact,L3,False,PoV passes; nothing failing
+VUL4J-8,L3b,gpt,L1,L1,exact,L1,False,"old PoV is a subset of the new PoV, and it failed"
