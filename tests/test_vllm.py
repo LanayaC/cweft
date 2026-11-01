@@ -8,6 +8,7 @@ a prompt that leaves nothing is skipped without being sent, a cut-off answer is
 flagged rather than raised, and a placeholder model id fails before any call.
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -61,6 +62,13 @@ def test_every_vllm_model_is_dispatched_and_colon_free():
     for key in config.VLLM_MODELS:
         assert key in models._DISPATCH
         assert ":" not in key, "the key goes into a log filename"
+
+
+def test_every_vllm_model_has_a_real_id_and_a_pinned_revision():
+    assert set(config.VLLM_REVISIONS) == set(config.VLLM_MODELS)
+    for key, hf_id in config.VLLM_MODELS.items():
+        assert not hf_id.startswith(config.VLLM_PLACEHOLDER)
+        assert re.fullmatch(r"[0-9a-f]{40}", config.VLLM_REVISIONS[key]), key
 
 
 def test_the_ollama_entries_are_unchanged():

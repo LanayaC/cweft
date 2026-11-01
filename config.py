@@ -69,20 +69,23 @@ LOCAL_MODELS = {
 
 # Served by vLLM. Same key rule as LOCAL_MODELS: colon-free, because the key
 # goes into a log filename. The VALUE is the Hugging Face model id the server
-# was launched with. The placeholders below are not ids: models.py and
-# generate.py refuse to run a model whose id still starts with VLLM_PLACEHOLDER.
+# was launched with. models.py and generate.py refuse to run a model whose id
+# still starts with VLLM_PLACEHOLDER.
 VLLM_PLACEHOLDER = "FILL-IN-HF-ID"
 VLLM_MODELS = {
     "granite-8b-bf16":  "ibm-granite/granite-4.1-8b",
-    "granite-30b-bf16": f"{VLLM_PLACEHOLDER}: granite 30B, bf16",
-    "gemma-12b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 12B, bf16",
-    "gemma-31b-bf16":   f"{VLLM_PLACEHOLDER}: gemma 31B, bf16",
+    "granite-30b-bf16": "ibm-granite/granite-4.1-30b",
+    "gemma-12b-bf16":   "google/gemma-4-12B-it",
+    "gemma-31b-bf16":   "google/gemma-4-31B-it",
 }
 
 # The Hugging Face revision each vLLM model is served at. leylak/run_model.sbatch
 # passes it to `vllm serve --revision` and refuses a model that has none here.
 VLLM_REVISIONS = {
-    "granite-8b-bf16": "1504002f650e656a0a3789d99574df12e3e94ed0",
+    "granite-8b-bf16":  "1504002f650e656a0a3789d99574df12e3e94ed0",
+    "granite-30b-bf16": "4fae6278f7132abf5e971f9de49ebbad09c54cce",
+    "gemma-12b-bf16":   "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+    "gemma-31b-bf16":   "842da3794eaa0b77d5f08bae87a17459d91ff475",
 }
 
 MODELS = {**CLOUD_MODELS, **LOCAL_MODELS, **VLLM_MODELS}

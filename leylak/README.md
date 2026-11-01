@@ -27,6 +27,12 @@ Download each model's weights once, at the revision pinned in `config.py`
 ```bash
 ~/cweft/venv312/bin/hf download ibm-granite/granite-4.1-8b \
     --revision 1504002f650e656a0a3789d99574df12e3e94ed0
+~/cweft/venv312/bin/hf download ibm-granite/granite-4.1-30b \
+    --revision 4fae6278f7132abf5e971f9de49ebbad09c54cce
+~/cweft/venv312/bin/hf download google/gemma-4-12B-it \
+    --revision 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7
+~/cweft/venv312/bin/hf download google/gemma-4-31B-it \
+    --revision 842da3794eaa0b77d5f08bae87a17459d91ff475
 ```
 
 If you keep the Hugging Face cache somewhere other than `~/.cache/huggingface`,
