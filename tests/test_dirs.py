@@ -26,7 +26,7 @@ def _keep_globals(monkeypatch):
 
 def test_logs_dir_moves_both_datasets(tmp_path, monkeypatch):
     _keep_globals(monkeypatch)
-    generate.set_logs_dir(tmp_path)
+    generate.set_logs_dir(tmp_path)  # main() adds t<temperature>/r<repetition> first
     assert generate.log_path_for("VUL4J-77", "L1", "m").parent == tmp_path.resolve()
     assert generate.log_path_for("CVE-2022-1992", "L1", "m").parent == \
         tmp_path.resolve() / "patcheval"
@@ -36,12 +36,13 @@ def test_generate_dry_run_reports_the_chosen_folder(tmp_path, monkeypatch, capsy
     _keep_globals(monkeypatch)
     monkeypatch.setattr(sys, "argv", [
         "generate.py", "--models", "claude", "--vulns", "VUL4J-77", "--levels", "L1",
+        "--temperature", "0.5", "--repetition", "2",
         "--logs-dir", str(tmp_path), "--dry-run"])
     generate.main()
     out = capsys.readouterr().out
-    assert str(tmp_path.resolve()) in out
+    assert str(tmp_path.resolve() / "t0.5" / "r2") in out
     assert "Dry run" in out
-    assert list(tmp_path.glob("*.json")) == []
+    assert list(tmp_path.rglob("*.json")) == []
 
 
 def test_evaluate_reads_and_writes_only_the_chosen_folders(tmp_path, monkeypatch, capsys):

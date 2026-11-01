@@ -2,13 +2,16 @@
 Unified LLM wrappers for the cloud providers, local Ollama models, and
 models served by vLLM.
 
-Exposes one function: call_model(model_key, prompt, language="Java")
--> (response_text, usage_dict), where model_key is any key of config.MODELS.
+Exposes one function: call_model(model_key, prompt, language="Java", *,
+temperature, seed=None) -> (response_text, usage_dict), where model_key is any
+key of config.MODELS. The temperature is sent on every request, and the
+parameters actually sent come back in usage["sampling_params"].
 
 All API differences live here. The rest of the pipeline calls this once
 per cell and doesn't care which provider it's talking to.
 """
 
+import hashlib
 import os
 import re
 import time
@@ -21,7 +24,7 @@ from config import (
     MODELS, LOCAL_MODELS,
     OLLAMA_BASE_URL, OLLAMA_NUM_CTX, OLLAMA_KEEP_ALIVE, OLLAMA_TIMEOUT,
     VLLM_MODELS, VLLM_BASE_URL, VLLM_MAX_MODEL_LEN, VLLM_MAX_OUTPUT_TOKENS,
-    VLLM_TOKEN_MARGIN, VLLM_TIMEOUT, VLLM_PLACEHOLDER,
+    VLLM_TOKEN_MARGIN, VLLM_TIMEOUT, VLLM_PLACEHOLDER, VLLM_TOP_P, VLLM_TOP_K,
 )
 
 load_dotenv()
@@ -192,17 +195,51 @@ def is_truncated(provider: str, reason: str) -> bool:
 
 
 # ──────────────────────────────────────────────────────────────────────
-# Per-provider call functions. Each returns the same shape:
-#   (response_text: str, usage: dict)
-# where usage always carries input_tokens, output_tokens, stop_reason and
-# truncated.
+# Sampling
 # ──────────────────────────────────────────────────────────────────────
 
-def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
+class TemperatureRejected(Exception):
+    """
+    The provider refused this temperature. generate.py stops the run: the
+    alternative is results at a temperature other than the one asked for.
+    """
+
+
+def _rejects_temperature(e: Exception) -> bool:
+    """A provider's "bad request" that names the temperature."""
+    status = getattr(e, "status_code", None) or getattr(e, "code", None)
+    return status in (400, 422) and "temperature" in str(e).lower()
+
+
+def request_seed(vul_id: str, level: str, model_key: str, repetition: int) -> int:
+    """
+    The seed for one vLLM request. The same cell and repetition always get the
+    same seed, and each repetition a different one. The temperature is left out,
+    so changing it alone does not change the seed. A positive 31-bit integer.
+    """
+    key = f"{vul_id}|{level}|{model_key}|{repetition}".encode("utf-8")
+    return int.from_bytes(hashlib.sha256(key).digest()[:4], "big") >> 1
+
+
+def _sampling(temperature: float, max_tokens=None, top_p=None, top_k=None, seed=None) -> dict:
+    """The parameters a request sent. None means not sent: the provider's default applies."""
+    return {"temperature": temperature, "top_p": top_p, "top_k": top_k,
+            "max_tokens": max_tokens, "seed": seed}
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Per-provider call functions. Each returns the same shape:
+#   (response_text: str, usage: dict)
+# where usage always carries input_tokens, output_tokens, stop_reason,
+# truncated and sampling_params.
+# ──────────────────────────────────────────────────────────────────────
+
+def _call_claude(prompt: str, system: str, temperature: float) -> Tuple[str, dict]:
     client = _get_anthropic()
     response = client.messages.create(
         model=MODELS["claude"],
         max_tokens=OUTPUT_CAPS["claude"],
+        temperature=temperature,
         system=system,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -213,15 +250,17 @@ def _call_claude(prompt: str, system: str) -> Tuple[str, dict]:
         "output_tokens": response.usage.output_tokens,
         "stop_reason": reason,
         "truncated": is_truncated("claude", reason),
+        "sampling_params": _sampling(temperature, max_tokens=OUTPUT_CAPS["claude"]),
     }
     return text, usage
 
 
-def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
+def _call_gpt(prompt: str, system: str, temperature: float) -> Tuple[str, dict]:
     client = _get_openai()
     response = client.chat.completions.create(
         model=MODELS["gpt"],
         max_completion_tokens=OUTPUT_CAPS["gpt"],
+        temperature=temperature,
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": prompt},
@@ -234,6 +273,7 @@ def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
         "output_tokens": response.usage.completion_tokens,
         "stop_reason": reason,
         "truncated": is_truncated("gpt", reason),
+        "sampling_params": _sampling(temperature, max_tokens=OUTPUT_CAPS["gpt"]),
     }
     # Reasoning tokens share max_completion_tokens with the visible answer, so
     # record them: they explain a truncation that the file length alone doesn't.
@@ -255,7 +295,7 @@ def _call_gpt(prompt: str, system: str) -> Tuple[str, dict]:
     return text, usage
 
 
-def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
+def _call_gemini(prompt: str, system: str, temperature: float) -> Tuple[str, dict]:
     client = _get_gemini()
     from google.genai import types
     response = client.models.generate_content(
@@ -264,6 +304,7 @@ def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
         config=types.GenerateContentConfig(
             system_instruction=system,
             max_output_tokens=OUTPUT_CAPS["gemini"],
+            temperature=temperature,
             thinking_config=types.ThinkingConfig(thinking_budget=512),
         ),
     )
@@ -277,11 +318,12 @@ def _call_gemini(prompt: str, system: str) -> Tuple[str, dict]:
         "output_tokens": getattr(response.usage_metadata, "candidates_token_count", 0),
         "stop_reason": reason,
         "truncated": is_truncated("gemini", reason),
+        "sampling_params": _sampling(temperature, max_tokens=OUTPUT_CAPS["gemini"]),
     }
     return text, usage
 
 
-def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
+def _call_ollama(prompt: str, system: str, model_key: str, temperature: float) -> Tuple[str, dict]:
     """
     Local generation via Ollama's /api/generate.
 
@@ -306,7 +348,7 @@ def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
         # done_reason "length". Measured on Ollama 0.33.2.
         "truncate":   False,
         "shift":      False,
-        "options":    {"num_ctx": OLLAMA_NUM_CTX},
+        "options":    {"num_ctx": OLLAMA_NUM_CTX, "temperature": temperature},
     }
 
     try:
@@ -335,6 +377,7 @@ def _call_ollama(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
         "output_tokens": data.get("eval_count", 0),
         "stop_reason": reason,
         "truncated": is_truncated("ollama", reason),
+        "sampling_params": _sampling(temperature),
     }
 
     if not text.strip():
@@ -435,7 +478,8 @@ def _vllm_prompt_tokens(model_id: str, messages: list) -> Tuple[int, int]:
     return data["count"], data.get("max_model_len")
 
 
-def _call_vllm(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
+def _call_vllm(prompt: str, system: str, model_key: str, temperature: float,
+               seed: int) -> Tuple[str, dict]:
     """
     Generation on a vLLM server through its OpenAI-compatible API.
 
@@ -443,8 +487,8 @@ def _call_vllm(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
     left (see vllm_max_tokens). A prompt that leaves no room is never sent.
     Unlike Ollama, running out of output budget is flagged rather than raised,
     as it is for the cloud models: finish_reason "length" sets `truncated`.
-    No temperature is set, as for every other model: each runs at its server's
-    default.
+    Every sampling parameter is sent explicitly, top_k through extra_body since
+    it is a vLLM extension to the OpenAI API.
     """
     model_id = MODELS[model_key]
     if vllm_placeholders([model_key]):
@@ -470,6 +514,10 @@ def _call_vllm(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
     response = _get_vllm().chat.completions.create(
         model=model_id,
         max_tokens=max_tokens,
+        temperature=temperature,
+        top_p=VLLM_TOP_P,
+        seed=seed,
+        extra_body={"top_k": VLLM_TOP_K},
         messages=messages,
     )
     text = response.choices[0].message.content or ""
@@ -480,6 +528,8 @@ def _call_vllm(prompt: str, system: str, model_key: str) -> Tuple[str, dict]:
         "max_tokens": max_tokens,
         "stop_reason": reason,
         "truncated": is_truncated("vllm", reason),
+        "sampling_params": _sampling(temperature, max_tokens=max_tokens, top_p=VLLM_TOP_P,
+                                     top_k=VLLM_TOP_K, seed=seed),
     }
     if not text.strip():
         raise RuntimeError(
@@ -505,7 +555,8 @@ _DISPATCH = {
 }
 
 
-def call_model(model_key: str, prompt: str, language: str = "Java") -> Tuple[str, dict]:
+def call_model(model_key: str, prompt: str, language: str = "Java", *,
+               temperature: float, seed: int = None) -> Tuple[str, dict]:
     """
     Call the named model with the given prompt.
 
@@ -515,18 +566,35 @@ def call_model(model_key: str, prompt: str, language: str = "Java") -> Tuple[str
         language:  source language of the file being repaired; selects the
                    system prompt and fence cleanup. The default is what the
                    Vul4J cells used.
+        temperature: sent on the request, whatever the model
+        seed:      required for vLLM models (see request_seed), unused otherwise
 
     Returns:
         (response_text, usage_dict)
-        usage_dict has keys: input_tokens, output_tokens, latency_s
+        usage_dict has keys: input_tokens, output_tokens, latency_s, sampling_params
+
+    Raises TemperatureRejected if the provider refuses the temperature.
     """
     if model_key not in _DISPATCH:
         raise ValueError(f"Unknown model_key: {model_key!r}. Use one of {list(_DISPATCH)}.")
     if language not in SYSTEM_PROMPTS:
         raise ValueError(f"Unknown language: {language!r}. Use one of {list(SYSTEM_PROMPTS)}.")
 
+    sampling = {"temperature": temperature}
+    if model_key in VLLM_MODELS:
+        if seed is None:
+            raise ValueError(f"{model_key} is a vLLM model and needs a seed")
+        sampling["seed"] = seed
+
     start = time.time()
-    text, usage = _DISPATCH[model_key](prompt, SYSTEM_PROMPTS[language])
+    try:
+        text, usage = _DISPATCH[model_key](prompt, SYSTEM_PROMPTS[language], **sampling)
+    except Exception as e:
+        if _rejects_temperature(e):
+            raise TemperatureRejected(
+                f"{model_key} ({MODELS[model_key]}) rejected temperature={temperature}: {e}"
+            ) from e
+        raise
     usage["latency_s"] = round(time.time() - start, 2)
     # Always present, whatever the provider reported, so every caller and every
     # log can rely on them.
@@ -549,7 +617,7 @@ if __name__ == "__main__":
     for key in MODELS:
         print(f"\n--- {key} ({MODELS[key]}) ---")
         try:
-            text, usage = call_model(key, test_prompt)
+            text, usage = call_model(key, test_prompt, temperature=1.0, seed=1)
             print(f"Latency: {usage['latency_s']}s")
             print(f"Tokens:  in={usage['input_tokens']}  out={usage['output_tokens']}")
             print(f"Output:  {text.strip()[:200]}")

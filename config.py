@@ -46,6 +46,9 @@ VLLM_MAX_MODEL_LEN     = int(os.environ.get("VLLM_MAX_MODEL_LEN", "65536"))
 VLLM_MAX_OUTPUT_TOKENS = 64000   # ceiling on max_tokens, whatever the window allows
 VLLM_TOKEN_MARGIN      = 64       # left unused between prompt + output and the window
 VLLM_TIMEOUT           = 1800     # same budget as Ollama; whole-file regeneration is slow
+# Sent on every request rather than left to server defaults: neither narrows sampling.
+VLLM_TOP_P             = 1.0
+VLLM_TOP_K             = -1       # vLLM's value for "no top-k"
 
 
 CLOUD_MODELS = {
@@ -92,6 +95,14 @@ MODELS = {**CLOUD_MODELS, **LOCAL_MODELS, **VLLM_MODELS}
 
 
 PROMPT_LEVELS = ["L1", "L2", "L3a", "L3b"]
+
+TEMPERATURES = (0.0, 0.5, 1.0)
+
+
+def run_subdir(temperature: float, repetition: int) -> Path:
+    """Where one temperature and repetition's logs and results live, under their
+    base folders (e.g. t0.5/r2), so runs at different settings cannot mix."""
+    return Path(f"t{float(temperature)}") / f"r{repetition}"
 
 SUBSET = [
     "VUL4J-1",  "VUL4J-2",  "VUL4J-6",  "VUL4J-7",  "VUL4J-8",  "VUL4J-10",

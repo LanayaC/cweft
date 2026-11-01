@@ -220,7 +220,8 @@ def no_api(monkeypatch):
 def test_check_caps_reports_and_calls_no_api(no_api, monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["generate.py", "--check-caps",
                                       "--vulns", "VUL4J-1", "--models", "claude",
-                                      "--levels", "L1"])
+                                      "--levels", "L1",
+                                      "--temperature", "1.0"])
     generate.main()
     out = capsys.readouterr().out
     assert "Cap check:" in out and "over cap" in out
@@ -231,7 +232,8 @@ def test_a_normal_run_prints_the_summary_before_starting(no_api, monkeypatch, ca
     # --dry-run stops before any API call, after the plan and the cap summary
     monkeypatch.setattr(sys, "argv", ["generate.py", "--dry-run",
                                       "--vulns", "VUL4J-1", "--models", "claude",
-                                      "--levels", "L1"])
+                                      "--levels", "L1",
+                                      "--temperature", "1.0"])
     generate.main()
     out = capsys.readouterr().out
     assert "Cap check:" in out

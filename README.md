@@ -128,13 +128,13 @@ cp .env.example .env        # then edit .env and add your three API keys
 python config.py
 
 # 1. Generate patches (resumable; skips cells already logged)
-python generate.py
+python generate.py --temperature 1.0
 
-# 2. Evaluate every patch in the Docker harness (resumable; writes results/results.csv)
-python evaluate.py
+# 2. Evaluate every patch in the Docker harness (resumable; writes results/t1.0/r1/results.csv)
+python evaluate.py --temperature 1.0
 
 # 3. Produce all tables + statistics for that run
-python analyze.py --results results/results.csv
+python analyze.py --results results/t1.0/r1/results.csv
 
 # Optional: live progress while (1) or (2) runs, in a second terminal
 python monitor.py

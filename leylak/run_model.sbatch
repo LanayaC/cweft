@@ -22,10 +22,11 @@
 #                       CUDA_VISIBLE_DEVICES (default 1), e.g. --tp 2 with
 #                       CUDA_VISIBLE_DEVICES=0,1 for gpu5's two cards.
 #   --port N            local port for vLLM (default 8000)
-#   --wait-timeout S    seconds to wait for the server to answer (default 1800)
+#   --wait-timeout S    seconds to wait for the server to answer (default 3600)
 #
-# Everything after -- goes to generate.py (--vulns, --levels, --dataset,
-# --logs-dir, --dry-run ...). --models is set from MODEL and may not be passed.
+# Everything after -- goes to generate.py (--temperature, --repetition, --vulns,
+# --levels, --dataset, --logs-dir, --dry-run ...). --temperature is required, and
+# --models is set from MODEL and may not be passed.
 #
 # Choosing a card: LEYLAK has no GPU gres, so Slurm does not assign cards.
 # Set CUDA_VISIBLE_DEVICES when submitting and the job inherits it, e.g.
@@ -54,7 +55,7 @@ shift
 MAX_LEN=65536
 TP=1
 PORT=8000
-WAIT_TIMEOUT=1800
+WAIT_TIMEOUT=3600
 GEN_ARGS=()
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -69,6 +70,9 @@ done
 for a in ${GEN_ARGS[@]+"${GEN_ARGS[@]}"}; do
     [[ "$a" == --models* ]] && die "--models is set from MODEL; do not pass it after --"
 done
+# Checked now: generate.py would only refuse it after the server has loaded.
+TEMPERATURE_ARG='(^| )--temperature[= ](0|0\.0|0\.5|1|1\.0)( |$)'
+[[ "${GEN_ARGS[*]-}" =~ $TEMPERATURE_ARG ]] || die "generate.py needs --temperature 0, 0.5 or 1.0 after --"
 
 CWEFT_DIR="${CWEFT_DIR:-$HOME/cweft}"
 CWEFT_VENV="${CWEFT_VENV:-$CWEFT_DIR/venv312}"
@@ -111,7 +115,9 @@ echo "=== cweft job $JOB  $(date -Is)  on $(hostname)"
 echo "model:        $MODEL = $HF_ID @ $REVISION"
 echo "window:       --max-model-len $MAX_LEN   tensor parallel: $TP   port: $PORT"
 echo "GPUs:         CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
-nvidia-smi -L 2>/dev/null || true
+echo "--- nvidia-smi (driver and CUDA version in its header)"
+nvidia-smi 2>&1 || echo "nvidia-smi failed or is not available"
+echo "---"
 echo "repository:   $CWEFT_DIR @ $(git rev-parse --short HEAD 2>/dev/null) ($(git rev-parse --abbrev-ref HEAD 2>/dev/null))"
 echo "python:       $(command -v python)   vllm: $(python -c 'import vllm; print(vllm.__version__)' 2>/dev/null)"
 echo "generate.py:  --models $MODEL ${GEN_ARGS[*]-}"

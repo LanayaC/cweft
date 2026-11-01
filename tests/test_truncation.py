@@ -96,7 +96,7 @@ def stub_genai_types(monkeypatch):
 @pytest.mark.parametrize("reason,truncated", [("max_tokens", True), ("end_turn", False)])
 def test_claude_records_stop_reason(monkeypatch, reason, truncated):
     monkeypatch.setattr(models, "_get_anthropic", lambda: _fake_anthropic(reason))
-    text, usage = models._call_claude("p", "sys")
+    text, usage = models._call_claude("p", "sys", temperature=1.0)
     assert text == "class A {}"
     assert usage["stop_reason"] == reason
     assert usage["truncated"] is truncated
@@ -106,7 +106,7 @@ def test_claude_records_stop_reason(monkeypatch, reason, truncated):
 @pytest.mark.parametrize("reason,truncated", [("length", True), ("stop", False)])
 def test_gpt_records_finish_reason_and_reasoning_tokens(monkeypatch, reason, truncated):
     monkeypatch.setattr(models, "_get_openai", lambda: _fake_openai(reason, reasoning=7))
-    text, usage = models._call_gpt("p", "sys")
+    text, usage = models._call_gpt("p", "sys", temperature=1.0)
     assert usage["stop_reason"] == reason
     assert usage["truncated"] is truncated
     assert usage["reasoning_tokens"] == 7
@@ -116,13 +116,13 @@ def test_gpt_empty_response_still_raises(monkeypatch):
     """The existing guard must survive: an empty file is not a patch."""
     monkeypatch.setattr(models, "_get_openai", lambda: _fake_openai("length", text=""))
     with pytest.raises(RuntimeError, match="empty response"):
-        models._call_gpt("p", "sys")
+        models._call_gpt("p", "sys", temperature=1.0)
 
 
 @pytest.mark.parametrize("reason,truncated", [("MAX_TOKENS", True), ("STOP", False)])
 def test_gemini_records_finish_reason(monkeypatch, stub_genai_types, reason, truncated):
     monkeypatch.setattr(models, "_get_gemini", lambda: _fake_gemini(reason))
-    text, usage = models._call_gemini("p", "sys")
+    text, usage = models._call_gemini("p", "sys", temperature=1.0)
     assert usage["stop_reason"] == reason
     assert usage["truncated"] is truncated
 
@@ -130,7 +130,7 @@ def test_gemini_records_finish_reason(monkeypatch, stub_genai_types, reason, tru
 def test_gemini_no_text_names_the_reason(monkeypatch, stub_genai_types):
     monkeypatch.setattr(models, "_get_gemini", lambda: _fake_gemini("SAFETY", text=None))
     with pytest.raises(RuntimeError, match="SAFETY"):
-        models._call_gemini("p", "sys")
+        models._call_gemini("p", "sys", temperature=1.0)
 
 
 def _ollama_payload(done_reason, eval_count=22):
@@ -143,7 +143,7 @@ def test_ollama_records_done_reason(monkeypatch):
     monkeypatch.setattr(httpx, "post",
                         lambda *a, **kw: _Obj(status_code=200,
                                               json=lambda: _ollama_payload("stop")))
-    text, usage = models._call_ollama("p", "sys", model_key="granite-8b")
+    text, usage = models._call_ollama("p", "sys", model_key="granite-8b", temperature=1.0)
     assert usage["stop_reason"] == "stop"
     assert usage["truncated"] is False
 
@@ -158,16 +158,16 @@ def test_ollama_truncation_raises_loudly(monkeypatch):
                         lambda *a, **kw: _Obj(status_code=200,
                                               json=lambda: _ollama_payload("length")))
     with pytest.raises(RuntimeError, match="truncated"):
-        models._call_ollama("p", "sys", model_key="granite-8b")
+        models._call_ollama("p", "sys", model_key="granite-8b", temperature=1.0)
 
 
 # ── normalisation ────────────────────────────────────────────────────────
 
 def test_call_model_always_sets_the_keys(monkeypatch):
-    def bare(prompt, system):
+    def bare(prompt, system, temperature):
         return "x", {"input_tokens": 1, "output_tokens": 2}   # provider told us nothing
     monkeypatch.setitem(models._DISPATCH, "claude", bare)
-    _, usage = models.call_model("claude", "p")
+    _, usage = models.call_model("claude", "p", temperature=1.0)
     assert usage["stop_reason"] == "" and usage["truncated"] is False
 
 
@@ -185,7 +185,7 @@ def test_run_cell_records_truncation_and_warns(monkeypatch, capsys):
     usage = {"input_tokens": 1, "output_tokens": 4000, "latency_s": 1.0,
              "stop_reason": "max_tokens", "truncated": True}
     monkeypatch.setattr(generate, "call_model", lambda *a, **kw: ("partial file", usage))
-    record = generate.run_cell(PAYLOAD, "L1", "claude")
+    record = generate.run_cell(PAYLOAD, "L1", "claude", temperature=1.0, repetition=1)
     assert record["status"] == "ok"
     assert record["truncated"] is True
     assert record["stop_reason"] == "max_tokens"
@@ -206,7 +206,7 @@ def test_console_that_cannot_print_the_warning_still_yields_the_result(monkeypat
     def exploding_print(*a, **kw):
         raise UnicodeEncodeError("charmap", "x", 0, 1, "cp1252 cannot encode this")
     monkeypatch.setattr("builtins.print", exploding_print)
-    record = generate.run_cell(PAYLOAD, "L1", "claude")
+    record = generate.run_cell(PAYLOAD, "L1", "claude", temperature=1.0, repetition=1)
     assert record["status"] == "ok" and record["truncated"] is True
     assert record["attempts"] == 1, "it must not have retried"
 
@@ -223,7 +223,7 @@ def test_run_cell_clean_response_is_not_flagged(monkeypatch, capsys):
     usage = {"input_tokens": 1, "output_tokens": 50, "latency_s": 1.0,
              "stop_reason": "end_turn", "truncated": False}
     monkeypatch.setattr(generate, "call_model", lambda *a, **kw: ("whole file", usage))
-    record = generate.run_cell(PAYLOAD, "L1", "claude")
+    record = generate.run_cell(PAYLOAD, "L1", "claude", temperature=1.0, repetition=1)
     assert record["truncated"] is False
     assert "TRUNCATED" not in capsys.readouterr().out
 

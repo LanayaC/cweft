@@ -4,21 +4,24 @@ Patch generation loop.
 For each (vulnerability × prompt_level × model) cell:
   1. Build the prompt from vuln_data + schemas + prompts
   2. Call the model via models.call_model()
-  3. Save a JSON log to logs/<vul_id>__<level>__<model>.json
-     (PatchEval cells: logs/patcheval/<CVE-ID>__<level>__<model>.json)
+  3. Save a JSON log to logs/t<temperature>/r<repetition>/<vul_id>__<level>__<model>.json
+     (PatchEval cells: in a patcheval/ subfolder of that)
 
 Resumable: cells with an existing log file are skipped on re-run.
 Idempotent: re-running is free; no re-billing for completed cells.
 
 Usage:
-    python generate.py                     # run everything (Vul4J)
-    python generate.py --models claude     # only one model
-    python generate.py --vulns VUL4J-1     # only one vuln
-    python generate.py --levels L1 L2      # only two levels
-    python generate.py --dataset patcheval # the 109 PatchEval entries (no Docker)
-    python generate.py --dataset all       # Vul4J then PatchEval
-    python generate.py --dry-run           # print plan, do nothing
-    python generate.py --logs-dir logs/plumbing_test   # write logs elsewhere
+    python generate.py --temperature 0.5   # run everything (Vul4J), into logs/t0.5/r1/
+
+  Every command takes --temperature (0, 0.5 or 1.0); these options add to it:
+    --repetition 2                         # the second repetition, logs/t0.5/r2/
+    --models claude                        # only one model
+    --vulns VUL4J-1                        # only one vuln
+    --levels L1 L2                         # only two levels
+    --dataset patcheval                    # the 109 PatchEval entries (no Docker)
+    --dataset all                          # Vul4J then PatchEval
+    --dry-run                              # print plan, do nothing
+    --logs-dir logs/plumbing_test          # logs/plumbing_test/t0.5/r1/ instead
 """
 
 import argparse
@@ -30,10 +33,12 @@ from pathlib import Path
 from typing import Optional
 
 from config import (
-    DATASETS, LOGS_DIR, MODELS, PATCHEVAL_LOGS_DIR, PROMPT_LEVELS,
+    DATASETS, LOGS_DIR, MODELS, PATCHEVAL_LOGS_DIR, PROMPT_LEVELS, TEMPERATURES,
+    VLLM_MODELS, run_subdir,
 )
 import capcheck
-from models import PromptExceedsWindow, call_model, vllm_placeholders
+from models import (PromptExceedsWindow, TemperatureRejected, call_model, request_seed,
+                    vllm_placeholders)
 from prompts import build_prompt
 from schemas import get_prose, get_schema
 from vuln_data import get_vuln_payload
@@ -58,8 +63,13 @@ def set_logs_dir(path: Path) -> None:
     PATCHEVAL_LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def cell_already_done(vul_id: str, level: str, model_key: str) -> bool:
-    """A cell is done iff its log file exists AND records a successful call."""
+def cell_already_done(vul_id: str, level: str, model_key: str,
+                      temperature: float, repetition: int) -> bool:
+    """
+    A cell is done iff its log file exists AND records a successful call. A
+    successful log from other settings stops the run: the folder is wrong, and
+    counting it as done would leave results from the wrong run in this one.
+    """
     p = log_path_for(vul_id, level, model_key)
     if not p.exists():
         return False
@@ -67,7 +77,13 @@ def cell_already_done(vul_id: str, level: str, model_key: str) -> bool:
         data = json.loads(p.read_text())
     except json.JSONDecodeError:
         return False
-    return data.get("status") == "ok"
+    if data.get("status") != "ok":
+        return False
+    found = (data.get("temperature"), data.get("repetition"))
+    if found != (temperature, repetition):
+        sys.exit(f"{p} records temperature, repetition = {found}, but this run is "
+                 f"({temperature}, {repetition}). Move that log out of this folder.")
+    return True
 
 
 def write_log(vul_id: str, level: str, model_key: str, record: dict) -> None:
@@ -83,12 +99,16 @@ def run_cell(
     payload: dict,
     level: str,
     model_key: str,
+    *,
+    temperature: float,
+    repetition: int,
     max_attempts: int = 3,
     base_backoff_s: float = 4.0,
 ) -> dict:
     """
     Build prompt, call model with retry, return a result dict to be logged.
-    Never raises — failures are recorded with status=error.
+    Failures are recorded with status=error, except a temperature the provider
+    rejects: TemperatureRejected reaches the caller, which stops the run.
     """
     # Vul4J payloads carry no language key and so get the Java default.
     language = payload.get("language", "Java")
@@ -99,6 +119,8 @@ def run_cell(
         file_content=payload["primary_content"],
         language=language,
     )
+    seed = (request_seed(payload["vul_id"], level, model_key, repetition)
+            if model_key in VLLM_MODELS else None)
 
     base_record = {
         "vul_id":       payload["vul_id"],
@@ -109,6 +131,9 @@ def run_cell(
         "level":        level,
         "model_key":    model_key,
         "model_id":     MODELS[model_key],
+        "temperature":  temperature,
+        "repetition":   repetition,
+        "seed":         seed,
         "prompt_chars": len(prompt),
         "prompt":       prompt,
         "timestamp":    datetime.now(timezone.utc).isoformat(),
@@ -121,9 +146,12 @@ def run_cell(
     last_error = None
     for attempt in range(1, max_attempts + 1):
         try:
-            response_text, usage = call_model(model_key, prompt, language=language)
+            response_text, usage = call_model(model_key, prompt, language=language,
+                                              temperature=temperature, seed=seed)
+            sampling_params = usage.pop("sampling_params", None)
             record = {
                 **base_record,
+                "sampling_params": sampling_params,
                 "status":      "ok",
                 "response":    response_text,
                 "usage":       usage,
@@ -154,6 +182,8 @@ def run_cell(
                 "error":    f"prompt exceeds window: {e}",
                 "attempts": attempt,
             }
+        except TemperatureRejected:
+            raise                # a retry would be refused too, and nothing gets logged
         except Exception as e:
             last_error = f"{type(e).__name__}: {e}"
             if attempt < max_attempts:
@@ -239,14 +269,19 @@ def main():
     ap = argparse.ArgumentParser(description="Generate LLM patches for CWEFT")
     ap.add_argument("--models", nargs="+", choices=list(MODELS), default=list(MODELS))
     ap.add_argument("--levels", nargs="+", choices=PROMPT_LEVELS, default=PROMPT_LEVELS)
+    ap.add_argument("--temperature", type=float, choices=TEMPERATURES, required=True,
+                    help="sent on every request")
+    ap.add_argument("--repetition", type=int, default=1,
+                    help="which repetition this is, from 1 (default 1); sets the vLLM seed")
     ap.add_argument("--dataset", choices=list(DATASETS), default="vul4j",
                     help="Which vulns to run when --vulns is not given (default: vul4j)")
     ap.add_argument("--vulns",  nargs="+", default=None,
                     help="Explicit vul_ids (VUL4J-N or PatchEval CVE ids); overrides --dataset")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--logs-dir", type=Path, default=None,
-                    help="write logs here instead of logs/ (PatchEval cells go to its "
-                         "patcheval/ subfolder); cells are 'done' only if logged here")
+                    help="base folder instead of logs/; logs go to its "
+                         "t<temperature>/r<repetition>/ (PatchEval cells to patcheval/ in "
+                         "that), and cells are 'done' only if logged there")
     ap.add_argument("--check-caps", action="store_true",
                     help="report which cells risk truncation at the output cap, then exit "
                          "without calling any API")
@@ -254,8 +289,9 @@ def main():
                     help="tokens of GPT's budget assumed to go to reasoning "
                          f"(default {capcheck.GPT_REASONING_RESERVE})")
     args = ap.parse_args()
-    if args.logs_dir is not None:
-        set_logs_dir(args.logs_dir)
+    if args.repetition < 1:
+        ap.error("--repetition must be at least 1")
+    set_logs_dir((args.logs_dir or LOGS_DIR) / run_subdir(args.temperature, args.repetition))
     if args.vulns is None:
         args.vulns = DATASETS[args.dataset]
 
@@ -267,13 +303,14 @@ def main():
     ]
 
     total = len(cells)
-    pending = [c for c in cells if not cell_already_done(*c)]
+    pending = [c for c in cells if not cell_already_done(*c, args.temperature, args.repetition)]
     skipped = total - len(pending)
 
     print(f"Plan: {total} cells  |  already done: {skipped}  |  to run: {len(pending)}")
     print(f"Models: {args.models}")
     print(f"Levels: {args.levels}")
     print(f"Vulns:  {len(args.vulns)}")
+    print(f"Sampling: temperature={args.temperature}  repetition={args.repetition}")
     print(f"Logs:   {LOGS_DIR}")
     print()
 
@@ -313,13 +350,20 @@ def main():
         if payload is None:
             write_log(vul_id, level, model_key, {
                 "vul_id": vul_id, "level": level, "model_key": model_key,
+                "temperature": args.temperature, "repetition": args.repetition,
                 "status": "error", "error": "payload build failed",
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
             err_count += 1
             continue
 
-        record = run_cell(payload, level, model_key)
+        try:
+            record = run_cell(payload, level, model_key, temperature=args.temperature,
+                              repetition=args.repetition)
+        except TemperatureRejected as e:
+            print("STOPPED")
+            sys.exit(f"Stopping: {e}\nNothing was logged for this cell. Leave this model out "
+                     f"with --models, or choose a temperature it accepts.")
         write_log(vul_id, level, model_key, record)
 
         if record["status"] == "ok":

@@ -91,13 +91,12 @@ def test_vllm_records_finish_reason(monkeypatch, filled):
     calls = []
     _tokenize_returns(monkeypatch, 1_000)
     monkeypatch.setattr(models, "_get_vllm", lambda: _fake_vllm("stop", calls=calls))
-    text, usage = models._call_vllm("p", "sys", model_key=KEY)
+    text, usage = models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
     assert text == "class A {}"
     assert usage["stop_reason"] == "stop"
     assert usage["truncated"] is False
     assert calls[0]["model"] == HF_ID
     assert calls[0]["max_tokens"] == usage["max_tokens"]
-    assert "temperature" not in calls[0], "no model sets one; all run at server default"
 
 
 def test_vllm_truncation_is_flagged_not_raised(monkeypatch, filled):
@@ -107,7 +106,7 @@ def test_vllm_truncation_is_flagged_not_raised(monkeypatch, filled):
     """
     _tokenize_returns(monkeypatch, 1_000)
     monkeypatch.setattr(models, "_get_vllm", lambda: _fake_vllm("length"))
-    _, usage = models._call_vllm("p", "sys", model_key=KEY)
+    _, usage = models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
     assert usage["stop_reason"] == "length"
     assert usage["truncated"] is True
 
@@ -116,7 +115,7 @@ def test_vllm_empty_response_raises(monkeypatch, filled):
     _tokenize_returns(monkeypatch, 1_000)
     monkeypatch.setattr(models, "_get_vllm", lambda: _fake_vllm("stop", text=""))
     with pytest.raises(RuntimeError, match="empty response"):
-        models._call_vllm("p", "sys", model_key=KEY)
+        models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
 
 
 def test_tokenize_goes_to_the_server_root_with_the_same_messages(monkeypatch):
@@ -150,7 +149,7 @@ def test_a_server_window_that_differs_from_config_refuses(monkeypatch, filled):
     monkeypatch.setattr(models, "_get_vllm",
                         lambda: pytest.fail("must not generate on a mismatched window"))
     with pytest.raises(RuntimeError, match="max_model_len=32768"):
-        models._call_vllm("p", "sys", model_key=KEY)
+        models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
 
 
 # ── the output budget ────────────────────────────────────────────────────
@@ -176,7 +175,7 @@ def test_a_prompt_that_does_not_fit_is_never_sent(monkeypatch, filled):
     monkeypatch.setattr(models, "_get_vllm",
                         lambda: pytest.fail("the request must not be sent"))
     with pytest.raises(models.PromptExceedsWindow, match="no room"):
-        models._call_vllm("p", "sys", model_key=KEY)
+        models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
 
 
 def test_run_cell_records_the_skip_and_does_not_retry(monkeypatch):
@@ -191,7 +190,7 @@ def test_run_cell_records_the_skip_and_does_not_retry(monkeypatch):
             "root_cause": "r", "canonical_repair": "c", "constraints": "k",
             "what_to_avoid": "a"},
     }
-    record = generate.run_cell(payload, "L1", KEY)
+    record = generate.run_cell(payload, "L1", KEY, temperature=0.5, repetition=1)
     assert record["status"] == "skipped"
     assert record["error"].startswith("prompt exceeds window")
     assert record["attempts"] == 1
@@ -220,7 +219,7 @@ def test_a_placeholder_id_fails_before_any_call(monkeypatch, unfilled):
     monkeypatch.setattr(models, "_vllm_prompt_tokens",
                         lambda *a: pytest.fail("must not reach the server"))
     with pytest.raises(ValueError, match="VLLM_MODELS in config.py"):
-        models._call_vllm("p", "sys", model_key=KEY)
+        models._call_vllm("p", "sys", model_key=KEY, temperature=0.5, seed=7)
 
 
 # ── the pre-flight cap check ─────────────────────────────────────────────

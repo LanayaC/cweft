@@ -117,15 +117,15 @@ def check_models() -> list:
     raw = "```java\npackage a;\nclass B {}\n```\n"
     seen = []
 
-    def fake(prompt, system):
+    def fake(prompt, system, temperature):
         seen.append(system)
         return raw, {"input_tokens": 0, "output_tokens": 0}
 
     original = models._DISPATCH["claude"]
     models._DISPATCH["claude"] = fake
     try:
-        outs = [models.call_model("claude", "p")[0],
-                models.call_model("claude", "p", language="Java")[0]]
+        outs = [models.call_model("claude", "p", temperature=1.0)[0],
+                models.call_model("claude", "p", language="Java", temperature=1.0)[0]]
     finally:
         models._DISPATCH["claude"] = original
     if any(s != JAVA_SYSTEM_PROMPT for s in seen):

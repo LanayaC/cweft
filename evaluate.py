@@ -15,6 +15,11 @@ That file is for new runs; the published 504 are frozen in results/published/.
     python evaluate.py --logs-dir logs/plumbing_test --results-dir results/plumbing_test
     python evaluate.py --oracle            # original -> L1, reference fix -> L3
     python evaluate.py --workers 4         # several cells at once (parallel_grading.py)
+    python evaluate.py --temperature 0.5 --repetition 2
+                                           # logs/t0.5/r2/ into results/t0.5/r2/
+
+Without --temperature, the folders are used as given, which is how logs from
+before temperatures existed are graded.
 
 Grading follows the PatchEval rules (vul4j_grading.py): the PoV is Vul4J's own
 failing_tests, all of which must run and pass, and regressions are counted
@@ -36,7 +41,7 @@ from typing import Callable, Dict, List, Optional, Set, Tuple
 
 from config import (
     CONTAINER_NAME, CONTAINER_WORK_DIR, DOCKER_EXEC_TIMEOUT,
-    LOGS_DIR, RESULTS_DIR, SUBSET,
+    LOGS_DIR, RESULTS_DIR, SUBSET, TEMPERATURES, run_subdir,
 )
 import vul4j_baseline as vb
 import vul4j_grading as vg
@@ -438,9 +443,15 @@ def main():
     ap.add_argument("--dataset", choices=["vul4j", "patcheval"], default="vul4j",
                     help="Which benchmark's logs to evaluate (default: vul4j)")
     ap.add_argument("--logs-dir", type=Path, default=None,
-                    help="read logs from here instead of logs/ (PatchEval: its patcheval/)")
+                    help="read logs from here instead of logs/ (PatchEval: its patcheval/); "
+                         "with --temperature, from its t<temperature>/r<repetition>/")
     ap.add_argument("--results-dir", type=Path, default=None,
-                    help="write results.csv / results_patcheval.csv here instead of results/")
+                    help="write results.csv / results_patcheval.csv here instead of results/; "
+                         "with --temperature, in its t<temperature>/r<repetition>/")
+    ap.add_argument("--temperature", type=float, choices=TEMPERATURES, default=None,
+                    help="grade the run generated at this temperature (see --repetition)")
+    ap.add_argument("--repetition", type=int, default=None,
+                    help="which repetition of that run (default 1); needs --temperature")
     ap.add_argument("--oracle", action="store_true",
                     help="Vul4J: grade each entry's original file (expect L1) and reference "
                          "fix (expect L3) against data/vul4j/baseline.json; results go to "
@@ -451,6 +462,10 @@ def main():
     args = ap.parse_args()
     if args.workers < 1:
         ap.error("--workers must be at least 1")
+    if args.repetition is not None and args.temperature is None:
+        ap.error("--repetition needs --temperature")
+    if args.oracle and args.temperature is not None:
+        ap.error("--oracle grades no generated patches, so it takes no --temperature")
 
     if args.oracle and args.dataset == "vul4j":
         out = args.results_dir or (RESULTS_DIR / "oracle_vul4j")
@@ -459,6 +474,10 @@ def main():
 
     global LOGS_DIR, RESULTS_CSV
     import patcheval_eval
+    if args.temperature is not None:
+        run = run_subdir(args.temperature, args.repetition or 1)
+        args.logs_dir = (args.logs_dir or LOGS_DIR) / run
+        args.results_dir = (args.results_dir or RESULTS_DIR) / run
     if args.logs_dir is not None:
         LOGS_DIR = args.logs_dir.resolve()
         patcheval_eval.PATCHEVAL_LOGS_DIR = LOGS_DIR / "patcheval"
