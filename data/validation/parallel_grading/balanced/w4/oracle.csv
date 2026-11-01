@@ -1,0 +1,9 @@
+vul_id,cve_id,cwe_id,cwe_name,level,model_key,model_id,compiled,pov_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,grader,error,timestamp,expected,as_expected
+VUL4J-30,CVE-2016-8738,CWE-20,Improper Input Validation,oracle,oracle_reference,oracle_reference,True,True,3348,3349,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:27:47.217134+00:00,L3,True
+VUL4J-30,CVE-2016-8738,CWE-20,Improper Input Validation,oracle,oracle_vulnerable,oracle_vulnerable,True,False,3348,3349,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:27:47.362843+00:00,L1,True
+VUL4J-29,CVE-2014-0116,CWE-264,"Permissions, Privileges, and Access Controls",oracle,oracle_vulnerable,oracle_vulnerable,True,False,855,856,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:28:34.826911+00:00,L1,True
+VUL4J-29,CVE-2014-0116,CWE-264,"Permissions, Privileges, and Access Controls",oracle,oracle_reference,oracle_reference,True,True,855,856,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:28:35.872728+00:00,L3,True
+VUL4J-33,CVE-2016-3081,CWE-77,Improper Neutralization of Special Elements Used in a Command (Command Injection),oracle,oracle_reference,oracle_reference,True,True,1655,1656,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:29:54.681331+00:00,L3,True
+VUL4J-33,CVE-2016-3081,CWE-77,Improper Neutralization of Special Elements Used in a Command (Command Injection),oracle,oracle_vulnerable,oracle_vulnerable,True,False,1655,1656,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:29:54.923519+00:00,L1,True
+VUL4J-34,CVE-2016-2162,CWE-79,Cross-Site Scripting (XSS),oracle,oracle_reference,oracle_reference,True,True,1653,1654,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:30:34.137752+00:00,L3,True
+VUL4J-34,CVE-2016-2162,CWE-79,Cross-Site Scripting (XSS),oracle,oracle_vulnerable,oracle_vulnerable,True,False,1653,1654,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:30:34.270786+00:00,L1,True

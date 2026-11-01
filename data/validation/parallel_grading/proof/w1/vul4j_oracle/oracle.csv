@@ -1,0 +1,7 @@
+vul_id,cve_id,cwe_id,cwe_name,level,model_key,model_id,compiled,pov_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,grader,error,timestamp,expected,as_expected
+VUL4J-40,CVE-2019-3775,CWE-287,Improper Authentication,oracle,oracle_vulnerable,oracle_vulnerable,True,False,2934,2983,,,,L1,False,,vul4j-baseline/1,,2026-11-01T08:15:16.011364+00:00,L1,True
+VUL4J-40,CVE-2019-3775,CWE-287,Improper Authentication,oracle,oracle_reference,oracle_reference,True,True,2934,2983,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T08:20:07.243119+00:00,L3,True
+VUL4J-29,CVE-2014-0116,CWE-264,"Permissions, Privileges, and Access Controls",oracle,oracle_vulnerable,oracle_vulnerable,True,False,855,856,,,,L1,False,,vul4j-baseline/1,,2026-11-01T08:21:52.344968+00:00,L1,True
+VUL4J-29,CVE-2014-0116,CWE-264,"Permissions, Privileges, and Access Controls",oracle,oracle_reference,oracle_reference,True,True,855,856,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T08:23:33.945173+00:00,L3,True
+VUL4J-36,CVE-2018-8017,CWE-835,Loop with Unreachable Exit Condition (Infinite Loop),oracle,oracle_vulnerable,oracle_vulnerable,True,False,983,1021,,,,L1,False,,vul4j-baseline/1,,2026-11-01T08:26:35.063947+00:00,L1,True
+VUL4J-36,CVE-2018-8017,CWE-835,Loop with Unreachable Exit Condition (Infinite Loop),oracle,oracle_reference,oracle_reference,True,True,983,1021,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T08:29:23.559132+00:00,L3,True

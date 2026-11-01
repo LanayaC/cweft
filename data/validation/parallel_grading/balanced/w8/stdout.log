@@ -1,0 +1,9 @@
+[2026-11-01T09:33:24+00:00] (1/8) VUL4J-30   oracle_vulnerable  expected L1 got L1       OK  (169s)  
+[2026-11-01T09:33:26+00:00] (2/8) VUL4J-30   oracle_reference   expected L3 got L3       OK  (2s)  
+[2026-11-01T09:34:08+00:00] (3/8) VUL4J-33   oracle_reference   expected L3 got L3       OK  (42s)  
+[2026-11-01T09:34:08+00:00] (4/8) VUL4J-33   oracle_vulnerable  expected L1 got L1       OK  (0s)  
+[2026-11-01T09:34:10+00:00] (5/8) VUL4J-34   oracle_vulnerable  expected L1 got L1       OK  (2s)  
+[2026-11-01T09:34:13+00:00] (6/8) VUL4J-34   oracle_reference   expected L3 got L3       OK  (2s)  
+[2026-11-01T09:34:22+00:00] (7/8) VUL4J-29   oracle_reference   expected L3 got L3       OK  (9s)  
+[2026-11-01T09:34:23+00:00] (8/8) VUL4J-29   oracle_vulnerable  expected L1 got L1       OK  (1s)  
+8 oracle cells graded, 8 as expected, 0 not.

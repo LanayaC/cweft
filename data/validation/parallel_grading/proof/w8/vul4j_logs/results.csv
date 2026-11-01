@@ -1,0 +1,7 @@
+vul_id,cve_id,cwe_id,cwe_name,level,model_key,model_id,compiled,pov_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,grader,error,timestamp
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L1,gemini,gemini-2.5-pro,True,True,144,152,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:12:07.151073+00:00
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L1,claude,claude-sonnet-4-5-20250929,True,False,144,152,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:12:07.191619+00:00
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L2,gemini,gemini-2.5-pro,True,True,144,152,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:12:07.264167+00:00
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L2,gpt,gpt-5,True,True,144,152,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:12:07.225226+00:00
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L1,gpt,gpt-5,True,False,144,152,,,,L1,False,,vul4j-baseline/1,,2026-11-01T09:12:07.111146+00:00
+VUL4J-41,CVE-2018-1002200,CWE-22,Path Traversal,L2,claude,claude-sonnet-4-5-20250929,True,True,144,152,,0,,L3,False,,vul4j-baseline/1,,2026-11-01T09:12:07.277981+00:00

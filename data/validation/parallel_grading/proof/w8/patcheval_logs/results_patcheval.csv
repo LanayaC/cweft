@@ -1,0 +1,2 @@
+cve,language,cwe,level,model_key,model_id,image_digest,digest_matches_baseline,l0_checker,l0_passed,poc_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,error,timings,code_fingerprint,timestamp
+CVE-2022-1992,Go,CWE-22,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:23a0ef3aec2762f63cbcba9361e3479f1a78cab92366d00c3c34f442a56e51df,True,gofmt -e,True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":35.2}",93e7d8be280f,2026-11-01T09:24:31.309384+00:00

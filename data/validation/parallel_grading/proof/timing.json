@@ -1,0 +1,50 @@
+{
+ "w1/vul4j_oracle": {
+  "seconds": 1146.8,
+  "rc": 0
+ },
+ "w1/vul4j_logs": {
+  "seconds": 89.9,
+  "rc": 0
+ },
+ "w1/patcheval_oracle": {
+  "seconds": 677.6,
+  "rc": 0
+ },
+ "w1/patcheval_logs": {
+  "seconds": 38.3,
+  "rc": 0
+ },
+ "w4/vul4j_oracle": {
+  "seconds": 520.8,
+  "rc": 0
+ },
+ "w4/vul4j_logs": {
+  "seconds": 59.4,
+  "rc": 0
+ },
+ "w4/patcheval_oracle": {
+  "seconds": 668.7,
+  "rc": 0
+ },
+ "w4/patcheval_logs": {
+  "seconds": 40.2,
+  "rc": 0
+ },
+ "w8/vul4j_oracle": {
+  "seconds": 467.4,
+  "rc": 0
+ },
+ "w8/vul4j_logs": {
+  "seconds": 46.9,
+  "rc": 0
+ },
+ "w8/patcheval_oracle": {
+  "seconds": 660.2,
+  "rc": 0
+ },
+ "w8/patcheval_logs": {
+  "seconds": 38.6,
+  "rc": 0
+ }
+}

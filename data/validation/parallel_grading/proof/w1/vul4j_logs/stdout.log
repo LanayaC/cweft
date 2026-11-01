@@ -1,0 +1,20 @@
+Total logs:    504
+Candidates:    12
+Already done:  0
+To evaluate:   6
+Results CSV:   C:\Users\lanay\AppData\Local\Temp\claude\c--Users-lanay-cweft\cf31d5e2-87af-4a80-a215-a2c0c93f6eca\scratchpad\proof\w1\vul4j_logs\results.csv
+
+[1/6] VUL4J-41  L1  claude  ... L1
+[2/6] VUL4J-41  L1  gemini  ... L3  pov_passed, 0 regressions of 144 judged
+[3/6] VUL4J-41  L1  gpt  ... L1
+[4/6] VUL4J-41  L2  claude  ... L3  pov_passed, 0 regressions of 144 judged
+[5/6] VUL4J-41  L2  gemini  ... L3  pov_passed, 0 regressions of 144 judged
+[6/6] VUL4J-41  L2  gpt  ... L3  pov_passed, 0 regressions of 144 judged
+
+Summary:
+  L0: 0
+  L1: 2
+  L2: 0
+  L3: 4
+  ERROR: 0
+  refused: 0

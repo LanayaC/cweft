@@ -1,0 +1,6 @@
+CVE-2022-2900      oracle_vulnerable  expected L1  got L1       OK  judged=1 nreg=  
+CVE-2022-2900      oracle_reference   expected L3  got L3       OK  judged=1 nreg=0  
+CVE-2024-5138      oracle_vulnerable  expected L1  got L1       OK  judged=160 nreg=  
+CVE-2024-5138      oracle_reference   expected L3  got L3       OK  judged=160 nreg=0  
+
+all verdicts as expected
