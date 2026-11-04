@@ -99,6 +99,7 @@ def test_a_vul4j_cell_gets_its_own_container_and_it_is_always_removed(monkeypatc
         return pdock.ExecResult(0, "oom_kill 2\n", "", 0.1, False)
 
     monkeypatch.setattr(pdock, "sh", sh)
+    monkeypatch.setattr(pdock, "image_present", lambda ref: True)
     monkeypatch.setattr(vb, "CONTAINER_NAME", vb.CONTAINER_NAME)
     monkeypatch.setattr(vuln_data, "CONTAINER_NAME", vuln_data.CONTAINER_NAME)
     monkeypatch.setattr(pg, "_oom_kills_seen", 0)
@@ -106,7 +107,10 @@ def test_a_vul4j_cell_gets_its_own_container_and_it_is_always_removed(monkeypatc
         with pg.vul4j_container() as name:
             assert vb.CONTAINER_NAME == vuln_data.CONTAINER_NAME == name
             raise RuntimeError("the cell blew up")
-    assert calls[0][:2] == ["docker", "run"] and "--network" not in calls[0]
+    # A cell's container is isolated like the baseline's; test_vul4j_isolation
+    # covers that rule, this covers that a worker's container obeys it too.
+    run = next(c for c in calls if c[:2] == ["docker", "run"])
+    assert run[run.index("--network") + 1] == "none"
     assert calls[-1] == ["docker", "rm", "-f", name]
     assert pg._oom_kills_seen == 2
 

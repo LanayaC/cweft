@@ -1,0 +1,22 @@
+Granite 8B pilot grading, wall clock per invocation
+step 2: 8 runs x 2 datasets, --workers 4
+t0.0 r1 vul4j      workers=4 rc=0 1260s
+t0.0 r1 patcheval  workers=4 rc=0 289s
+t0.0 r2 vul4j      workers=4 rc=0 1165s
+t0.0 r2 patcheval  workers=4 rc=0 518s
+t0.5 r1 vul4j      workers=4 rc=1 2012s
+t0.5 r1 patcheval  workers=4 rc=0 114s
+t0.5 r2 vul4j      workers=4 rc=0 963s
+t0.5 r2 patcheval  workers=4 rc=0 137s
+t0.5 r3 vul4j      workers=4 rc=0 960s
+t0.5 r3 patcheval  workers=4 rc=0 123s
+t1.0 r1 vul4j      workers=4 rc=0 1008s
+t1.0 r1 patcheval  workers=4 rc=0 133s
+t1.0 r2 vul4j      workers=4 rc=0 982s
+t1.0 r2 patcheval  workers=4 rc=0 110s
+t1.0 r3 vul4j      workers=4 rc=0 994s
+t1.0 r3 patcheval  workers=4 rc=0 122s
+step 3: t0.5 r1 re-graded with --workers 1
+t0.5 r1 vul4j      workers=1 rc=0 2806s
+t0.5 r1 patcheval  workers=1 rc=0 210s
+DRIVER_DONE

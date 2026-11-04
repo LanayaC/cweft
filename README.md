@@ -66,6 +66,38 @@ order:
 
 The final subset has 42 vulnerabilities spanning 17 CWE classes.
 
+## Grading environment
+
+Every container that compiles or tests a patch runs with `--network none`. A
+test that reaches the internet otherwise turns a network outage, a rate limit or
+a DNS hiccup into a verdict about a patch: the same patch can be graded L3 on
+one run and L2 on the next. With no network such a test fails the same way in
+every run, so the judged-set construction below excludes it once, at baseline
+time, instead of letting it decide a cell. The container's own name is mapped to
+`127.0.0.1`, because `--network none` otherwise leaves no `/etc/hosts` entry for
+it and anything that serves from inside the container dies on
+`InetAddress.getLocalHost()`. That mapping reaches nothing: there is still no
+interface, no DNS and no route off the container.
+
+A patch is judged against the entry's *judged set*: the tests that pass in all
+three runs of the human reference fix, with the PoV test excluded. Tests that
+fail or flake under the reference fix cannot distinguish a good patch from a bad
+one, so they are not allowed to. Across the subset the judged set holds 37,671
+tests.
+
+Of the 42 entries, 39 have a judged set and are graded. Three do not:
+
+| Entry | Status | Why |
+| --- | --- | --- |
+| VUL4J-2 | `no_judged_set` | No test passes in all three reference-fix runs. |
+| VUL4J-62 | `pov_not_found` | Its PoV is an LDAP integration test that is not among the tests the build runs. |
+| VUL4J-36 | `compile_failed_original` | Its build downloads nine NER models whose upstream URLs are gone; see [data/vul4j/VUL4J36.md](data/vul4j/VUL4J36.md). |
+
+The first two predate network isolation and are unaffected by it. VUL4J-36 was
+recorded `ok` by an earlier networked baseline, but that build had silently
+written HTML error pages in place of all nine models, so its figures were never
+usable; isolation made the breakage visible rather than causing it.
+
 ## Repository layout
 
 ```

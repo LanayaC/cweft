@@ -5,10 +5,10 @@ at a time, in a container of its own that is thrown away afterwards.
 
   Vul4J       The Maven and Gradle caches live in the vul4j-alldeps container,
               not in its image, so that container is committed once to
-              GRADER_IMAGE and each cell gets a new container from it, with the
-              same (bridge) network as vul4j-alldeps. Delete the image with
-              `docker rmi` after changing the caches, and the next run commits
-              a new one.
+              GRADER_IMAGE and each cell gets a new container from it, with no
+              network (vul4j_baseline.container, the same containers the
+              baseline is derived in). Delete the image with `docker rmi` after
+              changing the caches, and the next run commits a new one.
   PatchEval   Already one container per cell, but its name leaves out the
               prompt level, so two levels of a CVE would collide. Each worker
               adds its process id to the names.
@@ -31,22 +31,23 @@ import json
 import multiprocessing
 import os
 import subprocess
-import uuid
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable, Dict, Iterator, List, Optional, Tuple
 
-from config import CONTAINER_NAME
 import patcheval_docker as pdock
 import patcheval_eval as pe
 import vul4j_baseline as vb
-import vuln_data
 
-GRADER_IMAGE = "cweft/vul4j-grader:latest"
-BASE_IMAGE_LABEL = "cweft.base_image"
-VUL4J_PREFIX = "cweft_v4_"
-COMMIT_TIMEOUT = 3600
+# Which container a Vul4J cell runs in is vul4j_baseline's decision, so that
+# grading and the baseline it is judged against run in the same kind of
+# container. These names stay for the callers that already use them.
+GRADER_IMAGE = vb.GRADER_IMAGE
+BASE_IMAGE_LABEL = vb.BASE_IMAGE_LABEL
+VUL4J_PREFIX = vb.VUL4J_PREFIX
+ensure_grader_image = vb.ensure_grader_image
+sweep_vul4j_containers = vb.sweep_vul4j_containers
 
 OOM, TIMEOUT = "out of memory", "timeout"
 
@@ -54,40 +55,6 @@ _oom_kills_seen = 0       # in this worker, during the cell in flight
 
 
 # ── Containers ───────────────────────────────────────────────────────────
-
-def ensure_grader_image(baselined_image: str) -> str:
-    """
-    GRADER_IMAGE, committed from vul4j-alldeps if it is not there yet. Refuses
-    an image built on anything other than the image the baseline recorded.
-    """
-    def label() -> str:
-        r = pdock.sh(["docker", "image", "inspect", GRADER_IMAGE, "--format",
-                      "{{index .Config.Labels \"" + BASE_IMAGE_LABEL + "\"}}"])
-        return r.stdout.strip() if r.rc == 0 else ""
-
-    if not pdock.image_present(GRADER_IMAGE):
-        base = pdock.sh(["docker", "inspect", "-f", "{{.Image}}", CONTAINER_NAME]).stdout.strip()
-        print(f"Committing {CONTAINER_NAME} to {GRADER_IMAGE} (once; this takes a few minutes)",
-              flush=True)
-        r = pdock.sh(["docker", "commit", "--change", f"LABEL {BASE_IMAGE_LABEL}={base}",
-                      CONTAINER_NAME, GRADER_IMAGE], timeout=COMMIT_TIMEOUT)
-        if r.rc != 0:
-            raise RuntimeError(f"docker commit failed: {r.stderr[-500:]}")
-    if label() != baselined_image:
-        raise RuntimeError(f"{GRADER_IMAGE} is built on {label() or 'an unknown image'}, but "
-                           f"data/vul4j/baseline.json recorded {baselined_image}")
-    return GRADER_IMAGE
-
-
-def sweep_vul4j_containers() -> List[str]:
-    """Remove leftover per-cell Vul4J containers. Returns the names removed."""
-    r = pdock.sh(["docker", "ps", "-a", "--filter", f"name=^{VUL4J_PREFIX}",
-                  "--format", "{{.Names}}"])
-    names = [n for n in r.stdout.split() if n.startswith(VUL4J_PREFIX)]
-    for n in names:
-        pdock.sh(["docker", "rm", "-f", n])
-    return names
-
 
 def parse_oom_kills(memory_events: str) -> int:
     """oom_kill from a cgroup memory.events file; it counts system-wide OOM kills too."""
@@ -106,21 +73,15 @@ def _oom_kills(name: str) -> int:
 @contextmanager
 def vul4j_container() -> Iterator[str]:
     """
-    A new container for one Vul4J cell. vul4j_baseline and vuln_data read
-    CONTAINER_NAME on every call, so in this worker process they now talk to it.
+    A new container for one Vul4J cell, network-isolated like the baseline's,
+    with this worker's OOM kills read out of it before it goes.
     """
-    global _oom_kills_seen
-    name = f"{VUL4J_PREFIX}{os.getpid()}_{uuid.uuid4().hex[:8]}"
-    r = pdock.sh(["docker", "run", "-d", "--name", name, "--pull", "never", GRADER_IMAGE,
-                  "tail", "-f", "/dev/null"], timeout=300)
-    if r.rc != 0:
-        raise RuntimeError(f"docker run {GRADER_IMAGE} failed: {r.stderr[-500:]}")
-    vb.CONTAINER_NAME = vuln_data.CONTAINER_NAME = name
-    try:
-        yield name
-    finally:
+    def count_oom(name: str) -> None:
+        global _oom_kills_seen
         _oom_kills_seen += _oom_kills(name)
-        pdock.sh(["docker", "rm", "-f", name])
+
+    with vb.container(before_remove=count_oom) as name:
+        yield name
 
 
 def _init_worker() -> None:

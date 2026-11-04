@@ -4,8 +4,8 @@
  "entries": {
   "VUL4J-1": {
    "vul_id": "VUL4J-1",
-   "started_at": "2026-10-27T10:29:34.476615+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:44:31.905706+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java",
    "pov_raw": [
     "com.alibaba.json.bvt.bug.Issue1005#test_for_issue"
@@ -18,14 +18,15 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 21.9,
+    "seconds": 17.0,
     "results_written": true,
     "counts": {
-     "passed": 3596,
-     "failed": 1,
+     "passed": 3595,
+     "failed": 2,
      "skipped": 0
     },
     "failing": [
+     "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue",
      "com.alibaba.json.bvt.bug.Issue1005#test_for_issue"
     ]
    },
@@ -34,34 +35,40 @@
    ],
    "reference_runs": [
     {
-     "seconds": 20.8,
+     "seconds": 17.0,
      "results_written": true,
      "counts": {
-      "passed": 3597,
-      "failed": 0,
+      "passed": 3596,
+      "failed": 1,
       "skipped": 0
      },
-     "failing": []
+     "failing": [
+      "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue"
+     ]
     },
     {
-     "seconds": 16.8,
+     "seconds": 16.6,
      "results_written": true,
      "counts": {
-      "passed": 3597,
-      "failed": 0,
+      "passed": 3596,
+      "failed": 1,
       "skipped": 0
      },
-     "failing": []
+     "failing": [
+      "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue"
+     ]
     },
     {
-     "seconds": 23.0,
+     "seconds": 16.7,
      "results_written": true,
      "counts": {
-      "passed": 3597,
-      "failed": 0,
+      "passed": 3596,
+      "failed": 1,
       "skipped": 0
      },
-     "failing": []
+     "failing": [
+      "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue"
+     ]
     }
    ],
    "pov": [
@@ -737,7 +744,6 @@
     "com.alibaba.json.bvt.bug.Bug_for_issue_479#test_for_issue_blankinput",
     "com.alibaba.json.bvt.bug.Bug_for_issue_479#test_for_issue_private",
     "com.alibaba.json.bvt.bug.Bug_for_issue_489#test_for_issue",
-    "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue",
     "com.alibaba.json.bvt.bug.Bug_for_issue_491#test_for_issue",
     "com.alibaba.json.bvt.bug.Bug_for_issue_491#test_for_issue_2",
     "com.alibaba.json.bvt.bug.Bug_for_issue_492#test_for_issue",
@@ -3680,17 +3686,19 @@
     "com.alibaba.json.bvt.writeClassName.WriteDuplicateType#test_dupType2",
     "com.alibaba.json.bvt.writeClassName.WriteDuplicateType#test_dupType3"
    ],
-   "judged_count": 3596,
-   "excluded": {},
-   "excluded_count": 0,
+   "judged_count": 3595,
+   "excluded": {
+    "com.alibaba.json.bvt.bug.Bug_for_issue_490#test_for_issue": "failed on the reference fix"
+   },
+   "excluded_count": 1,
    "ok": true,
-   "finished_at": "2026-10-27T10:31:19.810646+00:00",
-   "elapsed_seconds": 105.3
+   "finished_at": "2026-11-04T11:45:59.405228+00:00",
+   "elapsed_seconds": 87.5
   },
   "VUL4J-2": {
    "vul_id": "VUL4J-2",
-   "started_at": "2026-10-27T10:31:20.154526+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:46:00.440158+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "batik-dom/src/main/java/org/apache/batik/dom/util/SAXDocumentFactory.java",
    "pov_raw": [
     "org.apache.batik.dom.util.TestCVE_2017_5662#testCVE_2017_5662"
@@ -3703,7 +3711,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 2.1,
+    "seconds": 2.2,
     "results_written": true,
     "counts": {
      "passed": 0,
@@ -3719,6 +3727,16 @@
    ],
    "reference_runs": [
     {
+     "seconds": 2.2,
+     "results_written": true,
+     "counts": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
      "seconds": 2.3,
      "results_written": true,
      "counts": {
@@ -3730,16 +3748,6 @@
     },
     {
      "seconds": 2.2,
-     "results_written": true,
-     "counts": {
-      "passed": 1,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
-     "seconds": 2.1,
      "results_written": true,
      "counts": {
       "passed": 1,
@@ -3772,13 +3780,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": false,
-   "finished_at": "2026-10-27T10:31:52.986073+00:00",
-   "elapsed_seconds": 32.8
+   "finished_at": "2026-11-04T11:46:31.757816+00:00",
+   "elapsed_seconds": 31.3
   },
   "VUL4J-6": {
    "vul_id": "VUL4J-6",
-   "started_at": "2026-10-27T10:31:53.245343+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:46:32.735324+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java",
    "pov_raw": [
     "org.apache.commons.compress.Test_CVE_2018_1324#testCVE_2018_1324"
@@ -3791,7 +3799,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 21.5,
+    "seconds": 22.1,
     "results_written": true,
     "counts": {
      "passed": 867,
@@ -3807,16 +3815,6 @@
    ],
    "reference_runs": [
     {
-     "seconds": 18.2,
-     "results_written": true,
-     "counts": {
-      "passed": 868,
-      "failed": 0,
-      "skipped": 4
-     },
-     "failing": []
-    },
-    {
      "seconds": 18.3,
      "results_written": true,
      "counts": {
@@ -3827,7 +3825,17 @@
      "failing": []
     },
     {
-     "seconds": 19.1,
+     "seconds": 17.5,
+     "results_written": true,
+     "counts": {
+      "passed": 868,
+      "failed": 0,
+      "skipped": 4
+     },
+     "failing": []
+    },
+    {
+     "seconds": 18.2,
      "results_written": true,
      "counts": {
       "passed": 868,
@@ -4733,13 +4741,13 @@
    },
    "excluded_count": 4,
    "ok": true,
-   "finished_at": "2026-10-27T10:33:29.528050+00:00",
-   "elapsed_seconds": 96.3
+   "finished_at": "2026-11-04T11:48:09.352821+00:00",
+   "elapsed_seconds": 96.6
   },
   "VUL4J-7": {
    "vul_id": "VUL4J-7",
-   "started_at": "2026-10-27T10:33:29.798209+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:48:10.232157+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
    "pov_raw": [
     "org.apache.commons.compress.archivers.zip.ZipArchiveInputStreamTest#singleByteReadThrowsAtEofForCorruptedStoredEntry",
@@ -4753,7 +4761,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 16.4,
+    "seconds": 16.7,
     "results_written": true,
     "counts": {
      "passed": 1031,
@@ -4770,7 +4778,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 16.5,
+     "seconds": 16.8,
      "results_written": true,
      "counts": {
       "passed": 1033,
@@ -4780,7 +4788,7 @@
      "failing": []
     },
     {
-     "seconds": 15.7,
+     "seconds": 16.7,
      "results_written": true,
      "counts": {
       "passed": 1033,
@@ -4790,7 +4798,7 @@
      "failing": []
     },
     {
-     "seconds": 19.2,
+     "seconds": 16.4,
      "results_written": true,
      "counts": {
       "passed": 1033,
@@ -5869,13 +5877,13 @@
    },
    "excluded_count": 8,
    "ok": true,
-   "finished_at": "2026-10-27T10:34:57.975888+00:00",
-   "elapsed_seconds": 88.2
+   "finished_at": "2026-11-04T11:49:36.955295+00:00",
+   "elapsed_seconds": 86.7
   },
   "VUL4J-8": {
    "vul_id": "VUL4J-8",
-   "started_at": "2026-10-27T10:34:58.307228+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:49:37.717004+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java",
    "pov_raw": [
     "org.apache.commons.compress.archivers.zip.NioZipEncodingTest#partialSurrogatePair"
@@ -5888,7 +5896,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 19.4,
+    "seconds": 19.7,
     "results_written": true,
     "counts": {
      "passed": 1093,
@@ -5904,7 +5912,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 17.0,
+     "seconds": 18.3,
      "results_written": true,
      "counts": {
       "passed": 1094,
@@ -5914,7 +5922,7 @@
      "failing": []
     },
     {
-     "seconds": 17.5,
+     "seconds": 17.7,
      "results_written": true,
      "counts": {
       "passed": 1094,
@@ -5924,7 +5932,7 @@
      "failing": []
     },
     {
-     "seconds": 17.8,
+     "seconds": 17.7,
      "results_written": true,
      "counts": {
       "passed": 1094,
@@ -7059,13 +7067,13 @@
    },
    "excluded_count": 7,
    "ok": true,
-   "finished_at": "2026-10-27T10:36:31.422401+00:00",
-   "elapsed_seconds": 93.1
+   "finished_at": "2026-11-04T11:51:13.218534+00:00",
+   "elapsed_seconds": 95.5
   },
   "VUL4J-10": {
    "vul_id": "VUL4J-10",
-   "started_at": "2026-10-27T10:36:31.627022+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:51:14.059504+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/fileupload/disk/DiskFileItem.java",
    "pov_raw": [
     "org.apache.commons.fileupload.DiskFileItemSerializeTest#testInvalidRepositoryWithNullChar",
@@ -7079,7 +7087,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 5.3,
+    "seconds": 4.6,
     "results_written": true,
     "counts": {
      "passed": 67,
@@ -7096,7 +7104,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 4.7,
+     "seconds": 4.5,
      "results_written": true,
      "counts": {
       "passed": 69,
@@ -7106,7 +7114,7 @@
      "failing": []
     },
     {
-     "seconds": 4.2,
+     "seconds": 4.5,
      "results_written": true,
      "counts": {
       "passed": 69,
@@ -7116,7 +7124,7 @@
      "failing": []
     },
     {
-     "seconds": 4.2,
+     "seconds": 4.4,
      "results_written": true,
      "counts": {
       "passed": 69,
@@ -7222,13 +7230,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T10:36:57.891791+00:00",
-   "elapsed_seconds": 26.3
+   "finished_at": "2026-11-04T11:51:40.692664+00:00",
+   "elapsed_seconds": 26.6
   },
   "VUL4J-13": {
    "vul_id": "VUL4J-13",
-   "started_at": "2026-10-27T10:36:58.065676+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:51:41.549996+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/imaging/formats/rgbe/RgbeInfo.java",
    "pov_raw": [
     "org.apache.commons.imaging.formats.rgbe.RgbeReadTest#testErrorDecompressingInvalidFile"
@@ -7241,7 +7249,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 28.5,
+    "seconds": 27.9,
     "results_written": true,
     "counts": {
      "passed": 560,
@@ -7257,7 +7265,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 27.9,
+     "seconds": 26.4,
      "results_written": true,
      "counts": {
       "passed": 561,
@@ -7267,7 +7275,7 @@
      "failing": []
     },
     {
-     "seconds": 27.1,
+     "seconds": 26.0,
      "results_written": true,
      "counts": {
       "passed": 561,
@@ -7887,13 +7895,13 @@
    },
    "excluded_count": 15,
    "ok": true,
-   "finished_at": "2026-10-27T10:39:07.390857+00:00",
-   "elapsed_seconds": 129.3
+   "finished_at": "2026-11-04T11:53:46.631644+00:00",
+   "elapsed_seconds": 125.1
   },
   "VUL4J-14": {
    "vul_id": "VUL4J-14",
-   "started_at": "2026-10-27T10:39:07.624753+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T11:53:47.630714+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/commons/io/FilenameUtils.java",
    "pov_raw": [
     "org.apache.commons.io.FilenameUtilsTestCase#testGetPrefixLength",
@@ -7907,7 +7915,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 112.0,
+    "seconds": 111.1,
     "results_written": true,
     "counts": {
      "passed": 1329,
@@ -7924,7 +7932,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 112.3,
+     "seconds": 111.4,
      "results_written": true,
      "counts": {
       "passed": 1331,
@@ -7934,7 +7942,7 @@
      "failing": []
     },
     {
-     "seconds": 110.6,
+     "seconds": 112.8,
      "results_written": true,
      "counts": {
       "passed": 1331,
@@ -7944,7 +7952,7 @@
      "failing": []
     },
     {
-     "seconds": 113.9,
+     "seconds": 111.7,
      "results_written": true,
      "counts": {
       "passed": 1331,
@@ -9317,13 +9325,13 @@
    },
    "excluded_count": 4,
    "ok": true,
-   "finished_at": "2026-10-27T10:46:52.197995+00:00",
-   "elapsed_seconds": 464.6
+   "finished_at": "2026-11-04T12:01:30.475241+00:00",
+   "elapsed_seconds": 462.8
   },
   "VUL4J-16": {
    "vul_id": "VUL4J-16",
-   "started_at": "2026-10-27T10:46:52.459871+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:01:31.291910+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "rt/rs/security/sso/saml/src/main/java/org/apache/cxf/rs/security/saml/sso/SAMLSSOResponseValidator.java",
    "pov_raw": [
     "org.apache.cxf.rs.security.saml.sso.CombinedValidatorTest#testWrappingAttack3"
@@ -9336,7 +9344,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 4.7,
+    "seconds": 4.8,
     "results_written": true,
     "counts": {
      "passed": 34,
@@ -9352,7 +9360,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 9.0,
+     "seconds": 5.4,
      "results_written": true,
      "counts": {
       "passed": 35,
@@ -9362,7 +9370,7 @@
      "failing": []
     },
     {
-     "seconds": 9.4,
+     "seconds": 5.3,
      "results_written": true,
      "counts": {
       "passed": 35,
@@ -9372,7 +9380,7 @@
      "failing": []
     },
     {
-     "seconds": 7.2,
+     "seconds": 5.4,
      "results_written": true,
      "counts": {
       "passed": 35,
@@ -9440,13 +9448,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T10:52:26.442618+00:00",
-   "elapsed_seconds": 334.0
+   "finished_at": "2026-11-04T12:06:04.232746+00:00",
+   "elapsed_seconds": 272.9
   },
   "VUL4J-18": {
    "vul_id": "VUL4J-18",
-   "started_at": "2026-10-27T10:52:27.381982+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:06:05.729668+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "jspwiki-main/src/main/java/org/apache/wiki/url/DefaultURLConstructor.java",
    "pov_raw": [
     "org.apache.wiki.WikiServletTest#testNastyDoPost",
@@ -9460,7 +9468,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 76.1,
+    "seconds": 72.0,
     "results_written": true,
     "counts": {
      "passed": 853,
@@ -9477,7 +9485,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 81.0,
+     "seconds": 73.6,
      "results_written": true,
      "counts": {
       "passed": 855,
@@ -9487,7 +9495,7 @@
      "failing": []
     },
     {
-     "seconds": 71.7,
+     "seconds": 73.5,
      "results_written": true,
      "counts": {
       "passed": 855,
@@ -9497,7 +9505,7 @@
      "failing": []
     },
     {
-     "seconds": 75.1,
+     "seconds": 72.6,
      "results_written": true,
      "counts": {
       "passed": 855,
@@ -10389,13 +10397,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T10:59:07.874402+00:00",
-   "elapsed_seconds": 400.5
+   "finished_at": "2026-11-04T12:12:14.625959+00:00",
+   "elapsed_seconds": 368.9
   },
   "VUL4J-22": {
    "vul_id": "VUL4J-22",
-   "started_at": "2026-10-27T10:59:08.307952+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:12:15.771364+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "web/src/main/java/org/apache/shiro/web/util/WebUtils.java",
    "pov_raw": [
     "org.apache.shiro.web.util.WebUtilsTest#testGetContextPathIncludes",
@@ -10410,7 +10418,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 5.6,
+    "seconds": 7.0,
     "results_written": true,
     "counts": {
      "passed": 125,
@@ -10428,7 +10436,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 5.7,
+     "seconds": 5.5,
      "results_written": true,
      "counts": {
       "passed": 128,
@@ -10438,7 +10446,7 @@
      "failing": []
     },
     {
-     "seconds": 6.2,
+     "seconds": 5.2,
      "results_written": true,
      "counts": {
       "passed": 128,
@@ -10448,7 +10456,7 @@
      "failing": []
     },
     {
-     "seconds": 6.8,
+     "seconds": 5.3,
      "results_written": true,
      "counts": {
       "passed": 128,
@@ -10617,13 +10625,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:00:46.589209+00:00",
-   "elapsed_seconds": 98.3
+   "finished_at": "2026-11-04T12:13:54.583951+00:00",
+   "elapsed_seconds": 98.8
   },
   "VUL4J-24": {
    "vul_id": "VUL4J-24",
-   "started_at": "2026-10-27T11:00:46.997872+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:13:55.606573+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "bundles/extensions/xss/src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java",
    "pov_raw": [
     "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidXML"
@@ -10636,7 +10644,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 9.1,
+    "seconds": 5.3,
     "results_written": true,
     "counts": {
      "passed": 24,
@@ -10652,7 +10660,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 5.2,
+     "seconds": 5.5,
      "results_written": true,
      "counts": {
       "passed": 25,
@@ -10662,7 +10670,7 @@
      "failing": []
     },
     {
-     "seconds": 5.2,
+     "seconds": 8.2,
      "results_written": true,
      "counts": {
       "passed": 25,
@@ -10672,7 +10680,7 @@
      "failing": []
     },
     {
-     "seconds": 5.4,
+     "seconds": 8.2,
      "results_written": true,
      "counts": {
       "passed": 25,
@@ -10730,13 +10738,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:04:47.309471+00:00",
-   "elapsed_seconds": 240.3
+   "finished_at": "2026-11-04T12:17:58.623130+00:00",
+   "elapsed_seconds": 243.0
   },
   "VUL4J-25": {
    "vul_id": "VUL4J-25",
-   "started_at": "2026-10-27T11:04:48.159492+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:18:00.178116+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/apache/sling/xss/impl/XSSAPIImpl.java",
    "pov_raw": [
     "org.apache.sling.xss.impl.XSSAPIImplTest#testGetValidHref",
@@ -10750,7 +10758,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 6.3,
+    "seconds": 6.0,
     "results_written": true,
     "counts": {
      "passed": 24,
@@ -10767,7 +10775,17 @@
    ],
    "reference_runs": [
     {
-     "seconds": 6.2,
+     "seconds": 7.1,
+     "results_written": true,
+     "counts": {
+      "passed": 26,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 6.4,
      "results_written": true,
      "counts": {
       "passed": 26,
@@ -10778,16 +10796,6 @@
     },
     {
      "seconds": 6.2,
-     "results_written": true,
-     "counts": {
-      "passed": 26,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
-     "seconds": 6.3,
      "results_written": true,
      "counts": {
       "passed": 26,
@@ -10850,13 +10858,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:05:33.369731+00:00",
-   "elapsed_seconds": 45.2
+   "finished_at": "2026-11-04T12:18:46.299768+00:00",
+   "elapsed_seconds": 46.1
   },
   "VUL4J-26": {
    "vul_id": "VUL4J-26",
-   "started_at": "2026-10-27T11:05:33.546147+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:18:47.113272+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java",
    "pov_raw": [
     "com.opensymphony.xwork2.validator.URLValidatorTest#testValidUrlWithDefaultRegex"
@@ -10869,7 +10877,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 45.7,
+    "seconds": 42.7,
     "results_written": true,
     "counts": {
      "passed": 1660,
@@ -10885,7 +10893,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 44.8,
+     "seconds": 44.2,
      "results_written": true,
      "counts": {
       "passed": 1661,
@@ -10895,7 +10903,7 @@
      "failing": []
     },
     {
-     "seconds": 43.5,
+     "seconds": 40.7,
      "results_written": true,
      "counts": {
       "passed": 1661,
@@ -10905,7 +10913,7 @@
      "failing": []
     },
     {
-     "seconds": 43.6,
+     "seconds": 40.4,
      "results_written": true,
      "counts": {
       "passed": 1661,
@@ -12599,13 +12607,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:10:22.536396+00:00",
-   "elapsed_seconds": 289.0
+   "finished_at": "2026-11-04T12:23:20.915833+00:00",
+   "elapsed_seconds": 273.8
   },
   "VUL4J-29": {
    "vul_id": "VUL4J-29",
-   "started_at": "2026-10-27T11:10:23.003088+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:23:21.853963+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/org/apache/struts2/interceptor/CookieInterceptor.java",
    "pov_raw": [
     "org.apache.struts2.interceptor.CookieInterceptorTest#testCookiesWithStrutsInternalsAccess"
@@ -12618,7 +12626,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 28.9,
+    "seconds": 26.7,
     "results_written": true,
     "counts": {
      "passed": 855,
@@ -12634,16 +12642,6 @@
    ],
    "reference_runs": [
     {
-     "seconds": 26.4,
-     "results_written": true,
-     "counts": {
-      "passed": 856,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
      "seconds": 26.7,
      "results_written": true,
      "counts": {
@@ -12654,7 +12652,17 @@
      "failing": []
     },
     {
-     "seconds": 28.9,
+     "seconds": 27.9,
+     "results_written": true,
+     "counts": {
+      "passed": 856,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 28.2,
      "results_written": true,
      "counts": {
       "passed": 856,
@@ -13543,13 +13551,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:15:02.953962+00:00",
-   "elapsed_seconds": 279.9
+   "finished_at": "2026-11-04T12:27:46.357452+00:00",
+   "elapsed_seconds": 264.5
   },
   "VUL4J-30": {
    "vul_id": "VUL4J-30",
-   "started_at": "2026-10-27T11:15:03.818026+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:27:47.452598+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java",
    "pov_raw": [
     "com.opensymphony.xwork2.validator.URLValidatorTest#testValidUrl2"
@@ -13562,7 +13570,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 44.6,
+    "seconds": 45.3,
     "results_written": true,
     "counts": {
      "passed": 3347,
@@ -13579,7 +13587,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 45.1,
+     "seconds": 41.7,
      "results_written": true,
      "counts": {
       "passed": 3349,
@@ -13589,7 +13597,7 @@
      "failing": []
     },
     {
-     "seconds": 45.1,
+     "seconds": 39.8,
      "results_written": true,
      "counts": {
       "passed": 3349,
@@ -13599,7 +13607,7 @@
      "failing": []
     },
     {
-     "seconds": 44.5,
+     "seconds": 40.7,
      "results_written": true,
      "counts": {
       "passed": 3349,
@@ -16981,13 +16989,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:19:00.962542+00:00",
-   "elapsed_seconds": 237.1
+   "finished_at": "2026-11-04T12:31:29.363182+00:00",
+   "elapsed_seconds": 221.9
   },
   "VUL4J-33": {
    "vul_id": "VUL4J-33",
-   "started_at": "2026-10-27T11:19:01.400966+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:31:30.335707+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/com/opensymphony/xwork2/ognl/OgnlUtil.java",
    "pov_raw": [
     "com.opensymphony.xwork2.ognl.OgnlUtilTest#testBlockSequenceOfExpressions"
@@ -17000,7 +17008,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 43.8,
+    "seconds": 40.2,
     "results_written": true,
     "counts": {
      "passed": 1655,
@@ -17016,7 +17024,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 43.5,
+     "seconds": 40.4,
      "results_written": true,
      "counts": {
       "passed": 1656,
@@ -17026,7 +17034,7 @@
      "failing": []
     },
     {
-     "seconds": 43.5,
+     "seconds": 39.0,
      "results_written": true,
      "counts": {
       "passed": 1656,
@@ -17036,7 +17044,7 @@
      "failing": []
     },
     {
-     "seconds": 43.8,
+     "seconds": 40.6,
      "results_written": true,
      "counts": {
       "passed": 1656,
@@ -18725,13 +18733,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:23:50.730288+00:00",
-   "elapsed_seconds": 289.3
+   "finished_at": "2026-11-04T12:35:53.778060+00:00",
+   "elapsed_seconds": 263.4
   },
   "VUL4J-34": {
    "vul_id": "VUL4J-34",
-   "started_at": "2026-10-27T11:23:51.240209+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:35:54.836347+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/com/opensymphony/xwork2/interceptor/I18nInterceptor.java",
    "pov_raw": [
     "com.opensymphony.xwork2.interceptor.I18nInterceptorTest#testCVE_2016_2162"
@@ -18744,7 +18752,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 46.2,
+    "seconds": 43.2,
     "results_written": true,
     "counts": {
      "passed": 1653,
@@ -18760,7 +18768,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 46.1,
+     "seconds": 43.2,
      "results_written": true,
      "counts": {
       "passed": 1654,
@@ -18770,7 +18778,7 @@
      "failing": []
     },
     {
-     "seconds": 46.4,
+     "seconds": 42.0,
      "results_written": true,
      "counts": {
       "passed": 1654,
@@ -18780,7 +18788,7 @@
      "failing": []
     },
     {
-     "seconds": 46.3,
+     "seconds": 42.2,
      "results_written": true,
      "counts": {
       "passed": 1654,
@@ -20467,1123 +20475,33 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:28:50.663493+00:00",
-   "elapsed_seconds": 299.4
+   "finished_at": "2026-11-04T12:40:29.467252+00:00",
+   "elapsed_seconds": 274.6
   },
   "VUL4J-36": {
    "vul_id": "VUL4J-36",
-   "started_at": "2026-10-27T11:28:51.114802+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:40:30.480231+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "tika-parsers/src/main/java/org/apache/tika/parser/iptc/IptcAnpaParser.java",
    "pov_raw": [
     "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
    ],
    "pov_source": "vul4j_failing_tests",
-   "status": "ok",
-   "phase": "done",
+   "status": "compile_failed_original",
+   "phase": "original",
    "frozen_file": {
     "sha256": "4ff0f5448ef808ec6e9a2a0a103f786e3d3baaad056caef4173cfa88601ecfc5",
     "matches_exported_copy": true
    },
-   "original_run": {
-    "seconds": 79.4,
-    "results_written": true,
-    "counts": {
-     "passed": 983,
-     "failed": 1,
-     "skipped": 37
-    },
-    "failing": [
-     "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
-    ]
-   },
-   "reference_files": [
-    "tika-parsers/src/main/java/org/apache/tika/parser/iptc/IptcAnpaParser.java"
-   ],
-   "reference_runs": [
-    {
-     "seconds": 66.4,
-     "results_written": true,
-     "counts": {
-      "passed": 984,
-      "failed": 0,
-      "skipped": 37
-     },
-     "failing": []
-    },
-    {
-     "seconds": 64.0,
-     "results_written": true,
-     "counts": {
-      "passed": 984,
-      "failed": 0,
-      "skipped": 37
-     },
-     "failing": []
-    },
-    {
-     "seconds": 65.1,
-     "results_written": true,
-     "counts": {
-      "passed": 984,
-      "failed": 0,
-      "skipped": 37
-     },
-     "failing": []
-    }
-   ],
-   "pov": [
-    "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017"
-   ],
-   "pov_notes": [],
-   "pov_on_original": {
-    "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017": "failed"
-   },
-   "pov_on_reference": [
-    {
-     "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017": "passed"
-    },
-    {
-     "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017": "passed"
-    },
-    {
-     "org.apache.tika.parser.iptc.IptcParserTest#testCVE_2018_8017": "passed"
-    }
-   ],
-   "judged": [
-    "org.apache.tika.TestParsers#testComment",
-    "org.apache.tika.TestParsers#testEXCELExtraction",
-    "org.apache.tika.TestParsers#testOptionalHyphen",
-    "org.apache.tika.TestParsers#testWORDxtraction",
-    "org.apache.tika.config.TikaDetectorConfigTest#testDetectorExcludeFromDefault",
-    "org.apache.tika.config.TikaDetectorConfigTest#testPSTDetectionWithoutZipDetector",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testBlackList",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testConfigurabilityOfUserSpecified",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testDefault",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testEncodingDetectorConfigurability",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testEncodingDetectorsAreLoaded",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testMarkLimitIntegration",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testMarkLimitUnit",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testNonDetectingDetectorParams",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testNonDetectingDetectorParamsBadCharset",
-    "org.apache.tika.config.TikaEncodingDetectorTest#testParameterization",
-    "org.apache.tika.config.TikaParserConfigTest#defaultParserBlacklist",
-    "org.apache.tika.config.TikaParserConfigTest#testMimeExcludeInclude",
-    "org.apache.tika.config.TikaParserConfigTest#testParserExcludeFromDefault",
-    "org.apache.tika.config.TikaTranslatorConfigTest#testDefaultBehaviour",
-    "org.apache.tika.config.TikaTranslatorConfigTest#testRequestsDefault",
-    "org.apache.tika.config.TikaTranslatorConfigTest#testRequestsEmpty",
-    "org.apache.tika.config.TikaTranslatorConfigTest#testRequestsMultiple",
-    "org.apache.tika.detect.TestContainerAwareDetector#testASiC",
-    "org.apache.tika.detect.TestContainerAwareDetector#testAllMultithreaded",
-    "org.apache.tika.detect.TestContainerAwareDetector#testCompressOOM",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectEPub",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectIPA",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectIWork",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectIWork2013",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectKMZ",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectLotusNotesEml",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectODF",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectOLE2",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectOOXML",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectProtectedOLE2",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectProtectedOOXML",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectStarOfficeFiles",
-    "org.apache.tika.detect.TestContainerAwareDetector#testDetectZip",
-    "org.apache.tika.detect.TestContainerAwareDetector#testLZMAOOM",
-    "org.apache.tika.detect.TestContainerAwareDetector#testOpenContainer",
-    "org.apache.tika.detect.TestContainerAwareDetector#testRemovalTempfiles",
-    "org.apache.tika.detect.TestContainerAwareDetector#testTarWithNoMagic",
-    "org.apache.tika.detect.TestContainerAwareDetector#testTruncatedFiles",
-    "org.apache.tika.detect.TestContainerAwareDetector#testXMLMultiThreaded",
-    "org.apache.tika.embedder.ExternalEmbedderTest#testEmbedStandardInputStream",
-    "org.apache.tika.embedder.ExternalEmbedderTest#testEmbedTikaInputStream",
-    "org.apache.tika.extractor.EmbeddedDocumentUtilTest#testAutomaticAdditionOfAutoDetectParserIfForgotten",
-    "org.apache.tika.mime.MimeTypeTest#testConstrctor",
-    "org.apache.tika.mime.MimeTypeTest#testIsValidName",
-    "org.apache.tika.mime.MimeTypeTest#testSetEmptyValues",
-    "org.apache.tika.mime.MimeTypesTest#testCompareTo",
-    "org.apache.tika.mime.MimeTypesTest#testForName",
-    "org.apache.tika.mime.MimeTypesTest#testIsDescendantOf",
-    "org.apache.tika.mime.MimeTypesTest#testRegisteredMimes",
-    "org.apache.tika.mime.MimeTypesTest#testSuperType",
-    "org.apache.tika.mime.TestMimeTypes#test7ZipDetection",
-    "org.apache.tika.mime.TestMimeTypes#testAMR",
-    "org.apache.tika.mime.TestMimeTypes#testASX",
-    "org.apache.tika.mime.TestMimeTypes#testArchiveDetection",
-    "org.apache.tika.mime.TestMimeTypes#testAutoCADDetection",
-    "org.apache.tika.mime.TestMimeTypes#testAxCrypt",
-    "org.apache.tika.mime.TestMimeTypes#testBerkeleyDB",
-    "org.apache.tika.mime.TestMimeTypes#testBmpDetection",
-    "org.apache.tika.mime.TestMimeTypes#testBpgDetection",
-    "org.apache.tika.mime.TestMimeTypes#testCBOR",
-    "org.apache.tika.mime.TestMimeTypes#testCaseSensitivity",
-    "org.apache.tika.mime.TestMimeTypes#testCgmDetection",
-    "org.apache.tika.mime.TestMimeTypes#testCodeFormats",
-    "org.apache.tika.mime.TestMimeTypes#testCreativeSuite",
-    "org.apache.tika.mime.TestMimeTypes#testDITADetection",
-    "org.apache.tika.mime.TestMimeTypes#testDJVU",
-    "org.apache.tika.mime.TestMimeTypes#testDolbyDigitalAC3",
-    "org.apache.tika.mime.TestMimeTypes#testEmail",
-    "org.apache.tika.mime.TestMimeTypes#testEndNoteImport",
-    "org.apache.tika.mime.TestMimeTypes#testFeedsDetection",
-    "org.apache.tika.mime.TestMimeTypes#testFitsDetection",
-    "org.apache.tika.mime.TestMimeTypes#testFontDetection",
-    "org.apache.tika.mime.TestMimeTypes#testGetMimeType_byteArray",
-    "org.apache.tika.mime.TestMimeTypes#testGifDetection",
-    "org.apache.tika.mime.TestMimeTypes#testGuessMimeTypes",
-    "org.apache.tika.mime.TestMimeTypes#testHFATypes",
-    "org.apache.tika.mime.TestMimeTypes#testIWorkDetection",
-    "org.apache.tika.mime.TestMimeTypes#testIcnsDetection",
-    "org.apache.tika.mime.TestMimeTypes#testJavaDetection",
-    "org.apache.tika.mime.TestMimeTypes#testJavaRegex",
-    "org.apache.tika.mime.TestMimeTypes#testJpegDetection",
-    "org.apache.tika.mime.TestMimeTypes#testKMLZDetection",
-    "org.apache.tika.mime.TestMimeTypes#testLoadMimeTypes",
-    "org.apache.tika.mime.TestMimeTypes#testMIF",
-    "org.apache.tika.mime.TestMimeTypes#testMSOwner",
-    "org.apache.tika.mime.TestMimeTypes#testMSWriteFile",
-    "org.apache.tika.mime.TestMimeTypes#testMatroskaDetection",
-    "org.apache.tika.mime.TestMimeTypes#testMessageNews",
-    "org.apache.tika.mime.TestMimeTypes#testMicrosoftMultiMediaDetection",
-    "org.apache.tika.mime.TestMimeTypes#testMimeDeterminationForTestDocuments",
-    "org.apache.tika.mime.TestMimeTypes#testNLS",
-    "org.apache.tika.mime.TestMimeTypes#testNetCDF",
-    "org.apache.tika.mime.TestMimeTypes#testOLE2Detection",
-    "org.apache.tika.mime.TestMimeTypes#testOldExcel",
-    "org.apache.tika.mime.TestMimeTypes#testOldWorksWordProcessorDetection",
-    "org.apache.tika.mime.TestMimeTypes#testOneNote",
-    "org.apache.tika.mime.TestMimeTypes#testOoxmlDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPKCSSignatures",
-    "org.apache.tika.mime.TestMimeTypes#testPcxDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPdfDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPictDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPngDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPnmDetection",
-    "org.apache.tika.mime.TestMimeTypes#testPsDetection",
-    "org.apache.tika.mime.TestMimeTypes#testRawDetection",
-    "org.apache.tika.mime.TestMimeTypes#testRdfXmlDetection",
-    "org.apache.tika.mime.TestMimeTypes#testSASProgramming",
-    "org.apache.tika.mime.TestMimeTypes#testStarOfficeDetection",
-    "org.apache.tika.mime.TestMimeTypes#testStataDTA",
-    "org.apache.tika.mime.TestMimeTypes#testSvgDetection",
-    "org.apache.tika.mime.TestMimeTypes#testSwfDetection",
-    "org.apache.tika.mime.TestMimeTypes#testTextBasedFormatsDetection",
-    "org.apache.tika.mime.TestMimeTypes#testTextFormats",
-    "org.apache.tika.mime.TestMimeTypes#testTiffDetection",
-    "org.apache.tika.mime.TestMimeTypes#testVandICalendars",
-    "org.apache.tika.mime.TestMimeTypes#testVisioDetection",
-    "org.apache.tika.mime.TestMimeTypes#testWEBPDetection",
-    "org.apache.tika.mime.TestMimeTypes#testWebArchiveDetection",
-    "org.apache.tika.mime.TestMimeTypes#testWebMDetection",
-    "org.apache.tika.mime.TestMimeTypes#testWebVTT",
-    "org.apache.tika.mime.TestMimeTypes#testWindowsEXE",
-    "org.apache.tika.mime.TestMimeTypes#testWmfDetection",
-    "org.apache.tika.mime.TestMimeTypes#testWorksSpreadsheetDetection",
-    "org.apache.tika.mime.TestMimeTypes#testXmlAndHtmlDetection",
-    "org.apache.tika.mime.TestMimeTypes#testZLIB",
-    "org.apache.tika.mime.TestMimeTypes#testprtDetection",
-    "org.apache.tika.parser.AutoDetectParserTest#testChm",
-    "org.apache.tika.parser.AutoDetectParserTest#testEpub",
-    "org.apache.tika.parser.AutoDetectParserTest#testExcel",
-    "org.apache.tika.parser.AutoDetectParserTest#testHTML",
-    "org.apache.tika.parser.AutoDetectParserTest#testImages",
-    "org.apache.tika.parser.AutoDetectParserTest#testKeynote",
-    "org.apache.tika.parser.AutoDetectParserTest#testNoBombDetectedForInvalidXml",
-    "org.apache.tika.parser.AutoDetectParserTest#testNumbers",
-    "org.apache.tika.parser.AutoDetectParserTest#testOggFlacAudio",
-    "org.apache.tika.parser.AutoDetectParserTest#testOpenOffice",
-    "org.apache.tika.parser.AutoDetectParserTest#testPDF",
-    "org.apache.tika.parser.AutoDetectParserTest#testPages",
-    "org.apache.tika.parser.AutoDetectParserTest#testPowerpoint",
-    "org.apache.tika.parser.AutoDetectParserTest#testRTF",
-    "org.apache.tika.parser.AutoDetectParserTest#testRdfXml",
-    "org.apache.tika.parser.AutoDetectParserTest#testRss",
-    "org.apache.tika.parser.AutoDetectParserTest#testSpecificParserList",
-    "org.apache.tika.parser.AutoDetectParserTest#testText",
-    "org.apache.tika.parser.AutoDetectParserTest#testTextNonASCIIUTF8",
-    "org.apache.tika.parser.AutoDetectParserTest#testWord",
-    "org.apache.tika.parser.AutoDetectParserTest#testXML",
-    "org.apache.tika.parser.AutoDetectParserTest#testZeroByteFileException",
-    "org.apache.tika.parser.AutoDetectParserTest#testZipBombPrevention",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testBasic",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testCommaSeparated",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testMultipleCombinations",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testNegativeMaxMarkLength",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testReset",
-    "org.apache.tika.parser.BouncyCastleDigestingParserTest#testUnrecognizedEncodingOptions",
-    "org.apache.tika.parser.DigestingParserTest#testBasic",
-    "org.apache.tika.parser.DigestingParserTest#testCommaSeparated",
-    "org.apache.tika.parser.DigestingParserTest#testMultipleCombinations",
-    "org.apache.tika.parser.DigestingParserTest#testNegativeMaxMarkLength",
-    "org.apache.tika.parser.DigestingParserTest#testReset",
-    "org.apache.tika.parser.ParsingReaderTest#testMetadata",
-    "org.apache.tika.parser.ParsingReaderTest#testPlainText",
-    "org.apache.tika.parser.ParsingReaderTest#testXML",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testBasicHTML",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testBasicText",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testBasicXML",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testCharLimit",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testDigesters",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testEmbeddedNPE",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testEmbeddedResourcePath",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testIgnoreContent",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testMaxEmbedded",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testMaxEmbeddedLegacy",
-    "org.apache.tika.parser.RecursiveParserWrapperTest#testPrimaryExcWEmbedded",
-    "org.apache.tika.parser.TabularFormatsTest#testCSV",
-    "org.apache.tika.parser.TabularFormatsTest#testSAS7BDAT",
-    "org.apache.tika.parser.TabularFormatsTest#testXLS",
-    "org.apache.tika.parser.TabularFormatsTest#testXLSB",
-    "org.apache.tika.parser.TabularFormatsTest#testXLSX",
-    "org.apache.tika.parser.apple.AppleSingleFileParserTest#testBasic",
-    "org.apache.tika.parser.asm.ClassParserTest#testClassParsing",
-    "org.apache.tika.parser.audio.AudioParserTest#testAIFF",
-    "org.apache.tika.parser.audio.AudioParserTest#testAU",
-    "org.apache.tika.parser.audio.AudioParserTest#testWAV",
-    "org.apache.tika.parser.audio.MidiParserTest#testMID",
-    "org.apache.tika.parser.chm.TestChmBlockInfo#testGetChmBlockInfo",
-    "org.apache.tika.parser.chm.TestChmBlockInfo#testToString",
-    "org.apache.tika.parser.chm.TestChmExtraction#testChmParser",
-    "org.apache.tika.parser.chm.TestChmExtraction#testExtractChmEntries",
-    "org.apache.tika.parser.chm.TestChmExtraction#testGetText",
-    "org.apache.tika.parser.chm.TestChmExtraction#testMultiThreadedChmExtraction",
-    "org.apache.tika.parser.chm.TestChmExtraction#testOOM",
-    "org.apache.tika.parser.chm.TestChmExtraction#test_TIKA_1446",
-    "org.apache.tika.parser.chm.TestChmExtractor#testEnumerateChm",
-    "org.apache.tika.parser.chm.TestChmExtractor#testExtractChmEntry",
-    "org.apache.tika.parser.chm.TestChmExtractor#testGetChmDirList",
-    "org.apache.tika.parser.chm.TestChmExtractor#testOOMOnCorruptCHM",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getDataOffset",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getDirLen",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getDirOffset",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getDir_uuid",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getHeaderLen",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getLangId",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getLastModified",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getUnknownLen",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getUnknownOffset",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getUnknown_000c",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#getVersion",
-    "org.apache.tika.parser.chm.TestChmItsfHeader#testToString",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetBlock_len",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetBlockidx_intvl",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetHeader_len",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetIndex_depth",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetIndex_head",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetIndex_root",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetLang_id",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetNum_blocks",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetSignature",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetSystem_uuid",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetUnknown_000c",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetUnknown_002",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetUnknown_0024",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetUnknown_0044",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testGetVersion",
-    "org.apache.tika.parser.chm.TestChmItspHeader#testToString",
-    "org.apache.tika.parser.chm.TestChmLzxState#testChmLzxStateConstructor",
-    "org.apache.tika.parser.chm.TestChmLzxState#testToString",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testConstructorNotNull",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetResetInterval",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetSignature",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetSignaure",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetSize",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetToString",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetUnknown_18",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetVersion",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetWindowSize",
-    "org.apache.tika.parser.chm.TestChmLzxcControlData#testGetWindowsPerReset",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetBlockAddress",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetBlockCount",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetBlockLen",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetCompressedLen",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetTableOffset",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetUncompressedLen",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetUnknown",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testGetVersion",
-    "org.apache.tika.parser.chm.TestChmLzxcResetTable#testToString",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testDefaultConstructor",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testGetEntryType",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testGetLength",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testGetName",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testGetNameLength",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testGetOffset",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testParamConstructor",
-    "org.apache.tika.parser.chm.TestDirectoryListingEntry#testToString",
-    "org.apache.tika.parser.chm.TestPmgiHeader#testGetFreeSpace",
-    "org.apache.tika.parser.chm.TestPmgiHeader#testToString",
-    "org.apache.tika.parser.chm.TestPmglHeader#testChmPmglHeaderGet",
-    "org.apache.tika.parser.chm.TestPmglHeader#testGetBlockNext",
-    "org.apache.tika.parser.chm.TestPmglHeader#testGetBlockPrev",
-    "org.apache.tika.parser.chm.TestPmglHeader#testGetFreeSpace",
-    "org.apache.tika.parser.chm.TestPmglHeader#testGetUnknown0008",
-    "org.apache.tika.parser.chm.TestPmglHeader#testToString",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testAuthor",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testHTMLRenderWithReturnLine",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testLoC",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testReturnContentAsIsForTextHandler",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testSupportTypes",
-    "org.apache.tika.parser.code.SourceCodeParserTest#testTextRender",
-    "org.apache.tika.parser.crypto.TSDParserTest#testBrokenPdf",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileData",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileDataRecursiveMetadataDocx",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileDataRecursiveMetadataPdf",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileDataRecursiveMetadataTxt1",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileDataRecursiveMetadataTxt2",
-    "org.apache.tika.parser.crypto.TSDParserTest#testTSDFileDataRecursiveMetadataXML",
-    "org.apache.tika.parser.dbf.DBFParserTest#testBasic",
-    "org.apache.tika.parser.dbf.DBFParserTest#testGB18030Encoded",
-    "org.apache.tika.parser.dbf.DBFParserTest#testSpecificTruncated",
-    "org.apache.tika.parser.dbf.DBFParserTest#testTruncated",
-    "org.apache.tika.parser.dbf.DBFParserTest#testVariants",
-    "org.apache.tika.parser.dif.DIFParserTest#testDifMetadata",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2000Parser",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2004Parser",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2004ParserNoHeaderAddress",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2007Parser",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2010CustomPropertiesParser",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWG2010Parser",
-    "org.apache.tika.parser.dwg.DWGParserTest#testDWGMechParser",
-    "org.apache.tika.parser.envi.EnviHeaderParserTest#testParseGlobalMetadata",
-    "org.apache.tika.parser.envi.EnviHeaderParserTest#testParseGlobalMetadataMultiLineMetadataValues",
-    "org.apache.tika.parser.epub.EpubParserTest#testXMLParser",
-    "org.apache.tika.parser.executable.ExecutableParserTest#testElfParser_x86_32",
-    "org.apache.tika.parser.executable.ExecutableParserTest#testWin32Parser",
-    "org.apache.tika.parser.feed.FeedParserTest#testAtomParser",
-    "org.apache.tika.parser.feed.FeedParserTest#testRSSParser",
-    "org.apache.tika.parser.font.FontParsersTest#testAdobeFontMetricParsing",
-    "org.apache.tika.parser.font.FontParsersTest#testTTFParsing",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testAttachingADebuggerOnTheForkedParserShouldWork",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testForkedPDFParsing",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testForkedPackageParsing",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testForkedTextParsing",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testParserHandlingOfNonSerializable",
-    "org.apache.tika.parser.fork.ForkParserIntegrationTest#testParsingErrorInForkedParserShouldBeReported",
-    "org.apache.tika.parser.geo.topic.GeoParserTest#testFunctions",
-    "org.apache.tika.parser.geo.topic.GeoParserTest#testNulls",
-    "org.apache.tika.parser.geoinfo.GeographicInformationParserTest#testISO19139",
-    "org.apache.tika.parser.grib.GribParserTest#testParseGlobalMetadata",
-    "org.apache.tika.parser.hdf.HDFParserTest#testHDF4",
-    "org.apache.tika.parser.hdf.HDFParserTest#testParseGlobalMetadata",
-    "org.apache.tika.parser.html.HtmlParserTest#testAllHeadElements",
-    "org.apache.tika.parser.html.HtmlParserTest#testAreaExtraction",
-    "org.apache.tika.parser.html.HtmlParserTest#testBaseHref",
-    "org.apache.tika.parser.html.HtmlParserTest#testBoilerplateDelegation",
-    "org.apache.tika.parser.html.HtmlParserTest#testBoilerplateRemoval",
-    "org.apache.tika.parser.html.HtmlParserTest#testBoilerplateWhitespace",
-    "org.apache.tika.parser.html.HtmlParserTest#testBoilerplateWithMarkup",
-    "org.apache.tika.parser.html.HtmlParserTest#testBrokenFrameset",
-    "org.apache.tika.parser.html.HtmlParserTest#testCharactersDirectlyUnderBodyElement",
-    "org.apache.tika.parser.html.HtmlParserTest#testCharsetsNotSupportedByIANA",
-    "org.apache.tika.parser.html.HtmlParserTest#testConfigExtractScript",
-    "org.apache.tika.parser.html.HtmlParserTest#testCustomHtmlSchema",
-    "org.apache.tika.parser.html.HtmlParserTest#testDataURI",
-    "org.apache.tika.parser.html.HtmlParserTest#testDataURIInJS",
-    "org.apache.tika.parser.html.HtmlParserTest#testDetectOfCharset",
-    "org.apache.tika.parser.html.HtmlParserTest#testElementOrdering",
-    "org.apache.tika.parser.html.HtmlParserTest#testExtractScript",
-    "org.apache.tika.parser.html.HtmlParserTest#testFirstTitleValueisSetToMetadata",
-    "org.apache.tika.parser.html.HtmlParserTest#testFrameSrcExtraction",
-    "org.apache.tika.parser.html.HtmlParserTest#testGoodScript",
-    "org.apache.tika.parser.html.HtmlParserTest#testHtml5Charset",
-    "org.apache.tika.parser.html.HtmlParserTest#testHttpEquivCharset",
-    "org.apache.tika.parser.html.HtmlParserTest#testHttpEquivCharsetFunkyAttributes",
-    "org.apache.tika.parser.html.HtmlParserTest#testIFrameSrcExtraction",
-    "org.apache.tika.parser.html.HtmlParserTest#testIdentityMapper",
-    "org.apache.tika.parser.html.HtmlParserTest#testIgnoreCharsetDetectorLanguage",
-    "org.apache.tika.parser.html.HtmlParserTest#testImgUrlExtraction",
-    "org.apache.tika.parser.html.HtmlParserTest#testLineBreak",
-    "org.apache.tika.parser.html.HtmlParserTest#testLinkHrefResolution",
-    "org.apache.tika.parser.html.HtmlParserTest#testLocator",
-    "org.apache.tika.parser.html.HtmlParserTest#testMetaHttpEquivWithLotsOfPreambleText",
-    "org.apache.tika.parser.html.HtmlParserTest#testMetaTagHandling",
-    "org.apache.tika.parser.html.HtmlParserTest#testMisleadingMetaContentTypeTags",
-    "org.apache.tika.parser.html.HtmlParserTest#testMultiThreadingEncodingDetection",
-    "org.apache.tika.parser.html.HtmlParserTest#testNewlineAndIndent",
-    "org.apache.tika.parser.html.HtmlParserTest#testNoisyMetaCharsetHeaders",
-    "org.apache.tika.parser.html.HtmlParserTest#testObjectExtraction",
-    "org.apache.tika.parser.html.HtmlParserTest#testOpenGraphMetadata",
-    "org.apache.tika.parser.html.HtmlParserTest#testParseAscii",
-    "org.apache.tika.parser.html.HtmlParserTest#testParseEmpty",
-    "org.apache.tika.parser.html.HtmlParserTest#testPushback",
-    "org.apache.tika.parser.html.HtmlParserTest#testScriptSrc",
-    "org.apache.tika.parser.html.HtmlParserTest#testSkippingCommentsInEncodingDetection",
-    "org.apache.tika.parser.html.HtmlParserTest#testUserDefinedCharset",
-    "org.apache.tika.parser.html.HtmlParserTest#testUsingCharsetInContentTypeHeader",
-    "org.apache.tika.parser.html.HtmlParserTest#testUsingFunkyCharsetInContentTypeHeader",
-    "org.apache.tika.parser.html.HtmlParserTest#testWhitespaceBetweenTableCells",
-    "org.apache.tika.parser.html.HtmlParserTest#testXHTMLWithMisleading",
-    "org.apache.tika.parser.html.HtmlParserTest#testXhtmlParsing",
-    "org.apache.tika.parser.ibooks.iBooksParserTest#testiBooksParser",
-    "org.apache.tika.parser.image.BPGParserTest#testBPG",
-    "org.apache.tika.parser.image.BPGParserTest#testBPG_Commented",
-    "org.apache.tika.parser.image.BPGParserTest#testBPG_Geo",
-    "org.apache.tika.parser.image.ICNSParserTest#testICNS",
-    "org.apache.tika.parser.image.ICNSParserTest#testICNS_basic",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testCopyUnknownFieldsHandler",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testExifHandlerParseDate",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testExifHandlerParseDateError",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testExifHandlerParseDateFallback",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testExifHandlerSupports",
-    "org.apache.tika.parser.image.ImageMetadataExtractorTest#testHandleDirectories",
-    "org.apache.tika.parser.image.ImageParserTest#testBMP",
-    "org.apache.tika.parser.image.ImageParserTest#testGIF",
-    "org.apache.tika.parser.image.ImageParserTest#testJBIG2",
-    "org.apache.tika.parser.image.ImageParserTest#testJPEG",
-    "org.apache.tika.parser.image.ImageParserTest#testPNG",
-    "org.apache.tika.parser.image.MetadataFieldsTest#testIsMetadataField",
-    "org.apache.tika.parser.image.PSDParserTest#testOddPSD",
-    "org.apache.tika.parser.image.PSDParserTest#testPSD",
-    "org.apache.tika.parser.image.TiffParserTest#testPageCount",
-    "org.apache.tika.parser.image.TiffParserTest#testTIFF",
-    "org.apache.tika.parser.image.WebPParserTest#testSimple",
-    "org.apache.tika.parser.image.xmp.JempboxExtractorTest#testJoinCreators",
-    "org.apache.tika.parser.image.xmp.JempboxExtractorTest#testMaxXMPMMHistory",
-    "org.apache.tika.parser.image.xmp.JempboxExtractorTest#testParseJpeg",
-    "org.apache.tika.parser.image.xmp.JempboxExtractorTest#testParseJpegPhotoshop",
-    "org.apache.tika.parser.image.xmp.JempboxExtractorTest#testParseJpegXnviewmp",
-    "org.apache.tika.parser.isatab.ISArchiveParserTest#testParseArchive",
-    "org.apache.tika.parser.iwork.AutoPageNumberUtilsTest#testAlphaLower",
-    "org.apache.tika.parser.iwork.AutoPageNumberUtilsTest#testAlphaUpper",
-    "org.apache.tika.parser.iwork.AutoPageNumberUtilsTest#testRomanLower",
-    "org.apache.tika.parser.iwork.AutoPageNumberUtilsTest#testRomanUpper",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testKeynoteBulletPoints",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testKeynoteMasterSlideTable",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testKeynoteTables",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testKeynoteTextBoxes",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testNumbersExtractChartNames",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testPagesLayoutMode",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParseKeynote",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParseNumbers",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParseNumbersTableHeaders",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParseNumbersTableNames",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePages",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesAnnotations",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesHeadersAlphaLower",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesHeadersAlphaUpper",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesHeadersFootersFootnotes",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesHeadersFootersRomanLower",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesHeadersFootersRomanUpper",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testParsePagesPasswordProtected",
-    "org.apache.tika.parser.iwork.IWorkParserTest#testStreamNotClosed",
-    "org.apache.tika.parser.iwork.iwana.IWork13ParserTest#testParseKeynote13",
-    "org.apache.tika.parser.iwork.iwana.IWork13ParserTest#testParseNumbers13",
-    "org.apache.tika.parser.iwork.iwana.IWork13ParserTest#testParsePages13",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testBasic",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testInputStreamReset",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testNotAddingEmbeddedParserToParseContext",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testNulls",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testParserContainerExtractor",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testRecursiveParserWrapper",
-    "org.apache.tika.parser.jdbc.SQLite3ParserTest#testSpacesInBodyContentHandler",
-    "org.apache.tika.parser.journal.TEITest#testBasic",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEG",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGEmptyEXIFDateTime",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGGeo",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGGeo2",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGTitleAndDescription",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGTitleAndDescriptionPhotoshop",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGTitleAndDescriptionXnviewmp",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGXMPMM",
-    "org.apache.tika.parser.jpeg.JpegParserTest#testJPEGoddTagComponent",
-    "org.apache.tika.parser.mail.MailUtilTest#testBasic",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testAlternativeWithComplexMixedChild",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testBase64",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testBasicAlternativeBodyHandling",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testDates",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testDetection",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testEmbeddedMetadata",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testExtendedToFromMetadata",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testExtractAttachments",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testGetAttachmentsAsEmbeddedResources",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testI18NHeaders",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testLongHeader",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testMainBody",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testMixedRelatedMultipart",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testMultipart",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testMultipartFlags",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testMultipleSubjects",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testNormalZipAttachment",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testQuotedPrintable",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testSimple",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testSimpleBodyInlined",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testSomeMissingHeaders",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testTrickyDates",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testUnusualFromAddress",
-    "org.apache.tika.parser.mat.MatParserTest#testParser",
-    "org.apache.tika.parser.mat.MatParserTest#testParserForText",
-    "org.apache.tika.parser.mbox.MboxParserTest#testComplex",
-    "org.apache.tika.parser.mbox.MboxParserTest#testHeaders",
-    "org.apache.tika.parser.mbox.MboxParserTest#testMultilineHeader",
-    "org.apache.tika.parser.mbox.MboxParserTest#testOverrideDetector",
-    "org.apache.tika.parser.mbox.MboxParserTest#testQuoted",
-    "org.apache.tika.parser.mbox.MboxParserTest#testSimple",
-    "org.apache.tika.parser.mbox.MboxParserTest#testTika2478",
-    "org.apache.tika.parser.mbox.OutlookPSTParserTest#testAccept",
-    "org.apache.tika.parser.mbox.OutlookPSTParserTest#testExtendedMetadata",
-    "org.apache.tika.parser.mbox.OutlookPSTParserTest#testOverrideDetector",
-    "org.apache.tika.parser.mbox.OutlookPSTParserTest#testParse",
-    "org.apache.tika.parser.microsoft.EMFParserTest#testPDFExtraction",
-    "org.apache.tika.parser.microsoft.EMFParserTest#testTextExtractionMac",
-    "org.apache.tika.parser.microsoft.EMFParserTest#testTextExtractionWindows",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testBigIntegersWGeneralFormat",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testCustomProperties",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testEmbeddedPDF",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testExcel95",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testExcelParser",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testExcelParserCharts",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testExcelParserFormatting",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testExcelParserPassword",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testHeaderAndFooterExtraction",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testHeaderAndFooterNotExtraction",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testHyperlinksInXLS",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testJXL",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testLabelsAreExtracted",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testMacros",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testPhoneticStrings",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testTextBox",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testTurningOffTextBoxExtractionExcel",
-    "org.apache.tika.parser.microsoft.ExcelParserTest#testWorksSpreadsheet70",
-    "org.apache.tika.parser.microsoft.JackcessParserTest#testBasic",
-    "org.apache.tika.parser.microsoft.JackcessParserTest#testMetadata",
-    "org.apache.tika.parser.microsoft.JackcessParserTest#testPassword",
-    "org.apache.tika.parser.microsoft.JackcessParserTest#testReadOnly",
-    "org.apache.tika.parser.microsoft.MSOwnerFileParserTest#testBasic",
-    "org.apache.tika.parser.microsoft.OfficeParserTest#parseOfficeWord",
-    "org.apache.tika.parser.microsoft.OldExcelParserTest#testDetection",
-    "org.apache.tika.parser.microsoft.OldExcelParserTest#testHTML",
-    "org.apache.tika.parser.microsoft.OldExcelParserTest#testPlainText",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testHandlingAllAlternativesBodies",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testMAPIMessageClasses",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testMultipleCopies",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testOutlookForwarded",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testOutlookHTMLVersion",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testOutlookHTMLfromRTF",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testOutlookNew",
-    "org.apache.tika.parser.microsoft.OutlookParserTest#testOutlookParsing",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedEquation",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedGraphChart",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedImages",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedOfficeFiles",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedOfficeFilesXML",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testEmbeddedStorageId",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testPowerpointImages",
-    "org.apache.tika.parser.microsoft.POIContainerExtractionTest#testWithoutEmbedded",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testAutoDatePPT",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testCommentAuthorship",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testCustomProperties",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testEmbeddedPDF",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testEmbeddedPlacedholder",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testEmbeddedXLSInOLEObject",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testEncrypted",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testGroups",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testMacros",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testMasterFooter",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testMasterText",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testMasterText2",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testPowerPointParser",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testSkippingBadCompressedObj",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testVarious",
-    "org.apache.tika.parser.microsoft.ProjectParserTest#testProject2003",
-    "org.apache.tika.parser.microsoft.ProjectParserTest#testProject2007",
-    "org.apache.tika.parser.microsoft.PublisherParserTest#testPublisherParser",
-    "org.apache.tika.parser.microsoft.TNEFParserTest#testBasics",
-    "org.apache.tika.parser.microsoft.TNEFParserTest#testBodyAndAttachments",
-    "org.apache.tika.parser.microsoft.TNEFParserTest#testMetadata",
-    "org.apache.tika.parser.microsoft.VisioParserTest#testVisioParser",
-    "org.apache.tika.parser.microsoft.WMFParserTest#testTextExtractionWindows",
-    "org.apache.tika.parser.microsoft.WordParserTest#testBoldHyperlink",
-    "org.apache.tika.parser.microsoft.WordParserTest#testControlCharacter",
-    "org.apache.tika.parser.microsoft.WordParserTest#testCustomProperties",
-    "org.apache.tika.parser.microsoft.WordParserTest#testDOCOverrideParagraphNumbering",
-    "org.apache.tika.parser.microsoft.WordParserTest#testDOCParagraphNumbering",
-    "org.apache.tika.parser.microsoft.WordParserTest#testDeleted",
-    "org.apache.tika.parser.microsoft.WordParserTest#testDocumentLink",
-    "org.apache.tika.parser.microsoft.WordParserTest#testEmbeddedNames",
-    "org.apache.tika.parser.microsoft.WordParserTest#testEmbeddedRTF",
-    "org.apache.tika.parser.microsoft.WordParserTest#testExceptions1",
-    "org.apache.tika.parser.microsoft.WordParserTest#testHeaderFooterNotExtraction",
-    "org.apache.tika.parser.microsoft.WordParserTest#testHeaderHyperlinks",
-    "org.apache.tika.parser.microsoft.WordParserTest#testHyperlinkStringIOOBESmartQuote",
-    "org.apache.tika.parser.microsoft.WordParserTest#testMacros",
-    "org.apache.tika.parser.microsoft.WordParserTest#testMultiAuthorsManagers",
-    "org.apache.tika.parser.microsoft.WordParserTest#testNoFormat",
-    "org.apache.tika.parser.microsoft.WordParserTest#testOrigLocation",
-    "org.apache.tika.parser.microsoft.WordParserTest#testOrigSourcePath",
-    "org.apache.tika.parser.microsoft.WordParserTest#testParagraphsAfterTables",
-    "org.apache.tika.parser.microsoft.WordParserTest#testPhonetic",
-    "org.apache.tika.parser.microsoft.WordParserTest#testProtected",
-    "org.apache.tika.parser.microsoft.WordParserTest#testSpecialControlCharacter",
-    "org.apache.tika.parser.microsoft.WordParserTest#testTabularSymbol",
-    "org.apache.tika.parser.microsoft.WordParserTest#testTextDecoration",
-    "org.apache.tika.parser.microsoft.WordParserTest#testTextDecorationNested",
-    "org.apache.tika.parser.microsoft.WordParserTest#testTurningOffTextBox",
-    "org.apache.tika.parser.microsoft.WordParserTest#testVarious",
-    "org.apache.tika.parser.microsoft.WordParserTest#testWord6Parser",
-    "org.apache.tika.parser.microsoft.WordParserTest#testWordHTML",
-    "org.apache.tika.parser.microsoft.WordParserTest#testWordParser",
-    "org.apache.tika.parser.microsoft.WordParserTest#testWordWithWAV",
-    "org.apache.tika.parser.microsoft.WriteProtectedParserTest#testWriteProtected",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testEmbeddedGraphChart",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testEmbeddedImages",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testEmbeddedOfficeFiles",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testEmbeddedOutlook",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testEmbeddedPDF",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLContainerExtractionTest#testWithoutEmbedded",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testBigIntegersWGeneralFormat",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testBigIntegersWGeneralFormatWLocaleIT",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testBoldHyperlink",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testCommentPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXChartData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXHeaderFooterNotExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXOverrideParagraphNumbering",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXParagraphNumbering",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXPhoneticStrings",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testDOCXThumbnail",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedMedia",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedPDF",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedPDFInPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedPDFInXLSX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedPPTXTwoSlides",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedXLSInOLEObject",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEmbeddedZipInPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testEncrypted",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcel",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelCustomProperties",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelFormats",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelHeaderAndFooterExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelHeaderAndFooterNotExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelTextBox",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelXLSB",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testHyperlinksInXLSX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testInitializationViaConfig",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testLongForIntExceptionInSummaryDetails",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMacroinXlsm",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMacrosInDocm",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMacrosInPptm",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMasterFooter",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMasterText",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMasterText2",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMissingText",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testMultiAuthorsManagers",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testNoFormat",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testNullHeaders",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testOrigSourcePath",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPOI61034",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPPTXAutodate",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPPTXChartData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPPTXDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPPTXGroups",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPPTXThumbnail",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPowerPoint",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPowerPointCustomProperties",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPowerPointMetadataEarly",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testProtectedExcelFile",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testProtectedExcelSheets",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testTextDecoration",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testTextDecorationNested",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testTextInsideTextBox",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testTurningOffTextBoxExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testTurningOffTextBoxExtractionExcel",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testUnsupportedPowerPoint",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testVarious",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testVariousPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWord",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordArt",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordCustomProperties",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordFootnote",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordHTML",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordMissingOOXMLBeans",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordNullStyle",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testWordPicturesInHeader",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSBChartData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSBDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSBNoHeaderFooters",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSBOriginalPath",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSBVarious",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSXChartData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSXDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSXOriginalPath",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSXPhoneticStrings",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testXLSXThumbnail",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#basicTest",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#poiBug54916Test",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testCommentPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testEmbeddedMedia",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testEmbeddedPDFInPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testEncrypted",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testMacrosInPptm",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testMasterFooter",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testMasterText",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testMasterText2",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPPTXAutodate",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPPTXChartData",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPPTXGroups",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPPTXThumbnail",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPowerPoint",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPowerPointCustomProperties",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testPowerPointMetadataEarly",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testUnsupportedPowerPoint",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testVariousPPTX",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testWordArt",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#basicTest",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testBoldHyperlink",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testContiguousHTMLFormatting",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDOCXChartData",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDOCXOverrideParagraphNumbering",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDOCXParagraphNumbering",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDOCXPhoneticStrings",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDOCXThumbnail",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDiagramData",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testDotx",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testEmbedded",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testEmbeddedPDF",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testEncrypted",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testHeaderFooterNotExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testLongForIntExceptionInSummaryDetails",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testMacrosInDocm",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testMissingText",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testMultiAuthorsManagers",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testNoFormat",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testNullHeaders",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testOrigSourcePath",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testPicturesInVariousPlaces",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testSkipDeleted",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testTextDecoration",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testTextDecorationNested",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testTextInsideTextBox",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testTurningOffTextBoxExtraction",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testVarious",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWord",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordCustomProperties",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordFootnote",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordHTML",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordMissingOOXMLBeans",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordNullStyle",
-    "org.apache.tika.parser.microsoft.ooxml.SXWPFExtractorTest#testWordPicturesInHeader",
-    "org.apache.tika.parser.microsoft.ooxml.xps.XPSParserTest#testBasic",
-    "org.apache.tika.parser.microsoft.ooxml.xps.XPSParserTest#testVarious",
-    "org.apache.tika.parser.microsoft.ooxml.xwpf.ml2006.Word2006MLParserTest#basicTest",
-    "org.apache.tika.parser.microsoft.ooxml.xwpf.ml2006.Word2006MLParserTest#testSkipDeletedAndMoveFrom",
-    "org.apache.tika.parser.microsoft.xml.XML2003ParserTest#testBasicExcel",
-    "org.apache.tika.parser.microsoft.xml.XML2003ParserTest#testBasicWord",
-    "org.apache.tika.parser.mock.MockParserTest#testExample",
-    "org.apache.tika.parser.mock.MockParserTest#testFakeOOM",
-    "org.apache.tika.parser.mock.MockParserTest#testHeavyHang",
-    "org.apache.tika.parser.mock.MockParserTest#testInterruptibleSleep",
-    "org.apache.tika.parser.mock.MockParserTest#testNonInterruptibleSleep",
-    "org.apache.tika.parser.mock.MockParserTest#testNothingBad",
-    "org.apache.tika.parser.mock.MockParserTest#testNullPointer",
-    "org.apache.tika.parser.mock.MockParserTest#testNullPointerNoMsg",
-    "org.apache.tika.parser.mock.MockParserTest#testRealOOM",
-    "org.apache.tika.parser.mock.MockParserTest#testSleep",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testID3v2Frame",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingID3i18n",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingID3v1",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingID3v1v2",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingID3v2",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingID3v24",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testMp3ParsingLyrics",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testNakedUTF16BOM",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testTIKA1589_noId3ReturnsDurationCorrectly",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testTIKA424",
-    "org.apache.tika.parser.mp3.Mp3ParserTest#testTIKA474",
-    "org.apache.tika.parser.mp3.MpegStreamTest#testSeachNextFrameEOS",
-    "org.apache.tika.parser.mp3.MpegStreamTest#testSearchNextFrame",
-    "org.apache.tika.parser.mp3.MpegStreamTest#testSearchNextFrameInvalid",
-    "org.apache.tika.parser.mp3.MpegStreamTest#testSkipNoCurrentHeader",
-    "org.apache.tika.parser.mp4.MP4ParserTest#testInfiniteLoop",
-    "org.apache.tika.parser.mp4.MP4ParserTest#testMP4ParsingAudio",
-    "org.apache.tika.parser.ner.nltk.NLTKNERecogniserTest#testGetEntityTypes",
-    "org.apache.tika.parser.ner.regex.RegexNERecogniserTest#testGetEntityTypes",
-    "org.apache.tika.parser.netcdf.NetCDFParserTest#testParseGlobalMetadata",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBadColorSpace",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBadOtherKey",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBadOtherValue",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBadOtherValueControl",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBadOtherValueSlash",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testBogusPathCheck",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testDataPathCheck",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testFullConfig",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testGoodOtherParameters",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testNoConfig",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testPartialConfig",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testPathCheck",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testTrailingSlashInPathBehavior",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateDensity",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateDepth",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateFilter",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateInvalidLanguage",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidatePageSegMode",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateResize",
-    "org.apache.tika.parser.ocr.TesseractOCRConfigTest#testValidateValidLanguage",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#getNormalMetadataToo",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#offersNoTypesIfNotFound",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testDOCXOCR",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testPDFOCR",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testPPTXOCR",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testRotatedOCR",
-    "org.apache.tika.parser.odf.ODFParserTest#testAnnotationsAndPDepthGt1",
-    "org.apache.tika.parser.odf.ODFParserTest#testEmbedded",
-    "org.apache.tika.parser.odf.ODFParserTest#testFromFile",
-    "org.apache.tika.parser.odf.ODFParserTest#testMissingMeta",
-    "org.apache.tika.parser.odf.ODFParserTest#testNPEFromFile",
-    "org.apache.tika.parser.odf.ODFParserTest#testNullStylesInODTFooter",
-    "org.apache.tika.parser.odf.ODFParserTest#testODPMasterFooter",
-    "org.apache.tika.parser.odf.ODFParserTest#testODSFooter",
-    "org.apache.tika.parser.odf.ODFParserTest#testODTFooter",
-    "org.apache.tika.parser.odf.ODFParserTest#testODTStyles",
-    "org.apache.tika.parser.odf.ODFParserTest#testOO2",
-    "org.apache.tika.parser.odf.ODFParserTest#testOO2Metadata",
-    "org.apache.tika.parser.odf.ODFParserTest#testOO3",
-    "org.apache.tika.parser.odf.ODFParserTest#testOO3Metadata",
-    "org.apache.tika.parser.odf.ODFParserTest#testParagraphLevelFontStyles",
-    "org.apache.tika.parser.pdf.AccessCheckerTest#testCantAddMultiplesToMetadata",
-    "org.apache.tika.parser.pdf.AccessCheckerTest#testCrazyExtractNotForAccessibility",
-    "org.apache.tika.parser.pdf.AccessCheckerTest#testExtractOnlyForAccessibility",
-    "org.apache.tika.parser.pdf.AccessCheckerTest#testLegacy",
-    "org.apache.tika.parser.pdf.AccessCheckerTest#testNoExtraction",
-    "org.apache.tika.parser.pdf.PDFParserTest#testAccessCheckingEmptyPassword",
-    "org.apache.tika.parser.pdf.PDFParserTest#testAccessCheckingOwnerPassword",
-    "org.apache.tika.parser.pdf.PDFParserTest#testAccessCheckingUserPassword",
-    "org.apache.tika.parser.pdf.PDFParserTest#testAnnotations",
-    "org.apache.tika.parser.pdf.PDFParserTest#testBookmarks",
-    "org.apache.tika.parser.pdf.PDFParserTest#testConfiguringMoreParams",
-    "org.apache.tika.parser.pdf.PDFParserTest#testCustomMetadata",
-    "org.apache.tika.parser.pdf.PDFParserTest#testDiffTitles",
-    "org.apache.tika.parser.pdf.PDFParserTest#testDisableAutoSpace",
-    "org.apache.tika.parser.pdf.PDFParserTest#testDuplicateOverlappingText",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedDocsWithOCROnly",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedFileMarkup",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedFileNameExtraction",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedFilesInAnnotations",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedFilesInChildren",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedJBIG2Image",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedJPEG",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedPDFEmbeddingAnotherDocument",
-    "org.apache.tika.parser.pdf.PDFParserTest#testEmbeddedPDFs",
-    "org.apache.tika.parser.pdf.PDFParserTest#testInitializationOfNonPrimitivesViaConfig",
-    "org.apache.tika.parser.pdf.PDFParserTest#testInitializationViaConfig",
-    "org.apache.tika.parser.pdf.PDFParserTest#testInlineConfig",
-    "org.apache.tika.parser.pdf.PDFParserTest#testInlineSelector",
-    "org.apache.tika.parser.pdf.PDFParserTest#testJBIG2OCROnly",
-    "org.apache.tika.parser.pdf.PDFParserTest#testLanguageMetadata",
-    "org.apache.tika.parser.pdf.PDFParserTest#testLegacyAccessChecking",
-    "org.apache.tika.parser.pdf.PDFParserTest#testLinks",
-    "org.apache.tika.parser.pdf.PDFParserTest#testMaxLength",
-    "org.apache.tika.parser.pdf.PDFParserTest#testMultipleAuthors",
-    "org.apache.tika.parser.pdf.PDFParserTest#testMultipleTitles",
-    "org.apache.tika.parser.pdf.PDFParserTest#testOSSpecificEmbeddedFileExtraction",
-    "org.apache.tika.parser.pdf.PDFParserTest#testPDFEncodedStringsInXMP",
-    "org.apache.tika.parser.pdf.PDFParserTest#testPageNumber",
-    "org.apache.tika.parser.pdf.PDFParserTest#testPdfParsing",
-    "org.apache.tika.parser.pdf.PDFParserTest#testPdfParsingMetadataOnly",
-    "org.apache.tika.parser.pdf.PDFParserTest#testPopupAnnotation",
-    "org.apache.tika.parser.pdf.PDFParserTest#testProtectedPDF",
-    "org.apache.tika.parser.pdf.PDFParserTest#testSignatureInAcroForm",
-    "org.apache.tika.parser.pdf.PDFParserTest#testSingleCloseDoc",
-    "org.apache.tika.parser.pdf.PDFParserTest#testSkipBadPage",
-    "org.apache.tika.parser.pdf.PDFParserTest#testSortByPosition",
-    "org.apache.tika.parser.pdf.PDFParserTest#testTurningOffBookmarks",
-    "org.apache.tika.parser.pdf.PDFParserTest#testTwoTextBoxes",
-    "org.apache.tika.parser.pdf.PDFParserTest#testVarious",
-    "org.apache.tika.parser.pdf.PDFParserTest#testVersions",
-    "org.apache.tika.parser.pdf.PDFParserTest#testXFAExtractionBasic",
-    "org.apache.tika.parser.pdf.PDFParserTest#testXFAOnly",
-    "org.apache.tika.parser.pdf.PDFParserTest#testXMPMM",
-    "org.apache.tika.parser.pkg.ArParserTest#testArParsing",
-    "org.apache.tika.parser.pkg.ArParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.Bzip2ParserTest#testBzip2Parsing",
-    "org.apache.tika.parser.pkg.Bzip2ParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.CompressParserTest#testCompressOOM",
-    "org.apache.tika.parser.pkg.CompressParserTest#testCompressParsing",
-    "org.apache.tika.parser.pkg.CompressParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.CompressParserTest#testLZMAOOM",
-    "org.apache.tika.parser.pkg.CompressorParserTest#testBrotli",
-    "org.apache.tika.parser.pkg.CompressorParserTest#testCoverage",
-    "org.apache.tika.parser.pkg.CompressorParserTest#testLZ4Framed",
-    "org.apache.tika.parser.pkg.CompressorParserTest#testSnappyFramed",
-    "org.apache.tika.parser.pkg.CompressorParserTest#testZstd",
-    "org.apache.tika.parser.pkg.GzipParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.GzipParserTest#testGzipParsing",
-    "org.apache.tika.parser.pkg.GzipParserTest#testSvgzParsing",
-    "org.apache.tika.parser.pkg.PackageParserTest#testCoverage",
-    "org.apache.tika.parser.pkg.PackageParserTest#testSpecializations",
-    "org.apache.tika.parser.pkg.RarParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.RarParserTest#testEncryptedRar",
-    "org.apache.tika.parser.pkg.RarParserTest#testRarParsing",
-    "org.apache.tika.parser.pkg.Seven7ParserTest#test7ZParsing",
-    "org.apache.tika.parser.pkg.Seven7ParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.Seven7ParserTest#testPasswordProtected",
-    "org.apache.tika.parser.pkg.TarParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.TarParserTest#testTarParsing",
-    "org.apache.tika.parser.pkg.ZipContainerDetectorTest#testTiffWorkaround",
-    "org.apache.tika.parser.pkg.ZipParserTest#testCustomEncoding",
-    "org.apache.tika.parser.pkg.ZipParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.ZipParserTest#testJARDetection",
-    "org.apache.tika.parser.pkg.ZipParserTest#testKMZDetection",
-    "org.apache.tika.parser.pkg.ZipParserTest#testPlaceholders",
-    "org.apache.tika.parser.pkg.ZipParserTest#testUnsupportedZipCompressionMethod",
-    "org.apache.tika.parser.pkg.ZipParserTest#testZipEncrypted",
-    "org.apache.tika.parser.pkg.ZipParserTest#testZipParsing",
-    "org.apache.tika.parser.pkg.ZlibParserTest#testEmbedded",
-    "org.apache.tika.parser.pkg.ZlibParserTest#testZlibParsing",
-    "org.apache.tika.parser.prt.PRTParserTest#testPRTParserBasics",
-    "org.apache.tika.parser.prt.PRTParserTest#testPRTParserComplex",
-    "org.apache.tika.parser.rtf.RTFParserTest#testBasicExtraction",
-    "org.apache.tika.parser.rtf.RTFParserTest#testBinControlWord",
-    "org.apache.tika.parser.rtf.RTFParserTest#testBoldItalic",
-    "org.apache.tika.parser.rtf.RTFParserTest#testBoldPlain",
-    "org.apache.tika.parser.rtf.RTFParserTest#testConfig",
-    "org.apache.tika.parser.rtf.RTFParserTest#testControls",
-    "org.apache.tika.parser.rtf.RTFParserTest#testCorruptListOverride",
-    "org.apache.tika.parser.rtf.RTFParserTest#testEmbeddedLinkedDocument",
-    "org.apache.tika.parser.rtf.RTFParserTest#testEmbeddedMonster",
-    "org.apache.tika.parser.rtf.RTFParserTest#testFontAfterBufferedText",
-    "org.apache.tika.parser.rtf.RTFParserTest#testGothic",
-    "org.apache.tika.parser.rtf.RTFParserTest#testHexEscapeInsideWord",
-    "org.apache.tika.parser.rtf.RTFParserTest#testHyperlink",
-    "org.apache.tika.parser.rtf.RTFParserTest#testIgnoredControlWord",
-    "org.apache.tika.parser.rtf.RTFParserTest#testInvalidUnicode",
-    "org.apache.tika.parser.rtf.RTFParserTest#testJapaneseText",
-    "org.apache.tika.parser.rtf.RTFParserTest#testListLibreOffice",
-    "org.apache.tika.parser.rtf.RTFParserTest#testListMicrosoftWord",
-    "org.apache.tika.parser.rtf.RTFParserTest#testListOverride",
-    "org.apache.tika.parser.rtf.RTFParserTest#testMS932Extraction",
-    "org.apache.tika.parser.rtf.RTFParserTest#testMaxLength",
-    "org.apache.tika.parser.rtf.RTFParserTest#testMetaDataCounts",
-    "org.apache.tika.parser.rtf.RTFParserTest#testMultipleNewlines",
-    "org.apache.tika.parser.rtf.RTFParserTest#testRegularImages",
-    "org.apache.tika.parser.rtf.RTFParserTest#testTableCellSeparation",
-    "org.apache.tika.parser.rtf.RTFParserTest#testTableCellSeparation2",
-    "org.apache.tika.parser.rtf.RTFParserTest#testTextWithCurlyBraces",
-    "org.apache.tika.parser.rtf.RTFParserTest#testUmlautSpacesExtraction",
-    "org.apache.tika.parser.rtf.RTFParserTest#testUmlautSpacesExtraction2",
-    "org.apache.tika.parser.rtf.RTFParserTest#testUnicodeUCNControlWordCharacterDoublingExtraction",
-    "org.apache.tika.parser.rtf.RTFParserTest#testVarious",
-    "org.apache.tika.parser.rtf.RTFParserTest#testVariousStyle",
-    "org.apache.tika.parser.rtf.RTFParserTest#testWindowsCodepage1250",
-    "org.apache.tika.parser.rtf.RTFParserTest#testWord2010CzechCharactersExtraction",
-    "org.apache.tika.parser.rtf.RTFParserTest#testWordPadCzechCharactersExtraction",
-    "org.apache.tika.parser.sas.SAS7BDATParserTest#testHTML",
-    "org.apache.tika.parser.sas.SAS7BDATParserTest#testHTML2",
-    "org.apache.tika.parser.sas.SAS7BDATParserTest#testMultiColumns",
-    "org.apache.tika.parser.sas.SAS7BDATParserTest#testSimpleFile",
-    "org.apache.tika.parser.sentiment.SentimentAnalysisParserTest#endToEndTest",
-    "org.apache.tika.parser.sentiment.SentimentAnalysisParserTest#testCategorical",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testAssembly2013SP2Parser",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testAssembly2014SP0Parser",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testDrawing2013SP2Parser",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testDrawing2014SP0Parser",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testPart2013SP2Parser",
-    "org.apache.tika.parser.solidworks.SolidworksParserTest#testPart2014SP0Parser",
-    "org.apache.tika.parser.strings.FileConfigTest#testNoConfig",
-    "org.apache.tika.parser.strings.Latin1StringsParserTest#testParse",
-    "org.apache.tika.parser.strings.StringsConfigTest#testFullConfig",
-    "org.apache.tika.parser.strings.StringsConfigTest#testNoConfig",
-    "org.apache.tika.parser.strings.StringsConfigTest#testPartialConfig",
-    "org.apache.tika.parser.strings.StringsConfigTest#testValidateEconding",
-    "org.apache.tika.parser.strings.StringsParserTest#testParse",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testEmptyOrNullDeclaredCharset",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testLengthResetCorrectly",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testSetTextConsistency",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testTagDropper",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testWin125XHeuristics",
-    "org.apache.tika.parser.txt.CharsetDetectorTest#testZeroLength",
-    "org.apache.tika.parser.txt.TXTParserTest#testCP866",
-    "org.apache.tika.parser.txt.TXTParserTest#testCharsetDetectionWithShortSnipet",
-    "org.apache.tika.parser.txt.TXTParserTest#testDropByteOrderMark",
-    "org.apache.tika.parser.txt.TXTParserTest#testEBCDIC_CP500",
-    "org.apache.tika.parser.txt.TXTParserTest#testEmptyText",
-    "org.apache.tika.parser.txt.TXTParserTest#testEnglishText",
-    "org.apache.tika.parser.txt.TXTParserTest#testLatinDetectionHeuristics",
-    "org.apache.tika.parser.txt.TXTParserTest#testRetainIncomingLanguage",
-    "org.apache.tika.parser.txt.TXTParserTest#testSubclassingMimeTypesRemain",
-    "org.apache.tika.parser.txt.TXTParserTest#testUTF8Text",
-    "org.apache.tika.parser.txt.TXTParserTest#testUseIncomingCharsetAsHint",
-    "org.apache.tika.parser.txt.TXTParserTest#testUsingCharsetInContentTypeHeader",
-    "org.apache.tika.parser.utils.DataURISchemeParserTest#testBackslashNewlines",
-    "org.apache.tika.parser.utils.DataURISchemeParserTest#testEmpty",
-    "org.apache.tika.parser.utils.DataURISchemeParserTest#testNewlines",
-    "org.apache.tika.parser.utils.DataURISchemeParserTest#testUTF8",
-    "org.apache.tika.parser.video.FLVParserTest#testFLV",
-    "org.apache.tika.parser.wordperfect.QuattroProTest#testQPW",
-    "org.apache.tika.parser.wordperfect.QuattroProTest#testWB3",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadArr",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadArrOffset",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadByte",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadChar",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadHex",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadHexString",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadLong",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadShort",
-    "org.apache.tika.parser.wordperfect.WPInputStreamTest#testReadString",
-    "org.apache.tika.parser.wordperfect.WordPerfectTest#testVersion50",
-    "org.apache.tika.parser.wordperfect.WordPerfectTest#testVersion51",
-    "org.apache.tika.parser.wordperfect.WordPerfectTest#testWordPerfectParser",
-    "org.apache.tika.parser.xml.DcXMLParserTest#testNoSpaces",
-    "org.apache.tika.parser.xml.DcXMLParserTest#testXMLParserAsciiChars",
-    "org.apache.tika.parser.xml.DcXMLParserTest#testXMLParserNonAsciiChars",
-    "org.apache.tika.parser.xml.EmptyAndDuplicateElementsXMLParserTest#testDefaultBehavior",
-    "org.apache.tika.parser.xml.EmptyAndDuplicateElementsXMLParserTest#testEmptiesAndRepeats",
-    "org.apache.tika.parser.xml.FictionBookParserTest#testEmbedded",
-    "org.apache.tika.parser.xml.FictionBookParserTest#testFB2",
-    "org.apache.tika.sax.PhoneExtractingContentHandlerTest#testExtractPhoneNumbers",
-    "org.apache.tika.sax.StandardsExtractingContentHandlerTest#testExtractStandards",
-    "org.apache.tika.utils.ServiceLoaderUtilsTest#testOrdering"
-   ],
-   "judged_count": 983,
-   "excluded": {
-    "org.apache.tika.TestCorruptedFiles#org.apache.tika.TestCorruptedFiles": "skipped on the reference fix",
-    "org.apache.tika.TestParsers#testAllMultiThreaded": "skipped on the reference fix",
-    "org.apache.tika.TestXMLEntityExpansion#org.apache.tika.TestXMLEntityExpansion": "skipped on the reference fix",
-    "org.apache.tika.TestXXEInXML#org.apache.tika.TestXXEInXML": "skipped on the reference fix",
-    "org.apache.tika.parser.gdal.TestGDALParser#testParseBasicInfo": "skipped on the reference fix",
-    "org.apache.tika.parser.gdal.TestGDALParser#testParseFITS": "skipped on the reference fix",
-    "org.apache.tika.parser.gdal.TestGDALParser#testParseMetadata": "skipped on the reference fix",
-    "org.apache.tika.parser.html.HtmlParserTest#XtestParseUTF8": "skipped on the reference fix",
-    "org.apache.tika.parser.html.HtmlParserTest#testBadScript": "skipped on the reference fix",
-    "org.apache.tika.parser.journal.JournalParserTest#testJournalParser": "skipped on the reference fix",
-    "org.apache.tika.parser.mail.RFC822ParserTest#testEncryptedZipAttachment": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.OldExcelParserTest#testMetadata": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testHyperlinksInTextBoxes": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.PowerPointParserTest#testSmartArtText": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.WordParserTest#testHyperlinkStringLongCarriageReturn": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.WordParserTest#testHyperlinkStringLongNoCloseQuote": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testExcelStrict": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testPicturesInVariousPlaces": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testEmbeddedPPTXTwoSlides": "skipped on the reference fix",
-    "org.apache.tika.parser.microsoft.ooxml.SXSLFExtractorTest#testEmbeddedZipInPPTX": "skipped on the reference fix",
-    "org.apache.tika.parser.ner.NamedEntityParserTest#testNerChain": "skipped on the reference fix",
-    "org.apache.tika.parser.ner.NamedEntityParserTest#testParse": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#confirmMultiPageTiffHandling": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#offersTypesIfFound": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testImageMagick": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testInterwordSpacing": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testOCROutputsHOCR": "skipped on the reference fix",
-    "org.apache.tika.parser.ocr.TesseractOCRParserTest#testSingleImage": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#gifRESTObjRecTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#gifRESTim2txtTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#jpegRESTObjRecTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#jpegRESTim2txtTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#jpegTFObjRecTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#pngRESTObjRecTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.ObjectRecognitionParserTest#pngRESTim2txtTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.tf.TensorflowImageRecParserTest#org.apache.tika.parser.recognition.tf.TensorflowImageRecParserTest": "skipped on the reference fix",
-    "org.apache.tika.parser.recognition.tf.TensorflowVideoRecParserTest#org.apache.tika.parser.recognition.tf.TensorflowVideoRecParserTest": "skipped on the reference fix"
-   },
-   "excluded_count": 37,
-   "ok": true,
-   "finished_at": "2026-10-27T11:37:04.388682+00:00",
-   "elapsed_seconds": 493.3
+   "ok": false,
+   "message": "[ERROR] Failed to execute goal org.codehaus.gmaven:groovy-maven-plugin:2.0:execute (testSetup) on project tika-parsers: Execution testSetup of goal org.codehaus.gmaven:groovy-maven-plugin:2.0:execute failed: java.net.UnknownHostException: opennlp.sourceforge.net: Unknown host opennlp.sourceforge.net -> [Help 1]",
+   "finished_at": "2026-11-04T12:40:47.314503+00:00",
+   "elapsed_seconds": 16.8
   },
   "VUL4J-40": {
    "vul_id": "VUL4J-40",
-   "started_at": "2026-10-27T11:37:04.771632+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:40:48.218589+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "server/src/main/java/org/cloudfoundry/identity/uaa/security/ScimUserSelfUpdateAllowed.java",
    "pov_raw": [
     "org.cloudfoundry.identity.uaa.security.ScimUserSelfUpdateAllowedTest$WithInternalUserStoreEnabled$WhenAttemptingToUpdateAFieldThatIsNotAllowedToBeUpdated$WhenUpdatingTheEmailField#isNotAllowedToUpdateField"
@@ -21596,11 +20514,11 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 278.4,
+    "seconds": 282.3,
     "results_written": true,
     "counts": {
-     "passed": 2934,
-     "failed": 32,
+     "passed": 2933,
+     "failed": 33,
      "skipped": 17
     },
     "failing": [
@@ -21608,6 +20526,7 @@
      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrant_NoLoginHintNoDefaultTriesChainedAuth",
      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_allowedProvidersUaaAndLdap",
      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa",
+     "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array",
      "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests#ensureJKUHeaderIsSetWhenBuildingARefreshToken",
      "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests#ensureJKUHeaderIsSetWhenBuildingAnAccessToken",
      "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests$WhenRefreshGrant#happyCase",
@@ -21643,28 +20562,30 @@
    ],
    "reference_runs": [
     {
-     "seconds": 224.5,
+     "seconds": 225.4,
      "results_written": true,
      "counts": {
-      "passed": 2963,
-      "failed": 3,
+      "passed": 2962,
+      "failed": 4,
       "skipped": 17
      },
      "failing": [
       "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrant_NoLoginHintNoDefaultTriesChainedAuth",
       "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_allowedProvidersUaaAndLdap",
-      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa"
+      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa",
+      "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array"
      ]
     },
     {
-     "seconds": 291.6,
+     "seconds": 276.0,
      "results_written": true,
      "counts": {
-      "passed": 2939,
-      "failed": 27,
+      "passed": 2938,
+      "failed": 28,
       "skipped": 17
      },
      "failing": [
+      "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array",
       "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests#ensureJKUHeaderIsSetWhenBuildingARefreshToken",
       "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests#ensureJKUHeaderIsSetWhenBuildingAnAccessToken",
       "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests$WhenRefreshGrant#happyCase",
@@ -21695,18 +20616,19 @@
      ]
     },
     {
-     "seconds": 223.3,
+     "seconds": 217.6,
      "results_written": true,
      "counts": {
-      "passed": 2962,
-      "failed": 4,
+      "passed": 2961,
+      "failed": 5,
       "skipped": 17
      },
      "failing": [
       "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrantNoLoginHint",
       "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrant_NoLoginHintNoDefaultTriesChainedAuth",
       "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_allowedProvidersUaaAndLdap",
-      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa"
+      "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa",
+      "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array"
      ]
     }
    ],
@@ -22017,7 +20939,6 @@
     "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#incorrect_uri_throws_illegal_argument_exception",
     "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#max_entries_is_respected",
     "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#rest_client_exception_is_propagated",
-    "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array",
     "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests$DeadHttpServer#throwUnavailableIdpWhenServerMetadataDoesNotReply",
     "org.cloudfoundry.identity.uaa.client.ClientAdminBootstrapTests#clientMetadata_getsBootstrapped",
     "org.cloudfoundry.identity.uaa.client.ClientAdminBootstrapTests#client_slated_for_deletion_does_not_get_inserted",
@@ -24664,13 +23585,14 @@
     "org.cloudfoundry.identity.uaa.zone.event.ServiceProviderModifiedEventTest#serviceProviderCreated",
     "org.cloudfoundry.identity.uaa.zone.event.ServiceProviderModifiedEventTest#serviceProviderModified"
    ],
-   "judged_count": 2934,
+   "judged_count": 2933,
    "excluded": {
     "org.cloudfoundry.identity.uaa.authentication.manager.KeystoneAuthenticationManagerTest#testUnknownVersion[2]": "skipped on the reference fix",
     "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrantNoLoginHint": "inconsistent on the reference fix: passed,passed,failed",
     "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testPasswordGrant_NoLoginHintNoDefaultTriesChainedAuth": "inconsistent on the reference fix: failed,passed,failed",
     "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_allowedProvidersUaaAndLdap": "inconsistent on the reference fix: failed,passed,failed",
     "org.cloudfoundry.identity.uaa.authentication.manager.PasswordGrantAuthenticationManagerTest#testUaaPasswordGrant_defaultProviderUaa": "inconsistent on the reference fix: failed,passed,failed",
+    "org.cloudfoundry.identity.uaa.cache.ExpiringUrlCacheTests#test_google_returns_same_array": "failed on the reference fix",
     "org.cloudfoundry.identity.uaa.client.OAuth2ClientAuthenticationFilterTests#testCloudFoundryAuthentication": "skipped on the reference fix",
     "org.cloudfoundry.identity.uaa.client.OAuth2ClientAuthenticationFilterTests#testFacebookAuthentication": "skipped on the reference fix",
     "org.cloudfoundry.identity.uaa.client.OAuth2ClientAuthenticationFilterTests#testGithubAuthentication": "skipped on the reference fix",
@@ -24715,15 +23637,15 @@
     "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests$WhenRequestingAnIdToken$WhenUserHasNotApprovedOpenIdScope#ensureAnIdTokenIsNotReturned[2]": "inconsistent on the reference fix: passed,failed,passed",
     "org.cloudfoundry.identity.uaa.oauth.UaaTokenServicesTests$WhenRequestingAnIdToken$WhenUserHasNotApprovedOpenIdScope#ensureAnIdTokenIsReturned": "inconsistent on the reference fix: passed,failed,passed"
    },
-   "excluded_count": 48,
+   "excluded_count": 49,
    "ok": true,
-   "finished_at": "2026-10-27T11:54:28.522598+00:00",
-   "elapsed_seconds": 1043.7
+   "finished_at": "2026-11-04T12:57:55.162309+00:00",
+   "elapsed_seconds": 1026.9
   },
   "VUL4J-41": {
    "vul_id": "VUL4J-41",
-   "started_at": "2026-10-27T11:54:29.770691+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:57:56.142612+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/codehaus/plexus/archiver/AbstractUnArchiver.java",
    "pov_raw": [
     "org.codehaus.plexus.archiver.zip.ZipUnArchiverTest#testExtractingZipWithEntryOutsideDestDirThrowsException"
@@ -24736,7 +23658,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 10.0,
+    "seconds": 9.5,
     "results_written": true,
     "counts": {
      "passed": 144,
@@ -24752,7 +23674,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 9.8,
+     "seconds": 9.3,
      "results_written": true,
      "counts": {
       "passed": 145,
@@ -24762,7 +23684,7 @@
      "failing": []
     },
     {
-     "seconds": 10.4,
+     "seconds": 9.1,
      "results_written": true,
      "counts": {
       "passed": 145,
@@ -24772,7 +23694,7 @@
      "failing": []
     },
     {
-     "seconds": 10.4,
+     "seconds": 9.2,
      "results_written": true,
      "counts": {
       "passed": 145,
@@ -24958,13 +23880,13 @@
    },
    "excluded_count": 7,
    "ok": true,
-   "finished_at": "2026-10-27T11:55:20.239608+00:00",
-   "elapsed_seconds": 50.5
+   "finished_at": "2026-11-04T12:58:43.150675+00:00",
+   "elapsed_seconds": 47.0
   },
   "VUL4J-43": {
    "vul_id": "VUL4J-43",
-   "started_at": "2026-10-27T11:55:20.536326+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T12:58:43.905930+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "util/src/main/java/org/eclipse/rdf4j/common/io/ZipUtil.java",
    "pov_raw": [
     "org.eclipse.rdf4j.common.io.ZipUtilTest#testWriteEntryPathTraversing"
@@ -24977,7 +23899,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 3.4,
+    "seconds": 3.6,
     "results_written": true,
     "counts": {
      "passed": 109,
@@ -24993,7 +23915,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 4.0,
+     "seconds": 3.5,
      "results_written": true,
      "counts": {
       "passed": 110,
@@ -25003,7 +23925,7 @@
      "failing": []
     },
     {
-     "seconds": 3.7,
+     "seconds": 3.2,
      "results_written": true,
      "counts": {
       "passed": 110,
@@ -25013,7 +23935,7 @@
      "failing": []
     },
     {
-     "seconds": 3.7,
+     "seconds": 4.8,
      "results_written": true,
      "counts": {
       "passed": 110,
@@ -25156,13 +24078,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:57:24.255940+00:00",
-   "elapsed_seconds": 123.7
+   "finished_at": "2026-11-04T13:00:46.474503+00:00",
+   "elapsed_seconds": 122.6
   },
   "VUL4J-44": {
    "vul_id": "VUL4J-44",
-   "started_at": "2026-10-27T11:57:24.504545+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:00:47.409440+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/owasp/esapi/codecs/PercentCodec.java",
    "pov_raw": [
     "org.OWASP.esapi.codecs.CodecImmunityTest#testImmuneEncode[PercentCodec %De]",
@@ -25189,7 +24111,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 21.6,
+    "seconds": 21.8,
     "results_written": true,
     "counts": {
      "passed": 583,
@@ -25207,7 +24129,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 21.1,
+     "seconds": 21.3,
      "results_written": true,
      "counts": {
       "passed": 586,
@@ -25217,7 +24139,7 @@
      "failing": []
     },
     {
-     "seconds": 22.3,
+     "seconds": 21.3,
      "results_written": true,
      "counts": {
       "passed": 586,
@@ -25227,7 +24149,7 @@
      "failing": []
     },
     {
-     "seconds": 21.7,
+     "seconds": 21.5,
      "results_written": true,
      "counts": {
       "passed": 586,
@@ -25870,13 +24792,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T11:59:05.929348+00:00",
-   "elapsed_seconds": 101.4
+   "finished_at": "2026-11-04T13:02:28.074754+00:00",
+   "elapsed_seconds": 100.7
   },
   "VUL4J-45": {
    "vul_id": "VUL4J-45",
-   "started_at": "2026-10-27T11:59:06.109333+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:02:29.028134+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "esigate-core/src/main/java/org/esigate/xml/XsltRenderer.java",
    "pov_raw": [
     "org.esigate.xml.XsltRendererTest#testSecureRendering"
@@ -25889,7 +24811,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 20.5,
+    "seconds": 17.3,
     "results_written": true,
     "counts": {
      "passed": 370,
@@ -25905,7 +24827,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 20.1,
+     "seconds": 17.4,
      "results_written": true,
      "counts": {
       "passed": 371,
@@ -25915,7 +24837,7 @@
      "failing": []
     },
     {
-     "seconds": 19.9,
+     "seconds": 17.6,
      "results_written": true,
      "counts": {
       "passed": 371,
@@ -25925,7 +24847,7 @@
      "failing": []
     },
     {
-     "seconds": 20.3,
+     "seconds": 17.4,
      "results_written": true,
      "counts": {
       "passed": 371,
@@ -26329,13 +25251,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:03:50.254261+00:00",
-   "elapsed_seconds": 284.1
+   "finished_at": "2026-11-04T13:06:49.547794+00:00",
+   "elapsed_seconds": 260.5
   },
   "VUL4J-47": {
    "vul_id": "VUL4J-47",
-   "started_at": "2026-10-27T12:03:50.464293+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:06:50.517478+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/com/fasterxml/jackson/dataformat/xml/XmlFactory.java",
    "pov_raw": [
     "com.fasterxml.jackson.dataformat.xml.SupportDTDDefaultsTest#testDTDAttempt"
@@ -26348,7 +25270,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 4.6,
+    "seconds": 4.4,
     "results_written": true,
     "counts": {
      "passed": 140,
@@ -26364,7 +25286,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 4.6,
+     "seconds": 4.2,
      "results_written": true,
      "counts": {
       "passed": 141,
@@ -26374,7 +25296,7 @@
      "failing": []
     },
     {
-     "seconds": 4.5,
+     "seconds": 4.1,
      "results_written": true,
      "counts": {
       "passed": 141,
@@ -26384,7 +25306,7 @@
      "failing": []
     },
     {
-     "seconds": 4.6,
+     "seconds": 4.1,
      "results_written": true,
      "counts": {
       "passed": 141,
@@ -26558,13 +25480,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:04:21.043732+00:00",
-   "elapsed_seconds": 30.6
+   "finished_at": "2026-11-04T13:07:19.561046+00:00",
+   "elapsed_seconds": 29.0
   },
   "VUL4J-48": {
    "vul_id": "VUL4J-48",
-   "started_at": "2026-10-27T12:04:21.215219+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:07:20.352543+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/primeframework/jwt/JWTDecoder.java",
    "pov_raw": [
     "org.primeframework.jwt.VulnerabilityTest#test_unsecuredJWT_validation"
@@ -26577,7 +25499,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 4.6,
+    "seconds": 6.7,
     "results_written": true,
     "counts": {
      "passed": 33,
@@ -26593,7 +25515,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 5.1,
+     "seconds": 5.5,
      "results_written": true,
      "counts": {
       "passed": 34,
@@ -26603,7 +25525,7 @@
      "failing": []
     },
     {
-     "seconds": 4.8,
+     "seconds": 4.7,
      "results_written": true,
      "counts": {
       "passed": 34,
@@ -26613,7 +25535,7 @@
      "failing": []
     },
     {
-     "seconds": 4.8,
+     "seconds": 3.9,
      "results_written": true,
      "counts": {
       "passed": 34,
@@ -26680,13 +25602,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:04:50.383067+00:00",
-   "elapsed_seconds": 29.2
+   "finished_at": "2026-11-04T13:07:50.938615+00:00",
+   "elapsed_seconds": 30.6
   },
   "VUL4J-49": {
    "vul_id": "VUL4J-49",
-   "started_at": "2026-10-27T12:04:50.613156+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:07:51.710380+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/primeframework/jwt/JWTDecoder.java",
    "pov_raw": [
     "org.primeframework.jwt.JWTTest#test_SingedWithoutSignature"
@@ -26699,7 +25621,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 4.7,
+    "seconds": 5.2,
     "results_written": true,
     "counts": {
      "passed": 30,
@@ -26715,7 +25637,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 5.3,
+     "seconds": 4.6,
      "results_written": true,
      "counts": {
       "passed": 31,
@@ -26725,7 +25647,7 @@
      "failing": []
     },
     {
-     "seconds": 4.9,
+     "seconds": 4.6,
      "results_written": true,
      "counts": {
       "passed": 31,
@@ -26735,7 +25657,7 @@
      "failing": []
     },
     {
-     "seconds": 5.3,
+     "seconds": 5.2,
      "results_written": true,
      "counts": {
       "passed": 31,
@@ -26799,13 +25721,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:05:20.179952+00:00",
-   "elapsed_seconds": 29.6
+   "finished_at": "2026-11-04T13:08:21.606428+00:00",
+   "elapsed_seconds": 29.9
   },
   "VUL4J-50": {
    "vul_id": "VUL4J-50",
-   "started_at": "2026-10-27T12:05:20.438903+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:08:22.535816+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "javamelody-core/src/main/java/net/bull/javamelody/HtmlSessionInformationsReport.java",
    "pov_raw": [
     "net.bull.javamelody.TestHtmlSessionInformationsReport#testCVE_2013_4378"
@@ -26818,7 +25740,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 25.3,
+    "seconds": 24.8,
     "results_written": true,
     "counts": {
      "passed": 276,
@@ -26834,16 +25756,6 @@
    ],
    "reference_runs": [
     {
-     "seconds": 25.7,
-     "results_written": true,
-     "counts": {
-      "passed": 277,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
      "seconds": 24.8,
      "results_written": true,
      "counts": {
@@ -26854,7 +25766,17 @@
      "failing": []
     },
     {
-     "seconds": 24.2,
+     "seconds": 24.0,
+     "results_written": true,
+     "counts": {
+      "passed": 277,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 24.4,
      "results_written": true,
      "counts": {
       "passed": 277,
@@ -27164,13 +26086,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:07:51.195899+00:00",
-   "elapsed_seconds": 150.8
+   "finished_at": "2026-11-04T13:10:49.333525+00:00",
+   "elapsed_seconds": 146.8
   },
   "VUL4J-52": {
    "vul_id": "VUL4J-52",
-   "started_at": "2026-10-27T12:07:51.379244+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:10:50.281076+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/kohsuke/groovy/sandbox/SandboxTransformer.java",
    "pov_raw": [
     "org.kohsuke.groovy.sandbox.FinalizerTest#testOverridingFinalizeForbidden"
@@ -27183,7 +26105,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 18.2,
+    "seconds": 18.6,
     "results_written": true,
     "counts": {
      "passed": 54,
@@ -27199,17 +26121,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 20.3,
-     "results_written": true,
-     "counts": {
-      "passed": 55,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
-     "seconds": 20.0,
+     "seconds": 19.8,
      "results_written": true,
      "counts": {
       "passed": 55,
@@ -27220,6 +26132,16 @@
     },
     {
      "seconds": 20.1,
+     "results_written": true,
+     "counts": {
+      "passed": 55,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 19.8,
      "results_written": true,
      "counts": {
       "passed": 55,
@@ -27307,13 +26229,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-27T12:09:18.927558+00:00",
-   "elapsed_seconds": 87.5
+   "finished_at": "2026-11-04T13:12:17.626399+00:00",
+   "elapsed_seconds": 87.3
   },
   "VUL4J-53": {
    "vul_id": "VUL4J-53",
-   "started_at": "2026-10-27T12:09:19.112873+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:12:18.496072+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/hudson/scheduler/CronTab.java",
    "pov_raw": [
     "hudson.scheduler.CronTabTest#testLongMonths"
@@ -27326,7 +26248,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 41.4,
+    "seconds": 48.3,
     "results_written": true,
     "counts": {
      "passed": 3501,
@@ -27342,7 +26264,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 41.9,
+     "seconds": 46.8,
      "results_written": true,
      "counts": {
       "passed": 3502,
@@ -27352,7 +26274,7 @@
      "failing": []
     },
     {
-     "seconds": 43.4,
+     "seconds": 41.5,
      "results_written": true,
      "counts": {
       "passed": 3502,
@@ -27362,7 +26284,7 @@
      "failing": []
     },
     {
-     "seconds": 42.3,
+     "seconds": 46.6,
      "results_written": true,
      "counts": {
       "passed": 3502,
@@ -30905,13 +29827,13 @@
    },
    "excluded_count": 7,
    "ok": true,
-   "finished_at": "2026-10-27T12:13:37.026803+00:00",
-   "elapsed_seconds": 257.9
+   "finished_at": "2026-11-04T13:16:55.173554+00:00",
+   "elapsed_seconds": 276.7
   },
   "VUL4J-55": {
    "vul_id": "VUL4J-55",
-   "started_at": "2026-10-27T12:13:38.030165+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:16:57.226177+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "core/src/main/java/hudson/scheduler/CronTab.java",
    "pov_raw": [
     "hudson.scheduler.CronTabTest#testCeilLongMonths"
@@ -30924,7 +29846,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 44.8,
+    "seconds": 40.5,
     "results_written": true,
     "counts": {
      "passed": 3631,
@@ -30940,27 +29862,27 @@
    ],
    "reference_runs": [
     {
-     "seconds": 38.1,
-     "results_written": true,
-     "counts": {
-      "passed": 3632,
-      "failed": 0,
-      "skipped": 13
-     },
-     "failing": []
-    },
-    {
-     "seconds": 38.4,
-     "results_written": true,
-     "counts": {
-      "passed": 3632,
-      "failed": 0,
-      "skipped": 13
-     },
-     "failing": []
-    },
-    {
      "seconds": 38.3,
+     "results_written": true,
+     "counts": {
+      "passed": 3632,
+      "failed": 0,
+      "skipped": 13
+     },
+     "failing": []
+    },
+    {
+     "seconds": 38.5,
+     "results_written": true,
+     "counts": {
+      "passed": 3632,
+      "failed": 0,
+      "skipped": 13
+     },
+     "failing": []
+    },
+    {
+     "seconds": 41.5,
      "results_written": true,
      "counts": {
       "passed": 3632,
@@ -34639,13 +33561,13 @@
    },
    "excluded_count": 13,
    "ok": true,
-   "finished_at": "2026-10-27T12:17:38.521014+00:00",
-   "elapsed_seconds": 240.5
+   "finished_at": "2026-11-04T13:20:55.652865+00:00",
+   "elapsed_seconds": 238.4
   },
   "VUL4J-57": {
    "vul_id": "VUL4J-57",
-   "started_at": "2026-10-28T14:43:04.952891+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:20:57.108995+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/jenkinsci/plugins/workflow/support/steps/build/BuildTriggerStepExecution.java",
    "pov_raw": [
     "org.jenkinsci.plugins.workflow.support.steps.build.BuildTriggerStepTest#permissions"
@@ -34658,7 +33580,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 89.2,
+    "seconds": 96.7,
     "results_written": true,
     "counts": {
      "passed": 28,
@@ -34674,7 +33596,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 81.8,
+     "seconds": 84.7,
      "results_written": true,
      "counts": {
       "passed": 29,
@@ -34684,7 +33606,7 @@
      "failing": []
     },
     {
-     "seconds": 82.9,
+     "seconds": 80.0,
      "results_written": true,
      "counts": {
       "passed": 29,
@@ -34694,7 +33616,7 @@
      "failing": []
     },
     {
-     "seconds": 80.7,
+     "seconds": 79.4,
      "results_written": true,
      "counts": {
       "passed": 29,
@@ -34756,13 +33678,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-28T14:48:55.147467+00:00",
-   "elapsed_seconds": 350.2
+   "finished_at": "2026-11-04T13:26:56.503852+00:00",
+   "elapsed_seconds": 359.4
   },
   "VUL4J-59": {
    "vul_id": "VUL4J-59",
-   "started_at": "2026-10-28T14:48:55.399294+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:26:57.380469+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/jsoup/parser/TokeniserState.java",
    "pov_raw": [
     "org.jsoup.parser.XmlTreeBuilderTest#testDoesHandleEOFInTag"
@@ -34775,7 +33697,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 3.3,
+    "seconds": 2.9,
     "results_written": true,
     "counts": {
      "passed": 453,
@@ -34791,7 +33713,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 4.3,
+     "seconds": 3.0,
      "results_written": true,
      "counts": {
       "passed": 454,
@@ -34801,7 +33723,7 @@
      "failing": []
     },
     {
-     "seconds": 2.6,
+     "seconds": 2.9,
      "results_written": true,
      "counts": {
       "passed": 454,
@@ -34811,7 +33733,7 @@
      "failing": []
     },
     {
-     "seconds": 3.6,
+     "seconds": 2.8,
      "results_written": true,
      "counts": {
       "passed": 454,
@@ -35302,13 +34224,13 @@
    },
    "excluded_count": 3,
    "ok": true,
-   "finished_at": "2026-10-28T14:49:24.134280+00:00",
-   "elapsed_seconds": 28.7
+   "finished_at": "2026-11-04T13:27:22.261181+00:00",
+   "elapsed_seconds": 24.9
   },
   "VUL4J-60": {
    "vul_id": "VUL4J-60",
-   "started_at": "2026-10-28T14:49:24.374582+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:27:23.206540+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/owasp/validator/html/scan/MagicSAXFilter.java",
    "pov_raw": [
     "org.owasp.validator.html.test.AntiSamyTest#testIssue2"
@@ -35321,7 +34243,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 8.6,
+    "seconds": 7.1,
     "results_written": true,
     "counts": {
      "passed": 56,
@@ -35337,7 +34259,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 7.7,
+     "seconds": 7.2,
      "results_written": true,
      "counts": {
       "passed": 57,
@@ -35347,7 +34269,7 @@
      "failing": []
     },
     {
-     "seconds": 7.4,
+     "seconds": 7.1,
      "results_written": true,
      "counts": {
       "passed": 57,
@@ -35447,13 +34369,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-28T14:50:04.565294+00:00",
-   "elapsed_seconds": 40.2
+   "finished_at": "2026-11-04T13:27:59.321614+00:00",
+   "elapsed_seconds": 36.1
   },
   "VUL4J-61": {
    "vul_id": "VUL4J-61",
-   "started_at": "2026-10-28T14:50:04.882032+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T13:28:00.181929+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/apoc/load/Xml.java",
    "pov_raw": [
     "apoc.load.XmlTest#testLoadXmlPreventXXEVulnerabilityThrowsQueryExecutionException"
@@ -35466,21 +34388,33 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 704.1,
+    "seconds": 518.5,
     "results_written": true,
     "counts": {
-     "passed": 1034,
-     "failed": 8,
-     "skipped": 49
+     "passed": 1019,
+     "failed": 20,
+     "skipped": 52
     },
     "failing": [
+     "apoc.load.LoadCsvTest#testLoadCsvByUrl",
+     "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect",
+     "apoc.load.LoadCsvTest#testLoadCsvTarByUrl",
+     "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl",
+     "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl",
+     "apoc.load.LoadCsvTest#testLoadCsvZipByUrl",
+     "apoc.load.LoadJsonTest#testLoadJsonTarByUrl",
+     "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl",
+     "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl",
+     "apoc.load.LoadJsonTest#testLoadJsonZipByUrl",
      "apoc.load.LoadLdapTest#testLoadLDAP",
      "apoc.load.LoadS3Test#testLoadCsvS3",
      "apoc.load.LoadS3Test#testLoadJsonS3",
      "apoc.load.LoadS3Test#testLoadXmlS3",
+     "apoc.load.XmlTest#testLoadXmlFromTarByUrl",
+     "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl",
+     "apoc.load.XmlTest#testLoadXmlFromTgzByUrl",
+     "apoc.load.XmlTest#testLoadXmlFromZipByUrl",
      "apoc.load.XmlTest#testLoadXmlPreventXXEVulnerabilityThrowsQueryExecutionException",
-     "apoc.periodic.PeriodicTest#testTerminateRockNRoll",
-     "apoc.spatial.GeocodeTest#testGeocodeOSM",
      "apoc.temporal.TemporalProceduresTest#shouldFormatTime"
     ]
    },
@@ -35489,54 +34423,94 @@
    ],
    "reference_runs": [
     {
-     "seconds": 721.7,
+     "seconds": 521.7,
      "results_written": true,
      "counts": {
-      "passed": 1036,
-      "failed": 6,
-      "skipped": 49
+      "passed": 1020,
+      "failed": 19,
+      "skipped": 52
      },
      "failing": [
+      "apoc.load.LoadCsvTest#testLoadCsvByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect",
+      "apoc.load.LoadCsvTest#testLoadCsvTarByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvZipByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonZipByUrl",
       "apoc.load.LoadLdapTest#testLoadLDAP",
       "apoc.load.LoadS3Test#testLoadCsvS3",
       "apoc.load.LoadS3Test#testLoadJsonS3",
       "apoc.load.LoadS3Test#testLoadXmlS3",
-      "apoc.spatial.GeocodeTest#testGeocodeOSM",
+      "apoc.load.XmlTest#testLoadXmlFromTarByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTgzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromZipByUrl",
       "apoc.temporal.TemporalProceduresTest#shouldFormatTime"
      ]
     },
     {
-     "seconds": 717.5,
+     "seconds": 517.3,
      "results_written": true,
      "counts": {
-      "passed": 1035,
-      "failed": 7,
-      "skipped": 49
+      "passed": 1020,
+      "failed": 19,
+      "skipped": 52
      },
      "failing": [
+      "apoc.load.LoadCsvTest#testLoadCsvByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect",
+      "apoc.load.LoadCsvTest#testLoadCsvTarByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvZipByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonZipByUrl",
       "apoc.load.LoadLdapTest#testLoadLDAP",
       "apoc.load.LoadS3Test#testLoadCsvS3",
       "apoc.load.LoadS3Test#testLoadJsonS3",
       "apoc.load.LoadS3Test#testLoadXmlS3",
+      "apoc.load.XmlTest#testLoadXmlFromTarByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTgzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromZipByUrl",
+      "apoc.temporal.TemporalProceduresTest#shouldFormatTime"
+     ]
+    },
+    {
+     "seconds": 515.4,
+     "results_written": true,
+     "counts": {
+      "passed": 1018,
+      "failed": 21,
+      "skipped": 52
+     },
+     "failing": [
+      "apoc.export.graphml.ExportGraphMLTest#testExportAllGraphML",
+      "apoc.load.LoadCsvTest#testLoadCsvByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect",
+      "apoc.load.LoadCsvTest#testLoadCsvTarByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl",
+      "apoc.load.LoadCsvTest#testLoadCsvZipByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl",
+      "apoc.load.LoadJsonTest#testLoadJsonZipByUrl",
+      "apoc.load.LoadLdapTest#testLoadLDAP",
+      "apoc.load.LoadS3Test#testLoadCsvS3",
+      "apoc.load.LoadS3Test#testLoadJsonS3",
+      "apoc.load.LoadS3Test#testLoadXmlS3",
+      "apoc.load.XmlTest#testLoadXmlFromTarByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromTgzByUrl",
+      "apoc.load.XmlTest#testLoadXmlFromZipByUrl",
       "apoc.periodic.PeriodicTest#testTerminateCommit",
-      "apoc.spatial.GeocodeTest#testGeocodeOSM",
-      "apoc.temporal.TemporalProceduresTest#shouldFormatTime"
-     ]
-    },
-    {
-     "seconds": 719.2,
-     "results_written": true,
-     "counts": {
-      "passed": 1036,
-      "failed": 6,
-      "skipped": 49
-     },
-     "failing": [
-      "apoc.load.LoadLdapTest#testLoadLDAP",
-      "apoc.load.LoadS3Test#testLoadCsvS3",
-      "apoc.load.LoadS3Test#testLoadJsonS3",
-      "apoc.load.LoadS3Test#testLoadXmlS3",
-      "apoc.spatial.GeocodeTest#testGeocodeOSM",
       "apoc.temporal.TemporalProceduresTest#shouldFormatTime"
      ]
     }
@@ -35989,7 +34963,6 @@
     "apoc.export.cypher.ExportCypherTest#testExportQueryCypherPlainFormat",
     "apoc.export.cypher.ExportCypherTest#testExportSchemaCypher",
     "apoc.export.cypher.ExportCypherTest#testExportSchemaCypherShell",
-    "apoc.export.graphml.ExportGraphMLTest#testExportAllGraphML",
     "apoc.export.graphml.ExportGraphMLTest#testExportGraphGraphML",
     "apoc.export.graphml.ExportGraphMLTest#testExportGraphGraphMLTypes",
     "apoc.export.graphml.ExportGraphMLTest#testImportGraphML",
@@ -36097,8 +35070,6 @@
     "apoc.load.JdbcTest#testLoadJdbcUpdate",
     "apoc.load.JdbcTest#testLoadJdbcUpdateParams",
     "apoc.load.LoadCsvTest#testLoadCsv",
-    "apoc.load.LoadCsvTest#testLoadCsvByUrl",
-    "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect",
     "apoc.load.LoadCsvTest#testLoadCsvColonSeparator",
     "apoc.load.LoadCsvTest#testLoadCsvIgnoreFields",
     "apoc.load.LoadCsvTest#testLoadCsvNoFailOnError",
@@ -36106,14 +35077,10 @@
     "apoc.load.LoadCsvTest#testLoadCsvSkip",
     "apoc.load.LoadCsvTest#testLoadCsvTabSeparator",
     "apoc.load.LoadCsvTest#testLoadCsvTar",
-    "apoc.load.LoadCsvTest#testLoadCsvTarByUrl",
     "apoc.load.LoadCsvTest#testLoadCsvTarGz",
-    "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl",
     "apoc.load.LoadCsvTest#testLoadCsvTgz",
-    "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl",
     "apoc.load.LoadCsvTest#testLoadCsvWithEmptyColumns",
     "apoc.load.LoadCsvTest#testLoadCsvZip",
-    "apoc.load.LoadCsvTest#testLoadCsvZipByUrl",
     "apoc.load.LoadCsvTest#testMapping",
     "apoc.load.LoadCsvTest#testPipeArraySeparator",
     "apoc.load.LoadHdfsTest#testLoadCsvFromHDFS",
@@ -36128,13 +35095,9 @@
     "apoc.load.LoadJsonTest#testLoadJsonPath",
     "apoc.load.LoadJsonTest#testLoadJsonPathRoot",
     "apoc.load.LoadJsonTest#testLoadJsonTar",
-    "apoc.load.LoadJsonTest#testLoadJsonTarByUrl",
     "apoc.load.LoadJsonTest#testLoadJsonTarGz",
-    "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl",
     "apoc.load.LoadJsonTest#testLoadJsonTgz",
-    "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl",
     "apoc.load.LoadJsonTest#testLoadJsonZip",
-    "apoc.load.LoadJsonTest#testLoadJsonZipByUrl",
     "apoc.load.LoadJsonTest#testLoadMultiJson",
     "apoc.load.LoadJsonTest#testLoadMultiJsonPaths",
     "apoc.load.LoadXlsTest#testLoadBrokenHeader",
@@ -36150,13 +35113,9 @@
     "apoc.load.XmlTest#testFilterIntoCollection",
     "apoc.load.XmlTest#testLoadXml",
     "apoc.load.XmlTest#testLoadXmlFromTar",
-    "apoc.load.XmlTest#testLoadXmlFromTarByUrl",
     "apoc.load.XmlTest#testLoadXmlFromTarGz",
-    "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl",
     "apoc.load.XmlTest#testLoadXmlFromTgz",
-    "apoc.load.XmlTest#testLoadXmlFromTgzByUrl",
     "apoc.load.XmlTest#testLoadXmlFromZip",
-    "apoc.load.XmlTest#testLoadXmlFromZipByUrl",
     "apoc.load.XmlTest#testLoadXmlNoFailOnError",
     "apoc.load.XmlTest#testLoadXmlSimple",
     "apoc.load.XmlTest#testLoadXmlWithImport",
@@ -36456,8 +35415,6 @@
     "apoc.search.ParallelNodeSearchTest#testMultiSearchNodeNumberExactComparison",
     "apoc.search.ParallelNodeSearchTest#testMultiSearchNodeReduced",
     "apoc.spatial.DistanceTest#testSortingPathsOnDistance",
-    "apoc.spatial.GeocodeTest#testReverseGeocodeGoogle",
-    "apoc.spatial.GeocodeTest#testReverseGeocodeOSM",
     "apoc.spatial.SpatialTest#testAllTheThings",
     "apoc.spatial.SpatialTest#testGeocodePointAndDistance",
     "apoc.spatial.SpatialTest#testGraphRefactoring",
@@ -36595,7 +35552,7 @@
     "apoc.warmup.WarmupTest#testWarmupIndexes",
     "apoc.warmup.WarmupTest#testWarmupProperties"
    ],
-   "judged_count": 1034,
+   "judged_count": 1017,
    "excluded": {
     "apoc.algo.PageRankTest#shouldGetPageRankWithCypherExpectedResultWithoutNodesParallel": "skipped on the reference fix",
     "apoc.couchbase.CouchbaseManagerIT#testGetConnectionWithHost": "skipped on the reference fix",
@@ -36607,6 +35564,7 @@
     "apoc.cypher.CypherTest#testSchemaRunFile": "skipped on the reference fix",
     "apoc.cypher.CypherTest#testSchemaRunFiles": "skipped on the reference fix",
     "apoc.cypher.CypherTest#testSchemaRunMixedSchemaAndDataFile": "skipped on the reference fix",
+    "apoc.export.graphml.ExportGraphMLTest#testExportAllGraphML": "inconsistent on the reference fix: passed,passed,failed",
     "apoc.generate.BarabasiAlbertGeneratorTest#shouldGenerateRelationshipsForLargeGraphInAReasonableAmountOfTime": "skipped on the reference fix",
     "apoc.generate.ErdosRenyiGeneratorTest#shouldGenerateRelationshipsForLargeGraphInAReasonableAmountOfTime": "skipped on the reference fix",
     "apoc.generate.ErdosRenyiGeneratorTest#shouldGenerateRelationshipsForLargeGraphInAReasonableAmountOfTime2": "skipped on the reference fix",
@@ -36628,13 +35586,27 @@
     "apoc.index.SchemaIndexTest#testOrderedRangeNumbersUpperBound": "skipped on the reference fix",
     "apoc.index.SchemaIndexTest#testOrderedRangeText": "skipped on the reference fix",
     "apoc.index.SchemaIndexTest#testRelated": "skipped on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvByUrl": "failed on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvByUrlRedirect": "failed on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvTarByUrl": "failed on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvTarGzByUrl": "failed on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvTgzByUrl": "failed on the reference fix",
+    "apoc.load.LoadCsvTest#testLoadCsvZipByUrl": "failed on the reference fix",
     "apoc.load.LoadJsonTest#testLoadJsonGraphCommons": "skipped on the reference fix",
+    "apoc.load.LoadJsonTest#testLoadJsonTarByUrl": "failed on the reference fix",
+    "apoc.load.LoadJsonTest#testLoadJsonTarGzByUrl": "failed on the reference fix",
+    "apoc.load.LoadJsonTest#testLoadJsonTgzByUrl": "failed on the reference fix",
+    "apoc.load.LoadJsonTest#testLoadJsonZipByUrl": "failed on the reference fix",
     "apoc.load.LoadLdapTest#testLoadLDAP": "failed on the reference fix",
     "apoc.load.LoadS3Test#testLoadCsvS3": "failed on the reference fix",
     "apoc.load.LoadS3Test#testLoadJsonS3": "failed on the reference fix",
     "apoc.load.LoadS3Test#testLoadXmlS3": "failed on the reference fix",
     "apoc.load.LoadXlsTest#testLoadCsvByUrl": "skipped on the reference fix",
     "apoc.load.LoadXlsTest#testLoadCsvByUrlRedirect": "skipped on the reference fix",
+    "apoc.load.XmlTest#testLoadXmlFromTarByUrl": "failed on the reference fix",
+    "apoc.load.XmlTest#testLoadXmlFromTarGzByUrl": "failed on the reference fix",
+    "apoc.load.XmlTest#testLoadXmlFromTgzByUrl": "failed on the reference fix",
+    "apoc.load.XmlTest#testLoadXmlFromZipByUrl": "failed on the reference fix",
     "apoc.mongodb.MongoDBTest#testCompatibleValues": "skipped on the reference fix",
     "apoc.mongodb.MongoDBTest#testCount": "skipped on the reference fix",
     "apoc.mongodb.MongoDBTest#testCountAll": "skipped on the reference fix",
@@ -36648,21 +35620,23 @@
     "apoc.mongodb.MongoDBTest#testObjectIdtoStringMapping": "skipped on the reference fix",
     "apoc.mongodb.MongoDBTest#testUpdate": "skipped on the reference fix",
     "apoc.monitor.LockProcedureTest#testGetLockInfo": "skipped on the reference fix",
-    "apoc.periodic.PeriodicTest#testTerminateCommit": "inconsistent on the reference fix: passed,failed,passed",
-    "apoc.spatial.GeocodeTest#testGeocodeOSM": "failed on the reference fix",
+    "apoc.periodic.PeriodicTest#testTerminateCommit": "inconsistent on the reference fix: passed,passed,failed",
+    "apoc.spatial.GeocodeTest#testGeocodeOSM": "skipped on the reference fix",
     "apoc.spatial.GeocodeTest#testGeocodeOpenCage": "skipped on the reference fix",
+    "apoc.spatial.GeocodeTest#testReverseGeocodeGoogle": "skipped on the reference fix",
+    "apoc.spatial.GeocodeTest#testReverseGeocodeOSM": "skipped on the reference fix",
     "apoc.spatial.GeocodeTest#testReverseGeocodeOpenCage": "skipped on the reference fix",
     "apoc.temporal.TemporalProceduresTest#shouldFormatTime": "failed on the reference fix"
    },
-   "excluded_count": 56,
+   "excluded_count": 73,
    "ok": true,
-   "finished_at": "2026-10-28T15:38:22.830663+00:00",
-   "elapsed_seconds": 2897.9
+   "finished_at": "2026-11-04T14:03:06.946915+00:00",
+   "elapsed_seconds": 2106.8
   },
   "VUL4J-62": {
    "vul_id": "VUL4J-62",
-   "started_at": "2026-10-28T15:38:23.180245+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:03:07.915430+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "enterprise/security/src/main/java/org/neo4j/server/security/enterprise/auth/LdapRealm.java",
    "pov_raw": [
     "org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls"
@@ -36675,7 +35649,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 2.8,
+    "seconds": 2.2,
     "results_written": true,
     "counts": {
      "passed": 0,
@@ -36689,7 +35663,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 2.9,
+     "seconds": 2.0,
      "results_written": true,
      "counts": {
       "passed": 0,
@@ -36699,7 +35673,7 @@
      "failing": []
     },
     {
-     "seconds": 2.7,
+     "seconds": 2.0,
      "results_written": true,
      "counts": {
       "passed": 0,
@@ -36709,7 +35683,7 @@
      "failing": []
     },
     {
-     "seconds": 2.7,
+     "seconds": 2.0,
      "results_written": true,
      "counts": {
       "passed": 0,
@@ -36726,13 +35700,13 @@
    ],
    "ok": false,
    "message": "PoV tests not among the tests that ran: org.neo4j.server.security.enterprise.auth.integration.bolt.LdapAuthIT#shouldFailLoginWrongPasswordWithLdapOnlyUsingStartTls",
-   "finished_at": "2026-10-28T15:53:18.656169+00:00",
-   "elapsed_seconds": 895.5
+   "finished_at": "2026-11-04T14:15:20.454567+00:00",
+   "elapsed_seconds": 732.5
   },
   "VUL4J-66": {
    "vul_id": "VUL4J-66",
-   "started_at": "2026-10-28T15:53:19.935240+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:15:22.102347+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "resteasy-core/src/main/java/org/jboss/resteasy/plugins/delegates/MediaTypeHeaderDelegate.java",
    "pov_raw": [
     "org.jboss.resteasy.test.mediatype.MediaTypeHeaderTest#testNewLineInHeaderValueIsRejected"
@@ -36745,7 +35719,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 10.7,
+    "seconds": 8.1,
     "results_written": true,
     "counts": {
      "passed": 304,
@@ -36761,34 +35735,43 @@
    ],
    "reference_runs": [
     {
-     "seconds": 803.3,
+     "seconds": 598.5,
      "results_written": true,
      "counts": {
-      "passed": 2652,
-      "failed": 0,
+      "passed": 2558,
+      "failed": 2,
       "skipped": 75
      },
-     "failing": []
+     "failing": [
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet1",
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet2"
+     ]
     },
     {
-     "seconds": 809.8,
+     "seconds": 600.8,
      "results_written": true,
      "counts": {
-      "passed": 2652,
-      "failed": 0,
+      "passed": 2558,
+      "failed": 2,
       "skipped": 75
      },
-     "failing": []
+     "failing": [
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet1",
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet2"
+     ]
     },
     {
-     "seconds": 811.8,
+     "seconds": 599.7,
      "results_written": true,
      "counts": {
-      "passed": 2652,
-      "failed": 0,
+      "passed": 2558,
+      "failed": 2,
       "skipped": 75
      },
-     "failing": []
+     "failing": [
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet1",
+      "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet2"
+     ]
     }
    ],
    "pov": [
@@ -36810,14 +35793,6 @@
     }
    ],
    "judged": [
-    "org.jboss.resteasy.embedded.test.core.basic.ApplicationTest#testExplicitA",
-    "org.jboss.resteasy.embedded.test.core.basic.ApplicationTest#testExplicitB",
-    "org.jboss.resteasy.embedded.test.core.basic.ApplicationTest#testMapped",
-    "org.jboss.resteasy.embedded.test.core.basic.ApplicationTest#testScanned",
-    "org.jboss.resteasy.embedded.test.core.interceptors.ReaderContextTest#readerContextOnClientTest",
-    "org.jboss.resteasy.embedded.test.interceptor.ClientRequestFilterRegistrationTest#filterRegisteredTest",
-    "org.jboss.resteasy.embedded.test.interceptor.PriorityExecutionTest#testPriority",
-    "org.jboss.resteasy.embedded.test.providers.custom.WriterNotBuiltinTest#test1New",
     "org.jboss.resteasy.test.asynch.AsyncGenericEntityTest#testCalls",
     "org.jboss.resteasy.test.asynch.AsyncInjectionTest#testAsyncInjection",
     "org.jboss.resteasy.test.asynch.AsyncInjectionTest#testAsyncInjectionException",
@@ -37575,8 +36550,6 @@
     "org.jboss.resteasy.test.microprofile.config.MicroProfileConfigServletTest#testSystemInject",
     "org.jboss.resteasy.test.microprofile.config.MicroProfileConfigServletTest#testSystemProgrammatic",
     "org.jboss.resteasy.test.microprofile.config.MicroProfileConfigUseGlobalTest#testMultipleAppsUseGlobal",
-    "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet1",
-    "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet2",
     "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyTest#testAsyncClient404",
     "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyTest#testGetClient",
     "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyTest#testGetCompletionStage",
@@ -37801,9 +36774,6 @@
     "org.jboss.resteasy.test.providers.jaxb.XmlJaxbProvidersTest#testGetOrderWithParamsToOrder",
     "org.jboss.resteasy.test.providers.jaxb.XmlJaxbProvidersTest#testUnmarshalOrder",
     "org.jboss.resteasy.test.providers.jaxb.XmlJaxbProvidersTest#testUpdateOrder",
-    "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingAnnotationsJacksonTest#jsonbNotOnServerNotOnClientTest",
-    "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingAnnotationsJacksonTest#jsonbOnServerNotOnClientTest",
-    "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingAnnotationsJacksonTest#negativeScenarioOnServer",
     "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingDebugLoggingTest#exceptionDuringClientReceive",
     "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingDebugLoggingTest#exceptionDuringClientSend",
     "org.jboss.resteasy.test.providers.jsonb.basic.JsonBindingDebugLoggingTest#exceptionDuringServerReceive",
@@ -37934,8 +36904,6 @@
     "org.jboss.resteasy.test.providers.sse.SseEventSourceTest#testSseEventSourceOnEventCallback",
     "org.jboss.resteasy.test.providers.sse.SseEventSourceTest#testSseEventSourceOnEventOnErrorCallback",
     "org.jboss.resteasy.test.providers.sse.SseEventSourceTest#testSseEventSourceOnEventOnErrorOnCompleteCallback",
-    "org.jboss.resteasy.test.providers.sse.SseJsonEventTest#testEventWithCustomProvider",
-    "org.jboss.resteasy.test.providers.sse.SseJsonEventTest#testWithoutProvider",
     "org.jboss.resteasy.test.providers.sse.SsePostResourceMethodInvokerTest#Should_Return200OkResponse_When_ResourceMethodExitFirst",
     "org.jboss.resteasy.test.providers.sse.SsePostResourceMethodInvokerTest#Should_ThrowIntenalServerError_When_AnyFilterAfterSseFilterThrowsIOException",
     "org.jboss.resteasy.test.providers.sse.SseReconnectTest#testReconnectDelayIsNotSet",
@@ -39122,85 +38090,6 @@
     "org.jboss.resteasy.test.security.TwoSecurityDomainsTest#testOneClientTwoDeploymentsTwoSecurityDomains",
     "org.jboss.resteasy.test.sourceProvider.SourceProviderTest#testSourceWithInputStream",
     "org.jboss.resteasy.test.sourceProvider.SourceProviderTest#testSourceWithStringReader",
-    "org.jboss.resteasy.test.spring.deployment.AddSpringResteasyAsResourceRootTest#testDeploymentWithSpringContextLoaderListenerAddsResourceRoot",
-    "org.jboss.resteasy.test.spring.deployment.AddSpringResteasyAsResourceRootTest#testDeploymentWithSpringMvcDispatcherAddsResourceRoot",
-    "org.jboss.resteasy.test.spring.deployment.AddSpringResteasyAsResourceRootTest#testDeploymentWithoutSpringMvcDispatcherOrListenerDoesNotAddResourceRoot",
-    "org.jboss.resteasy.test.spring.deployment.ContactsDependenciesInDeploymentTest#testData",
-    "org.jboss.resteasy.test.spring.deployment.ContextRefreshDependenciesInDeploymentTest#testContextRefresh",
-    "org.jboss.resteasy.test.spring.deployment.JavaConfigDependenciesInDeploymentTest#test",
-    "org.jboss.resteasy.test.spring.deployment.JaxrsWithSpringMVCTest#testAllEndpoints",
-    "org.jboss.resteasy.test.spring.deployment.RequestScopedBeanDependenciesInDeploymentTest#testBean",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testAutoProxy",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testAutowiredProvider",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testProcessor",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testPrototyped",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testRegistration",
-    "org.jboss.resteasy.test.spring.deployment.SpringBeanProcessorDependenciesInDeploymentTest#testScanned",
-    "org.jboss.resteasy.test.spring.deployment.SpringLocatingResourceDependenciesInDeploymentTest#testLocatingResource",
-    "org.jboss.resteasy.test.spring.deployment.SpringLocatingResourceDependenciesInDeploymentTest#testNoDefaultsResource",
-    "org.jboss.resteasy.test.spring.deployment.SpringWebappContextDependenciesInDeploymentTest#testConcurrent",
-    "org.jboss.resteasy.test.spring.deployment.SpringWebappContextDependenciesInDeploymentTest#testGetHeaders",
-    "org.jboss.resteasy.test.spring.deployment.SpringWebappContextDependenciesInDeploymentTest#testGetUri",
-    "org.jboss.resteasy.test.spring.deployment.SpringWebappContextDependenciesInDeploymentTest#testParamsDontStick",
-    "org.jboss.resteasy.test.spring.deployment.TypeMappingDependenciesInDeploymentTest#test",
-    "org.jboss.resteasy.test.spring.inmodule.AddSpringResteasyAsResourceRootInModuleTest#testDeploymentWithSpringContextLoaderListenerAddsResourceRoot",
-    "org.jboss.resteasy.test.spring.inmodule.AddSpringResteasyAsResourceRootInModuleTest#testDeploymentWithSpringMvcDispatcherAddsResourceRoot",
-    "org.jboss.resteasy.test.spring.inmodule.AddSpringResteasyAsResourceRootInModuleTest#testDeploymentWithoutSpringMvcDispatcherOrListenerDoesNotAddResourceRoot",
-    "org.jboss.resteasy.test.spring.inmodule.ContactsTest#testData",
-    "org.jboss.resteasy.test.spring.inmodule.ContextRefreshTest#testContextRefresh",
-    "org.jboss.resteasy.test.spring.inmodule.JavaConfigTest#test",
-    "org.jboss.resteasy.test.spring.inmodule.RESTEasy828Test#testResteasy828",
-    "org.jboss.resteasy.test.spring.inmodule.RequestScopedBeanTest#testBean",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testAutoProxy",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testAutowiredProvider",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testProcessor",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testPrototyped",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testRegistration",
-    "org.jboss.resteasy.test.spring.inmodule.SpringBeanProcessorTest#testScanned",
-    "org.jboss.resteasy.test.spring.inmodule.SpringLocatingResourceTest#testLocatingResource",
-    "org.jboss.resteasy.test.spring.inmodule.SpringLocatingResourceTest#testNoDefaultsResource",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testBadRequestException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testForbiddenException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testMethodNotAllowedException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testNotAcceptableException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testNotAuthorizedException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testNotFoundException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testNotSupportedException",
-    "org.jboss.resteasy.test.spring.inmodule.SpringMvcHttpResponseCodesTest#testOK",
-    "org.jboss.resteasy.test.spring.inmodule.SpringWebappContextTest#testConcurrent",
-    "org.jboss.resteasy.test.spring.inmodule.SpringWebappContextTest#testGetHeaders",
-    "org.jboss.resteasy.test.spring.inmodule.SpringWebappContextTest#testGetUri",
-    "org.jboss.resteasy.test.spring.inmodule.SpringWebappContextTest#testParamsDontStick",
-    "org.jboss.resteasy.test.spring.inmodule.TypeMappingTest#test",
-    "org.jboss.resteasy.test.spring.unit.MediaTypePropertyEditorTest#testGetAsText",
-    "org.jboss.resteasy.test.spring.unit.MediaTypePropertyEditorTest#testGetAsTextCustom",
-    "org.jboss.resteasy.test.spring.unit.MediaTypePropertyEditorTest#testSetAsText",
-    "org.jboss.resteasy.test.spring.unit.MediaTypePropertyEditorTest#testSetAsTextCustom",
-    "org.jboss.resteasy.test.spring.unit.MediaTypePropertyEditorTest#testSetAsTextWithCharset",
-    "org.jboss.resteasy.test.spring.unit.SpringContextLoaderTest#testThatDeploymentIsRequired",
-    "org.jboss.resteasy.test.spring.unit.SpringContextLoaderTest#testThatWeAddedAnApplicationListener",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyControllerWithoutRequestMapping",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyEmptyContentResponseEntity",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyEmptyContentResponseStatus",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyGetToMethodWithoutForwardSlash",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyGetUsingDefaultValue",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyGetWithQueryParam",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyHttpServletRequestParameterInjection",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonContentResponseEntity",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonContentResponseEntityWithoutType",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonGetWithPathParamAndGettingMapping",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonOnRequestMappingGetWithPathParamAndRequestMapping",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonPostWithPostMapping",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyJsonPostWithRequestMapping",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyMultipleInputAndJsonResponse",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathVariableTypeConversion",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathWithAntStyleWildCard",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathWithCharacterWildCard",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathWithMultipleCharacterWildCards",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathWithMultipleWildcards",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyPathWithWildcard",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyStringContentResponseEntity",
-    "org.jboss.resteasy.test.spring.web.deployment.SpringWebTest#verifyStringResponseStatus",
     "org.jboss.resteasy.test.stream.StreamRawFlowableRxJava2Test#testByte",
     "org.jboss.resteasy.test.stream.StreamRawFlowableRxJava2Test#testByteArray",
     "org.jboss.resteasy.test.stream.StreamRawFlowableRxJava2Test#testChar",
@@ -39462,13 +38351,15 @@
     "org.jboss.resteasy.test.xxe.XxeSecureProcessingTest#testXmlRootElementWithoutExternalExpansionBig",
     "org.jboss.resteasy.test.xxe.XxeSecureProcessingTest#testXmlRootElementWithoutExternalExpansionSmall"
    ],
-   "judged_count": 2651,
+   "judged_count": 2557,
    "excluded": {
     "org.jboss.resteasy.test.client.AsyncBenchTest#org.jboss.resteasy.test.client.AsyncBenchTest": "skipped on the reference fix",
     "org.jboss.resteasy.test.client.EntityBufferingInFileTest#testGigabytes1": "skipped on the reference fix",
     "org.jboss.resteasy.test.client.InContainerClientBenchTest#org.jboss.resteasy.test.client.InContainerClientBenchTest": "skipped on the reference fix",
     "org.jboss.resteasy.test.core.spi.ResourceClassProcessorBasicTest#proxyTest": "skipped on the reference fix",
     "org.jboss.resteasy.test.injection.PostConstructInjectionTest#TestPostInjectCdiOnEJB": "skipped on the reference fix",
+    "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet1": "failed on the reference fix",
+    "org.jboss.resteasy.test.microprofile.restclient.RestClientProxyRedeployTest#testGet2": "failed on the reference fix",
     "org.jboss.resteasy.test.providers.jackson2.JacksonJaxbCoexistenceTest#org.jboss.resteasy.test.providers.jackson2.JacksonJaxbCoexistenceTest": "skipped on the reference fix",
     "org.jboss.resteasy.test.providers.sse.SseBroadcastTest#testBroadcasterOnCloseCallbackCloseClientConnection": "skipped on the reference fix",
     "org.jboss.resteasy.test.providers.sse.SseBroadcastTest#testBroadcasterOnCloseCallbackCloseSinkOnServer": "skipped on the reference fix",
@@ -39540,15 +38431,15 @@
     "org.jboss.resteasy.test.rx.rxjava2.Rx2SingleTest#testTraceThing": "skipped on the reference fix",
     "org.jboss.resteasy.test.rx.rxjava2.Rx2SingleTest#testTraceThingList": "skipped on the reference fix"
    },
-   "excluded_count": 75,
+   "excluded_count": 77,
    "ok": true,
-   "finished_at": "2026-10-28T16:35:17.575752+00:00",
-   "elapsed_seconds": 2517.6
+   "finished_at": "2026-11-04T14:46:30.811247+00:00",
+   "elapsed_seconds": 1868.7
   },
   "VUL4J-75": {
    "vul_id": "VUL4J-75",
-   "started_at": "2026-10-28T16:35:18.436675+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:46:32.619517+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/endpoint/SpelView.java",
    "pov_raw": [
     "org.springframework.security.oauth2.provider.endpoint.SpelViewTests#nonRecursive",
@@ -39562,15 +38453,14 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 15.9,
+    "seconds": 12.5,
     "results_written": true,
     "counts": {
-     "passed": 587,
-     "failed": 33,
+     "passed": 588,
+     "failed": 32,
      "skipped": 0
     },
     "failing": [
-     "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServerAndGlobalMethodSecurity",
      "org.springframework.security.oauth2.provider.endpoint.SpelViewTests#nonRecursive",
      "org.springframework.security.oauth2.provider.endpoint.SpelViewTests#recursive",
      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringAccessToken",
@@ -39610,49 +38500,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 15.8,
-     "results_written": true,
-     "counts": {
-      "passed": 589,
-      "failed": 31,
-      "skipped": 0
-     },
-     "failing": [
-      "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServerAndGlobalMethodSecurity",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringRefreshToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientId",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientIdAndUserName",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testGetAccessTokenForDeletedUser",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingAccessTokenForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingAuthenticationForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingRefreshTokenForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRefreshTokenIsNotStoredDuringAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRemoveRefreshToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRemovedTokenCannotBeFoundByUsername",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRetrieveAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreAccessTokenTwice",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreRefreshToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testExpiringAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testExpiringRefreshToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testFindAccessTokensByClientId",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testFindAccessTokensByClientIdAndUserName",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testGetAccessTokenForDeletedUser",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingAccessTokenForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingAuthenticationForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingRefreshTokenForTokenThatDoesNotExist",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRefreshTokenIsNotStoredDuringAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRemoveRefreshToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRemovedTokenCannotBeFoundByUsername",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRetrieveAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreAccessToken",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreAccessTokenTwice",
-      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreRefreshToken"
-     ]
-    },
-    {
-     "seconds": 15.8,
+     "seconds": 13.3,
      "results_written": true,
      "counts": {
       "passed": 590,
@@ -39693,15 +38541,55 @@
      ]
     },
     {
-     "seconds": 15.9,
+     "seconds": 13.4,
      "results_written": true,
      "counts": {
-      "passed": 589,
-      "failed": 31,
+      "passed": 590,
+      "failed": 30,
       "skipped": 0
      },
      "failing": [
-      "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServerAndGlobalMethodSecurity",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringRefreshToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientId",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientIdAndUserName",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testGetAccessTokenForDeletedUser",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingAccessTokenForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingAuthenticationForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testReadingRefreshTokenForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRefreshTokenIsNotStoredDuringAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRemoveRefreshToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRemovedTokenCannotBeFoundByUsername",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testRetrieveAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreAccessTokenTwice",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testStoreRefreshToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testExpiringAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testExpiringRefreshToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testFindAccessTokensByClientId",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testFindAccessTokensByClientIdAndUserName",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testGetAccessTokenForDeletedUser",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingAccessTokenForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingAuthenticationForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testReadingRefreshTokenForTokenThatDoesNotExist",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRefreshTokenIsNotStoredDuringAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRemoveRefreshToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRemovedTokenCannotBeFoundByUsername",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testRetrieveAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreAccessToken",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreAccessTokenTwice",
+      "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreRefreshToken"
+     ]
+    },
+    {
+     "seconds": 13.5,
+     "results_written": true,
+     "counts": {
+      "passed": 590,
+      "failed": 30,
+      "skipped": 0
+     },
+     "failing": [
       "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringAccessToken",
       "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringRefreshToken",
       "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientId",
@@ -39936,6 +38824,7 @@
     "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testCustomTokenServices",
     "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testDefaults",
     "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServer",
+    "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServerAndGlobalMethodSecurity",
     "org.springframework.security.oauth2.config.xml.AuthorizationServerBeanDefinitionParserTests#testDefaults[0]",
     "org.springframework.security.oauth2.config.xml.AuthorizationServerBeanDefinitionParserTests#testDefaults[1]",
     "org.springframework.security.oauth2.config.xml.AuthorizationServerBeanDefinitionParserTests#testDefaults[2]",
@@ -40347,9 +39236,8 @@
     "org.springframework.security.oauth2.provider.vote.ScopeVoterTests#testDenyIfOAuth2AndExplictlyDenied",
     "org.springframework.security.oauth2.provider.vote.ScopeVoterTests#testExceptionThrownIfWrongScopesPresent"
    ],
-   "judged_count": 587,
+   "judged_count": 588,
    "excluded": {
-    "org.springframework.security.oauth2.config.annotation.ResourceServerConfigurationTests#testWithAuthServerAndGlobalMethodSecurity": "inconsistent on the reference fix: failed,passed,failed",
     "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringAccessToken": "failed on the reference fix",
     "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testExpiringRefreshToken": "failed on the reference fix",
     "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStorePrefixTests#testFindAccessTokensByClientId": "failed on the reference fix",
@@ -40381,15 +39269,15 @@
     "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreAccessTokenTwice": "failed on the reference fix",
     "org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreTests#testStoreRefreshToken": "failed on the reference fix"
    },
-   "excluded_count": 31,
+   "excluded_count": 30,
    "ok": true,
-   "finished_at": "2026-10-28T16:37:56.896380+00:00",
-   "elapsed_seconds": 158.5
+   "finished_at": "2026-11-04T14:48:40.210602+00:00",
+   "elapsed_seconds": 127.6
   },
   "VUL4J-76": {
    "vul_id": "VUL4J-76",
-   "started_at": "2026-10-28T16:37:57.266535+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:48:41.136473+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "retrofit/src/main/java/retrofit2/RequestBuilder.java",
    "pov_raw": [
     "retrofit2.RequestFactoryTest#pathParametersAndPathTraversal",
@@ -40404,7 +39292,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 14.2,
+    "seconds": 9.3,
     "results_written": true,
     "counts": {
      "passed": 313,
@@ -40422,7 +39310,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 14.0,
+     "seconds": 9.1,
      "results_written": true,
      "counts": {
       "passed": 316,
@@ -40432,7 +39320,7 @@
      "failing": []
     },
     {
-     "seconds": 12.8,
+     "seconds": 8.9,
      "results_written": true,
      "counts": {
       "passed": 316,
@@ -40442,7 +39330,7 @@
      "failing": []
     },
     {
-     "seconds": 12.9,
+     "seconds": 9.0,
      "results_written": true,
      "counts": {
       "passed": 316,
@@ -40801,13 +39689,13 @@
    },
    "excluded_count": 1,
    "ok": true,
-   "finished_at": "2026-10-28T16:39:57.420469+00:00",
-   "elapsed_seconds": 120.2
+   "finished_at": "2026-11-04T14:50:05.854829+00:00",
+   "elapsed_seconds": 84.7
   },
   "VUL4J-77": {
    "vul_id": "VUL4J-77",
-   "started_at": "2026-10-28T16:39:57.715136+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:50:06.685002+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "modules/swagger-parser/src/main/java/io/swagger/parser/util/DeserializationUtils.java",
    "pov_raw": [
     "io.swagger.parser.util.SwaggerDeserializerTest#testCVE_2017_1000207"
@@ -40820,7 +39708,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 15.1,
+    "seconds": 11.0,
     "results_written": true,
     "counts": {
      "passed": 150,
@@ -40836,30 +39724,30 @@
    ],
    "reference_runs": [
     {
-     "seconds": 15.0,
-     "results_written": true,
-     "counts": {
-      "passed": 151,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
-     "seconds": 15.5,
-     "results_written": true,
-     "counts": {
-      "passed": 151,
-      "failed": 0,
-      "skipped": 0
-     },
-     "failing": []
-    },
-    {
-     "seconds": 14.7,
+     "seconds": 10.8,
      "results_written": true,
      "counts": {
       "passed": 153,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 10.7,
+     "results_written": true,
+     "counts": {
+      "passed": 151,
+      "failed": 0,
+      "skipped": 0
+     },
+     "failing": []
+    },
+    {
+     "seconds": 10.9,
+     "results_written": true,
+     "counts": {
+      "passed": 152,
       "failed": 0,
       "skipped": 0
      },
@@ -41038,18 +39926,18 @@
    ],
    "judged_count": 150,
    "excluded": {
-    "io.swagger.parser.util.RefUtilsTest#testComputeDefinitionName on testComputeDefinitionName": "inconsistent on the reference fix: missing,missing,passed",
-    "io.swagger.parser.util.RefUtilsTest#testIsAnExternalRefFormat on testIsAnExternalRefFormat": "inconsistent on the reference fix: missing,missing,passed"
+    "io.swagger.parser.util.RefUtilsTest#testComputeDefinitionName on testComputeDefinitionName": "inconsistent on the reference fix: passed,missing,passed",
+    "io.swagger.parser.util.RefUtilsTest#testIsAnExternalRefFormat on testIsAnExternalRefFormat": "inconsistent on the reference fix: passed,missing,missing"
    },
    "excluded_count": 2,
    "ok": true,
-   "finished_at": "2026-10-28T16:41:20.406979+00:00",
-   "elapsed_seconds": 82.7
+   "finished_at": "2026-11-04T14:51:08.400106+00:00",
+   "elapsed_seconds": 61.7
   },
   "VUL4J-78": {
    "vul_id": "VUL4J-78",
-   "started_at": "2026-10-28T16:41:20.751375+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:51:09.286178+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "xstream/src/java/com/thoughtworks/xstream/XStream.java",
    "pov_raw": [
     "com.thoughtworks.acceptance.SecurityVulnerabilityTest#testCannotInjectEventHandlerWithUnconfiguredSecurityFramework"
@@ -41062,7 +39950,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 15.0,
+    "seconds": 13.3,
     "results_written": true,
     "counts": {
      "passed": 1816,
@@ -41078,7 +39966,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 15.5,
+     "seconds": 12.7,
      "results_written": true,
      "counts": {
       "passed": 1817,
@@ -41088,7 +39976,7 @@
      "failing": []
     },
     {
-     "seconds": 14.9,
+     "seconds": 13.2,
      "results_written": true,
      "counts": {
       "passed": 1817,
@@ -41098,7 +39986,7 @@
      "failing": []
     },
     {
-     "seconds": 15.3,
+     "seconds": 13.0,
      "results_written": true,
      "counts": {
       "passed": 1817,
@@ -42948,13 +41836,13 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-28T16:43:01.399860+00:00",
-   "elapsed_seconds": 100.6
+   "finished_at": "2026-11-04T14:52:34.410317+00:00",
+   "elapsed_seconds": 85.1
   },
   "VUL4J-79": {
    "vul_id": "VUL4J-79",
-   "started_at": "2026-10-28T16:43:01.743028+00:00",
-   "code_fingerprint": "047a7b1e06d6",
+   "started_at": "2026-11-04T14:52:35.341866+00:00",
+   "code_fingerprint": "d9fc5b9a52fa",
    "primary_file": "src/main/java/org/zeroturnaround/zip/ZipUtil.java",
    "pov_raw": [
     "org.zeroturnaround.zip.DirectoryTraversalMaliciousTest#testUnwrapDoesntLeaveTarget",
@@ -42968,7 +41856,7 @@
     "matches_exported_copy": true
    },
    "original_run": {
-    "seconds": 4.5,
+    "seconds": 3.4,
     "results_written": true,
     "counts": {
      "passed": 116,
@@ -42985,7 +41873,7 @@
    ],
    "reference_runs": [
     {
-     "seconds": 4.0,
+     "seconds": 3.6,
      "results_written": true,
      "counts": {
       "passed": 118,
@@ -42995,7 +41883,7 @@
      "failing": []
     },
     {
-     "seconds": 4.0,
+     "seconds": 3.1,
      "results_written": true,
      "counts": {
       "passed": 118,
@@ -43005,7 +41893,7 @@
      "failing": []
     },
     {
-     "seconds": 3.9,
+     "seconds": 3.1,
      "results_written": true,
      "counts": {
       "passed": 118,
@@ -43160,10 +42048,12 @@
    "excluded": {},
    "excluded_count": 0,
    "ok": true,
-   "finished_at": "2026-10-28T16:43:32.514048+00:00",
-   "elapsed_seconds": 30.8
+   "finished_at": "2026-11-04T14:52:59.142707+00:00",
+   "elapsed_seconds": 23.8
   }
  },
  "image": "sha256:744fa5437034484d3e929f6e7feb735416385d4fb3d9b860e21ff92a291864d7",
- "generated_at": "2026-10-28T16:43:32.649843+00:00"
+ "generated_at": "2026-11-04T14:52:59.484780+00:00",
+ "grader_image": "cweft/vul4j-grader:latest",
+ "network": "none"
 }

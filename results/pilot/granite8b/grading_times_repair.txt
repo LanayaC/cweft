@@ -1,0 +1,4 @@
+Granite 8B pilot, repair grading after the container sweep incident
+re-grades the 4 missing t0.5/r1 Vul4J cells (VUL4J-61 L1/L2/L3b, VUL4J-48 L2)
+timed on its own: the step-2 t0.5 r1 vul4j time of 2012s is unusable
+t0.5 r1 vul4j repair  workers=4 rc=0 1694s (4 cells)

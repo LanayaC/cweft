@@ -1,0 +1,21 @@
+vul_id,cve_id,cwe_id,cwe_name,level,model_key,model_id,compiled,pov_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,grader,error,timestamp
+VUL4J-1,CVE-2017-18349,CWE-20,Improper Input Validation,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,3596,3597,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:39:03.284950+00:00
+VUL4J-1,CVE-2017-18349,CWE-20,Improper Input Validation,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,3596,3597,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:39:03.345100+00:00
+VUL4J-1,CVE-2017-18349,CWE-20,Improper Input Validation,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,3596,3597,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:39:03.301910+00:00
+VUL4J-1,CVE-2017-18349,CWE-20,Improper Input Validation,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,3596,3597,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:39:03.332137+00:00
+VUL4J-48,CVE-2018-1000531,CWE-20,Improper Input Validation,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,33,34,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:10.796871+00:00
+VUL4J-48,CVE-2018-1000531,CWE-20,Improper Input Validation,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,33,34,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:11.072145+00:00
+VUL4J-48,CVE-2018-1000531,CWE-20,Improper Input Validation,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,33,34,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:11.047372+00:00
+VUL4J-48,CVE-2018-1000531,CWE-20,Improper Input Validation,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,33,34,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:11.137015+00:00
+VUL4J-50,CVE-2013-4378,CWE-79,Cross-Site Scripting (XSS),L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,276,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:40:37.208887+00:00
+VUL4J-50,CVE-2013-4378,CWE-79,Cross-Site Scripting (XSS),L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,276,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:40:37.761162+00:00
+VUL4J-61,CVE-2018-1000820,CWE-611,Improper Restriction of XML External Entity Reference (XXE),L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,1034,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:40:52.333076+00:00
+VUL4J-61,CVE-2018-1000820,CWE-611,Improper Restriction of XML External Entity Reference (XXE),L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,1034,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:41:28.138369+00:00
+VUL4J-50,CVE-2013-4378,CWE-79,Cross-Site Scripting (XSS),L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,276,277,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:37.445112+00:00
+VUL4J-50,CVE-2013-4378,CWE-79,Cross-Site Scripting (XSS),L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,276,277,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:38.783072+00:00
+VUL4J-77,CVE-2017-1000207,CWE-502,Deserialization of Untrusted Data,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,150,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:42:04.515241+00:00
+VUL4J-77,CVE-2017-1000207,CWE-502,Deserialization of Untrusted Data,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,150,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:42:04.416038+00:00
+VUL4J-77,CVE-2017-1000207,CWE-502,Deserialization of Untrusted Data,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,150,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:42:15.037995+00:00
+VUL4J-77,CVE-2017-1000207,CWE-502,Deserialization of Untrusted Data,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,150,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:42:15.092856+00:00
+VUL4J-61,CVE-2018-1000820,CWE-611,Improper Restriction of XML External Entity Reference (XXE),L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,False,,1034,,,,,L0,False,stop,vul4j-baseline/1,,2026-11-02T10:41:57.234107+00:00
+VUL4J-61,CVE-2018-1000820,CWE-611,Improper Restriction of XML External Entity Reference (XXE),L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,True,False,1034,1091,,,,L1,False,stop,vul4j-baseline/1,,2026-11-02T10:40:52.129207+00:00

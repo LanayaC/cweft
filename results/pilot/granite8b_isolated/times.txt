@@ -1,0 +1,13 @@
+Timings under the network-isolated baseline (fingerprint in each row).
+Everything here ran after the rebuild; nothing from before the change.
+vul4j oracle (42 entries, workers 4)         rc=1 2384s
+patcheval oracle (workers 4)                 rc=0 659s
+pilot t0.5/r1 vul4j workers 4                rc=0 682s
+pilot t0.5/r1 vul4j workers 1                rc=0 1891s
+pilot t0.0/r1 vul4j workers 4                rc=0 704s
+pilot t0.0/r2 vul4j workers 4                rc=0 698s
+pilot t0.5/r2 vul4j workers 4                rc=0 663s
+pilot t0.5/r3 vul4j workers 4                rc=0 689s
+pilot t1.0/r1 vul4j workers 4                rc=0 722s
+pilot t1.0/r2 vul4j workers 4                rc=0 658s
+pilot t1.0/r3 vul4j workers 4                rc=0 705s

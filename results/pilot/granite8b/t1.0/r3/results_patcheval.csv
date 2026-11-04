@@ -1,0 +1,31 @@
+cve,language,cwe,level,model_key,model_id,image_digest,digest_matches_baseline,l0_checker,l0_passed,poc_passed,judged_set_size,tests_run,regressions,n_regressions,flaky_excluded,trust_level,truncated,stop_reason,error,timings,code_fingerprint,timestamp
+CVE-2022-1992,Go,CWE-22,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:23a0ef3aec2762f63cbcba9361e3479f1a78cab92366d00c3c34f442a56e51df,True,gofmt -e,True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":66.6}",93e7d8be280f,2026-11-02T12:10:22.007162+00:00
+CVE-2022-1992,Go,CWE-22,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:23a0ef3aec2762f63cbcba9361e3479f1a78cab92366d00c3c34f442a56e51df,True,gofmt -e,True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":66.7}",93e7d8be280f,2026-11-02T12:10:22.131645+00:00
+CVE-2022-1992,Go,CWE-22,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:23a0ef3aec2762f63cbcba9361e3479f1a78cab92366d00c3c34f442a56e51df,True,gofmt -e,True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":67.1}",93e7d8be280f,2026-11-02T12:10:22.512548+00:00
+CVE-2022-2900,JavaScript,CWE-918,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc222f98c2e6b3af520b758a25e0b337f87c5d6546b36c4bc700e4e429da75b,True,node --check,False,,1,,,,,L0,False,stop,"/workspace/parse-url/lib/index.js:69
+    const parsed = parsePath(url);
+          ^
+
+SyntaxError: Identifier 'parsed' has already been declared
+    at checkSyntax (node:internal/main/check_syntax:74:5)
+
+Node.js v22.14.0","{""l0"":0.4}",93e7d8be280f,2026-11-02T12:10:24.215983+00:00
+CVE-2022-2900,JavaScript,CWE-918,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc222f98c2e6b3af520b758a25e0b337f87c5d6546b36c4bc700e4e429da75b,True,node --check,True,False,1,,,,,L1,False,stop,,"{""l0"":0.4,""poc"":0.2}",93e7d8be280f,2026-11-02T12:10:24.275261+00:00
+CVE-2022-1992,Go,CWE-22,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:23a0ef3aec2762f63cbcba9361e3479f1a78cab92366d00c3c34f442a56e51df,True,gofmt -e,True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":69.3}",93e7d8be280f,2026-11-02T12:10:24.638791+00:00
+CVE-2022-2900,JavaScript,CWE-918,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc222f98c2e6b3af520b758a25e0b337f87c5d6546b36c4bc700e4e429da75b,True,node --check,True,False,1,,,,,L1,False,stop,,"{""l0"":0.4,""poc"":0.2}",93e7d8be280f,2026-11-02T12:10:24.712110+00:00
+CVE-2022-2900,JavaScript,CWE-918,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc222f98c2e6b3af520b758a25e0b337f87c5d6546b36c4bc700e4e429da75b,True,node --check,False,,1,,,,,L0,False,stop,"/workspace/parse-url/lib/index.js:121
+    if (host && !(await validateHost(host))) {
+                  ^^^^^
+
+SyntaxError: Unexpected reserved word
+    at checkSyntax (node:internal/main/check_syntax:74:5)
+
+Node.js v22.14.0","{""l0"":0.4}",93e7d8be280f,2026-11-02T12:10:26.031183+00:00
+CVE-2022-39286,Python,CWE-269,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc51b81e2f62120f06e982552521e5ac6e01573f0515b1161bb2002ef6f1d94,True,ast.parse (/workspace/PoC_env/CVE-2022-39286/bin/python),True,False,7,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":0.7}",93e7d8be280f,2026-11-02T12:10:27.084364+00:00
+CVE-2022-39286,Python,CWE-269,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc51b81e2f62120f06e982552521e5ac6e01573f0515b1161bb2002ef6f1d94,True,ast.parse (/workspace/PoC_env/CVE-2022-39286/bin/python),True,False,7,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":0.7}",93e7d8be280f,2026-11-02T12:10:27.445310+00:00
+CVE-2022-39286,Python,CWE-269,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc51b81e2f62120f06e982552521e5ac6e01573f0515b1161bb2002ef6f1d94,True,ast.parse (/workspace/PoC_env/CVE-2022-39286/bin/python),True,False,7,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":0.7}",93e7d8be280f,2026-11-02T12:10:27.500350+00:00
+CVE-2022-39286,Python,CWE-269,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:ccc51b81e2f62120f06e982552521e5ac6e01573f0515b1161bb2002ef6f1d94,True,ast.parse (/workspace/PoC_env/CVE-2022-39286/bin/python),True,False,7,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":0.7}",93e7d8be280f,2026-11-02T12:10:28.686885+00:00
+CVE-2024-5138,Go,CWE-269,L1,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:74e0c164074ff35c20b9c05ca60ac889e5173ccc0c694a7ce992f80ebb3733ab,True,gofmt -e,True,False,160,,,,,L1,False,stop,,"{""l0"":0.5,""poc"":42.0}",93e7d8be280f,2026-11-02T12:11:11.973901+00:00
+CVE-2024-5138,Go,CWE-269,L2,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:74e0c164074ff35c20b9c05ca60ac889e5173ccc0c694a7ce992f80ebb3733ab,True,gofmt -e,True,False,160,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":42.2}",93e7d8be280f,2026-11-02T12:11:12.713828+00:00
+CVE-2024-5138,Go,CWE-269,L3a,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:74e0c164074ff35c20b9c05ca60ac889e5173ccc0c694a7ce992f80ebb3733ab,True,gofmt -e,True,False,160,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":42.2}",93e7d8be280f,2026-11-02T12:11:12.820355+00:00
+CVE-2024-5138,Go,CWE-269,L3b,granite-8b-bf16,ibm-granite/granite-4.1-8b,ghcr.io/patcheval-cve/patcheval-cve@sha256:74e0c164074ff35c20b9c05ca60ac889e5173ccc0c694a7ce992f80ebb3733ab,True,gofmt -e,True,False,160,,,,,L1,False,stop,,"{""l0"":0.6,""poc"":40.6}",93e7d8be280f,2026-11-02T12:11:13.514943+00:00

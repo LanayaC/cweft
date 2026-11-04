@@ -58,7 +58,7 @@ CSV_FIELDS = [
     "regressions", "n_regressions", "flaky_excluded",
     "trust_level",
     "truncated", "stop_reason",
-    "grader", "error", "timestamp",
+    "grader", "error", "code_fingerprint", "timestamp",
 ]
 
 
@@ -225,6 +225,10 @@ def _row(meta: Dict, graded: Dict, entry: Optional[Dict], timestamp: str) -> Dic
         "stop_reason":       meta.get("stop_reason", ""),
         "grader":            GRADER,
         "error":             graded["error"],
+        # Which code produced this verdict, as the PatchEval rows record
+        # (vul4j_baseline.FINGERPRINTED): a row is only comparable to another
+        # row, or to a baseline entry, with the same fingerprint.
+        "code_fingerprint":  vb.code_fingerprint(),
         "timestamp":         timestamp,
     }
 
@@ -311,6 +315,17 @@ def oracle(vul_ids: List[str], results_dir: Path, workers: int = 1) -> int:
     path = results_dir / ORACLE_CSV_NAME
     done = set()
     if path.exists():
+        # Same reason as _check_header: an oracle.csv from an older version of
+        # this code has fewer columns, and appending today's rows to it would
+        # leave rows the header cannot describe.
+        with path.open(newline="", encoding="utf-8") as f:
+            header = (f.readline().strip() or "").split(",")
+        if header != ORACLE_FIELDS:
+            missing = [c for c in ORACLE_FIELDS if c not in header]
+            raise RuntimeError(
+                f"{path} has an older header (missing: {', '.join(missing) or 'none'}; "
+                f"{len(header)} columns, this code writes {len(ORACLE_FIELDS)}). Appending "
+                f"would corrupt it. Point --results-dir at a fresh directory.")
         with path.open(encoding="utf-8", newline="") as f:
             done = {(r["vul_id"], r["model_key"]) for r in csv.DictReader(f)}
     cells = [(v, k) for v in vul_ids for k in ORACLE_CASES]
@@ -334,13 +349,15 @@ def oracle(vul_ids: List[str], results_dir: Path, workers: int = 1) -> int:
         t0[0] = time.time()
 
     failed = []
+    _grader_image_ready()
     if workers > 1:
-        _grader_image_ready()
         failed = parallel_grading.run_cells(_oracle_cell, todo, workers, record,
                                             own_vul4j_container=True)
     else:
         for vul_id, model_key in todo:
-            record(_oracle_cell(vul_id, model_key))
+            with vb.container():
+                row = _oracle_cell(vul_id, model_key)
+            record(row)
 
     with path.open(encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
@@ -538,6 +555,9 @@ def main():
 
     baseline = load_baseline()
     counts = {"L0": 0, "L1": 0, "L2": 0, "L3": 0, ERROR: 0, REFUSED: 0}
+    # One container per cell here too, so --workers 1 and --workers N grade in
+    # the same isolated environment and can be compared.
+    _grader_image_ready()
 
     for i, log_path in enumerate(pending, start=1):
         vul = _parse_vul_id(log_path)
@@ -546,7 +566,8 @@ def main():
         print(f"[{i}/{len(pending)}] {vul}  {lvl}  {mdl}", end="  ... ", flush=True)
 
         try:
-            row = evaluate_log(log_path, baseline)
+            with vb.container():
+                row = evaluate_log(log_path, baseline)
         except Exception as e:
             row = _error_row(
                 log_path, datetime.now(timezone.utc).isoformat(),
