@@ -21,6 +21,9 @@
 #   --tp N              tensor parallel across the first N cards in
 #                       CUDA_VISIBLE_DEVICES (default 1), e.g. --tp 2 with
 #                       CUDA_VISIBLE_DEVICES=0,1 for gpu5's two cards.
+#   --gpu-memory-utilization F
+#                       fraction of each card's memory vLLM may use for
+#                       weights, activations and KV cache (default 0.92)
 #   --port N            local port for vLLM (default 8000)
 #   --wait-timeout S    seconds to wait for the server to answer (default 3600)
 #
@@ -54,6 +57,7 @@ shift
 
 MAX_LEN=65536
 TP=1
+GPU_MEM=0.92
 PORT=8000
 WAIT_TIMEOUT=3600
 GEN_ARGS=()
@@ -61,6 +65,7 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --max-model-len) MAX_LEN="$2"; shift 2 ;;
         --tp)            TP="$2"; shift 2 ;;
+        --gpu-memory-utilization) GPU_MEM="$2"; shift 2 ;;
         --port)          PORT="$2"; shift 2 ;;
         --wait-timeout)  WAIT_TIMEOUT="$2"; shift 2 ;;
         --)              shift; GEN_ARGS=("$@"); break ;;
@@ -73,6 +78,10 @@ done
 # Checked now: generate.py would only refuse it after the server has loaded.
 TEMPERATURE_ARG='(^| )--temperature[= ](0|0\.0|0\.5|1|1\.0)( |$)'
 [[ "${GEN_ARGS[*]-}" =~ $TEMPERATURE_ARG ]] || die "generate.py needs --temperature 0, 0.5 or 1.0 after --"
+# Also checked now: vLLM rejects an out-of-range fraction only once it has
+# started loading the model onto the card.
+GPU_MEM_RE='^(0?\.0*[1-9][0-9]*|1|1\.0+)$'
+[[ "$GPU_MEM" =~ $GPU_MEM_RE ]] || die "--gpu-memory-utilization takes a fraction in (0,1], e.g. 0.92 (got $GPU_MEM)"
 
 CWEFT_DIR="${CWEFT_DIR:-$HOME/cweft}"
 CWEFT_VENV="${CWEFT_VENV:-$CWEFT_DIR/venv312}"
@@ -114,7 +123,7 @@ REVISION="$(sed -n 2p <<<"$MODEL_INFO")"
 echo "=== cweft job $JOB  $(date -Is)  on $(hostname)"
 echo "model:        $MODEL = $HF_ID @ $REVISION"
 echo "window:       --max-model-len $MAX_LEN   tensor parallel: $TP   port: $PORT"
-echo "GPUs:         CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
+echo "GPUs:         CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES   memory utilization: $GPU_MEM"
 echo "--- nvidia-smi (driver and CUDA version in its header)"
 nvidia-smi 2>&1 || echo "nvidia-smi failed or is not available"
 echo "---"
@@ -147,6 +156,7 @@ setsid vllm serve "$HF_ID" \
     --generation-config vllm \
     --max-model-len "$MAX_LEN" \
     --tensor-parallel-size "$TP" \
+    --gpu-memory-utilization "$GPU_MEM" \
     --host 127.0.0.1 --port "$PORT" \
     >"$VLLM_LOG" 2>&1 &
 SERVER_PID=$!
