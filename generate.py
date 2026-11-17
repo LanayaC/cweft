@@ -22,12 +22,22 @@ Usage:
     --dataset all                          # Vul4J then PatchEval
     --dry-run                              # print plan, do nothing
     --logs-dir logs/plumbing_test          # logs/plumbing_test/t0.5/r1/ instead
+    --concurrency 8                        # keep up to 8 requests in flight (default 1)
+
+Concurrency: with --concurrency N > 1, up to N cells are generated at once, so
+a vLLM server can batch them. Every cell still gets its own log, written
+atomically, and records the concurrency it ran under. The default, 1, runs
+cells one after another for every provider; cloud models run concurrently only
+when --concurrency is given.
 """
 
 import argparse
 import json
+import os
 import sys
+import threading
 import time
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -87,8 +97,19 @@ def cell_already_done(vul_id: str, level: str, model_key: str,
 
 
 def write_log(vul_id: str, level: str, model_key: str, record: dict) -> None:
+    """
+    Write the cell's log atomically: to a temporary file beside it, then renamed
+    over it. A run killed mid-write leaves either no log or a whole one, never a
+    partial file that resuming would have to guess about. The temporary name
+    does not end in .json, so nothing that globs the logs picks it up.
+    """
     p = log_path_for(vul_id, level, model_key)
-    p.write_text(json.dumps(record, indent=2))
+    tmp = p.with_name(f".{p.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+    try:
+        tmp.write_text(json.dumps(record, indent=2))
+        os.replace(tmp, p)
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -102,6 +123,7 @@ def run_cell(
     *,
     temperature: float,
     repetition: int,
+    concurrency: int = 1,
     max_attempts: int = 3,
     base_backoff_s: float = 4.0,
 ) -> dict:
@@ -109,6 +131,7 @@ def run_cell(
     Build prompt, call model with retry, return a result dict to be logged.
     Failures are recorded with status=error, except a temperature the provider
     rejects: TemperatureRejected reaches the caller, which stops the run.
+    `concurrency` is only recorded: how many cells the run kept in flight.
     """
     # Vul4J payloads carry no language key and so get the Java default.
     language = payload.get("language", "Java")
@@ -134,6 +157,9 @@ def run_cell(
         "temperature":  temperature,
         "repetition":   repetition,
         "seed":         seed,
+        # Batching can change floating-point results, so a cell generated
+        # alongside others may differ from one generated alone.
+        "concurrency":  concurrency,
         "prompt_chars": len(prompt),
         "prompt":       prompt,
         "timestamp":    datetime.now(timezone.utc).isoformat(),
@@ -288,19 +314,27 @@ def main():
     ap.add_argument("--reasoning-reserve", type=int, default=capcheck.GPT_REASONING_RESERVE,
                     help="tokens of GPT's budget assumed to go to reasoning "
                          f"(default {capcheck.GPT_REASONING_RESERVE})")
+    ap.add_argument("--concurrency", type=int, default=1,
+                    help="keep up to this many requests in flight at once, so a vLLM server "
+                         "can batch them (default 1: one after another). Applies to every "
+                         "model in the run, cloud ones included; each log records it")
     args = ap.parse_args()
     if args.repetition < 1:
         ap.error("--repetition must be at least 1")
+    if args.concurrency < 1:
+        ap.error("--concurrency must be at least 1")
     set_logs_dir((args.logs_dir or LOGS_DIR) / run_subdir(args.temperature, args.repetition))
     if args.vulns is None:
         args.vulns = DATASETS[args.dataset]
 
-    cells = [
+    # Each cell once, in order: a vuln or level named twice would otherwise be
+    # requested twice, and with --concurrency both requests could be in flight.
+    cells = list(dict.fromkeys(
         (vul_id, level, model_key)
         for vul_id in args.vulns
         for level in args.levels
         for model_key in args.models
-    ]
+    ))
 
     total = len(cells)
     pending = [c for c in cells if not cell_already_done(*c, args.temperature, args.repetition)]
@@ -311,6 +345,7 @@ def main():
     print(f"Levels: {args.levels}")
     print(f"Vulns:  {len(args.vulns)}")
     print(f"Sampling: temperature={args.temperature}  repetition={args.repetition}")
+    print(f"Concurrency: {args.concurrency}")
     print(f"Logs:   {LOGS_DIR}")
     print()
 
@@ -338,49 +373,113 @@ def main():
                  f"VLLM_MODELS in config.py, or leave them out with --models.")
 
     started_at = time.time()
-    ok_count = 0
-    err_count = 0
-    skip_count = 0
-
-    for i, (vul_id, level, model_key) in enumerate(pending, start=1):
-        prefix = f"[{i}/{len(pending)}]"
-        print(f"{prefix} {vul_id}  {level}  {model_key}", end="  ... ", flush=True)
-
-        payload = payload_for(vul_id)
-        if payload is None:
-            write_log(vul_id, level, model_key, {
-                "vul_id": vul_id, "level": level, "model_key": model_key,
-                "temperature": args.temperature, "repetition": args.repetition,
-                "status": "error", "error": "payload build failed",
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-            })
-            err_count += 1
-            continue
-
-        try:
-            record = run_cell(payload, level, model_key, temperature=args.temperature,
-                              repetition=args.repetition)
-        except TemperatureRejected as e:
-            print("STOPPED")
-            sys.exit(f"Stopping: {e}\nNothing was logged for this cell. Leave this model out "
-                     f"with --models, or choose a temperature it accepts.")
-        write_log(vul_id, level, model_key, record)
-
-        if record["status"] == "ok":
-            ok_count += 1
-            u = record["usage"]
-            print(f"ok  ({u['latency_s']:.1f}s  in={u['input_tokens']} out={u['output_tokens']})")
-        elif record["status"] == "skipped":
-            skip_count += 1
-            print(f"SKIPPED ({record['error']})")
-        else:
-            err_count += 1
-            print(f"ERROR ({record['error']})")
+    counts, rejected = generate_cells(pending, temperature=args.temperature,
+                                      repetition=args.repetition,
+                                      concurrency=args.concurrency)
+    if rejected is not None:
+        sys.exit(f"Stopping: {rejected}\nNothing was logged for that cell. Leave this model "
+                 f"out with --models, or choose a temperature it accepts.")
 
     elapsed = time.time() - started_at
     print()
-    print(f"Done in {elapsed/60:.1f} min  |  ok={ok_count}  error={err_count}  "
-          f"skipped={skip_count}")
+    print(f"Done in {elapsed/60:.1f} min  |  ok={counts['ok']}  error={counts['error']}  "
+          f"skipped={counts['skipped']}")
+
+
+def _generate_one(vul_id: str, level: str, model_key: str, payload: dict, *,
+                  temperature: float, repetition: int, concurrency: int) -> dict:
+    """One cell, start to finish: generate, then write its log. Runs in a worker."""
+    record = run_cell(payload, level, model_key, temperature=temperature,
+                      repetition=repetition, concurrency=concurrency)
+    write_log(vul_id, level, model_key, record)
+    return record
+
+
+def _outcome(record: dict) -> str:
+    if record["status"] == "ok":
+        u = record["usage"]
+        return f"ok  ({u['latency_s']:.1f}s  in={u['input_tokens']} out={u['output_tokens']})"
+    if record["status"] == "skipped":
+        return f"SKIPPED ({record['error']})"
+    return f"ERROR ({record['error']})"
+
+
+def generate_cells(pending, *, temperature: float, repetition: int, concurrency: int = 1):
+    """
+    Generate every pending cell, keeping at most `concurrency` in flight.
+
+    Returns ({"ok": n, "error": n, "skipped": n}, rejected), where `rejected`
+    is the TemperatureRejected that stopped the run, or None.
+
+    Cells are handed out in order, one more each time one finishes, so nothing
+    waits in a queue: once a provider rejects the temperature, no further
+    request is sent. Requests already in flight are allowed to finish and are
+    logged, since they were already paid for. Each worker writes its own
+    cell's log as soon as the cell is done, so a run stopped at any point
+    leaves only whole logs, and resuming redoes just the cells without one.
+    With concurrency 1 this is the plain sequential loop, one cell at a time.
+    """
+    counts = {"ok": 0, "error": 0, "skipped": 0}
+    rejected = None
+    total = len(pending)
+    finished = 0
+    sequential = concurrency == 1
+
+    def report(cell, record):
+        nonlocal finished
+        finished += 1
+        counts["ok" if record["status"] == "ok" else
+               "skipped" if record["status"] == "skipped" else "error"] += 1
+        if sequential:          # the "[i/n] cell ... " half was printed at submit
+            print(_outcome(record), flush=True)
+        else:
+            print(f"[{finished}/{total}] {cell[0]}  {cell[1]}  {cell[2]}  "
+                  f"{_outcome(record)}", flush=True)
+
+    queue = iter(enumerate(pending, start=1))
+    in_flight = {}
+    with ThreadPoolExecutor(max_workers=concurrency, thread_name_prefix="cell") as pool:
+        while True:
+            # Top up to `concurrency` in flight, unless the run is stopping.
+            while rejected is None and len(in_flight) < concurrency:
+                nxt = next(queue, None)
+                if nxt is None:
+                    break
+                i, (vul_id, level, model_key) = nxt
+                if sequential:
+                    print(f"[{i}/{total}] {vul_id}  {level}  {model_key}", end="  ... ",
+                          flush=True)
+                payload = payload_for(vul_id)
+                if payload is None:
+                    write_log(vul_id, level, model_key, {
+                        "vul_id": vul_id, "level": level, "model_key": model_key,
+                        "temperature": temperature, "repetition": repetition,
+                        "concurrency": concurrency,
+                        "status": "error", "error": "payload build failed",
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                    })
+                    report((vul_id, level, model_key), {"status": "error",
+                                                        "error": "payload build failed"})
+                    continue
+                future = pool.submit(_generate_one, vul_id, level, model_key, payload,
+                                     temperature=temperature, repetition=repetition,
+                                     concurrency=concurrency)
+                in_flight[future] = (vul_id, level, model_key)
+            if not in_flight:
+                break
+            done, _ = wait(in_flight, return_when=FIRST_COMPLETED)
+            for future in done:
+                cell = in_flight.pop(future)
+                try:
+                    record = future.result()
+                except TemperatureRejected as e:
+                    print("STOPPED" if sequential else
+                          f"STOPPED {cell[0]}  {cell[1]}  {cell[2]}: temperature rejected",
+                          flush=True)
+                    rejected = rejected or e
+                    continue
+                report(cell, record)
+    return counts, rejected
 
 
 if __name__ == "__main__":

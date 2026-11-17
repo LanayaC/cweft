@@ -14,6 +14,7 @@ per cell and doesn't care which provider it's talking to.
 import hashlib
 import os
 import re
+import threading
 import time
 from functools import partial
 from typing import Tuple
@@ -36,38 +37,48 @@ load_dotenv()
 # ──────────────────────────────────────────────────────────────────────
 
 _clients = {}
+# generate.py --concurrency calls these from several threads at once; the lock
+# makes every thread share one client (and its connection pool) per provider.
+_clients_lock = threading.Lock()
+
+
+def _client(name: str, make):
+    with _clients_lock:
+        if name not in _clients:
+            _clients[name] = make()
+        return _clients[name]
 
 
 def _get_anthropic():
-    if "anthropic" not in _clients:
+    def make():
         from anthropic import Anthropic
-        _clients["anthropic"] = Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    return _clients["anthropic"]
+        return Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    return _client("anthropic", make)
 
 
 def _get_openai():
-    if "openai" not in _clients:
+    def make():
         from openai import OpenAI
-        _clients["openai"] = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    return _clients["openai"]
+        return OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    return _client("openai", make)
 
 
 def _get_vllm():
-    if "vllm" not in _clients:
+    def make():
         from openai import OpenAI
         # vLLM ignores the key but the client requires one. No client-side
         # retries: generate.run_cell already retries, and a retried timeout
         # here would silently repeat a half-hour generation.
-        _clients["vllm"] = OpenAI(base_url=VLLM_BASE_URL, api_key="EMPTY",
-                                  timeout=VLLM_TIMEOUT, max_retries=0)
-    return _clients["vllm"]
+        return OpenAI(base_url=VLLM_BASE_URL, api_key="EMPTY",
+                      timeout=VLLM_TIMEOUT, max_retries=0)
+    return _client("vllm", make)
 
 
 def _get_gemini():
-    if "gemini" not in _clients:
+    def make():
         from google import genai
-        _clients["gemini"] = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
-    return _clients["gemini"]
+        return genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+    return _client("gemini", make)
 
 
 # ──────────────────────────────────────────────────────────────────────

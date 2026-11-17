@@ -93,6 +93,14 @@ server already uses that port on the node) and `--wait-timeout S` (default
 3600 seconds for the server to come up). Add `--dry-run` after `--` to check a
 plan without generating anything.
 
+To let vLLM batch requests, add `--concurrency N` after `--`; generate.py then
+keeps up to N cells in flight, and each log records the N it ran under. The
+default, 1, sends one cell at a time. Batching can change floating-point
+results, so a T=0 run with `--concurrency 8` may not reproduce a sequential one
+token for token. vLLM 0.28.0 has a beta batch-invariant mode
+(`VLLM_BATCH_INVARIANT=1` in the server's environment) meant to remove that
+difference; it is not enabled here.
+
 The GPU partitions cap a job at 12 hours (the script asks for 12:00:00; ask
 for less with `--time` if you like, never more, or the job waits forever with
 reason `PartitionTimeLimit`). A full run that needs longer is split into several
