@@ -1,0 +1,19 @@
+16 PatchEval cells to grade, 4 workers
+[1/16] CVE-2022-1992      L1    granite-30b-bf16 L1       
+[2/16] CVE-2022-1992      L2    granite-30b-bf16 L1       
+[3/16] CVE-2022-1992      L3b   granite-30b-bf16 L1       
+[4/16] CVE-2022-2900      L1    granite-30b-bf16 L1       
+[5/16] CVE-2022-2900      L2    granite-30b-bf16 L1       
+[6/16] CVE-2022-1992      L3a   granite-30b-bf16 L1       
+[7/16] CVE-2022-2900      L3a   granite-30b-bf16 L1       
+[8/16] CVE-2022-2900      L3b   granite-30b-bf16 L1       
+[9/16] CVE-2022-39286     L2    granite-30b-bf16 L1       
+[10/16] CVE-2022-39286     L1    granite-30b-bf16 L1       
+[11/16] CVE-2022-39286     L3a   granite-30b-bf16 L1       
+[12/16] CVE-2022-39286     L3b   granite-30b-bf16 L1       
+[13/16] CVE-2024-5138      L3a   granite-30b-bf16 L1       
+[14/16] CVE-2024-5138      L2    granite-30b-bf16 L1       
+[15/16] CVE-2024-5138      L3b   granite-30b-bf16 L1       
+[16/16] CVE-2024-5138      L1    granite-30b-bf16 L1       
+
+{'L1': 16}  ->  C:\Users\lanay\cweft\results\pilot\granite30b\t0.0\r1\results_patcheval.csv

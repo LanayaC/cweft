@@ -1,0 +1,3 @@
+Grading wall time, network-isolated baseline (Vul4J d9fc5b9a52fa, PatchEval 93e7d8be280f), graded 2026-11-17
+gemma12b   t0.0/r1 vul4j     workers 4  rc=0 1308s
+gemma12b   t0.0/r1 patcheval workers 4  rc=0 138s

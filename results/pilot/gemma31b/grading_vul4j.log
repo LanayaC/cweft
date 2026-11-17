@@ -1,0 +1,28 @@
+Total logs:    20
+Candidates:    20
+Already done:  0
+To evaluate:   20
+Results CSV:   C:\Users\lanay\cweft\results\pilot\gemma31b\t0.0\r1\results.csv
+
+[1/20] VUL4J-1  L2  gemma-31b-bf16  L1
+[2/20] VUL4J-1  L3b  gemma-31b-bf16  L1
+[3/20] VUL4J-1  L3a  gemma-31b-bf16  L1
+[4/20] VUL4J-1  L1  gemma-31b-bf16  L1
+[5/20] VUL4J-48  L1  gemma-31b-bf16  L1
+[6/20] VUL4J-48  L2  gemma-31b-bf16  L1
+[7/20] VUL4J-48  L3b  gemma-31b-bf16  L1
+[8/20] VUL4J-48  L3a  gemma-31b-bf16  L1
+[9/20] VUL4J-50  L1  gemma-31b-bf16  L3
+[10/20] VUL4J-50  L3a  gemma-31b-bf16  L3
+[11/20] VUL4J-50  L3b  gemma-31b-bf16  L3
+[12/20] VUL4J-50  L2  gemma-31b-bf16  L3
+[13/20] VUL4J-61  L1  gemma-31b-bf16  L1
+[14/20] VUL4J-61  L2  gemma-31b-bf16  L3
+[15/20] VUL4J-61  L3b  gemma-31b-bf16  L3
+[16/20] VUL4J-61  L3a  gemma-31b-bf16  L3
+[17/20] VUL4J-77  L1  gemma-31b-bf16  L3
+[18/20] VUL4J-77  L2  gemma-31b-bf16  L3
+[19/20] VUL4J-77  L3a  gemma-31b-bf16  L3
+[20/20] VUL4J-77  L3b  gemma-31b-bf16  L3
+
+Summary: {'L1': 9, 'L3': 11}
